@@ -7,6 +7,9 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 
 ---
 
+## 2026-07-07 20:30:25 UTC — sync run
+- SKIPPED: `NOTION_TOKEN` または `NOTION_08_WEBSITE_CMS_PAGE_ID` が未設定のため、同期をスキップしました。
+
 ## 2026-07-07 18:35:30 UTC — sync run
 - SKIPPED: `NOTION_TOKEN` または `NOTION_08_WEBSITE_CMS_PAGE_ID` が未設定のため、同期をスキップしました。
 
