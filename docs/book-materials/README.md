@@ -1,0 +1,9 @@
+# docs/book-materials
+
+TEAM AICの活動をいずれ本にまとめるための素材を蓄積するディレクトリです。
+
+- 章立てのアイデア
+- 活動の中で得たエピソードや気づき
+- Live Build LogやNote Draftsから拾い上げた、本にも使えそうな言葉のストック
+
+まとまった内容は [`book.html`](../../book.html) にも反映していきます。
