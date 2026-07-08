@@ -25,7 +25,15 @@ const NOTION_VERSION = "2022-06-28";
 const MAX_LOG_ENTRIES = 20;
 
 const PAGE_MAP = [
-  { file: "index.html", prefix: "08-01", label: "08-01 Home" },
+  {
+    file: "index.html",
+    prefix: "08-01",
+    label: "08-01 Home",
+    fields: [
+      { marker: "hero-title", heading: "トップ表示文言", render: "heroTitle" },
+      { marker: "hero-lead", heading: "トップ説明文", render: "leadFirst" },
+    ],
+  },
   { file: "about.html", prefix: "08-02", label: "08-02 About" },
   {
     file: "activities.html",
@@ -143,6 +151,29 @@ async function syncPage(entry, rootChildren, token, logLines) {
       fileContent = result.content;
       changedAny = changedAny || result.changed;
     }
+  } else if (entry.fields) {
+    const blocks = await getAllChildren(pageBlock.id, token);
+    const plainText = blocks.map(plainTextOfBlock).join("\n");
+    const forbiddenHits = scanForbidden(plainText);
+    if (forbiddenHits.length > 0) {
+      logLines.push(
+        `- SKIP (warning): ${entry.label} → 公開NGらしきパターンを検知したため出力をスキップしました（種別: ${forbiddenHits.join(", ")}）`
+      );
+    } else {
+      for (const field of entry.fields) {
+        const sectionBlocks = blocksUnderHeading(blocks, field.heading);
+        const inner = renderField(field.render, sectionBlocks);
+        if (!inner) {
+          logLines.push(`- WARN: ${entry.label} の「${field.heading}」セクションが見つからないか空でした。`);
+          continue;
+        }
+        const startMarker = `<!-- notion-sync:content:${field.marker}:start -->`;
+        const endMarker = `<!-- notion-sync:content:${field.marker}:end -->`;
+        const result = replaceBetweenMarkers(fileContent, startMarker, endMarker, inner);
+        fileContent = result.content;
+        changedAny = changedAny || result.changed;
+      }
+    }
   } else {
     const result = await renderAndApplySection(fileContent, pageBlock, null, entry.label, token, logLines);
     fileContent = result.content;
@@ -175,6 +206,59 @@ async function renderAndApplySection(fileContent, pageBlock, marker, label, toke
   const startMarker = marker ? `<!-- notion-sync:content:${marker}:start -->` : `<!-- notion-sync:content:start -->`;
   const endMarker = marker ? `<!-- notion-sync:content:${marker}:end -->` : `<!-- notion-sync:content:end -->`;
   return replaceBetweenMarkers(fileContent, startMarker, endMarker, html);
+}
+
+// ---------- Field-level rendering (single page → named markers) ----------
+
+// Collects the blocks that appear under a given heading, until the next heading
+// or a divider. Used to map one Notion page's sections to individual HTML slots.
+function blocksUnderHeading(blocks, headingText) {
+  const out = [];
+  let capturing = false;
+  for (const b of blocks) {
+    const isHeading = b.type === "heading_1" || b.type === "heading_2" || b.type === "heading_3";
+    if (isHeading) {
+      if (capturing) break;
+      const t = plainTextOf(b[b.type].rich_text).trim();
+      if (t === headingText) capturing = true;
+      continue;
+    }
+    if (capturing) {
+      if (b.type === "divider") break;
+      out.push(b);
+    }
+  }
+  return out;
+}
+
+function renderField(mode, blocks) {
+  if (mode === "heroTitle") return renderHeroTitle(blocks);
+  if (mode === "leadFirst") return renderLeadFirst(blocks);
+  return "";
+}
+
+// Each Notion paragraph line becomes one hero line (joined with <br>). The word
+// before "をかえる" is highlighted with the accent span, matching the design.
+function renderHeroTitle(blocks) {
+  const lines = blocks
+    .filter((b) => b.type === "paragraph")
+    .map((b) => plainTextOf(b.paragraph.rich_text).trim())
+    .filter(Boolean)
+    .filter((t) => !t.startsWith("TEAM AIC"));
+  if (lines.length === 0) return "";
+  const htmlLines = lines.map((line) => {
+    const esc = escapeHtml(line);
+    const m = esc.match(/^(.+?)(をかえる。?)$/);
+    return m ? `<span class="accent">${m[1]}</span>${m[2]}` : esc;
+  });
+  return htmlLines.join("<br>\n    ");
+}
+
+function renderLeadFirst(blocks) {
+  const first = blocks.find(
+    (b) => b.type === "paragraph" && plainTextOf(b.paragraph.rich_text).trim()
+  );
+  return first ? escapeHtml(plainTextOf(first.paragraph.rich_text).trim()) : "";
 }
 
 function updateBadge(fileContent, label, timestampLabel) {
