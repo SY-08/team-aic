@@ -1,36 +1,36 @@
 /* ==========================================================================
-   TEAM AIC ｛AI Circle｝ — Theme: Sax Blue（サックスブルー・テーマ）
+   TEAM AIC ｛AI Circle｝ — Theme: Sax Blue（サックスブルー・テーマ / 濃いめ版）
    --------------------------------------------------------------------------
    これは「上書き専用」テーマです。style.css の後ろに読み込むと、
    色・ヘッダー/フッター・ヒーロー装飾・ボタンがサックスブルー基調に変わります。
 
    ▼ 元に戻す方法（超かんたん）
      各HTMLの <head> にある次の1行を消す（またはコメントアウト）だけ：
-       <link rel="stylesheet" href="assets/css/theme-sax-blue.css">
+       <link rel="stylesheet" href="assets/css/theme-sax-blue.css?v=3">
      style.css 本体は一切変更していないので、消せば元の白×グリーンに戻ります。
    ========================================================================== */
 
-/* ---------- 1. カラー変数の上書き（サックスブルー基調） ---------- */
+/* ---------- 1. カラー変数の上書き（サックスブルー基調・濃いめ） ---------- */
 :root {
-  /* メイン：サックスブルー */
-  --color-accent: #4a90cf;
-  --color-accent-dark: #2f6fae;
-  --color-accent-soft: #e8f1fb;
+  /* メイン：サックスブルー（濃いめ） */
+  --color-accent: #2a6fb5;
+  --color-accent-dark: #1c548c;
+  --color-accent-soft: #d8e8fa;
 
-  /* ベース：白＋ごく淡いブルー */
+  /* ベース：白＋淡いブルー */
   --color-bg: #ffffff;
-  --color-bg-soft: #f3f8fd;
+  --color-bg-soft: #eef5fc;
 
   /* 補助：淡いブルーグレーの罫線 */
-  --color-border: #e2ebf4;
+  --color-border: #d7e3f0;
 
   /* 文字は読みやすい濃いグレーを維持 */
-  --color-text: #1d1f24;
-  --color-text-secondary: #5f6b7a;
+  --color-text: #1a1c21;
+  --color-text-secondary: #566171;
 
-  /* アクセント：淡いゴールド（線や小さな装飾用） */
-  --color-gold: #d9be78;
-  --color-gold-soft: #efe2b8;
+  /* アクセント：ゴールド（濃いめ） */
+  --color-gold: #bf972c;
+  --color-gold-soft: #e6cf86;
 }
 
 /* 100vw装飾での横スクロールを防ぐ */
@@ -40,13 +40,13 @@ body {
 
 /* ---------- 2. ヘッダー：淡いブルーの色面 ---------- */
 .site-header {
-  background: linear-gradient(180deg, rgba(232, 241, 251, 0.92), rgba(255, 255, 255, 0.82));
+  background: linear-gradient(180deg, rgba(216, 232, 250, 0.95), rgba(255, 255, 255, 0.82));
   border-bottom: 1px solid var(--color-border);
 }
 
 .brand-mark {
-  background: linear-gradient(135deg, #5b9bd8, #3f7fbe);
-  box-shadow: 0 2px 6px rgba(74, 144, 207, 0.35);
+  background: linear-gradient(135deg, #3a83c6, #1d5590);
+  box-shadow: 0 2px 6px rgba(42, 111, 181, 0.4);
 }
 
 /* ---------- 3. ヒーロー：丸・曲線・淡いグラデーションのやさしい装飾（全幅） ---------- */
@@ -66,21 +66,21 @@ body {
   z-index: 0;
   pointer-events: none;
   background:
-    /* 左上：淡いブルーのやわらかい面 */
-    radial-gradient(circle at 8% 26%, rgba(120, 170, 220, 0.30), transparent 42%),
+    /* 左上：ブルーのやわらかい面（濃いめ） */
+    radial-gradient(circle at 8% 26%, rgba(80, 140, 205, 0.40), transparent 42%),
     /* 左下：やや大きめのブルー面 */
-    radial-gradient(circle at 13% 90%, rgba(150, 192, 232, 0.28), transparent 40%),
+    radial-gradient(circle at 13% 90%, rgba(110, 165, 220, 0.38), transparent 40%),
     /* 右：小さめのブルー面 */
-    radial-gradient(circle at 94% 60%, rgba(140, 182, 226, 0.24), transparent 34%),
-    /* 右上の小さな青い点 */
-    radial-gradient(circle at 88% 20%, rgba(120, 168, 220, 0.5) 0 6px, transparent 7px),
-    radial-gradient(circle at 82% 44%, rgba(150, 192, 232, 0.45) 0 5px, transparent 6px),
-    /* 金の細い曲線（大きなリングの一部を見せる） */
-    radial-gradient(circle at 96% 118%, transparent 380px, rgba(217, 190, 120, 0.55) 381px 383px, transparent 384px),
-    radial-gradient(circle at 3% -6%, transparent 320px, rgba(217, 190, 120, 0.45) 321px 323px, transparent 324px),
-    radial-gradient(circle at 80% 98%, transparent 250px, rgba(217, 190, 120, 0.4) 251px 252px, transparent 253px),
+    radial-gradient(circle at 94% 60%, rgba(95, 152, 212, 0.32), transparent 34%),
+    /* 右上の青い点 */
+    radial-gradient(circle at 88% 20%, rgba(70, 128, 195, 0.6) 0 7px, transparent 8px),
+    radial-gradient(circle at 82% 44%, rgba(110, 165, 220, 0.55) 0 6px, transparent 7px),
+    /* 金の細い曲線（濃いめ・太め） */
+    radial-gradient(circle at 96% 118%, transparent 379px, rgba(191, 151, 44, 0.8) 380px 384px, transparent 385px),
+    radial-gradient(circle at 3% -6%, transparent 319px, rgba(191, 151, 44, 0.7) 320px 324px, transparent 325px),
+    radial-gradient(circle at 80% 98%, transparent 249px, rgba(191, 151, 44, 0.6) 250px 252px, transparent 253px),
     /* ベース：全幅の淡いブルー→白のグラデーション（最背面） */
-    linear-gradient(180deg, #eef6fe 0%, #f6fbff 45%, #ffffff 100%);
+    linear-gradient(180deg, #dceaf9 0%, #eef6fe 45%, #ffffff 100%);
 }
 
 /* ヒーロー内の中身は装飾より前面に */
@@ -98,21 +98,21 @@ body {
 .hero .eyebrow {
   background: var(--color-accent-soft);
   color: var(--color-accent-dark);
-  box-shadow: 0 1px 0 rgba(217, 190, 120, 0.35) inset;
+  box-shadow: 0 1px 0 rgba(191, 151, 44, 0.45) inset;
 }
 
 /* ---------- 4. ボタン ---------- */
-/* メイン：サックスブルー（丸みは維持） */
+/* メイン：サックスブルー（濃いめ・丸みは維持） */
 .btn-primary {
-  background: linear-gradient(135deg, #5b9bd8, #3f7fbe);
+  background: linear-gradient(135deg, #2f7ac2, #1d5590);
   color: #fff;
-  box-shadow: 0 6px 16px rgba(74, 144, 207, 0.28);
+  box-shadow: 0 6px 16px rgba(42, 111, 181, 0.35);
 }
 .btn-primary:hover {
-  background: linear-gradient(135deg, #4d8fce, #356fa8);
+  background: linear-gradient(135deg, #2a6fb5, #184a7e);
 }
 
-/* サブ：白地に淡いゴールドの枠 */
+/* サブ：白地に濃いめゴールドの枠 */
 .btn-secondary {
   background: #fff;
   color: var(--color-text);
@@ -126,13 +126,18 @@ body {
 /* ---------- 5. 細部：カードにブルーのやわらかい影 ---------- */
 .card {
   border-color: var(--color-border);
-  box-shadow: 0 6px 20px rgba(74, 144, 207, 0.06);
+  box-shadow: 0 6px 20px rgba(42, 111, 181, 0.08);
+}
+
+/* リンクはサックスブルーに */
+main a:not(.btn):not(.brand):not(.site-nav a) {
+  color: var(--color-accent-dark);
 }
 
 /* ---------- 6. フッター：淡いブルーの色面 ---------- */
 .site-footer {
   border-top: 1px solid var(--color-border);
-  background: linear-gradient(180deg, #ffffff 0%, #eef5fc 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #e4eff9 100%);
 }
 
 /* ---------- 7. スマホでも崩れないように ---------- */
