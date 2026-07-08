@@ -7,6 +7,22 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 
 ---
 
+## 2026-07-08 21:56:22 UTC — sync run
+- OK: 08-01 Home → index.html（変更なし）
+- OK: 08-02 About → about.html（変更なし）
+- OK: 08-03 Activities → activities.html（変更なし）
+- OK: 08-04 Profile → profile.html（変更なし）
+- OK: 08-05 Open Source → open-source.html（変更なし）
+- OK: 08-06 Live Build Log → live-build.html（変更なし）
+- OK: 08-07 Blueprints → blueprints.html（変更なし）
+- OK: 08-08 Prompts → prompts.html（変更なし）
+- OK: 08-09 Automation → automation.html（変更なし）
+- OK: 08-10 note Drafts → note-drafts.html（変更なし）
+- OK: 08-11 Book Materials → book.html（変更なし）
+- OK: 08-12 YouTube Drafts → youtube.html（変更なし）
+- OK: 08-13 Roadmap → roadmap.html（変更なし）
+- OK: 08-14 Contact → contact.html（変更なし）
+
 ## 2026-07-08 20:53:24 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
