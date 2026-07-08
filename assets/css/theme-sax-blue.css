@@ -33,6 +33,11 @@
   --color-gold-soft: #efe2b8;
 }
 
+/* 100vw装飾での横スクロールを防ぐ */
+body {
+  overflow-x: hidden;
+}
+
 /* ---------- 2. ヘッダー：淡いブルーの色面 ---------- */
 .site-header {
   background: linear-gradient(180deg, rgba(232, 241, 251, 0.92), rgba(255, 255, 255, 0.82));
@@ -44,14 +49,12 @@
   box-shadow: 0 2px 6px rgba(74, 144, 207, 0.35);
 }
 
-/* ---------- 3. ヒーロー：丸・曲線・淡いグラデーションのやさしい装飾 ---------- */
+/* ---------- 3. ヒーロー：丸・曲線・淡いグラデーションのやさしい装飾（全幅） ---------- */
 .hero {
   position: relative;
-  overflow: hidden;
-  background: linear-gradient(180deg, #f2f8fe 0%, #ffffff 70%);
 }
 
-/* 背景装飾（本文の下に敷く／クリックの邪魔をしない） */
+/* 背景装飾（本文の下に全幅で敷く／クリックの邪魔をしない） */
 .hero::before {
   content: "";
   position: absolute;
@@ -64,18 +67,20 @@
   pointer-events: none;
   background:
     /* 左上：淡いブルーのやわらかい面 */
-    radial-gradient(circle at 8% 26%, rgba(120, 170, 220, 0.28), transparent 42%),
+    radial-gradient(circle at 8% 26%, rgba(120, 170, 220, 0.30), transparent 42%),
     /* 左下：やや大きめのブルー面 */
-    radial-gradient(circle at 13% 88%, rgba(150, 192, 232, 0.26), transparent 40%),
+    radial-gradient(circle at 13% 90%, rgba(150, 192, 232, 0.28), transparent 40%),
     /* 右：小さめのブルー面 */
-    radial-gradient(circle at 93% 62%, rgba(140, 182, 226, 0.22), transparent 34%),
+    radial-gradient(circle at 94% 60%, rgba(140, 182, 226, 0.24), transparent 34%),
     /* 右上の小さな青い点 */
     radial-gradient(circle at 88% 20%, rgba(120, 168, 220, 0.5) 0 6px, transparent 7px),
     radial-gradient(circle at 82% 44%, rgba(150, 192, 232, 0.45) 0 5px, transparent 6px),
     /* 金の細い曲線（大きなリングの一部を見せる） */
-    radial-gradient(circle at 96% 118%, transparent 360px, rgba(217, 190, 120, 0.55) 361px 363px, transparent 364px),
-    radial-gradient(circle at 4% -6%, transparent 300px, rgba(217, 190, 120, 0.45) 301px 303px, transparent 304px),
-    radial-gradient(circle at 78% 96%, transparent 240px, rgba(217, 190, 120, 0.4) 241px 242px, transparent 243px);
+    radial-gradient(circle at 96% 118%, transparent 380px, rgba(217, 190, 120, 0.55) 381px 383px, transparent 384px),
+    radial-gradient(circle at 3% -6%, transparent 320px, rgba(217, 190, 120, 0.45) 321px 323px, transparent 324px),
+    radial-gradient(circle at 80% 98%, transparent 250px, rgba(217, 190, 120, 0.4) 251px 252px, transparent 253px),
+    /* ベース：全幅の淡いブルー→白のグラデーション（最背面） */
+    linear-gradient(180deg, #eef6fe 0%, #f6fbff 45%, #ffffff 100%);
 }
 
 /* ヒーロー内の中身は装飾より前面に */
@@ -118,7 +123,7 @@
   color: var(--color-accent-dark);
 }
 
-/* ---------- 5. 細部：バッジ・タグ・カード・サブナビもブルー基調に ---------- */
+/* ---------- 5. 細部：カードにブルーのやわらかい影 ---------- */
 .card {
   border-color: var(--color-border);
   box-shadow: 0 6px 20px rgba(74, 144, 207, 0.06);
@@ -133,11 +138,9 @@
 /* ---------- 7. スマホでも崩れないように ---------- */
 @media (max-width: 760px) {
   .hero::before {
-    /* 装飾はやや控えめに */
-    opacity: 0.85;
+    opacity: 0.9;
   }
   .site-nav {
-    /* モバイルメニューは白背景を維持（読みやすさ優先） */
     background: #fff;
   }
 }
