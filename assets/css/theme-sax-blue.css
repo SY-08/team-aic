@@ -1,0 +1,143 @@
+/* ==========================================================================
+   TEAM AIC ｛AI Circle｝ — Theme: Sax Blue（サックスブルー・テーマ）
+   --------------------------------------------------------------------------
+   これは「上書き専用」テーマです。style.css の後ろに読み込むと、
+   色・ヘッダー/フッター・ヒーロー装飾・ボタンがサックスブルー基調に変わります。
+
+   ▼ 元に戻す方法（超かんたん）
+     各HTMLの <head> にある次の1行を消す（またはコメントアウト）だけ：
+       <link rel="stylesheet" href="assets/css/theme-sax-blue.css">
+     style.css 本体は一切変更していないので、消せば元の白×グリーンに戻ります。
+   ========================================================================== */
+
+/* ---------- 1. カラー変数の上書き（サックスブルー基調） ---------- */
+:root {
+  /* メイン：サックスブルー */
+  --color-accent: #4a90cf;
+  --color-accent-dark: #2f6fae;
+  --color-accent-soft: #e8f1fb;
+
+  /* ベース：白＋ごく淡いブルー */
+  --color-bg: #ffffff;
+  --color-bg-soft: #f3f8fd;
+
+  /* 補助：淡いブルーグレーの罫線 */
+  --color-border: #e2ebf4;
+
+  /* 文字は読みやすい濃いグレーを維持 */
+  --color-text: #1d1f24;
+  --color-text-secondary: #5f6b7a;
+
+  /* アクセント：淡いゴールド（線や小さな装飾用） */
+  --color-gold: #d9be78;
+  --color-gold-soft: #efe2b8;
+}
+
+/* ---------- 2. ヘッダー：淡いブルーの色面 ---------- */
+.site-header {
+  background: linear-gradient(180deg, rgba(232, 241, 251, 0.92), rgba(255, 255, 255, 0.82));
+  border-bottom: 1px solid var(--color-border);
+}
+
+.brand-mark {
+  background: linear-gradient(135deg, #5b9bd8, #3f7fbe);
+  box-shadow: 0 2px 6px rgba(74, 144, 207, 0.35);
+}
+
+/* ---------- 3. ヒーロー：丸・曲線・淡いグラデーションのやさしい装飾 ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f2f8fe 0%, #ffffff 70%);
+}
+
+/* 背景装飾（本文の下に敷く／クリックの邪魔をしない） */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    /* 左上：淡いブルーのやわらかい面 */
+    radial-gradient(circle at 8% 26%, rgba(120, 170, 220, 0.28), transparent 42%),
+    /* 左下：やや大きめのブルー面 */
+    radial-gradient(circle at 13% 88%, rgba(150, 192, 232, 0.26), transparent 40%),
+    /* 右：小さめのブルー面 */
+    radial-gradient(circle at 93% 62%, rgba(140, 182, 226, 0.22), transparent 34%),
+    /* 右上の小さな青い点 */
+    radial-gradient(circle at 88% 20%, rgba(120, 168, 220, 0.5) 0 6px, transparent 7px),
+    radial-gradient(circle at 82% 44%, rgba(150, 192, 232, 0.45) 0 5px, transparent 6px),
+    /* 金の細い曲線（大きなリングの一部を見せる） */
+    radial-gradient(circle at 96% 118%, transparent 360px, rgba(217, 190, 120, 0.55) 361px 363px, transparent 364px),
+    radial-gradient(circle at 4% -6%, transparent 300px, rgba(217, 190, 120, 0.45) 301px 303px, transparent 304px),
+    radial-gradient(circle at 78% 96%, transparent 240px, rgba(217, 190, 120, 0.4) 241px 242px, transparent 243px);
+}
+
+/* ヒーロー内の中身は装飾より前面に */
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 見出しのアクセント語（例：社会）をサックスブルーに（変数で自動反映） */
+.hero h1 .accent {
+  color: var(--color-accent);
+}
+
+/* アイキャッチのピル */
+.hero .eyebrow {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+  box-shadow: 0 1px 0 rgba(217, 190, 120, 0.35) inset;
+}
+
+/* ---------- 4. ボタン ---------- */
+/* メイン：サックスブルー（丸みは維持） */
+.btn-primary {
+  background: linear-gradient(135deg, #5b9bd8, #3f7fbe);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(74, 144, 207, 0.28);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #4d8fce, #356fa8);
+}
+
+/* サブ：白地に淡いゴールドの枠 */
+.btn-secondary {
+  background: #fff;
+  color: var(--color-text);
+  border-color: var(--color-gold);
+}
+.btn-secondary:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-dark);
+}
+
+/* ---------- 5. 細部：バッジ・タグ・カード・サブナビもブルー基調に ---------- */
+.card {
+  border-color: var(--color-border);
+  box-shadow: 0 6px 20px rgba(74, 144, 207, 0.06);
+}
+
+/* ---------- 6. フッター：淡いブルーの色面 ---------- */
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  background: linear-gradient(180deg, #ffffff 0%, #eef5fc 100%);
+}
+
+/* ---------- 7. スマホでも崩れないように ---------- */
+@media (max-width: 760px) {
+  .hero::before {
+    /* 装飾はやや控えめに */
+    opacity: 0.85;
+  }
+  .site-nav {
+    /* モバイルメニューは白背景を維持（読みやすさ優先） */
+    background: #fff;
+  }
+}
