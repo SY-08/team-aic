@@ -3,7 +3,8 @@ name: Notion Sync
 on:
   workflow_dispatch: {}
   schedule:
-    - cron: "*/5 * * * *"
+    # 毎時0分に実行（1時間ごと）。以前は "*/5 * * * *"（5分ごと）だった。
+    - cron: "0 * * * *"
 
 permissions:
   contents: write
@@ -18,6 +19,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # rebase を確実に行うため全履歴を取得する（浅いcloneだと稀に失敗する）
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -35,12 +39,29 @@ jobs:
           git config user.name "notion-sync-bot"
           git config user.email "notion-sync-bot@users.noreply.github.com"
 
-          git pull --rebase origin main
-
-          if [ -n "$(git status --porcelain)" ]; then
-            git add .
-            git commit -m "sync: update site content from Notion 08 Website CMS"
-            git push origin main
-          else
+          # 変更が無ければ何もしない
+          if [ -z "$(git status --porcelain)" ]; then
             echo "No changes from Notion sync."
+            exit 0
           fi
+
+          # ★重要★ 先にローカルの変更をコミットしてから remote を取り込む。
+          # 旧版は作業ツリーが変更されたまま "git pull --rebase" していたため、
+          # remote main が進んでいるとき "cannot rebase: You have unstaged changes"
+          # で失敗していた。commit → rebase → push の順にすることで解消する。
+          git add .
+          git commit -m "sync: update site content from Notion 08 Website CMS"
+
+          # 競合対策：push前に remote main を rebase で取り込む。
+          # pull と push の間に他の実行が push する僅かな隙間に備え、最大5回リトライ。
+          for i in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin main; then
+              echo "Pushed successfully on attempt $i."
+              exit 0
+            fi
+            echo "push attempt $i failed, retrying in 5s..."
+            sleep 5
+          done
+
+          echo "Failed to push after 5 attempts." >&2
+          exit 1
