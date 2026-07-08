@@ -55,7 +55,7 @@
   <div class="wrap notion-sync">
     <!-- notion-sync:badge:start -->
     <span class="notion-sync-badge">🔄 Synced from Notion: 08 Website CMS</span>
-    <span class="notion-sync-meta">08-09 Automation ・ 初回自動同期待ち</span>
+    <span class="notion-sync-meta">08-09 Automation ・ Last content update: 2026-07-08 01:29:31 UTC</span>
     <!-- notion-sync:badge:end -->
   </div>
 
@@ -92,32 +92,77 @@
       <span class="log-date">08-09-01 Notion to GitHub</span>
       <h3>Notion to GitHub</h3>
       <!-- notion-sync:content:notion-to-github:start -->
-      <p>
-        Notionの「08 Website CMS」配下のページを、GitHub Actionsが定期的に読み取り、
-        ページごとのHTMLファイルへ変換して反映する仕組みです。詳細はNotion同期待ちのプレースホルダーです。
-      </p>
-      <!-- notion-sync:content:notion-to-github:end -->
+    <h2>GitHub Section</h2>
+<p><code>automation.html#notion-to-github</code></p>
+<hr>
+<h2>目的</h2>
+<p>08 Website CMSを正本として、GitHub Pagesに反映する。</p>
+<hr>
+<h2>流れ</h2>
+<pre><code>08 Website CMS
+↓
+GitHub Actions
+↓
+Notion API
+↓
+HTML生成
+↓
+GitHubへcommit / push
+↓
+GitHub Pages公開</code></pre>
+<hr>
+<h2>方針</h2>
+<p>08を編集した内容を、下書き状態でも公開してよい。</p>
+<p>タイムリーさを優先する。</p>
+    <!-- notion-sync:content:notion-to-github:end -->
     </div>
 
     <div class="log-entry">
       <span class="log-date">08-09-02 GitHub Actions</span>
       <h3>GitHub Actions</h3>
       <!-- notion-sync:content:github-actions:start -->
-      <p>
-        <code>.github/workflows/notion-sync.yml</code> により、手動実行（workflow_dispatch）と
-        5分おきのスケジュール実行（schedule）の両方に対応しています。詳細はNotion同期待ちのプレースホルダーです。
-      </p>
-      <!-- notion-sync:content:github-actions:end -->
+    <h2>GitHub Section</h2>
+<p><code>automation.html#github-actions</code></p>
+<hr>
+<h2>目的</h2>
+<p>人がClaude Codeを毎回起動しなくても、GitHub上で同期処理を自動実行する。</p>
+<hr>
+<h2>起動方法</h2>
+<pre><code>GitHub Actions
+│
+├─ schedule：5分おきに実行
+├─ workflow_dispatch：手動実行
+└─ repository_dispatch：将来の外部イベント起動</code></pre>
+<hr>
+<h2>必要なSecrets</h2>
+<pre><code>NOTION_TOKEN
+NOTION_WEBSITE_CMS_ID</code></pre>
+    <!-- notion-sync:content:github-actions:end -->
     </div>
 
     <div class="log-entry">
       <span class="log-date">08-09-03 note / SNS / YouTube / Book連動</span>
       <h3>note / SNS / YouTube / Book連動</h3>
       <!-- notion-sync:content:note-sns-youtube-book:start -->
-      <p>
-        GitHub Pagesに蓄積された内容を、note・SNS・YouTube・本づくりへどうつなげていくかの方針です。詳細はNotion同期待ちのプレースホルダーです。
-      </p>
-      <!-- notion-sync:content:note-sns-youtube-book:end -->
+    <h2>GitHub Section</h2>
+<p><code>automation.html#media-sync</code></p>
+<hr>
+<h2>目的</h2>
+<p>08やGitHub Pagesの内容を、note、Instagram、X、YouTube、本化へつなげる。</p>
+<hr>
+<h2>流れ</h2>
+<pre><code>GitHub Pages公開内容
+│
+├─ note下書き
+├─ Instagram投稿文
+├─ X投稿文
+├─ YouTube台本
+└─ Book Materials</code></pre>
+<hr>
+<h2>方針</h2>
+<p>完全自動投稿ではなく、まずは下書き・台本・投稿文の自動生成を行う。</p>
+<p>投稿は人がタイミングを見て行う。</p>
+    <!-- notion-sync:content:note-sns-youtube-book:end -->
     </div>
   </section>
 
