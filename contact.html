@@ -57,12 +57,8 @@
     <h2>連絡方法</h2>
     <div class="grid">
       <div class="card">
-        <h3>✉️ メール</h3>
-        <p>
-          メールでのご連絡は
-          <a href="mailto:yokoshooooo@gmail.com">yokoshooooo@gmail.com</a>
-          までお願いします。
-        </p>
+        <h3>📝 お問い合わせフォーム</h3>
+        <p>下のフォームからお送りいただくと、TEAM AICにメールで届きます。</p>
       </div>
       <div class="card">
         <h3>🐙 GitHub Issues</h3>
@@ -76,23 +72,28 @@
   </section>
 
   <section class="section wrap">
-    <h2>下書きフォーム（準備中）</h2>
-    <p class="section-lead">送信機能は未実装です。今後、外部サービスなどと接続予定です。</p>
-    <form>
+    <h2>お問い合わせフォーム</h2>
+    <p class="section-lead">お名前・メールアドレス・内容をご記入のうえ送信してください。TEAM AICにメールで届きます。</p>
+    <form action="https://formsubmit.co/yokoshooooo@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="TEAM AIC お問い合わせ">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://sy-08.github.io/team-aic/contact.html">
       <div class="form-field">
         <label for="name">お名前</label>
-        <input type="text" id="name" name="name" disabled placeholder="準備中のためご利用いただけません">
+        <input type="text" id="name" name="name" required placeholder="山田 太郎">
       </div>
       <div class="form-field">
         <label for="email">メールアドレス</label>
-        <input type="email" id="email" name="email" disabled placeholder="準備中のためご利用いただけません">
+        <input type="email" id="email" name="email" required placeholder="you@example.com">
       </div>
       <div class="form-field">
         <label for="message">お問い合わせ内容</label>
-        <textarea id="message" name="message" rows="5" disabled placeholder="準備中のためご利用いただけません"></textarea>
+        <textarea id="message" name="message" rows="5" required placeholder="ご用件をご記入ください"></textarea>
       </div>
-      <button type="button" class="btn btn-secondary" disabled>送信（準備中）</button>
+      <button type="submit" class="btn btn-primary">送信する</button>
     </form>
+    <p class="footer-note" style="margin-top:14px">※ 送信内容は外部サービス（FormSubmit）を経由してメールで届きます。迷惑メール対策のため、初回送信時のみ確認メールが管理者に届き、承認後から通常どおり受信できます。</p>
   </section>
 
   <section class="section wrap notion-content" id="notion-synced">
