@@ -30,9 +30,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // 統一ヘッダーメニュー
   var NAV = [
     ["index.html", "ホーム"],
-    ["about.html", "私たちについて"],
+    ["about.html", "TEAM AICについて"],
     ["activities.html", "活動内容"],
-    ["profile.html", "メンバー"],
+    ["profile.html", "プロフィール"],
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
     ["roadmap.html", "ロードマップ"],
