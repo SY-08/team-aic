@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ["about.html", "team AICについて"],
     ["activities.html", "活動内容"],
     ["seminar.html", "勉強会活動"],
+    ["knowledge-monster.html", "ナレッジモンスター"],
     ["profile.html", "プロフィール"],
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
@@ -65,6 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
     ["seminar.html", "勉強会活動"],
+    ["ai-creative.html", "AIクリエイティブ"],
+    ["knowledge-monster.html", "ナレッジモンスター"],
     ["roadmap.html", "ロードマップ"],
     ["contact.html", "お問い合わせ"],
   ];
