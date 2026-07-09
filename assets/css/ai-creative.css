@@ -1,0 +1,251 @@
+.creative-hero {
+  position: relative;
+  min-height: 560px;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+.creative-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255, 199, 66, 0.26), transparent 28%),
+    radial-gradient(circle at 78% 18%, rgba(69, 173, 255, 0.24), transparent 30%),
+    radial-gradient(circle at 85% 82%, rgba(80, 214, 132, 0.20), transparent 32%),
+    linear-gradient(135deg, #f7fbff 0%, #eaf6ff 48%, #fff9ec 100%);
+}
+
+.creative-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.creative-hero-grid,
+.naremon-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+  gap: 40px;
+  align-items: center;
+}
+
+.creative-title {
+  font-size: clamp(2.6rem, 6vw, 5.4rem);
+  line-height: 1.02;
+  margin: 0 0 20px;
+}
+
+.creative-title span {
+  color: #1d6db3;
+}
+
+.creative-stamp-stage {
+  position: relative;
+  min-height: 420px;
+}
+
+.stamp-orbit {
+  position: absolute;
+  width: min(44vw, 230px);
+  filter: drop-shadow(0 18px 30px rgba(25, 68, 110, 0.20));
+}
+
+.stamp-orbit:nth-child(1) {
+  top: 2%;
+  left: 4%;
+  transform: rotate(-12deg);
+}
+
+.stamp-orbit:nth-child(2) {
+  top: 0;
+  right: 8%;
+  transform: rotate(13deg);
+}
+
+.stamp-orbit:nth-child(3) {
+  bottom: 4%;
+  left: 12%;
+  transform: rotate(10deg);
+}
+
+.stamp-orbit:nth-child(4) {
+  right: 0;
+  bottom: 10%;
+  transform: rotate(-8deg);
+}
+
+.creative-feature-card {
+  position: absolute;
+  inset: 27% 12%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 30px;
+  border: 1px solid rgba(42, 111, 181, 0.22);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 26px 64px rgba(31, 90, 145, 0.18);
+  backdrop-filter: blur(12px);
+}
+
+.creative-feature-card img {
+  width: min(220px, 70%);
+  margin-bottom: 18px;
+}
+
+.experiment-grid,
+.monster-grid,
+.manga-grid {
+  display: grid;
+  gap: 22px;
+}
+
+.experiment-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.experiment-card,
+.monster-card,
+.manga-card {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(42, 111, 181, 0.10);
+}
+
+.experiment-card {
+  padding: 24px;
+}
+
+.monster-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.monster-card img,
+.manga-card img {
+  width: 100%;
+  display: block;
+}
+
+.monster-card h3,
+.manga-card h3 {
+  margin: 14px 16px 18px;
+}
+
+.naremon-hero {
+  position: relative;
+  overflow: hidden;
+  padding-top: 64px;
+}
+
+.naremon-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 24%, rgba(255, 197, 53, 0.22), transparent 26%),
+    radial-gradient(circle at 88% 18%, rgba(65, 174, 255, 0.25), transparent 30%),
+    linear-gradient(180deg, #f4fbff 0%, #ffffff 82%);
+}
+
+.naremon-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.naremon-logo-panel {
+  border-radius: 24px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 28px 70px rgba(22, 74, 130, 0.16);
+}
+
+.naremon-logo-panel img {
+  width: 100%;
+  display: block;
+  border-radius: 18px;
+}
+
+.naremon-points {
+  display: grid;
+  gap: 12px;
+  margin: 26px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.naremon-points li {
+  padding: 14px 16px;
+  border: 1px solid rgba(42, 111, 181, 0.18);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.manga-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.manga-card {
+  color: inherit;
+  text-decoration: none;
+}
+
+.manga-card img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top;
+}
+
+@media (max-width: 900px) {
+  .creative-hero-grid,
+  .naremon-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .creative-stamp-stage {
+    min-height: 360px;
+  }
+
+  .experiment-grid,
+  .monster-grid,
+  .manga-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .creative-hero {
+    min-height: auto;
+  }
+
+  .creative-stamp-stage {
+    min-height: 300px;
+  }
+
+  .stamp-orbit {
+    width: min(42vw, 150px);
+  }
+
+  .creative-feature-card {
+    inset: 22% 8%;
+    padding: 22px;
+  }
+
+  .experiment-grid,
+  .monster-grid,
+  .manga-grid {
+    grid-template-columns: 1fr;
+  }
+}

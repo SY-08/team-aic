@@ -49,6 +49,8 @@ GitHub Actionsによる自動同期（`scripts/notion-sync.mjs` / `.github/workf
 ├── index.html            トップページ
 ├── about.html             About（TEAM AICについて）
 ├── activities.html        活動領域
+├── ai-creative.html       AIクリエイティブ自由研究
+├── knowledge-monster.html ナレッジモンスター｛ナレモン｝
 ├── seminar.html            勉強会活動
 ├── profile.html            プロフィール
 ├── open-source.html       Open Source（公開方針）
