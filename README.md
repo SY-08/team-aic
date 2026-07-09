@@ -49,7 +49,7 @@ GitHub Actionsによる自動同期（`scripts/notion-sync.mjs` / `.github/workf
 ├── index.html            トップページ
 ├── about.html             About（TEAM AICについて）
 ├── activities.html        活動領域
-├── seminar.html            セミナー活動
+├── seminar.html            勉強会活動
 ├── profile.html            プロフィール
 ├── open-source.html       Open Source（公開方針）
 ├── live-build.html         Live Build Log（実行中のログ）
@@ -77,7 +77,7 @@ GitHub Actionsによる自動同期（`scripts/notion-sync.mjs` / `.github/workf
     ├── prompts/            プロンプト集の本体
     ├── manga/              漫画関連の素材（AIクリエイティブ自由研究）
     ├── note-drafts/        note転記用下書きの本体
-    ├── seminars/           セミナー活動の企画・台本・スライド構成
+    ├── seminars/           勉強会活動の企画・台本・スライド構成
     ├── youtube-drafts/     YouTube動画案の本体
     ├── book-materials/     本化素材の本体
     ├── security/           公開前チェックリストなど運用ルール

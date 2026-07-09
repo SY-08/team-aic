@@ -66,6 +66,7 @@ const PAGE_MAP = [
   { file: "youtube.html", prefix: "08-12", label: "08-12 YouTube Drafts" },
   { file: "roadmap.html", prefix: "08-13", label: "08-13 Roadmap" },
   { file: "contact.html", prefix: "08-14", label: "08-14 Contact" },
+  { file: "seminar.html", prefix: "08-15", label: "08-15 勉強会活動" },
 ];
 
 // Heuristic guardrails. Never log the matched value itself, only the rule name.
