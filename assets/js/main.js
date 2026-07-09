@@ -1,6 +1,7 @@
-// TEAM AIC ｛AI Circle｝ — site behaviour
+// team AIC｛team AI circle｝ — site behaviour
 // - 全ページ共通でサックスブルー・テーマを読み込む
 // - ヘッダーメニュー / フッター / サブメニュー を「統一された日本語メニュー」に置き換える
+// - ブランド表記を「team AIC / team AIC｛team AI circle｝」に統一する
 // - モバイルメニュー開閉、現在地ハイライト、フッターの年号
 //
 // ※ メニューの文言・順番はこの1ファイルで一元管理しています。
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // 統一ヘッダーメニュー
   var NAV = [
     ["index.html", "ホーム"],
-    ["about.html", "TEAM AICについて"],
+    ["about.html", "team AICについて"],
     ["activities.html", "活動内容"],
     ["profile.html", "プロフィール"],
     ["open-source.html", "オープンソース"],
@@ -90,6 +91,29 @@ document.addEventListener("DOMContentLoaded", function () {
       return '<a href="' + n[0] + '"' + cls + ">" + n[1] + "</a>";
     }).join("\n    ");
   }
+
+  // ブランド表記を統一（TEAM AIC → team AIC、AI Circle → team AI circle）
+  // ※ 正式名称：team AIC｛team AI circle｝／略称：team AIC
+  try {
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    var targets = [];
+    var node;
+    while ((node = walker.nextNode())) {
+      var pn = node.parentNode ? node.parentNode.nodeName : "";
+      if (pn === "SCRIPT" || pn === "STYLE") continue;
+      if (node.nodeValue && (node.nodeValue.indexOf("TEAM AIC") !== -1 || node.nodeValue.indexOf("AI Circle") !== -1)) {
+        targets.push(node);
+      }
+    }
+    targets.forEach(function (t) {
+      t.nodeValue = t.nodeValue
+        .replace(/TEAM AIC/g, "team AIC")
+        .replace(/AI Circle/g, "team AI circle");
+    });
+    document.title = document.title
+      .replace(/TEAM AIC/g, "team AIC")
+      .replace(/AI Circle/g, "team AI circle");
+  } catch (e) {}
 
   // モバイルメニュー開閉
   var toggle = document.getElementById("navToggle");
