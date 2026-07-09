@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ["index.html", "ホーム"],
     ["about.html", "team AICについて"],
     ["activities.html", "活動内容"],
+    ["seminar.html", "セミナー活動"],
     ["profile.html", "プロフィール"],
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
@@ -63,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ["index.html", "ホーム"],
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
+    ["seminar.html", "セミナー活動"],
     ["roadmap.html", "ロードマップ"],
     ["contact.html", "お問い合わせ"],
   ];
