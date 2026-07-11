@@ -37,6 +37,36 @@
   } catch (e) {}
 })();
 
+// 2b) Instagram流入の専用計測
+//   インスタのリンクに ?ref=instagram を付けて来た人（またはinstagramからの参照）を
+//   「/ig/<ページ名>」という専用パスでもう1件カウントする。
+//   → GoatCounterの /counter//ig/knowledge-monster.json でインスタ流入数だけ取り出せる。
+(function () {
+  try {
+    var q = (location.search || "").toLowerCase();
+    var ref = (document.referrer || "").toLowerCase();
+    var fromIG =
+      q.indexOf("ref=instagram") !== -1 ||
+      q.indexOf("utm_source=instagram") !== -1 ||
+      q.indexOf("from=ig") !== -1 ||
+      ref.indexOf("instagram") !== -1;
+    if (!fromIG) return;
+    var page = (location.pathname.split("/").pop() || "index.html").replace(/\.html$/, "");
+    var tries = 0;
+    (function send() {
+      if (window.goatcounter && window.goatcounter.count) {
+        window.goatcounter.count({
+          path: "/ig/" + page,
+          title: "Instagram流入: " + page,
+          event: false,
+        });
+      } else if (tries++ < 25) {
+        setTimeout(send, 400);
+      }
+    })();
+  } catch (e) {}
+})();
+
 document.addEventListener("DOMContentLoaded", function () {
   var current = location.pathname.split("/").pop() || "index.html";
 
