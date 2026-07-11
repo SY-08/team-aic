@@ -1,5 +1,6 @@
 // team AIC｛team AI circle｝ — site behaviour
 // - 全ページ共通でサックスブルー・テーマを読み込む
+// - ページ別アクセス解析（GoatCounter）を読み込む
 // - ヘッダーメニュー / フッター / サブメニュー を「統一された日本語メニュー」に置き換える
 // - ブランド表記を「team AIC / team AIC｛team AI circle｝」に統一する
 // - モバイルメニュー開閉、現在地ハイライト、フッターの年号
@@ -22,6 +23,47 @@
       link.href = "assets/css/theme-sax-blue.css?v=3";
       document.head.appendChild(link);
     }
+  } catch (e) {}
+})();
+
+// 2) ページ別アクセス解析（GoatCounter） — 全ページで自動カウント
+(function () {
+  try {
+    var g = document.createElement("script");
+    g.async = true;
+    g.setAttribute("data-goatcounter", "https://teamaic.goatcounter.com/count");
+    g.src = "//gc.zgo.at/count.js";
+    document.head.appendChild(g);
+  } catch (e) {}
+})();
+
+// 2b) Instagram流入の専用計測
+//   インスタのリンクに ?ref=instagram を付けて来た人（またはinstagramからの参照）を
+//   「/ig/<ページ名>」という専用パスでもう1件カウントする。
+//   → GoatCounterの /counter//ig/knowledge-monster.json でインスタ流入数だけ取り出せる。
+(function () {
+  try {
+    var q = (location.search || "").toLowerCase();
+    var ref = (document.referrer || "").toLowerCase();
+    var fromIG =
+      q.indexOf("ref=instagram") !== -1 ||
+      q.indexOf("utm_source=instagram") !== -1 ||
+      q.indexOf("from=ig") !== -1 ||
+      ref.indexOf("instagram") !== -1;
+    if (!fromIG) return;
+    var page = (location.pathname.split("/").pop() || "index.html").replace(/\.html$/, "");
+    var tries = 0;
+    (function send() {
+      if (window.goatcounter && window.goatcounter.count) {
+        window.goatcounter.count({
+          path: "/ig/" + page,
+          title: "Instagram流入: " + page,
+          event: false,
+        });
+      } else if (tries++ < 25) {
+        setTimeout(send, 400);
+      }
+    })();
   } catch (e) {}
 })();
 
@@ -97,7 +139,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ブランド表記を統一（TEAM AIC → team AIC、AI Circle → team AI circle）
-  // ※ 正式名称：team AIC｛team AI circle｝／略称：team AIC
   try {
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
     var targets = [];
