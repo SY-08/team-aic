@@ -121,6 +121,13 @@
   display: block;
 }
 
+/* モンスターカードの画像を同じ縦横比にそろえる（サボリンだけ正方形で高さがズレるため） */
+.monster-card img {
+  aspect-ratio: 880 / 1204;
+  object-fit: cover;
+  object-position: center top;
+}
+
 .monster-card h3,
 .manga-card h3 {
   margin: 14px 16px 18px;
