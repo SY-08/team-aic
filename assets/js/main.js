@@ -147,14 +147,15 @@ document.addEventListener("DOMContentLoaded", function () {
     while ((node = walker.nextNode())) {
       var pn = node.parentNode ? node.parentNode.nodeName : "";
       if (pn === "SCRIPT" || pn === "STYLE") continue;
-      if (node.nodeValue && (node.nodeValue.indexOf("TEAM AIC") !== -1 || node.nodeValue.indexOf("AI Circle") !== -1)) {
+      if (node.nodeValue && (node.nodeValue.indexOf("TEAM AIC") !== -1 || node.nodeValue.indexOf("AI Circle") !== -1 || node.nodeValue.indexOf("Live Build Log") !== -1)) {
         targets.push(node);
       }
     }
     targets.forEach(function (t) {
       t.nodeValue = t.nodeValue
         .replace(/TEAM AIC/g, "team AIC")
-        .replace(/AI Circle/g, "team AI circle");
+        .replace(/AI Circle/g, "team AI circle")
+        .replace(/Live Build Log/g, "活動共有ノート");
     });
     document.title = document.title
       .replace(/TEAM AIC/g, "team AIC")
@@ -177,6 +178,38 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+
+  // 同期の裏側ラベル（内部メモ）をHP表示から取り除く
+  //   例：「GitHub Path」「GitHub Section」「ページの役割」「Notion同期コンテンツ」
+  //       「活動領域の詳細（Notion同期）」「08-03-01 EDUCATION」等の管理用ラベル。
+  try {
+    var KILL_EXACT = ["GitHub Path", "GitHub Section", "ページの役割", "Notion同期コンテンツ"];
+    var mainEl = document.querySelector("main") || document.body;
+    mainEl.querySelectorAll("h1, h2, h3, h4").forEach(function (h) {
+      var tx = (h.textContent || "").trim();
+      var hit =
+        KILL_EXACT.indexOf(tx) !== -1 ||
+        tx.indexOf("活動領域の詳細") === 0 ||
+        /^08-\d\d(-\d\d)?\b/.test(tx); // 「08-03-01 EDUCATION」等の内部コード見出し
+      if (!hit) return;
+      var nx = h.nextElementSibling;
+      // 内部コード見出し(08-xx)は見出しだけ消し、本文（教育 等）は残す
+      if (KILL_EXACT.indexOf(tx) !== -1 || tx.indexOf("活動領域の詳細") === 0) {
+        if (nx && !/^H[1-6]$/.test(nx.tagName)) {
+          var after = nx.nextElementSibling;
+          nx.remove();
+          if (after && after.tagName === "HR") after.remove();
+        }
+      }
+      h.remove();
+    });
+    // 念のため、同期の説明文（本文）も取り除く
+    mainEl.querySelectorAll("p").forEach(function (p) {
+      if (/(から自動同期されます|自動同期されるセクションです)/.test(p.textContent || "")) {
+        p.remove();
+      }
+    });
+  } catch (e) {}
 
   // 全ページ共通「ホームへ」ボタン（トップページ以外に右下固定で表示）
   try {
