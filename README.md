@@ -2,7 +2,7 @@
 
 TEAM AIC official site and open source activity log.
 
-TEAM AICは、横塚翔太が町田を起点に進めるAIのオープンソースプロジェクトです。
+TEAM AICは、横塚翔太が日本全体の課題解決を見据えて進めるAIのオープンソースプロジェクトです。
 教育・福祉・地域産業・政治・経済・暮らしの課題を、AIを活用しながら研究し、活動の過程をできるだけ公開しながら進めています。
 
 - 公式サイト（GitHub Pages）: https://sy-08.github.io/team-aic/
@@ -56,7 +56,6 @@ GitHub Actionsによる自動同期（`scripts/notion-sync.mjs` / `.github/workf
 ├── open-source.html       Open Source（公開方針）
 ├── live-build.html         Live Build Log（実行中のログ）
 ├── blueprints.html         Blueprints（設計図）
-├── prompts.html            Prompts（AIへの指示・プロンプト）
 ├── automation.html         Automation（Notion同期の仕組み）
 ├── note-drafts.html       Note Drafts（note転記の下書き）
 ├── book.html               Book Materials（本化素材）
@@ -76,7 +75,6 @@ GitHub Actionsによる自動同期（`scripts/notion-sync.mjs` / `.github/workf
 └── docs/
     ├── live-log/           実行ログの本体（Markdown）
     ├── blueprints/         設計図・構成図の本体
-    ├── prompts/            プロンプト集の本体
     ├── manga/              漫画関連の素材（AIクリエイティブ自由研究）
     ├── note-drafts/        note転記用下書きの本体
     ├── seminars/           勉強会活動の企画・台本・スライド構成

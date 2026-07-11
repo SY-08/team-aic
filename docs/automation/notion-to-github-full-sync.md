@@ -37,7 +37,6 @@ GitHub Pages（公開サイト）
 | 08-05 Open Source | `open-source.html` |
 | 08-06 Live Build Log | `live-build.html` |
 | 08-07 Blueprints | `blueprints.html` |
-| 08-08 Prompts | `prompts.html` |
 | 08-09 Automation | `automation.html`（08-09-01〜03はページ内セクションとして反映） |
 | 08-10 note Drafts | `note-drafts.html` |
 | 08-11 Book Materials | `book.html` |

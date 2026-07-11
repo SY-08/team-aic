@@ -15,7 +15,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-05 Open Source → open-source.html（変更なし）
 - OK: 08-06 Live Build Log → live-build.html（更新あり）
 - OK: 08-07 Blueprints → blueprints.html（変更なし）
-- OK: 08-08 Prompts → prompts.html（変更なし）
 - OK: 08-09 Automation → automation.html（変更なし）
 - OK: 08-10 note Drafts → note-drafts.html（変更なし）
 - OK: 08-11 Book Materials → book.html（変更なし）
@@ -31,7 +30,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-05 Open Source → open-source.html（変更なし）
 - OK: 08-06 Live Build Log → live-build.html（変更なし）
 - OK: 08-07 Blueprints → blueprints.html（変更なし）
-- OK: 08-08 Prompts → prompts.html（変更なし）
 - OK: 08-09 Automation → automation.html（変更なし）
 - OK: 08-10 note Drafts → note-drafts.html（変更なし）
 - OK: 08-11 Book Materials → book.html（変更なし）
@@ -47,7 +45,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-05 Open Source → open-source.html（変更なし）
 - OK: 08-06 Live Build Log → live-build.html（変更なし）
 - OK: 08-07 Blueprints → blueprints.html（変更なし）
-- OK: 08-08 Prompts → prompts.html（変更なし）
 - OK: 08-09 Automation → automation.html（変更なし）
 - OK: 08-10 note Drafts → note-drafts.html（変更なし）
 - OK: 08-11 Book Materials → book.html（変更なし）
@@ -63,7 +60,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-05 Open Source → open-source.html（変更なし）
 - OK: 08-06 Live Build Log → live-build.html（変更なし）
 - OK: 08-07 Blueprints → blueprints.html（変更なし）
-- OK: 08-08 Prompts → prompts.html（変更なし）
 - OK: 08-09 Automation → automation.html（変更なし）
 - OK: 08-10 note Drafts → note-drafts.html（変更なし）
 - OK: 08-11 Book Materials → book.html（変更なし）
@@ -79,7 +75,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-05 Open Source → open-source.html（変更なし）
 - OK: 08-06 Live Build Log → live-build.html（変更なし）
 - OK: 08-07 Blueprints → blueprints.html（変更なし）
-- OK: 08-08 Prompts → prompts.html（変更なし）
 - OK: 08-09 Automation → automation.html（変更なし）
 - OK: 08-10 note Drafts → note-drafts.html（変更なし）
 - OK: 08-11 Book Materials → book.html（変更なし）
@@ -95,7 +90,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-05 Open Source → open-source.html（変更なし）
 - OK: 08-06 Live Build Log → live-build.html（変更なし）
 - OK: 08-07 Blueprints → blueprints.html（変更なし）
-- OK: 08-08 Prompts → prompts.html（変更なし）
 - OK: 08-09 Automation → automation.html（変更なし）
 - OK: 08-10 note Drafts → note-drafts.html（変更なし）
 - OK: 08-11 Book Materials → book.html（変更なし）
@@ -111,7 +105,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-05 Open Source → open-source.html（変更なし）
 - OK: 08-06 Live Build Log → live-build.html（変更なし）
 - OK: 08-07 Blueprints → blueprints.html（変更なし）
-- OK: 08-08 Prompts → prompts.html（変更なし）
 - OK: 08-09 Automation → automation.html（変更なし）
 - OK: 08-10 note Drafts → note-drafts.html（変更なし）
 - OK: 08-11 Book Materials → book.html（変更なし）
@@ -127,7 +120,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-05 Open Source → open-source.html（変更なし）
 - OK: 08-06 Live Build Log → live-build.html（変更なし）
 - OK: 08-07 Blueprints → blueprints.html（変更なし）
-- OK: 08-08 Prompts → prompts.html（変更なし）
 - OK: 08-09 Automation → automation.html（変更なし）
 - OK: 08-10 note Drafts → note-drafts.html（変更なし）
 - OK: 08-11 Book Materials → book.html（変更なし）
@@ -143,7 +135,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-05 Open Source → open-source.html（変更なし）
 - OK: 08-06 Live Build Log → live-build.html（変更なし）
 - OK: 08-07 Blueprints → blueprints.html（変更なし）
-- OK: 08-08 Prompts → prompts.html（変更なし）
 - OK: 08-09 Automation → automation.html（変更なし）
 - OK: 08-10 note Drafts → note-drafts.html（変更なし）
 - OK: 08-11 Book Materials → book.html（変更なし）
@@ -159,7 +150,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-05 Open Source → open-source.html（変更なし）
 - OK: 08-06 Live Build Log → live-build.html（変更なし）
 - OK: 08-07 Blueprints → blueprints.html（変更なし）
-- OK: 08-08 Prompts → prompts.html（変更なし）
 - OK: 08-09 Automation → automation.html（変更なし）
 - OK: 08-10 note Drafts → note-drafts.html（変更なし）
 - OK: 08-11 Book Materials → book.html（変更なし）
@@ -175,7 +165,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-05 Open Source → open-source.html（変更なし）
 - OK: 08-06 Live Build Log → live-build.html（変更なし）
 - OK: 08-07 Blueprints → blueprints.html（変更なし）
-- OK: 08-08 Prompts → prompts.html（変更なし）
 - OK: 08-09 Automation → automation.html（変更なし）
 - OK: 08-10 note Drafts → note-drafts.html（変更なし）
 - OK: 08-11 Book Materials → book.html（変更なし）
@@ -191,7 +180,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-05 Open Source → open-source.html（変更なし）
 - OK: 08-06 Live Build Log → live-build.html（変更なし）
 - OK: 08-07 Blueprints → blueprints.html（変更なし）
-- OK: 08-08 Prompts → prompts.html（変更なし）
 - OK: 08-09 Automation → automation.html（変更なし）
 - OK: 08-10 note Drafts → note-drafts.html（変更なし）
 - OK: 08-11 Book Materials → book.html（変更なし）
@@ -207,7 +195,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-05 Open Source → open-source.html（更新あり）
 - OK: 08-06 Live Build Log → live-build.html（更新あり）
 - OK: 08-07 Blueprints → blueprints.html（更新あり）
-- OK: 08-08 Prompts → prompts.html（更新あり）
 - OK: 08-09 Automation → automation.html（更新あり）
 - OK: 08-10 note Drafts → note-drafts.html（更新あり）
 - OK: 08-11 Book Materials → book.html（更新あり）
