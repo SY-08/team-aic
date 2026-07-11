@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ["index.html", "ホーム"],
     ["activities.html", "活動内容"],
     ["seminar.html", "勉強会活動"],
-    ["knowledge-monster.html", "ナレッジモンスター"],
+    ["ai-creative.html", "AIクリエイティブ自由研究"],
     ["profile.html", "プロフィール"],
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
