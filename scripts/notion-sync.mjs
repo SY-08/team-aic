@@ -50,7 +50,6 @@ const PAGE_MAP = [
   { file: "open-source.html", prefix: "08-05", label: "08-05 Open Source" },
   { file: "live-build.html", prefix: "08-06", label: "08-06 Live Build Log" },
   { file: "blueprints.html", prefix: "08-07", label: "08-07 Blueprints" },
-  { file: "prompts.html", prefix: "08-08", label: "08-08 Prompts" },
   {
     file: "automation.html",
     prefix: "08-09",

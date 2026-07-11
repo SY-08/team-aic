@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
   // オープンソース配下のページ（トップメニューでは「オープンソース」を選択状態に）
   var FAMILY = [
-    "open-source.html", "live-build.html", "blueprints.html", "prompts.html",
+    "open-source.html", "live-build.html", "blueprints.html",
     "automation.html", "note-drafts.html", "book.html", "youtube.html",
   ];
 
@@ -125,7 +125,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
     ["blueprints.html", "設計図"],
-    ["prompts.html", "プロンプト"],
     ["automation.html", "自動化"],
     ["note-drafts.html", "note下書き"],
     ["book.html", "本化素材"],

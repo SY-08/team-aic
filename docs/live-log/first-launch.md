@@ -20,7 +20,7 @@
 ## 次にやること
 
 - Notion側の運用ルールを整理し、GitHubへの中継フローを確認する
-- Blueprints / Prompts / Book Materials / YouTube Draftsの中身を少しずつ蓄積する
+- Blueprints / Book Materials / YouTube Draftsの中身を少しずつ蓄積する
 - OGP画像・favicon画像など、`assets/img` の素材を用意する
 - noteへの初回転記タイミングを検討する
 - GitHub Pagesの公開設定（Settings > Pages）を確認し、正式に公開する
