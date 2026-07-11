@@ -159,7 +159,7 @@
         return {file:p[0], name:p[1], count:c.count, unique:c.unique};
       });
     });
-    var totalP = fetchCount("TOTAL.json");
+    var totalP = fetchCount("TOTAL");
     var igP = fetchCount("/ig/knowledge-monster");
 
     Promise.all(jobs.concat([totalP, igP])).then(function(all){
