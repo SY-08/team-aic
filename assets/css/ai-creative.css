@@ -96,8 +96,8 @@
 }
 
 .stamp-orbit:nth-child(3) {
-  bottom: 6%;
-  left: 12%;
+  bottom: 32%;
+  left: 6%;
   transform: rotate(8deg);
 }
 
@@ -107,9 +107,20 @@
   transform: rotate(-8deg);
 }
 
-.creative-hero .cta-row,
 .naremon-hero .cta-row {
   gap: 14px;
+}
+
+/* AIクリエイティブのヒーロー：3つのボタンを縦に並べ、間隔をあけて視認性を上げる */
+.creative-hero .cta-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.creative-hero .cta-row .btn {
+  width: auto;
 }
 
 .experiment-grid,
@@ -120,7 +131,7 @@
 }
 
 .experiment-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .experiment-card,
