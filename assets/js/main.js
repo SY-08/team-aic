@@ -1,5 +1,6 @@
 // team AIC｛team AI circle｝ — site behaviour
 // - 全ページ共通でサックスブルー・テーマを読み込む
+// - ページ別アクセス解析（GoatCounter）を読み込む
 // - ヘッダーメニュー / フッター / サブメニュー を「統一された日本語メニュー」に置き換える
 // - ブランド表記を「team AIC / team AIC｛team AI circle｝」に統一する
 // - モバイルメニュー開閉、現在地ハイライト、フッターの年号
@@ -22,6 +23,17 @@
       link.href = "assets/css/theme-sax-blue.css?v=3";
       document.head.appendChild(link);
     }
+  } catch (e) {}
+})();
+
+// 2) ページ別アクセス解析（GoatCounter） — 全ページで自動カウント
+(function () {
+  try {
+    var g = document.createElement("script");
+    g.async = true;
+    g.setAttribute("data-goatcounter", "https://teamaic.goatcounter.com/count");
+    g.src = "//gc.zgo.at/count.js";
+    document.head.appendChild(g);
   } catch (e) {}
 })();
 
@@ -98,7 +110,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ブランド表記を統一（TEAM AIC → team AIC、AI Circle → team AI circle）
-  // ※ 正式名称：team AIC｛team AI circle｝／略称：team AIC
   try {
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
     var targets = [];
