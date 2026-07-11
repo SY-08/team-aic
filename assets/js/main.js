@@ -178,6 +178,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // 全ページ共通「ホームへ」ボタン（トップページ以外に右下固定で表示）
+  try {
+    if (current !== "index.html" && !document.getElementById("homeFab")) {
+      var homeBtn = document.createElement("a");
+      homeBtn.id = "homeFab";
+      homeBtn.href = "index.html";
+      homeBtn.textContent = "🏠 ホームへ";
+      homeBtn.setAttribute("aria-label", "ホームへ戻る");
+      homeBtn.style.cssText =
+        "position:fixed;right:18px;bottom:18px;z-index:1000;" +
+        "display:inline-flex;align-items:center;gap:6px;" +
+        "background:#2a6fb5;color:#fff;text-decoration:none;" +
+        "font-weight:700;font-size:14px;line-height:1;" +
+        "padding:12px 18px;border-radius:999px;" +
+        "box-shadow:0 8px 22px rgba(28,84,140,.38);";
+      document.body.appendChild(homeBtn);
+    }
+  } catch (e) {}
+
   // フッターの年号
   var yearEl = document.getElementById("year");
   if (yearEl) {
