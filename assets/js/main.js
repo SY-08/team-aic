@@ -209,6 +209,23 @@ document.addEventListener("DOMContentLoaded", function () {
         p.remove();
       }
     });
+    // 「08-03-01 Education」等の内部コードラベル（log-date）を取り除く
+    mainEl.querySelectorAll("span.log-date, .log-date").forEach(function (s) {
+      if (/^08-\d\d(-\d\d)?\s+[A-Za-z]/.test((s.textContent || "").trim())) {
+        s.remove();
+      }
+    });
+  } catch (e) {}
+
+  // 活動内容ページ：領域名（教育／福祉／地域産業活性／AIクリエイティブ）を大きく見せる
+  try {
+    if (current === "activities.html") {
+      document.querySelectorAll(".card h3, .log-entry > h3").forEach(function (h) {
+        h.style.fontSize = "1.9rem";
+        h.style.lineHeight = "1.25";
+        h.style.color = "#1c548c";
+      });
+    }
   } catch (e) {}
 
   // 全ページ共通「ホームへ」ボタン（トップページ以外に右下固定で表示）
