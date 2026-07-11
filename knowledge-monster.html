@@ -11,12 +11,13 @@
 <meta property="og:title" content="ナレッジモンスター｛ナレモン｝ | team AIC">
 <meta property="og:description" content="知識と経験から生まれたモンスター｛ナレモン｝と旅する、AIと作る漫画・キャラクター企画。">
 <meta property="og:url" content="https://sy-08.github.io/team-aic/knowledge-monster.html">
+<meta property="og:site_name" content="team AIC">
 <meta property="og:image" content="https://sy-08.github.io/team-aic/assets/img/ai-creative/km-logo-wide.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/img/ai-creative/km-logo-round.png">
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/theme-sax-blue.css?v=3">
-<link rel="stylesheet" href="assets/css/ai-creative.css?v=3">
+<link rel="stylesheet" href="assets/css/ai-creative.css?v=4">
 </head>
 <body>
 <header class="site-header">
@@ -48,7 +49,7 @@
           <li>目標はいつかポケモンとコラボ。まずフォロワー0人から1万人へ</li>
           <li>定期的に誰かに読んでもらえる事を目指す。素人なので、作りながら育てます</li>
         </ul>
-        <div class="cta-row" style="display:flex;flex-direction:column;align-items:flex-start;gap:18px;margin-top:10px">
+        <div class="cta-row">
           <a class="btn btn-primary" href="https://www.instagram.com/knowledge_monster_official?igsh=eDY0YXMwZjZ5aGF5&utm_source=qr" target="_blank" rel="noopener noreferrer">ナレッジモンスターマンガを読む（インスタグラムで公開中）</a>
           <a class="btn btn-secondary" href="ai-creative.html">AIクリエイティブ自由研究へ</a>
         </div>
@@ -56,6 +57,69 @@
       <div class="naremon-logo-panel">
         <img src="assets/img/ai-creative/km-logo-wide.png" alt="ナレッジモンスターの大きなロゴ">
       </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="manga">
+    <h2>ナレッジモンスターマンガ</h2>
+    <p class="section-lead">インスタグラムでは下記のようなマンガを公開しています。</p>
+
+    <div class="manga-about">
+      <p>ナレモンは、知識と経験から生まれたモンスター｛ナレモン｝と旅する物語。という作品を、AIと一緒に作る活動です。</p>
+      <p>原作は、私（横塚）がClaudeに与える色々なアイデアを基に作成しています。Claudeの中で「原案構成担当」「原作構成担当」「マーケティング担当」「Geminiへの指示だし担当」と役割を分けており、最後はGeminiで画像を生成しています。</p>
+      <p>Geminiの画像生成はまだ荒いため、最後にCanvaで加工して完成させています（主にセリフ部分）。</p>
+      <p>Geminiの画像生成は「ブレ」（毎回、絵柄やキャラクターが変わってしまう現象）がまだ大きく出てしまいます。それを抑えるために、次の3つをGeminiに渡しています。</p>
+      <ul class="feed-list">
+        <li><strong>原作キャラ画像</strong>：下の「ナレモン図鑑」の画像。キャラクターの見た目を固定するために使います。</li>
+        <li><strong>コマ割り画像</strong>：ページの枠組み（レイアウト）を示す画像。どこに何のコマを置くかを固定します。</li>
+        <li><strong>YAMLでのストーリーデータ</strong>：各コマのセリフや展開を書いたテキストデータ。</li>
+      </ul>
+
+      <div class="manga-koma">
+        <figure>
+          <img src="assets/img/ai-creative/koma-example-1.png" alt="コマ割り画像の例1">
+          <figcaption>▲ コマ割り画像の例。この枠組み画像は、見本の画像をもとに Claude を通して Python で作成しています。</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/ai-creative/koma-example-2.png" alt="コマ割り画像の例2">
+          <figcaption>▲ 別パターンのコマ割り例。ページごとに枠組みを変えて指示します。</figcaption>
+        </figure>
+      </div>
+
+      <p class="note-yaml"><strong>YAMLとは？</strong>　コンピュータにも人にも読みやすい「箇条書きメモ」のような書き方のことです。「だれが・どこで・何を言うか」を、見出しと字下げ（インデント）で整理して書けるので、むずかしいプログラムの知識がなくても、ストーリーの設計図として使えます。</p>
+    </div>
+
+    <div class="callout">
+      <span class="emoji">IG</span>
+      <div>
+        <strong>マンガ本編はInstagramで公開していきます。</strong><br>
+        最新のナレッジモンスターマンガは
+        <a href="https://www.instagram.com/knowledge_monster_official?igsh=eDY0YXMwZjZ5aGF5&utm_source=qr" target="_blank" rel="noopener noreferrer">knowledge_monster_official</a>
+        から読めます。
+      </div>
+    </div>
+
+    <div class="manga-grid">
+      <a class="manga-card" href="assets/img/ai-creative/manga-ep01-p16.png">
+        <img src="assets/img/ai-creative/manga-ep01-p16.png" alt="ナレッジモンスター漫画 EP.01 P16">
+        <h3>EP.01 P16</h3>
+      </a>
+      <a class="manga-card" href="assets/img/ai-creative/manga-ep01-p31.png">
+        <img src="assets/img/ai-creative/manga-ep01-p31.png" alt="ナレッジモンスター漫画 EP.01 P31">
+        <h3>EP.01 P31</h3>
+      </a>
+      <a class="manga-card" href="assets/img/ai-creative/manga-ep02-p7.png">
+        <img src="assets/img/ai-creative/manga-ep02-p7.png" alt="ナレッジモンスター漫画 EP.02 P7">
+        <h3>EP.02 P7</h3>
+      </a>
+      <a class="manga-card" href="assets/img/ai-creative/manga-ep02-p8.png">
+        <img src="assets/img/ai-creative/manga-ep02-p8.png" alt="ナレッジモンスター漫画 EP.02 P8">
+        <h3>EP.02 P8</h3>
+      </a>
+      <a class="manga-card" href="assets/img/ai-creative/manga-ep02-p14.png">
+        <img src="assets/img/ai-creative/manga-ep02-p14.png" alt="ナレッジモンスター漫画 EP.02 P14">
+        <h3>EP.02 P14</h3>
+      </a>
     </div>
   </section>
 
@@ -95,42 +159,6 @@
         <img src="assets/img/ai-creative/naremon-saborin.png" alt="サボリン">
         <h3>サボリン</h3>
       </article>
-    </div>
-  </section>
-
-  <section class="section wrap" id="manga">
-    <h2>ナレッジモンスターマンガ</h2>
-    <p class="section-lead">まずは一部ページを公開しています。AIと一緒に、少しずつ読める形へ育てていきます。</p>
-    <div class="callout">
-      <span class="emoji">IG</span>
-      <div>
-        <strong>マンガ本編はInstagramで公開していきます。</strong><br>
-        最新のナレッジモンスターマンガは
-        <a href="https://www.instagram.com/knowledge_monster_official?igsh=eDY0YXMwZjZ5aGF5&utm_source=qr" target="_blank" rel="noopener noreferrer">knowledge_monster_official</a>
-        から読めます。
-      </div>
-    </div>
-    <div class="manga-grid">
-      <a class="manga-card" href="assets/img/ai-creative/manga-ep01-p16.png">
-        <img src="assets/img/ai-creative/manga-ep01-p16.png" alt="ナレッジモンスター漫画 EP.01 P16">
-        <h3>EP.01 P16</h3>
-      </a>
-      <a class="manga-card" href="assets/img/ai-creative/manga-ep01-p31.png">
-        <img src="assets/img/ai-creative/manga-ep01-p31.png" alt="ナレッジモンスター漫画 EP.01 P31">
-        <h3>EP.01 P31</h3>
-      </a>
-      <a class="manga-card" href="assets/img/ai-creative/manga-ep02-p7.png">
-        <img src="assets/img/ai-creative/manga-ep02-p7.png" alt="ナレッジモンスター漫画 EP.02 P7">
-        <h3>EP.02 P7</h3>
-      </a>
-      <a class="manga-card" href="assets/img/ai-creative/manga-ep02-p8.png">
-        <img src="assets/img/ai-creative/manga-ep02-p8.png" alt="ナレッジモンスター漫画 EP.02 P8">
-        <h3>EP.02 P8</h3>
-      </a>
-      <a class="manga-card" href="assets/img/ai-creative/manga-ep02-p14.png">
-        <img src="assets/img/ai-creative/manga-ep02-p14.png" alt="ナレッジモンスター漫画 EP.02 P14">
-        <h3>EP.02 P14</h3>
-      </a>
     </div>
   </section>
 </main>
