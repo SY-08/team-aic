@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>閲覧数ダッシュボード | team AIC｛team AI circle｝</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root{
+    --blue:#2a6fb5; --blue-dark:#1c548c; --gold:#bf972c; --gold-dark:#9c7a1f;
+    --ink:#1b2733; --muted:#5b6b7a; --line:#e2e9f1; --bg:#f4f8fd; --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif;
+    color:var(--ink);background:linear-gradient(180deg,#eef5fc 0%,#f7fbff 100%);line-height:1.6}
+  .wrap{max-width:960px;margin:0 auto;padding:22px 18px 60px}
+  header.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+  h1{font-size:1.5rem;margin:0;letter-spacing:.02em}
+  h1 small{display:block;font-size:.8rem;font-weight:600;color:var(--blue);margin-top:2px}
+  .updated{font-size:.82rem;color:var(--muted)}
+  .btn{appearance:none;border:0;cursor:pointer;background:var(--blue);color:#fff;font-weight:700;
+    padding:10px 18px;border-radius:999px;font-size:.9rem;box-shadow:0 6px 16px rgba(42,111,181,.28)}
+  .btn:hover{background:var(--blue-dark)}
+  .btn:disabled{opacity:.6;cursor:default}
+
+  /* Instagram → ナレモン ヘッドライン */
+  .hero{margin:18px 0 22px;border-radius:20px;overflow:hidden;
+    background:linear-gradient(120deg,#fff7e6 0%,#fdeede 55%,#fce7f0 100%);
+    border:1px solid #f0dcc0;box-shadow:0 16px 40px rgba(150,110,30,.14)}
+  .hero-in{display:flex;flex-wrap:wrap;align-items:center;gap:18px;padding:22px 24px}
+  .hero-badge{font-size:2.4rem;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))}
+  .hero-txt{flex:1;min-width:220px}
+  .hero-label{font-weight:800;font-size:1.05rem;color:var(--gold-dark)}
+  .hero-sub{font-size:.84rem;color:#8a6d3b;margin-top:2px}
+  .hero-num{font-size:3.1rem;font-weight:800;color:var(--gold-dark);line-height:1;white-space:nowrap}
+  .hero-num small{font-size:1rem;font-weight:700;margin-left:4px}
+  .hero-note{font-size:.8rem;color:#8a6d3b;padding:0 24px 18px}
+
+  /* サマリーカード */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;
+    box-shadow:0 10px 26px rgba(42,111,181,.08)}
+  .card .k{font-size:.82rem;color:var(--muted);font-weight:700}
+  .card .v{font-size:2.1rem;font-weight:800;color:var(--blue-dark);line-height:1.1;margin-top:6px}
+  .card .v small{font-size:.85rem;color:var(--muted);font-weight:600;margin-left:3px}
+
+  /* ページ別ランキング */
+  .sec-title{font-size:1.15rem;margin:6px 0 4px;display:flex;align-items:baseline;gap:10px}
+  .sec-title .hint{font-size:.78rem;color:var(--muted);font-weight:600}
+  .rows{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+  .row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;
+    background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+  .row .name{font-weight:700;font-size:.96rem}
+  .row .path{font-size:.72rem;color:#9aa7b4;font-weight:500;margin-left:2px}
+  .row .val{font-weight:800;color:var(--blue-dark);font-size:1.15rem;white-space:nowrap}
+  .row .val small{font-size:.72rem;color:var(--muted);font-weight:600;margin-left:4px}
+  .bar{grid-column:1 / -1;height:8px;border-radius:99px;background:#eaf1f9;overflow:hidden;margin-top:2px}
+  .bar > i{display:block;height:100%;border-radius:99px;
+    background:linear-gradient(90deg,var(--blue) 0%,#4b93d8 100%)}
+  .rank{display:inline-block;min-width:1.5em;color:var(--gold-dark);font-weight:800}
+  .zero{opacity:.55}
+
+  .note{margin-top:26px;font-size:.82rem;color:var(--muted);background:#fbfdff;border:1px dashed var(--line);
+    border-radius:12px;padding:14px 16px}
+  .note b{color:var(--ink)}
+  .loading{text-align:center;color:var(--muted);padding:30px}
+  a{color:var(--blue)}
+  @media(max-width:620px){
+    .cards{grid-template-columns:1fr 1fr}
+    .hero-num{font-size:2.4rem}
+    h1{font-size:1.25rem}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>閲覧数ダッシュボード<small>team AIC｛team AI circle｝</small></h1>
+    <div style="text-align:right">
+      <div class="updated" id="updated">読み込み中…</div>
+      <button class="btn" id="refresh">↻ 最新に更新</button>
+    </div>
+  </header>
+
+  <!-- Instagram → ナレッジモンスター -->
+  <section class="hero">
+    <div class="hero-in">
+      <div class="hero-badge">📸➜🧩</div>
+      <div class="hero-txt">
+        <div class="hero-label">インスタグラム → ナレッジモンスター</div>
+        <div class="hero-sub">インスタのリンクから「ナレモン」ページに来た人の数</div>
+      </div>
+      <div class="hero-num" id="igNum">–<small>回</small></div>
+    </div>
+    <div class="hero-note" id="igNote"></div>
+  </section>
+
+  <!-- サマリー -->
+  <div class="cards">
+    <div class="card"><div class="k">サイト全体の閲覧数</div><div class="v" id="totalViews">–</div></div>
+    <div class="card"><div class="k">おおよその訪問者数</div><div class="v" id="totalUnique">–</div></div>
+    <div class="card"><div class="k">見られたページ数</div><div class="v" id="pageCount">–<small>/ 全<span id="pageAll">0</span></small></div></div>
+  </div>
+
+  <!-- ページ別ランキング -->
+  <div class="sec-title">ページ別の閲覧数 <span class="hint">（多い順）</span></div>
+  <div id="rows" class="rows"><div class="loading">読み込み中…</div></div>
+
+  <div class="note">
+    <b>数字の意味</b>　「閲覧数」はページが開かれた回数、「訪問者数」は同じ人の重複を除いたおおよその人数です（GoatCounter調べ）。<br>
+    <b>インスタ計測の使い方</b>　インスタのプロフィール/投稿に貼るリンクを
+    <code>https://sy-08.github.io/team-aic/knowledge-monster.html?ref=instagram</code>
+    にしておくと、そこから来た人がこの「インスタ→ナレモン」に自動で加算されます。<br>
+    <b>更新</b>　このページを開き直すか「最新に更新」で最新値になります。データは公開サイトのGoatCounterから直接読み込んでいます。
+  </div>
+</div>
+
+<script>
+  var SITE = "https://teamaic.goatcounter.com";
+
+  // ページ一覧（ファイル名, 日本語表示名）
+  var PAGES = [
+    ["index.html", "ホーム（トップ）"],
+    ["about.html", "team AICについて"],
+    ["activities.html", "活動内容"],
+    ["seminar.html", "勉強会活動"],
+    ["knowledge-monster.html", "ナレッジモンスター"],
+    ["ai-creative.html", "AIクリエイティブ自由研究"],
+    ["profile.html", "プロフィール"],
+    ["open-source.html", "オープンソース"],
+    ["live-build.html", "活動共有ノート"],
+    ["roadmap.html", "ロードマップ"],
+    ["contact.html", "お問い合わせ"],
+    ["blueprints.html", "設計図"],
+    ["prompts.html", "プロンプト"],
+    ["automation.html", "自動化"],
+    ["note-drafts.html", "note下書き"],
+    ["book.html", "本化素材"],
+    ["youtube.html", "動画下書き"]
+  ];
+
+  function fetchCount(path){
+    var url = SITE + "/counter/" + encodeURIComponent(path) + ".json";
+    return fetch(url, {cache:"no-store"})
+      .then(function(r){ return r.ok ? r.json() : {count:"0", count_unique:"0"}; })
+      .then(function(j){ return {count:parseInt(j.count||0,10), unique:parseInt(j.count_unique||0,10)}; })
+      .catch(function(){ return {count:0, unique:0}; });
+  }
+
+  function n(x){ return (x||0).toLocaleString("ja-JP"); }
+
+  function load(){
+    var btn = document.getElementById("refresh");
+    btn.disabled = true; btn.textContent = "更新中…";
+    document.getElementById("updated").textContent = "読み込み中…";
+
+    var jobs = PAGES.map(function(p){
+      return fetchCount("/team-aic/" + p[0]).then(function(c){
+        return {file:p[0], name:p[1], count:c.count, unique:c.unique};
+      });
+    });
+    var totalP = fetchCount("TOTAL.json");
+    var igP = fetchCount("/ig/knowledge-monster");
+
+    Promise.all(jobs.concat([totalP, igP])).then(function(all){
+      var ig = all.pop();
+      var total = all.pop();
+      var rowsData = all;
+
+      // Instagram → ナレモン
+      var igEl = document.getElementById("igNum");
+      igEl.innerHTML = n(ig.count) + '<small>回</small>';
+      document.getElementById("igNote").textContent =
+        ig.count > 0
+          ? "うち、おおよその人数：" + n(ig.unique) + "人"
+          : "まだ計測データはありません。インスタのリンクに ?ref=instagram を付けると、ここに数字が入り始めます。";
+
+      // サマリー
+      document.getElementById("totalViews").innerHTML = n(total.count) + '<small>回</small>';
+      document.getElementById("totalUnique").innerHTML = n(total.unique) + '<small>人</small>';
+      var seen = rowsData.filter(function(r){ return r.count > 0; }).length;
+      document.getElementById("pageCount").innerHTML = n(seen) + '<small>/ 全' + PAGES.length + '</small>';
+
+      // ランキング
+      rowsData.sort(function(a,b){ return b.count - a.count; });
+      var max = Math.max(1, rowsData[0] ? rowsData[0].count : 1);
+      var html = rowsData.map(function(r, i){
+        var w = Math.round((r.count / max) * 100);
+        var zero = r.count === 0 ? " zero" : "";
+        return '<div class="row' + zero + '">'
+          + '<div class="name"><span class="rank">' + (i+1) + '</span>' + r.name
+          + '<span class="path"> /' + r.file + '</span></div>'
+          + '<div class="val">' + n(r.count) + '<small>回 / ' + n(r.unique) + '人</small></div>'
+          + '<div class="bar"><i style="width:' + w + '%"></i></div>'
+          + '</div>';
+      }).join("");
+      document.getElementById("rows").innerHTML = html;
+
+      var now = new Date();
+      document.getElementById("updated").textContent =
+        "最終更新：" + now.toLocaleString("ja-JP", {month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"});
+      btn.disabled = false; btn.textContent = "↻ 最新に更新";
+    });
+  }
+
+  document.getElementById("refresh").addEventListener("click", load);
+  load();
+</script>
+</body>
+</html>
