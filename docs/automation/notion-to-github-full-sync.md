@@ -23,7 +23,7 @@ GitHub Pages（公開サイト）
 - **GitHub Pages**：外向きの公式HP。GitHubの内容がそのまま公開されます。
 
 今後、サイトの内容を更新する場合は、**GitHubのHTMLを直接編集するのではなく、Notion「08 Website CMS」を編集**します。
-編集内容は、GitHub Actionsの自動実行（5分おき）または手動実行によって、GitHubへ反映されます。
+編集内容は、GitHub Actionsの自動実行（1時間おき）または手動実行によって、GitHubへ反映されます。
 
 ## Notionの構造とGitHubの対応
 
@@ -43,6 +43,7 @@ GitHub Pages（公開サイト）
 | 08-12 YouTube Drafts | `youtube.html` |
 | 08-13 Roadmap | `roadmap.html` |
 | 08-14 Contact | `contact.html` |
+| 08-15 勉強会活動 | `seminar.html` |
 
 ## 同期スクリプト（scripts/notion-sync.mjs）の処理内容
 
@@ -59,7 +60,7 @@ GitHub Pages（公開サイト）
 ## GitHub Actions（.github/workflows/notion-sync.yml）
 
 - `workflow_dispatch`：GitHubの画面から手動実行できます
-- `schedule`：5分おきに自動実行されます（`cron: '*/5 * * * *'`）
+- `schedule`：1時間おきに自動実行されます（`cron: '0 * * * *'`）
 - 実行後、`git status` で差分がある場合のみ `git add . && git commit && git push` を行います（差分がなければ何もしません）
 
 ## 必要なGitHub Secrets
@@ -70,6 +71,8 @@ GitHub Pages（公開サイト）
 | `NOTION_08_WEBSITE_CMS_PAGE_ID` | 「08 Website CMS」ページのID |
 
 これらの値は、コード・HTML・同期ログのいずれにも出力されません。
+
+勉強会教材の生成は別の流れです。GPTタスクがNotionの活動記録から教材案を作り、`確認待ち` の状態で人が確認します。`scripts/seminar-draft.mjs` は必須項目と公開NG情報を確認するだけで、教材を自動公開しません。
 
 ## セキュリティ方針
 
