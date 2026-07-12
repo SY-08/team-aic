@@ -247,6 +247,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   } catch (e) {}
 
+  // プロフィールページ：横塚翔太の顔写真をページ見出しに差し込む
+  //   （profile.html はNotion同期ページなので、写真はここ（main.js）から挿入して同期でも消えないようにする）
+  try {
+    if (current === "profile.html" && !document.getElementById("profilePhoto")) {
+      var ph = document.querySelector(".page-header.wrap") || document.querySelector(".page-header");
+      if (ph) {
+        var img = document.createElement("img");
+        img.id = "profilePhoto";
+        img.src = "assets/img/profile/yokozuka.png";
+        img.alt = "横塚翔太";
+        img.loading = "lazy";
+        img.onerror = function () { this.style.display = "none"; };
+        img.style.cssText =
+          "width:132px;height:132px;border-radius:50%;object-fit:cover;" +
+          "display:block;margin:0 0 16px;border:4px solid #fff;" +
+          "box-shadow:0 8px 22px rgba(28,84,140,.28);";
+        ph.insertBefore(img, ph.firstChild);
+      }
+    }
+  } catch (e) {}
+
   // 全ページ共通「ホームへ」ボタン（トップページ以外に右下固定で表示）
   try {
     if (current !== "index.html" && !document.getElementById("homeFab")) {
