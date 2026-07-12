@@ -49,7 +49,6 @@ const PAGE_MAP = [
   { file: "profile.html", prefix: "08-04", label: "08-04 Profile" },
   { file: "open-source.html", prefix: "08-05", label: "08-05 Open Source" },
   { file: "live-build.html", prefix: "08-06", label: "08-06 Live Build Log" },
-  { file: "blueprints.html", prefix: "08-07", label: "08-07 Blueprints" },
   {
     file: "automation.html",
     prefix: "08-09",
