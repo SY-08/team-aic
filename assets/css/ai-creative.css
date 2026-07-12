@@ -6,8 +6,10 @@
   overflow: hidden;
   padding-top: 72px;
   padding-bottom: 72px;
+  color: #eaf1ff;
 }
 
+/* 濃紺の夜空トーン（ネオンスタンプが映えるように） */
 .creative-hero::before {
   content: "";
   position: absolute;
@@ -17,15 +19,42 @@
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 18% 22%, rgba(255, 199, 66, 0.26), transparent 28%),
-    radial-gradient(circle at 78% 18%, rgba(69, 173, 255, 0.24), transparent 30%),
-    radial-gradient(circle at 85% 82%, rgba(80, 214, 132, 0.20), transparent 32%),
-    linear-gradient(135deg, #f7fbff 0%, #eaf6ff 48%, #fff9ec 100%);
+    radial-gradient(circle at 18% 20%, rgba(83, 148, 255, 0.30), transparent 30%),
+    radial-gradient(circle at 82% 24%, rgba(140, 96, 255, 0.24), transparent 32%),
+    radial-gradient(circle at 78% 84%, rgba(64, 214, 190, 0.18), transparent 34%),
+    linear-gradient(150deg, #081a3c 0%, #0d2a5f 52%, #06132f 100%);
 }
 
 .creative-hero > * {
   position: relative;
   z-index: 1;
+}
+
+/* 濃紺背景に合わせた明るい文字色 */
+.creative-hero .eyebrow {
+  color: #8fb8ff;
+}
+
+.creative-hero .creative-title {
+  color: #ffffff;
+}
+
+.creative-hero .creative-title span {
+  color: #7ecbff;
+}
+
+.creative-hero .lead {
+  color: #cfe0f7;
+}
+
+.creative-hero .btn-secondary {
+  border-color: rgba(126, 203, 255, 0.9);
+  color: #eaf1ff;
+  background: rgba(126, 203, 255, 0.10);
+}
+
+.creative-hero .btn-secondary:hover {
+  background: rgba(126, 203, 255, 0.22);
 }
 
 .creative-hero-grid,
@@ -42,19 +71,16 @@
   margin: 0 0 20px;
 }
 
-.creative-title span {
-  color: #1d6db3;
-}
-
 .creative-stamp-stage {
   position: relative;
   min-height: 500px;
 }
 
+/* 濃紺の上でスタンプが光って見えるように発光感を強める */
 .stamp-orbit {
   position: absolute;
   width: min(24vw, 170px);
-  filter: drop-shadow(0 18px 30px rgba(25, 68, 110, 0.20));
+  filter: drop-shadow(0 0 18px rgba(126, 203, 255, 0.45)) drop-shadow(0 18px 30px rgba(4, 12, 32, 0.55));
 }
 
 .stamp-orbit:nth-child(1) {
@@ -70,8 +96,8 @@
 }
 
 .stamp-orbit:nth-child(3) {
-  bottom: 6%;
-  left: 12%;
+  bottom: 32%;
+  left: 6%;
   transform: rotate(8deg);
 }
 
@@ -81,9 +107,20 @@
   transform: rotate(-8deg);
 }
 
-.creative-hero .cta-row,
 .naremon-hero .cta-row {
   gap: 14px;
+}
+
+/* AIクリエイティブのヒーロー：3つのボタンを縦に並べ、間隔をあけて視認性を上げる */
+.creative-hero .cta-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.creative-hero .cta-row .btn {
+  width: auto;
 }
 
 .experiment-grid,
@@ -94,7 +131,7 @@
 }
 
 .experiment-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .experiment-card,
@@ -186,6 +223,69 @@
   background: rgba(255, 255, 255, 0.78);
 }
 
+/* ナレッジモンスターマンガ 説明ブロック */
+.manga-about {
+  max-width: 860px;
+  margin: 6px 0 26px;
+}
+
+.manga-about p {
+  margin: 0 0 14px;
+}
+
+.manga-about .feed-list {
+  display: grid;
+  gap: 10px;
+  margin: 8px 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.manga-about .feed-list li {
+  padding: 12px 16px;
+  border: 1px solid rgba(42, 111, 181, 0.18);
+  border-radius: 12px;
+  background: #f7fbff;
+}
+
+.manga-koma {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 18px 0 22px;
+}
+
+.manga-koma figure {
+  margin: 0;
+}
+
+.manga-koma img {
+  width: 100%;
+  display: block;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.manga-koma figcaption {
+  font-size: 0.82rem;
+  color: #5b6b7a;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.note-yaml {
+  background: #f4f8fd;
+  border: 1px solid rgba(42, 111, 181, 0.20);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 0.94rem;
+}
+
+.note-yaml strong {
+  color: #1c548c;
+}
+
 .manga-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -205,6 +305,11 @@
   .creative-hero-grid,
   .naremon-hero-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* スマホではナレモンのタイトル画像を「4歳娘と～」より先に表示 */
+  .naremon-logo-panel {
+    order: -1;
   }
 
   .creative-stamp-stage {
@@ -234,6 +339,10 @@
   .experiment-grid,
   .monster-grid,
   .manga-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .manga-koma {
     grid-template-columns: 1fr;
   }
 }

@@ -149,3 +149,13 @@ main a:not(.btn):not(.brand):not(.site-nav a) {
     background: #fff;
   }
 }
+
+/* デイリーレポート（AIの日報 / 私とAIの哲学 / 日本の裏側） */
+.daily-reports { display: grid; gap: 18px; margin-top: 6px; }
+.daily-report { background:#fff; border:1px solid var(--color-border,#e2e9f1); border-radius:16px; padding:20px 22px; box-shadow:0 10px 26px rgba(42,111,181,.08); }
+.daily-report h3 { margin:0 0 10px; font-size:1.2rem; line-height:1.4; }
+.dr-tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+.dr-tag { font-size:.76rem; font-weight:700; color:#1c548c; background:#eaf2fb; border:1px solid rgba(42,111,181,.18); border-radius:999px; padding:4px 10px; }
+.dr-field { margin:6px 0; line-height:1.75; }
+.dr-field strong { color:#1c548c; }
+.daily-empty { color:#5b6b7a; background:#f7fbff; border:1px dashed var(--color-border,#e2e9f1); border-radius:12px; padding:16px 18px; }

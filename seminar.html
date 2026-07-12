@@ -44,7 +44,7 @@
   <div class="wrap notion-sync">
     <!-- notion-sync:badge:start -->
     <span class="notion-sync-badge">🔄 Synced from Notion: 08 Website CMS</span>
-    <span class="notion-sync-meta">08-15 勉強会活動 ・ Last content update: 2026-07-10 05:50:17 UTC</span>
+    <span class="notion-sync-meta">08-15 勉強会活動 ・ Last content update: 2026-07-11 22:34:53 UTC</span>
     <!-- notion-sync:badge:end -->
   </div>
 
@@ -198,8 +198,31 @@ GitHub Pagesの seminar.html に反映する</code></pre>
 <li>次に作るべき資料</li>
 </ul>
 <hr>
-<h2>AI活用の設計メモ</h2>
-<p>勉強会内容は、実際に行ったHP作業・Notion作業・GitHub作業から派生させます。活動共有ノートをもとに、初心者向け説明、対象別テーマ、簡単なデモ、スライド構成、実施事項へ整理していきます。</p>
+<h2>GPTタスク用プロンプト</h2>
+<pre><code>あなたはteam AICの勉強会企画担当です。
+
+前提ルール：
+- 正本はNotion。
+- 公開はGitHub Pages。
+- GitHubは中継。
+- 勉強会内容は、実際に行ったHP作業・Notion作業・GitHub作業から派生させる。
+- 流行りのAI紹介ではなく、活動共有ノートに残った実践を教材化する。
+- 対象は、小学生、幼稚園・保育園、地域企業・商店街・個人商店、高齢者を想定する。
+
+入力された活動共有ノートの内容を読み、以下を作成してください。
+
+1. 今回の作業から初心者に教えられること
+2. 対象別に向いている勉強会案
+3. 勉強会タイトル案
+4. 60分の内容構成
+5. その場でできる簡単なデモ
+6. スライド構成
+7. 実施事項
+8. 注意点
+9. Notionに追記すべき勉強会素材
+
+出力は、Notionに貼れる見出し構造で書いてください。
+公開NG情報、APIキー、トークン、個人情報、守秘義務情報は含めないでください。</code></pre>
 <hr>
 <h2>対象別勉強会の初期分類</h2>
 <h3>小学生</h3>
