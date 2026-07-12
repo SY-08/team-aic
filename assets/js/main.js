@@ -78,12 +78,12 @@ document.addEventListener("DOMContentLoaded", function () {
     ["seminar.html", "勉強会活動"],
     ["knowledge-monster.html", "ナレッジモンスター"],
     ["profile.html", "プロフィール"],
-    ["open-source.html", "オープンソース"],
+    ["open-source.html", "活動の設計図"],
     ["live-build.html", "活動共有ノート"],
     ["roadmap.html", "ロードマップ"],
     ["contact.html", "お問い合わせ"],
   ];
-  // オープンソース配下のページ（トップメニューでは「オープンソース」を選択状態に）
+  // 活動の設計図配下のページ（トップメニューでは「活動の設計図」を選択状態に）
   var FAMILY = [
     "open-source.html", "live-build.html", "blueprints.html",
     "automation.html", "note-drafts.html", "book.html", "youtube.html",
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // 統一フッターリンク
   var FOOT = [
     ["index.html", "ホーム"],
-    ["open-source.html", "オープンソース"],
+    ["open-source.html", "活動の設計図"],
     ["live-build.html", "活動共有ノート"],
     ["seminar.html", "勉強会活動"],
     ["ai-creative.html", "AIクリエイティブ"],
@@ -120,9 +120,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }).join("\n      ");
   }
 
-  // 統一サブメニュー（オープンソース配下ページに表示）
+  // 統一サブメニュー（活動の設計図配下ページに表示）
   var SUB = [
-    ["open-source.html", "オープンソース"],
+    ["open-source.html", "活動の設計図"],
     ["live-build.html", "活動共有ノート"],
     ["blueprints.html", "設計図"],
     ["automation.html", "自動化"],
