@@ -47,7 +47,7 @@ const PAGE_MAP = [
     ],
   },
   { file: "profile.html", prefix: "08-04", label: "08-04 Profile" },
-  { file: "open-source.html", prefix: "08-05", label: "08-05 活動の設計図" },
+  { file: "open-source.html", prefix: "08-05", label: "08-05 Open Source" },
   { file: "live-build.html", prefix: "08-06", label: "08-06 Live Build Log" },
   { file: "blueprints.html", prefix: "08-07", label: "08-07 Blueprints" },
   {
@@ -69,7 +69,7 @@ const PAGE_MAP = [
   { file: "ai-daily.html", prefix: "08-16", label: "08-16 AIの日報", database: true },
   { file: "philosophy.html", prefix: "08-17", label: "08-17 私とAIの哲学", database: true },
   { file: "japan-inside.html", prefix: "08-18", label: "08-18 日本の裏側", database: true },
-  { file: "my-journal.html", prefix: "08-20", label: "08-20 私のジャーナル" },
+  { file: "my-journal.html", prefix: "08-20", label: "08-20 私のジャーナル", database: true },
 ];
 
 // Heuristic guardrails. Never log the matched value itself, only the rule name.
@@ -337,6 +337,12 @@ function propToText(prop) {
 
 const DAILY_SKIP_PROPS = ["公開状態", "一次情報確認", "作成日時"];
 const DAILY_META_TYPES = ["date", "select", "status", "multi_select"];
+// 私のジャーナルのカテゴリ別・左線カラー（濃紺／スカイブルー／ゴールド）
+const CATEGORY_COLORS = {
+  "私のジャストアイデア": "#0d2a5f",
+  "私が読んだ本": "#3a95d8",
+  "活動を経てのジャーナリング": "#bf972c",
+};
 
 function entryPublished(page) {
   const st = (page.properties || {})["公開状態"];
@@ -393,10 +399,24 @@ async function renderDatabaseEntries(blocks, token, logLines, label) {
     }
     const metas = [];
     const fields = [];
+    let borderColor = "";
     for (const k of Object.keys(props)) {
       if (DAILY_SKIP_PROPS.includes(k)) continue;
       const pr = props[k];
       if (pr.type === "title") continue;
+      if (k === "カテゴリ") {
+        const cv = propToText(pr);
+        if (cv) {
+          borderColor = CATEGORY_COLORS[cv] || "";
+          metas.push(`<span class="dr-tag">${escapeHtml(cv)}</span>`);
+        }
+        continue;
+      }
+      if (k === "内容" || k === "本文") {
+        const v = plainTextOf(pr.rich_text);
+        if (v) fields.push(`<div class="dr-body">${escapeHtml(v).replace(/\n/g, "<br>")}</div>`);
+        continue;
+      }
       if (DAILY_META_TYPES.includes(pr.type)) {
         const v = propToText(pr);
         if (v) metas.push(`<span class="dr-tag">${escapeHtml(v)}</span>`);
@@ -407,7 +427,8 @@ async function renderDatabaseEntries(blocks, token, logLines, label) {
         fields.push(`<p class="dr-field"><strong>${escapeHtml(k)}：</strong><a href="${escapeHtml(pr.url)}" target="_blank" rel="noopener">${escapeHtml(pr.url)}</a></p>`);
       }
     }
-    return `<article class="daily-report">\n<h3>${escapeHtml(titleText) || "（無題）"}</h3>\n<div class="dr-tags">${metas.join("")}</div>\n${fields.join("\n")}\n</article>`;
+    const styleAttr = borderColor ? ` style="border-left:7px solid ${borderColor}"` : "";
+    return `<article class="daily-report"${styleAttr}>\n<h3>${escapeHtml(titleText) || "（無題）"}</h3>\n<div class="dr-tags">${metas.join("")}</div>\n${fields.join("\n")}\n</article>`;
   });
 
   logLines.push(`- OK: ${label} → 公開記事 ${published.length} 件を出力`);
