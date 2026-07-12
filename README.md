@@ -53,7 +53,7 @@ GitHub Actionsによる自動同期（`scripts/notion-sync.mjs` / `.github/workf
 ├── knowledge-monster.html ナレッジモンスター｛ナレモン｝
 ├── seminar.html            勉強会活動
 ├── profile.html            プロフィール
-├── open-source.html       Open Source（公開方針）
+├── open-source.html       活動の設計図
 ├── live-build.html         Live Build Log（実行中のログ）
 ├── blueprints.html         Blueprints（設計図）
 ├── automation.html         Automation（Notion同期の仕組み）
