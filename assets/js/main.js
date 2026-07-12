@@ -42,7 +42,25 @@
   } catch (e) {}
 })();
 
+// 1c) 自分のアクセスを計測から外す（自分の端末だけカウントしない）
+//   使い方：カウントしたくない端末で「?skipgc=1」を付けて1回開く（例：stats.html?skipgc=1）。
+//           以降その端末（ブラウザ）ではGoatCounterがカウントしない。解除は「?skipgc=0」。
+(function () {
+  try {
+    var q = (location.search || "").toLowerCase();
+    if (q.indexOf("skipgc=1") !== -1) {
+      localStorage.setItem("skipgc", "t");
+      alert("この端末（このブラウザ）では、以降ページ閲覧数をカウントしません。\n自分の訪問を除外して、純粋な閲覧数を計測できます。");
+    }
+    if (q.indexOf("skipgc=0") !== -1) {
+      localStorage.removeItem("skipgc");
+      alert("この端末の閲覧数カウントを再開しました。");
+    }
+  } catch (e) {}
+})();
+
 // 2) ページ別アクセス解析（GoatCounter） — 全ページで自動カウント
+//   ※ localStorage の "skipgc"="t" が設定された端末はGoatCounter側で自動的に計測から除外されます。
 (function () {
   try {
     var g = document.createElement("script");
@@ -96,6 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ["profile.html", "プロフィール"],
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
+    ["stats.html", "HPの閲覧数"],
     ["roadmap.html", "ロードマップ"],
     ["contact.html", "お問い合わせ"],
   ];
