@@ -11,17 +11,18 @@
 // 1) サックスブルー・テーマを（未読み込みなら）読み込む
 (function () {
   try {
-    var already = [].some.call(
+    var V = "assets/css/theme-sax-blue.css?v=8";
+    var link = [].filter.call(
       document.querySelectorAll('link[rel="stylesheet"]'),
-      function (l) {
-        return (l.getAttribute("href") || "").indexOf("theme-sax-blue.css") !== -1;
-      }
-    );
-    if (!already) {
-      var link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = "assets/css/theme-sax-blue.css?v=3";
-      document.head.appendChild(link);
+      function (l) { return (l.getAttribute("href") || "").indexOf("theme-sax-blue.css") !== -1; }
+    )[0];
+    if (link) {
+      if ((link.getAttribute("href") || "").indexOf("v=8") === -1) link.setAttribute("href", V);
+    } else {
+      var n = document.createElement("link");
+      n.rel = "stylesheet";
+      n.href = V;
+      document.head.appendChild(n);
     }
   } catch (e) {}
 })();
@@ -91,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ["activities.html", "活動内容"],
     ["seminar.html", "勉強会活動"],
     ["ai-creative.html", "AIクリエイティブ自由研究"],
+    ["daily-column.html", "毎日の記録・コラム"],
     ["profile.html", "プロフィール"],
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
