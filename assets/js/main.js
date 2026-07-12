@@ -11,18 +11,34 @@
 // 1) サックスブルー・テーマを（未読み込みなら）読み込む
 (function () {
   try {
-    var already = [].some.call(
+    var V = "assets/css/theme-sax-blue.css?v=8";
+    var link = [].filter.call(
       document.querySelectorAll('link[rel="stylesheet"]'),
-      function (l) {
-        return (l.getAttribute("href") || "").indexOf("theme-sax-blue.css") !== -1;
-      }
-    );
-    if (!already) {
-      var link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = "assets/css/theme-sax-blue.css?v=3";
+      function (l) { return (l.getAttribute("href") || "").indexOf("theme-sax-blue.css") !== -1; }
+    )[0];
+    if (link) {
+      if ((link.getAttribute("href") || "").indexOf("v=8") === -1) link.setAttribute("href", V);
+    } else {
+      var n = document.createElement("link");
+      n.rel = "stylesheet";
+      n.href = V;
+      document.head.appendChild(n);
+    }
+  } catch (e) {}
+})();
+
+// 1b) ファビコン（四角A）をサックスブルーに統一（緑をやめる）
+(function () {
+  try {
+    var svg =
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232a6fb5'/%3E%3Ctext x='32' y='42' font-size='30' font-family='Arial, sans-serif' font-weight='700' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E";
+    var link = document.querySelector('link[rel="icon"]');
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "icon";
       document.head.appendChild(link);
     }
+    link.href = svg;
   } catch (e) {}
 })();
 
@@ -76,18 +92,16 @@ document.addEventListener("DOMContentLoaded", function () {
     ["activities.html", "活動内容"],
     ["seminar.html", "勉強会活動"],
     ["ai-creative.html", "AIクリエイティブ自由研究"],
+    ["daily-column.html", "毎日の記録・コラム"],
     ["profile.html", "プロフィール"],
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
-    ["ai-daily.html", "AIの日報"],
-    ["philosophy.html", "私とAIの哲学"],
-    ["japan-inside.html", "日本の裏側"],
     ["roadmap.html", "ロードマップ"],
     ["contact.html", "お問い合わせ"],
   ];
   // オープンソース配下のページ（トップメニューでは「オープンソース」を選択状態に）
   var FAMILY = [
-    "open-source.html", "live-build.html", "blueprints.html", "prompts.html",
+    "open-source.html", "live-build.html", "prompts.html",
     "automation.html", "note-drafts.html", "book.html", "youtube.html",
   ];
 
@@ -112,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ["ai-daily.html", "AIの日報"],
     ["philosophy.html", "私とAIの哲学"],
     ["japan-inside.html", "日本の裏側"],
+    ["my-journal.html", "私のジャーナル"],
     ["seminar.html", "勉強会活動"],
     ["ai-creative.html", "AIクリエイティブ"],
     ["knowledge-monster.html", "ナレッジモンスター"],
@@ -129,7 +144,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var SUB = [
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
-    ["blueprints.html", "設計図"],
     ["prompts.html", "プロンプト"],
     ["automation.html", "自動化"],
     ["note-drafts.html", "note下書き"],

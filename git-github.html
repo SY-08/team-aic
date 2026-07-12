@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitさんとGitHub氏のお勉強会 | team AIC｛team AI circle｝</title>
+<meta name="description" content="神様が、自分が何者かを忘れたGitさんとGitHub氏に、GitとGitHubの正体をやさしく教えていく、シュールな読み物コンテンツ。">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://sy-08.github.io/team-aic/git-github.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GitさんとGitHub氏のお勉強会 | team AIC">
+<meta property="og:description" content="神様がGitとGitHubの正体をやさしく教える、シュールな読み物。">
+<meta property="og:url" content="https://sy-08.github.io/team-aic/git-github.html">
+<meta property="og:site_name" content="team AIC">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/img/git-github/logo.png">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/theme-sax-blue.css?v=7">
+<style>
+  .gg-hero { text-align:center; padding: 26px 0 8px; }
+  .gg-logo { max-width: 460px; width: 78%; height:auto; display:block; margin: 0 auto 6px; }
+  .gg-hero h1 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); margin: 8px 0 6px; }
+  .gg-hero .lead { max-width: 720px; margin: 0 auto; color:#4a5b6b; }
+  .gg-cast { display:flex; justify-content:center; flex-wrap:wrap; gap:22px; margin:18px 0 6px; }
+  .gg-cast .c { text-align:center; font-size:.82rem; color:#4a5b6b; }
+  .chat-av { width:52px; height:52px; border-radius:50%; background:#fff; border:2px solid rgba(42,111,181,.35);
+    background-size:cover; background-position:center; display:inline-flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:.72rem; color:#fff; box-shadow:0 3px 8px rgba(20,60,110,.18); }
+  .chat-av.god    { background-color:#c9a13a; background-image:url('assets/img/git-github/god.png'); }
+  .chat-av.git    { background-color:#3aa564; background-image:url('assets/img/git-github/git.png'); }
+  .chat-av.github { background-color:#2b3440; background-image:url('assets/img/git-github/github.png'); }
+  .gg-cast .chat-av { width:64px; height:64px; margin-bottom:6px; }
+
+  .ep { border:1px solid var(--color-border,#e2e9f1); border-radius:16px; background:#fff; margin:16px 0;
+    box-shadow:0 10px 26px rgba(42,111,181,.10); overflow:hidden; }
+  .ep > summary { cursor:pointer; list-style:none; padding:16px 20px; font-weight:800; font-size:1.05rem;
+    display:flex; align-items:center; gap:10px; background:linear-gradient(180deg,#f2f8ff,#eaf3fc); }
+  .ep > summary::-webkit-details-marker { display:none; }
+  .ep > summary .tag { font-size:.72rem; font-weight:800; color:#1c548c; background:#dcebfa;
+    border:1px solid rgba(42,111,181,.25); border-radius:999px; padding:3px 10px; }
+  .ep > summary::after { content:"＋ ひらく"; margin-left:auto; font-size:.78rem; font-weight:700; color:#2a6fb5; }
+  .ep[open] > summary::after { content:"－ とじる"; }
+
+  .chat { background:linear-gradient(180deg,#dceffb 0%, #eaf5fd 100%); padding:18px 16px; }
+  .msg { display:flex; gap:10px; margin:12px 0; align-items:flex-start; }
+  .msg-body { max-width: 78%; }
+  .msg .name { font-size:.76rem; color:#5b6b7a; margin:0 0 3px 4px; font-weight:700; }
+  .bubble { position:relative; background:#fff; border-radius:14px; padding:10px 14px; line-height:1.7;
+    box-shadow:0 2px 6px rgba(20,60,110,.12); }
+  .bubble::before { content:""; position:absolute; left:-7px; top:12px; width:0; height:0;
+    border-top:6px solid transparent; border-bottom:6px solid transparent; border-right:8px solid #fff; }
+  .msg.god .bubble { background:#fff7e6; }
+  .msg.god .bubble::before { border-right-color:#fff7e6; }
+  .stage { text-align:center; color:#6a7b8b; font-size:.86rem; margin:14px 0; }
+  .stage span { background:rgba(255,255,255,.7); padding:5px 14px; border-radius:999px; }
+  .ep-next { text-align:center; font-weight:700; color:#1c548c; padding:12px; background:#eaf5fd; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">AIC</span>
+      <span class="brand-name">team AIC<small>{team AI circle}</small></span>
+    </a>
+    <nav class="site-nav" id="siteNav"></nav>
+    <button class="nav-toggle" id="navToggle" aria-label="メニュー" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="section wrap">
+    <div class="gg-hero">
+      <img class="gg-logo" src="assets/img/git-github/logo.png" alt="GitさんとGitHub氏のお勉強会" onerror="this.style.display='none'">
+      <h1>GitさんとGitHub氏のお勉強会</h1>
+      <p class="lead">
+        自分が何者かを忘れてしまった<strong>Gitさん</strong>と<strong>GitHub氏</strong>。
+        そこに現れた<strong>神様</strong>が、GitとGitHubの正体を、誰にでもわかる言葉で教えていきます。
+        少しシュールな、チャット形式の読み物です。読むだけで、GitとGitHubの基本と使い方の“最低限”がつかめます。
+      </p>
+      <div class="gg-cast">
+        <div class="c"><div class="chat-av god">神</div>神様</div>
+        <div class="c"><div class="chat-av git">Git</div>Gitさん</div>
+        <div class="c"><div class="chat-av github">GH</div>GitHub氏</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" style="padding-top:0">
+    <h2>お話一覧</h2>
+    <p class="section-lead">上から順番に読むのがおすすめです。タイトルを押すと、その回のチャットが開きます。</p>
+
+    <details class="ep" open>
+      <summary><span class="tag">第一話</span>目を覚ますと、スカイブルーの世界</summary>
+      <div class="chat">
+        <div class="stage"><span>——気づけば、そこは一面スカイブルーの世界だった。</span></div>
+
+        <div class="msg git">
+          <div class="chat-av git">Git</div>
+          <div class="msg-body"><div class="name">Gitさん</div>
+            <div class="bubble">あれ…？ ここ、どこ…？（キョロキョロ）</div></div>
+        </div>
+        <div class="msg github">
+          <div class="chat-av github">GH</div>
+          <div class="msg-body"><div class="name">GitHub氏</div>
+            <div class="bubble">さあ…？ 気づいたら、この青い世界に立っていた…。</div></div>
+        </div>
+        <div class="msg git">
+          <div class="chat-av git">Git</div>
+          <div class="msg-body"><div class="name">Gitさん</div>
+            <div class="bubble">「Git」って名前だけは、なぜか覚えてる。でも、それ以外はまっしろ。</div></div>
+        </div>
+        <div class="msg github">
+          <div class="chat-av github">GH</div>
+          <div class="msg-body"><div class="name">GitHub氏</div>
+            <div class="bubble">奇遇だね。ぼくも「GitHub」って名前だけ分かる。中身はゼロ。</div></div>
+        </div>
+
+        <div class="stage"><span>——そこへ、金の輪っかを浮かべた者が、ふわりと現れた。</span></div>
+
+        <div class="msg god">
+          <div class="chat-av god">神</div>
+          <div class="msg-body"><div class="name">神様</div>
+            <div class="bubble">ふむ。目を覚ましたか、若人よ。お前たちのこと、教えてやろうか？</div></div>
+        </div>
+        <div class="msg git">
+          <div class="chat-av git">Git</div>
+          <div class="msg-body"><div class="name">Gitさん</div>
+            <div class="bubble">だれ…？ 急に出てきて、めっちゃあやしい…。</div></div>
+        </div>
+        <div class="msg github">
+          <div class="chat-av github">GH</div>
+          <div class="msg-body"><div class="name">GitHub氏</div>
+            <div class="bubble">ていうか神様、なんでスニーカー履いてるんですか。</div></div>
+        </div>
+        <div class="msg god">
+          <div class="chat-av god">神</div>
+          <div class="msg-body"><div class="name">神様</div>
+            <div class="bubble">…ふっ。細かいことを気にするな。走りやすいからだ。</div></div>
+        </div>
+        <div class="msg git">
+          <div class="chat-av git">Git</div>
+          <div class="msg-body"><div class="name">Gitさん</div>
+            <div class="bubble">走る神様……？（ますます怪しい）</div></div>
+        </div>
+        <div class="msg god">
+          <div class="chat-av god">神</div>
+          <div class="msg-body"><div class="name">神様</div>
+            <div class="bubble">まあ座れ。お前たちが「何者なのか」、ゆっくり教えてやる。損はさせん。</div></div>
+        </div>
+        <div class="msg github">
+          <div class="chat-av github">GH</div>
+          <div class="msg-body"><div class="name">GitHub氏</div>
+            <div class="bubble">（小声）どうする…？ スニーカー、まだ気になるけど…。</div></div>
+        </div>
+        <div class="msg git">
+          <div class="chat-av git">Git</div>
+          <div class="msg-body"><div class="name">Gitさん</div>
+            <div class="bubble">（小声）…名前しか分からんし、聞くだけ聞いてみるか。</div></div>
+        </div>
+        <div class="msg github">
+          <div class="chat-av github">GH</div>
+          <div class="msg-body"><div class="name">GitHub氏</div>
+            <div class="bubble">神様、お願いします。ぼくらのこと、教えてください。</div></div>
+        </div>
+        <div class="msg god">
+          <div class="chat-av god">神</div>
+          <div class="msg-body"><div class="name">神様</div>
+            <div class="bubble">よし。次回からまずは「Git」とは何者か、じっくり解き明かそう。心して待て。</div></div>
+        </div>
+      </div>
+      <div class="ep-next">つづく — 次回「Gitって、実は“セーブの神”だった」</div>
+    </details>
+
+    <details class="ep">
+      <summary><span class="tag">第二話</span>Gitって、実は“セーブの神”だった</summary>
+      <div class="chat">
+        <div class="stage"><span>——お勉強会、はじまりはじまり。まずはGitさんの回。</span></div>
+
+        <div class="msg god">
+          <div class="chat-av god">神</div>
+          <div class="msg-body"><div class="name">神様</div>
+            <div class="bubble">さてGitよ。お前の正体を教えてやろう。お前は「記録する者」だ。</div></div>
+        </div>
+        <div class="msg git">
+          <div class="chat-av git">Git</div>
+          <div class="msg-body"><div class="name">Gitさん</div>
+            <div class="bubble">記録…？ なにを記録するの？</div></div>
+        </div>
+        <div class="msg god">
+          <div class="chat-av god">神</div>
+          <div class="msg-body"><div class="name">神様</div>
+            <div class="bubble">人が何かを作るとき、途中で「ここまでの状態」を保存したくなる。ゲームのセーブポイントのようにな。それを刻むのがお前の力——「コミット」だ。</div></div>
+        </div>
+        <div class="msg git">
+          <div class="chat-av git">Git</div>
+          <div class="msg-body"><div class="name">Gitさん</div>
+            <div class="bubble">コミット…！ なんか、かっこいい響き…！</div></div>
+        </div>
+        <div class="msg github">
+          <div class="chat-av github">GH</div>
+          <div class="msg-body"><div class="name">GitHub氏</div>
+            <div class="bubble">（にぎやかし）Gitさん、急に主人公っぽくなってきたね〜。うらやましいぞ〜。</div></div>
+        </div>
+        <div class="msg god">
+          <div class="chat-av god">神</div>
+          <div class="msg-body"><div class="name">神様</div>
+            <div class="bubble">コミットを重ねれば、「いつ・何を・なぜ変えたか」が全部たどれる。失敗しても、前のセーブに戻れるのだ。</div></div>
+        </div>
+        <div class="msg git">
+          <div class="chat-av git">Git</div>
+          <div class="msg-body"><div class="name">Gitさん</div>
+            <div class="bubble">つまりぼくがいれば……作るのが、怖くなくなる……？</div></div>
+        </div>
+        <div class="msg god">
+          <div class="chat-av god">神</div>
+          <div class="msg-body"><div class="name">神様</div>
+            <div class="bubble">そういうことだ。お前は「やり直せる勇気」を人に与える者。だから胸を張れ。</div></div>
+        </div>
+        <div class="msg github">
+          <div class="chat-av github">GH</div>
+          <div class="msg-body"><div class="name">GitHub氏</div>
+            <div class="bubble">いい話だ…（涙）。……で、神様、ぼくの出番は？</div></div>
+        </div>
+        <div class="msg god">
+          <div class="chat-av god">神</div>
+          <div class="msg-body"><div class="name">神様</div>
+            <div class="bubble">次回だ、GitHub。あわてるな。スニーカーの紐でも結んで待っておれ。</div></div>
+        </div>
+      </div>
+      <div class="ep-next">つづく — 次回、GitHub氏の正体にせまる</div>
+    </details>
+
+    <div class="callout" style="margin-top:22px">
+      <span class="emoji">🪄</span>
+      <div>
+        このお勉強会は、これから少しずつ増やしていきます。横塚がClaudeやCodexと実際に使ったGit／GitHubの操作を、神様・Gitさん・GitHub氏の会話として、Notion経由で自動的にコラム化していく予定です。
+      </div>
+    </div>
+
+    <div class="cta-row" style="margin-top:18px">
+      <a class="btn btn-secondary" href="ai-creative.html">AIクリエイティブ自由研究へ戻る</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-links"></div>
+    <p>&copy; <span id="year"></span> team AIC - team AI circle. Japan.</p>
+    <p class="footer-note">本サイトは実行中のプロジェクトの記録です。内容は随時更新されます。</p>
+  </div>
+</footer>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
