@@ -66,6 +66,9 @@ const PAGE_MAP = [
   { file: "roadmap.html", prefix: "08-13", label: "08-13 Roadmap" },
   { file: "contact.html", prefix: "08-14", label: "08-14 Contact" },
   { file: "seminar.html", prefix: "08-15", label: "08-15 勉強会活動" },
+  { file: "ai-daily.html", prefix: "08-16", label: "08-16 AIの日報", database: true },
+  { file: "philosophy.html", prefix: "08-17", label: "08-17 私とAIの哲学", database: true },
+  { file: "japan-inside.html", prefix: "08-18", label: "08-18 日本の裏側", database: true },
 ];
 
 // Heuristic guardrails. Never log the matched value itself, only the rule name.
@@ -174,6 +177,17 @@ async function syncPage(entry, rootChildren, token, logLines) {
         changedAny = changedAny || result.changed;
       }
     }
+  } else if (entry.database) {
+    const blocks = await getAllChildren(pageBlock.id, token);
+    const dbHtml = await renderDatabaseEntries(blocks, token, logLines, entry.label);
+    const result = replaceBetweenMarkers(
+      fileContent,
+      "<!-- notion-sync:content:start -->",
+      "<!-- notion-sync:content:end -->",
+      dbHtml || '<p class="daily-empty">（準備中）</p>'
+    );
+    fileContent = result.content;
+    changedAny = changedAny || result.changed;
   } else {
     const result = await renderAndApplySection(fileContent, pageBlock, null, entry.label, token, logLines);
     fileContent = result.content;
@@ -278,6 +292,125 @@ export function replaceBetweenMarkers(content, startMarker, endMarker, innerHtml
   const replacement = `${startMarker}\n    ${innerHtml}\n    ${endMarker}`;
   const newContent = content.replace(pattern, replacement);
   return { content: newContent, changed: newContent !== content };
+}
+
+// ---------- Daily-report database rendering ----------
+async function notionPost(apiPath, token, body) {
+  const res = await fetch(`${NOTION_API_BASE}${apiPath}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Notion-Version": NOTION_VERSION,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body || {}),
+  });
+  if (!res.ok) {
+    const t = await res.text().catch(() => "");
+    throw new Error(`Notion API ${res.status} for ${apiPath}: ${t.slice(0, 200)}`);
+  }
+  return res.json();
+}
+
+function findChildDatabaseId(blocks) {
+  const b = blocks.find((x) => x.type === "child_database");
+  return b ? b.id : null;
+}
+
+function propToText(prop) {
+  if (!prop) return "";
+  switch (prop.type) {
+    case "title": return plainTextOf(prop.title);
+    case "rich_text": return plainTextOf(prop.rich_text);
+    case "select": return prop.select ? prop.select.name : "";
+    case "status": return prop.status ? prop.status.name : "";
+    case "multi_select": return (prop.multi_select || []).map((o) => o.name).join("・");
+    case "url": return prop.url || "";
+    case "date": return prop.date ? prop.date.start : "";
+    case "number": return prop.number != null ? String(prop.number) : "";
+    case "checkbox": return prop.checkbox ? "はい" : "";
+    case "created_time": return prop.created_time || "";
+    default: return "";
+  }
+}
+
+const DAILY_SKIP_PROPS = ["公開状態", "一次情報確認", "作成日時"];
+const DAILY_META_TYPES = ["date", "select", "status", "multi_select"];
+
+function entryPublished(page) {
+  const st = (page.properties || {})["公開状態"];
+  if (!st) return true;
+  const name = st.type === "status" ? (st.status && st.status.name) : (st.select && st.select.name);
+  return name === "公開";
+}
+
+function entryDate(page) {
+  const props = page.properties || {};
+  for (const k of Object.keys(props)) {
+    if (props[k].type === "date" && props[k].date) return props[k].date.start || "";
+  }
+  return page.created_time || "";
+}
+
+async function renderDatabaseEntries(blocks, token, logLines, label) {
+  const dbId = findChildDatabaseId(blocks);
+  if (!dbId) {
+    logLines.push(`- WARN: ${label} に子データベースが見つかりませんでした。`);
+    return "";
+  }
+  let results = [];
+  let cursor;
+  do {
+    const body = { page_size: 100 };
+    if (cursor) body.start_cursor = cursor;
+    const data = await notionPost(`/databases/${dbId}/query`, token, body);
+    results = results.concat(data.results || []);
+    cursor = data.has_more ? data.next_cursor : undefined;
+  } while (cursor && results.length < 300);
+
+  const published = results.filter(entryPublished);
+  published.sort((a, b) => (entryDate(a) < entryDate(b) ? 1 : -1));
+
+  const scanText = published
+    .map((pg) => Object.values(pg.properties || {}).map(propToText).join("\n"))
+    .join("\n");
+  const hits = scanForbidden(scanText);
+  if (hits.length > 0) {
+    logLines.push(`- SKIP (warning): ${label} → 公開NGらしきパターンを検知したため日報の出力をスキップ（種別: ${hits.join(", ")}）`);
+    return "";
+  }
+
+  if (published.length === 0) {
+    return `<p class="daily-empty">まだ公開された記事はありません。毎朝の更新で追加されていきます。</p>`;
+  }
+
+  const cards = published.map((pg) => {
+    const props = pg.properties || {};
+    let titleText = "";
+    for (const k of Object.keys(props)) {
+      if (props[k].type === "title") { titleText = plainTextOf(props[k].title); break; }
+    }
+    const metas = [];
+    const fields = [];
+    for (const k of Object.keys(props)) {
+      if (DAILY_SKIP_PROPS.includes(k)) continue;
+      const pr = props[k];
+      if (pr.type === "title") continue;
+      if (DAILY_META_TYPES.includes(pr.type)) {
+        const v = propToText(pr);
+        if (v) metas.push(`<span class="dr-tag">${escapeHtml(v)}</span>`);
+      } else if (pr.type === "rich_text") {
+        const v = plainTextOf(pr.rich_text);
+        if (v) fields.push(`<p class="dr-field"><strong>${escapeHtml(k)}：</strong>${escapeHtml(v)}</p>`);
+      } else if (pr.type === "url" && pr.url) {
+        fields.push(`<p class="dr-field"><strong>${escapeHtml(k)}：</strong><a href="${escapeHtml(pr.url)}" target="_blank" rel="noopener">${escapeHtml(pr.url)}</a></p>`);
+      }
+    }
+    return `<article class="daily-report">\n<h3>${escapeHtml(titleText) || "（無題）"}</h3>\n<div class="dr-tags">${metas.join("")}</div>\n${fields.join("\n")}\n</article>`;
+  });
+
+  logLines.push(`- OK: ${label} → 公開記事 ${published.length} 件を出力`);
+  return `<div class="daily-reports">\n${cards.join("\n")}\n</div>`;
 }
 
 // ---------- Notion API ----------
