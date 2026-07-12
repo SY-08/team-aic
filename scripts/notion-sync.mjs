@@ -69,6 +69,7 @@ const PAGE_MAP = [
   { file: "ai-daily.html", prefix: "08-16", label: "08-16 AIの日報", database: true },
   { file: "philosophy.html", prefix: "08-17", label: "08-17 私とAIの哲学", database: true },
   { file: "japan-inside.html", prefix: "08-18", label: "08-18 日本の裏側", database: true },
+  { file: "my-journal.html", prefix: "08-20", label: "08-20 私のジャーナル" },
 ];
 
 // Heuristic guardrails. Never log the matched value itself, only the rule name.
