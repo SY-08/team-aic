@@ -79,9 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ["profile.html", "プロフィール"],
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
-    ["ai-daily.html", "AIの日報"],
-    ["philosophy.html", "私とAIの哲学"],
-    ["japan-inside.html", "日本の裏側"],
     ["roadmap.html", "ロードマップ"],
     ["contact.html", "お問い合わせ"],
   ];
@@ -112,6 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ["ai-daily.html", "AIの日報"],
     ["philosophy.html", "私とAIの哲学"],
     ["japan-inside.html", "日本の裏側"],
+    ["my-journal.html", "私のジャーナル"],
     ["seminar.html", "勉強会活動"],
     ["ai-creative.html", "AIクリエイティブ"],
     ["knowledge-monster.html", "ナレッジモンスター"],
