@@ -159,3 +159,10 @@ main a:not(.btn):not(.brand):not(.site-nav a) {
 .dr-field { margin:6px 0; line-height:1.75; }
 .dr-field strong { color:#1c548c; }
 .daily-empty { color:#5b6b7a; background:#f7fbff; border:1px dashed var(--color-border,#e2e9f1); border-radius:12px; padding:16px 18px; }
+
+/* ゴールド塗りボタン（AIクリエイティブの日報・コラム導線） */
+.btn-gold { background:#c9a13a; color:#1b2733; border:1px solid #b8912f; font-weight:700; }
+.btn-gold:hover { background:#b8912f; color:#12202e; }
+
+/* 私のジャーナルの本文（ラベルなし本文表示） */
+.dr-body { line-height:1.85; margin:4px 0 0; }
