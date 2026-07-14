@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ナレッジモンスター｜あそんでまなぶ</title>
+<meta name="robots" content="index, follow">
+<style>
+  :root{ --blue:#2a6fb5; --blueD:#1c548c; --sky:#dceafa; --gold:#c9a13a; --ink:#22303c; --line:#cfe0f2; }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none;}
+  html,body{margin:0;height:100%;font-family:"Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;color:var(--ink);}
+  body{background:linear-gradient(180deg,#bfe3ff 0%,#eaf6ff 45%,#eafbe9 100%);overflow:hidden;}
+  #app{position:fixed;inset:0;display:flex;flex-direction:column;}
+  .screen{flex:1;display:none;flex-direction:column;align-items:center;justify-content:flex-start;padding:16px;overflow:auto;}
+  .screen.on{display:flex;}
+  h1{font-size:clamp(26px,6vw,44px);margin:10px 0 4px;color:var(--blueD);letter-spacing:.02em;text-shadow:0 2px 0 #fff;}
+  .sub{color:#4a6076;font-size:clamp(13px,3.4vw,16px);margin:0 0 14px;}
+  .btn{border:0;border-radius:999px;background:var(--blue);color:#fff;font-weight:800;
+    font-size:clamp(17px,4.6vw,22px);padding:16px 26px;box-shadow:0 8px 0 #1c5893, 0 12px 22px rgba(20,60,110,.25);cursor:pointer;}
+  .btn:active{transform:translateY(4px);box-shadow:0 4px 0 #1c5893;}
+  .btn.gold{background:var(--gold);box-shadow:0 8px 0 #96741f,0 12px 22px rgba(150,110,20,.25);}
+  .btn.ghost{background:#fff;color:var(--blueD);box-shadow:0 6px 0 #cfe0f2;}
+  .row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:center;}
+  .back{position:fixed;top:12px;left:12px;z-index:20;font-size:15px;padding:10px 16px;}
+  /* character select */
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:560px;width:100%;margin-top:6px;}
+  .card{background:#fff;border:3px solid var(--line);border-radius:22px;padding:14px;text-align:center;cursor:pointer;transition:.15s;box-shadow:0 10px 24px rgba(42,111,181,.12);}
+  .card:active{transform:scale(.97);}
+  .card.sel{border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,161,58,.3),0 10px 24px rgba(42,111,181,.18);}
+  .sprite{width:120px;height:120px;object-fit:contain;image-rendering:auto;filter:drop-shadow(0 6px 8px rgba(0,0,0,.15));}
+  .cname{font-weight:800;font-size:20px;margin-top:4px;}
+  .cattr{display:inline-block;font-size:12px;font-weight:800;color:#fff;border-radius:999px;padding:2px 10px;margin-top:4px;}
+  /* abacus */
+  .numbig{font-size:clamp(48px,14vw,96px);font-weight:900;color:var(--blueD);line-height:1;margin:2px 0 2px;text-shadow:0 3px 0 #fff;}
+  .place{font-size:14px;color:#4a6076;margin-bottom:8px;font-weight:700;}
+  .abacus{background:#fff;border:3px solid var(--line);border-radius:18px;padding:12px;max-width:560px;width:100%;box-shadow:0 8px 20px rgba(42,111,181,.12);}
+  .track{position:relative;height:58px;border-radius:12px;background:#eef5fd;border:2px solid #dbe8f6;display:flex;align-items:center;padding:0 8px;gap:6px;overflow:hidden;}
+  .bead{width:40px;height:40px;border-radius:50%;flex:0 0 auto;box-shadow:inset 0 -4px 6px rgba(0,0,0,.15),0 2px 4px rgba(0,0,0,.15);transition:transform .18s cubic-bezier(.2,1.4,.5,1);}
+  .bead.done{transform:translateX(-2px) scale(1.02);}
+  .bead.pending{opacity:.35;filter:grayscale(.4);}
+  .tens{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;min-height:26px;}
+  .tama{font-size:20px;}
+  .stage{position:relative;display:flex;justify-content:space-around;align-items:flex-end;max-width:560px;width:100%;height:190px;margin:6px 0;}
+  .fighter{display:flex;flex-direction:column;align-items:center;gap:4px;}
+  .fighter .sprite{width:120px;height:120px;transition:transform .18s;}
+  .fighter .lbl{font-weight:800;font-size:14px;}
+  .cap{position:absolute;top:6px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.85);border-radius:999px;padding:5px 14px;font-weight:800;color:var(--blueD);font-size:14px;white-space:nowrap;}
+  .shake{animation:shk .4s;}
+  @keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+  .hit{animation:hit .5s;}
+  @keyframes hit{0%{transform:scale(1)}30%{transform:scale(1.15) rotate(-6deg)}100%{transform:scale(1)}}
+  .ko{animation:ko .7s forwards;}
+  @keyframes ko{to{transform:translateY(30px) rotate(30deg);opacity:0;}}
+  .flash{position:fixed;inset:0;pointer-events:none;opacity:0;z-index:15;}
+  .flash.go{animation:fl .6s;}
+  @keyframes fl{0%{opacity:0}30%{opacity:.55}100%{opacity:0}}
+  .tapzone{margin-top:12px;width:100%;max-width:560px;}
+  /* trace */
+  .traceWrap{background:#fff;border:3px solid var(--line);border-radius:22px;padding:10px;box-shadow:0 8px 20px rgba(42,111,181,.12);}
+  canvas{touch-action:none;border-radius:14px;background:#fbfdff;display:block;}
+  .foods{font-size:26px;letter-spacing:2px;min-height:34px;margin-top:6px;}
+  .praise{font-weight:900;color:var(--gold);font-size:22px;min-height:28px;}
+  .mini{font-size:13px;color:#5a6f82;}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- HOME -->
+  <section class="screen on" id="s-home">
+    <h1>ナレッジモンスター</h1>
+    <p class="sub">あそんで まなぼう！　まずは パートナーを えらんでね</p>
+    <div class="cards" id="charCards"></div>
+    <div class="row" style="margin-top:18px"><button class="btn gold" id="toMenu" disabled>この こで あそぶ →</button></div>
+  </section>
+
+  <!-- MENU -->
+  <section class="screen" id="s-menu">
+    <button class="btn ghost back" data-go="s-home">← もどる</button>
+    <h1 style="margin-top:40px">なにで あそぶ？</h1>
+    <p class="sub" id="menuPartner"></p>
+    <div class="row" style="flex-direction:column;gap:18px;margin-top:8px">
+      <button class="btn" data-go="s-abacus" id="startAbacus">🧮 かぞえて そろばん（かず＋バトル）</button>
+      <button class="btn" data-go="s-trace" id="startTrace">✍️ ひらがな なぞり</button>
+    </div>
+  </section>
+
+  <!-- ABACUS -->
+  <section class="screen" id="s-abacus">
+    <button class="btn ghost back" data-go="s-menu">← もどる</button>
+    <div class="numbig" id="numBig">0</div>
+    <div class="place" id="placeTxt">たまを ひだりから みぎへ すべらせよう！</div>
+    <div class="stage" id="stage">
+      <div class="cap" id="stageCap"></div>
+      <div class="fighter"><img class="sprite" id="pSprite"><div class="lbl" id="pName"></div></div>
+      <div class="fighter"><img class="sprite" id="eSprite"><div class="lbl" id="eName"></div></div>
+    </div>
+    <div class="abacus">
+      <div class="track" id="track"></div>
+      <div class="tens" id="tens"></div>
+    </div>
+    <div class="tapzone row" style="margin-top:14px">
+      <button class="btn gold" id="tapCount" style="width:100%;font-size:24px;padding:20px">＋ かぞえる！</button>
+    </div>
+  </section>
+
+  <!-- TRACE -->
+  <section class="screen" id="s-trace">
+    <button class="btn ghost back" data-go="s-menu">← もどる</button>
+    <h1 style="margin-top:38px;font-size:30px" id="traceHint">「あ」を なぞってね</h1>
+    <p class="mini" id="traceTry">1かいめ / 3かい</p>
+    <div class="traceWrap"><canvas id="pad" width="320" height="320"></canvas></div>
+    <div class="foods" id="foods"></div>
+    <div class="praise" id="praise"></div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn ghost" id="clearPad">けす</button>
+      <button class="btn" id="doneTrace">できた！</button>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;margin-top:6px">
+      <img class="sprite" id="traceMon" style="width:96px;height:96px"><div class="lbl" id="traceMonName" style="font-weight:800"></div>
+    </div>
+  </section>
+</div>
+<div class="flash" id="flash"></div>
+
+<script>
+(function(){
+"use strict";
+const PARTNERS=[
+  {key:"goronyan",name:"ゴロニャン",attr:"でんき",color:"#f4b731",moves:["ビリビリショック","いなずまダッシュ","サンダーボルト"]},
+  {key:"hinokoma",name:"ヒノコマ",attr:"ほのお",color:"#e0552f",moves:["ファイアタックル","ほのおのうず","だいかえん"]},
+  {key:"sarumizu",name:"サルミズ",attr:"みず",color:"#2a86c8",moves:["アクアスプラッシュ","うずしお","ハイドロポンプ"]},
+  {key:"kijimidori",name:"キジミドリ",attr:"くさ・かぜ",color:"#4faa4f",moves:["リーフカッター","かぜのつばさ","グリーンストーム"]}
+];
+const ENEMIES=[
+  {key:"dokuchu",name:"ドクチュー",color:"#8a6fbf"},
+  {key:"hiepillar",name:"ヒエピラー",color:"#7fd3e0"},
+  {key:"koromogura",name:"コロモグラ",color:"#b08a5a"},
+  {key:"elebee",name:"エレビー",color:"#e0b13a"},
+  {key:"saborin",name:"サボリン",color:"#5fa84f"},
+  {key:"dokuronezu",name:"ドクロネズ",color:"#5b4a66"}
+];
+const ATTR_COLOR={"でんき":"#f4d03f","ほのお":"#ff6a3d","みず":"#3aa0e0","くさ・かぜ":"#5fc46a"};
+const IDLE=["ためる…","かわす！","むにゃむにゃ ねる…","ようすを みている"];
+
+function ph(color,label){
+  const s="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'>"+
+    "<ellipse cx='60' cy='104' rx='34' ry='8' fill='rgba(0,0,0,.12)'/>"+
+    "<circle cx='60' cy='60' r='40' fill='"+color+"' stroke='#00000022' stroke-width='3'/>"+
+    "<circle cx='46' cy='54' r='7' fill='#fff'/><circle cx='74' cy='54' r='7' fill='#fff'/>"+
+    "<circle cx='47' cy='55' r='3.5' fill='#22303c'/><circle cx='75' cy='55' r='3.5' fill='#22303c'/>"+
+    "<path d='M50 74 q10 8 20 0' stroke='#22303c' stroke-width='3' fill='none' stroke-linecap='round'/>"+
+    "<text x='60' y='114' font-size='13' font-family='sans-serif' font-weight='700' fill='#22303c' text-anchor='middle'>"+label+"</text></svg>";
+  return "data:image/svg+xml;utf8,"+encodeURIComponent(s);
+}
+function setSprite(img,ch){
+  img.alt=ch.name;
+  img.onerror=function(){ img.onerror=null; img.src=ph(ch.color,ch.name); };
+  img.src="assets/img/naremon/"+ch.key+".png";
+}
+function say(text){
+  try{ if(!window.speechSynthesis) return; const u=new SpeechSynthesisUtterance(text);
+    u.lang="ja-JP"; u.rate=1; u.pitch=1.15; speechSynthesis.cancel(); speechSynthesis.speak(u);}catch(e){}
+}
+function show(id){ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on")); document.getElementById(id).classList.add("on"); }
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>{ const g=b.getAttribute("data-go"); if(g==="s-abacus")startAbacus(); if(g==="s-trace")startTrace(); if(g==="s-menu")openMenu(); show(g);}));
+
+/* ---------- character select ---------- */
+let partner=null;
+const cc=document.getElementById("charCards");
+PARTNERS.forEach(p=>{
+  const d=document.createElement("div"); d.className="card";
+  d.innerHTML="<img class='sprite'><div class='cname'>"+p.name+"</div><span class='cattr' style='background:"+(ATTR_COLOR[p.attr]||"#2a6fb5")+"'>"+p.attr+"</span>";
+  setSprite(d.querySelector("img"),p);
+  d.addEventListener("click",()=>{ partner=p; document.querySelectorAll(".card").forEach(x=>x.classList.remove("sel")); d.classList.add("sel"); document.getElementById("toMenu").disabled=false; say(p.name+"、よろしくね！"); });
+  cc.appendChild(d);
+});
+document.getElementById("toMenu").addEventListener("click",()=>{ if(!partner)return; openMenu(); show("s-menu"); });
+function openMenu(){ if(partner) document.getElementById("menuPartner").textContent="パートナー：「"+partner.name+"」（"+partner.attr+"）"; }
+
+/* ---------- abacus + battle ---------- */
+let count=0, enemy=null, koFlag=false;
+const track=document.getElementById("track"), tensBox=document.getElementById("tens");
+function newEnemy(){ enemy=ENEMIES[Math.floor(Math.random()*ENEMIES.length)]; const es=document.getElementById("eSprite"); es.className="sprite"; setSprite(es,enemy); document.getElementById("eName").textContent=enemy.name; }
+function drawBeads(){
+  track.innerHTML=""; const ones=count%10; const cur=ones===0&&count>0?10:ones;
+  for(let i=0;i<10;i++){ const b=document.createElement("div"); b.className="bead"+(i<cur?" done":" pending");
+    const hue=(i*36); b.style.background="hsl("+hue+",75%,55%)"; track.appendChild(b);}
+}
+function drawTens(){ const tens=Math.floor(count/10); tensBox.innerHTML=""; for(let i=0;i<tens;i++){ const s=document.createElement("span"); s.className="tama"; s.textContent="🟦"; tensBox.appendChild(s);} if(tens>0){ const t=document.createElement("span"); t.className="mini"; t.style.marginLeft="6px"; t.textContent="＝ 10のたば ×"+tens+(count>=100?"（100は "+Math.floor(count/100)+"）":""); tensBox.appendChild(t);} }
+function startAbacus(){ count=0; koFlag=false; setSprite(document.getElementById("pSprite"),partner); document.getElementById("pName").textContent=partner.name; newEnemy(); render(); document.getElementById("stageCap").textContent="てきが あらわれた！"; }
+function render(){ document.getElementById("numBig").textContent=count; drawBeads(); drawTens();
+  document.getElementById("placeTxt").textContent = count>=1000?"1000まで きたよ！すごい！":"たまを かぞえて 10で ひっさつわざ！"; }
+function partnerAttack(small){
+  const ps=document.getElementById("pSprite"); ps.classList.remove("hit"); void ps.offsetWidth; ps.classList.add("hit");
+  if(small){ document.getElementById("stageCap").textContent=partner.name+"の たいあたり！"; return; }
+  const mv=partner.moves[Math.floor(Math.random()*partner.moves.length)];
+  document.getElementById("stageCap").textContent="⚡"+partner.name+"の『"+mv+"』！";
+  const fl=document.getElementById("flash"); fl.style.background=ATTR_COLOR[partner.attr]||"#2a6fb5"; fl.classList.remove("go"); void fl.offsetWidth; fl.classList.add("go");
+  const es=document.getElementById("eSprite"); es.classList.add("ko");
+  say(mv+"！");
+  setTimeout(()=>{ es.classList.remove("ko"); newEnemy(); document.getElementById("stageCap").textContent="つぎの てきだ！"; },760);
+}
+function enemyIdle(){ const es=document.getElementById("eSprite"); const g=IDLE[Math.floor(Math.random()*IDLE.length)]; document.getElementById("stageCap").textContent=(enemy?enemy.name:"てき")+"は "+g;
+  if(Math.random()<0.25){ const ps=document.getElementById("pSprite"); ps.classList.remove("shake"); void ps.offsetWidth; ps.classList.add("shake"); document.getElementById("stageCap").textContent=(enemy?enemy.name:"てき")+"の こうげき！"; } }
+document.getElementById("tapCount").addEventListener("click",()=>{
+  count++; const ones=count%10; render(); say(String(count));
+  if(ones===0){ partnerAttack(false); }
+  else if(ones===5){ partnerAttack(true); }
+  else { enemyIdle(); }
+});
+
+/* ---------- hiragana tracing ---------- */
+const KANA="あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん".split("");
+let kIndex=0, tryN=1, drawing=false, drew=false;
+const pad=document.getElementById("pad"), ctx=pad.getContext("2d");
+function sizePad(){ const w=Math.min(320, Math.floor(window.innerWidth*0.82)); pad.width=w; pad.height=w; }
+function drawGuide(){
+  ctx.clearRect(0,0,pad.width,pad.height);
+  const op=[0.34,0.17,0.06][tryN-1]||0.06;
+  ctx.save(); ctx.globalAlpha=op; ctx.fillStyle="#2a6fb5";
+  ctx.font="bold "+Math.floor(pad.height*0.72)+"px 'Hiragino Maru Gothic ProN','Yu Gothic',sans-serif";
+  ctx.textAlign="center"; ctx.textBaseline="middle";
+  ctx.fillText(KANA[kIndex], pad.width/2, pad.height/2+6); ctx.restore();
+}
+function startTrace(){ kIndex=0; tryN=1; loadKana(); setSprite(document.getElementById("traceMon"),partner); document.getElementById("traceMonName").textContent=partner.name; }
+function loadKana(){ drew=false; sizePad(); document.getElementById("traceHint").textContent="「"+KANA[kIndex]+"」を なぞってね"; document.getElementById("traceTry").textContent=tryN+"かいめ / 3かい"; document.getElementById("praise").textContent=""; drawGuide(); say(KANA[kIndex]); }
+function pos(e){ const r=pad.getBoundingClientRect(); const t=e.touches?e.touches[0]:e; return {x:(t.clientX-r.left)*(pad.width/r.width), y:(t.clientY-r.top)*(pad.height/r.height)}; }
+function down(e){ e.preventDefault(); drawing=true; drew=true; const p=pos(e); ctx.strokeStyle="#e0552f"; ctx.lineWidth=14; ctx.lineCap="round"; ctx.lineJoin="round"; ctx.beginPath(); ctx.moveTo(p.x,p.y); }
+function move(e){ if(!drawing)return; e.preventDefault(); const p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); }
+function up(){ drawing=false; }
+pad.addEventListener("mousedown",down); pad.addEventListener("mousemove",move); window.addEventListener("mouseup",up);
+pad.addEventListener("touchstart",down,{passive:false}); pad.addEventListener("touchmove",move,{passive:false}); pad.addEventListener("touchend",up);
+document.getElementById("clearPad").addEventListener("click",()=>{ drew=false; drawGuide(); });
+const PRAISES=["じょうず！","はなまる！","すごい！","てんさい！","かんぺき！"];
+document.getElementById("doneTrace").addEventListener("click",()=>{
+  // 失敗の概念なし：かならず成功あつかい
+  const foods=document.getElementById("foods"); foods.textContent += "🍙";
+  const pr=PRAISES[Math.floor(Math.random()*PRAISES.length)];
+  document.getElementById("praise").textContent=pr+" ナレモンが よろこんだ！";
+  const mon=document.getElementById("traceMon"); mon.classList.remove("hit"); void mon.offsetWidth; mon.classList.add("hit");
+  say(pr);
+  if(tryN<3){ tryN++; document.getElementById("traceTry").textContent=tryN+"かいめ / 3かい"; drew=false; drawGuide(); }
+  else { tryN=1; foods.textContent=""; kIndex=(kIndex+1)%KANA.length; setTimeout(loadKana,700); }
+});
+window.addEventListener("resize",()=>{ if(document.getElementById("s-trace").classList.contains("on")) loadKana(); });
+})();
+</script>
+</body>
+</html>
