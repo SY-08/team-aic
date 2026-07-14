@@ -110,9 +110,9 @@ document.addEventListener("DOMContentLoaded", function () {
     ["activities.html", "活動内容"],
     ["seminar.html", "勉強会活動"],
     ["ai-creative.html", "AIクリエイティブ自由研究"],
-    ["daily-column.html", "毎日の記録・コラム"],
+    ["ai-daily.html", "team AIC朝刊"],
     ["profile.html", "プロフィール"],
-    ["open-source.html", "オープンソース"],
+    ["open-source.html", "活動の設計図"],
     ["live-build.html", "活動共有ノート"],
     ["roadmap.html", "ロードマップ"],
     ["contact.html", "お問い合わせ"],
@@ -141,9 +141,8 @@ document.addEventListener("DOMContentLoaded", function () {
     ["index.html", "ホーム"],
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
-    ["ai-daily.html", "AIの日報"],
+    ["ai-daily.html", "team AIC朝刊"],
     ["philosophy.html", "私とAIの哲学"],
-    ["japan-inside.html", "日本の裏側"],
     ["my-journal.html", "私のジャーナル"],
     ["seminar.html", "勉強会活動"],
     ["ai-creative.html", "AIクリエイティブ"],
@@ -160,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 統一サブメニュー（オープンソース配下ページに表示）
   var SUB = [
-    ["open-source.html", "オープンソース"],
+    ["open-source.html", "活動の設計図"],
     ["live-build.html", "活動共有ノート"],
     ["prompts.html", "プロンプト"],
     ["automation.html", "自動化"],
@@ -175,6 +174,47 @@ document.addEventListener("DOMContentLoaded", function () {
       return '<a href="' + n[0] + '"' + cls + ">" + n[1] + "</a>";
     }).join("\n    ");
   }
+
+  // team AIC朝刊のジャンル切替。旧「日本の裏側」URLからの genre=politics も受け取る。
+  try {
+    var filterGroup = document.querySelector("[data-daily-filter-group]");
+    var results = document.querySelector("[data-daily-results]");
+    if (filterGroup && results) {
+      var filterButtons = Array.prototype.slice.call(filterGroup.querySelectorAll("[data-daily-filter]"));
+      var filterEmpty = results.querySelector("[data-daily-filter-empty]");
+      var params = new URLSearchParams(location.search || "");
+      var requestedFilter = params.get("genre") || "all";
+      var validFilters = filterButtons.map(function (button) { return button.getAttribute("data-daily-filter"); });
+      if (validFilters.indexOf(requestedFilter) === -1) requestedFilter = "all";
+
+      function applyDailyFilter(filter) {
+        var visibleCount = 0;
+        results.querySelectorAll("[data-daily-category]").forEach(function (article) {
+          var visible = filter === "all" || article.getAttribute("data-daily-category") === filter;
+          article.hidden = !visible;
+          if (visible) visibleCount += 1;
+        });
+        filterButtons.forEach(function (button) {
+          var active = button.getAttribute("data-daily-filter") === filter;
+          button.classList.toggle("is-active", active);
+          button.setAttribute("aria-pressed", String(active));
+        });
+        if (filterEmpty) filterEmpty.hidden = visibleCount !== 0;
+      }
+
+      filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          var filter = button.getAttribute("data-daily-filter");
+          applyDailyFilter(filter);
+          var nextUrl = new URL(window.location.href);
+          if (filter === "all") nextUrl.searchParams.delete("genre");
+          else nextUrl.searchParams.set("genre", filter);
+          window.history.replaceState({}, "", nextUrl.href);
+        });
+      });
+      applyDailyFilter(requestedFilter);
+    }
+  } catch (e) {}
 
   // ブランド表記を統一（TEAM AIC → team AIC、AI Circle → team AI circle）
   try {

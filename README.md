@@ -50,11 +50,12 @@ GitHub Actionsによる自動同期（`scripts/notion-sync.mjs` / `.github/workf
 ├── about.html             About（TEAM AICについて）
 ├── activities.html        活動領域
 ├── ai-creative.html       AIクリエイティブ自由研究
+├── ai-daily.html           team AIC朝刊（AI日報＋日本の裏側）
 ├── knowledge-monster.html ナレッジモンスター｛ナレモン｝
 ├── seminar.html            勉強会活動
 ├── profile.html            プロフィール
 ├── open-source.html       活動の設計図
-├── live-build.html         Live Build Log（実行中のログ）
+├── live-build.html         活動共有ノート（実行中のログ）
 ├── blueprints.html         Blueprints（設計図）
 ├── automation.html         Automation（Notion同期の仕組み）
 ├── note-drafts.html       Note Drafts（note転記の下書き）

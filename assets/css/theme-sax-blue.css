@@ -150,15 +150,38 @@ main a:not(.btn):not(.brand):not(.site-nav a) {
   }
 }
 
-/* デイリーレポート（AIの日報 / 私とAIの哲学 / 日本の裏側） */
+/* team AIC朝刊（AI日報と日本の裏側を統合表示） */
 .daily-reports { display: grid; gap: 18px; margin-top: 6px; }
 .daily-report { background:#fff; border:1px solid var(--color-border,#e2e9f1); border-radius:16px; padding:20px 22px; box-shadow:0 10px 26px rgba(42,111,181,.08); }
 .daily-report h3 { margin:0 0 10px; font-size:1.2rem; line-height:1.4; }
 .dr-tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
 .dr-tag { font-size:.76rem; font-weight:700; color:#1c548c; background:#eaf2fb; border:1px solid rgba(42,111,181,.18); border-radius:999px; padding:4px 10px; }
+.dr-tag-source { background:#f5f8fc; color:#566171; }
 .dr-field { margin:6px 0; line-height:1.75; }
 .dr-field strong { color:#1c548c; }
 .daily-empty { color:#5b6b7a; background:#f7fbff; border:1px dashed var(--color-border,#e2e9f1); border-radius:12px; padding:16px 18px; }
+.daily-filter { display:flex; flex-wrap:wrap; gap:10px; margin:0; }
+.daily-filter-button { appearance:none; border:1px solid var(--color-border); border-radius:999px; background:#fff; color:var(--color-text); cursor:pointer; font:inherit; font-size:.88rem; font-weight:700; padding:10px 15px; transition:background .16s ease, color .16s ease, border-color .16s ease, transform .16s ease; }
+.daily-filter-button:hover { border-color:var(--color-accent); color:var(--color-accent-dark); transform:translateY(-1px); }
+.daily-filter-button.is-active { background:var(--color-accent); border-color:var(--color-accent); color:#fff; box-shadow:0 5px 14px rgba(42,111,181,.22); }
+.daily-filter-help { color:var(--color-text-faint); font-size:.82rem; margin:12px 0 0; }
+.daily-report--politics { border-left:7px solid #c74d55; }
+.daily-report--politics .dr-tag:not(.dr-tag-source) { background:#fff0f1; border-color:#efc3c7; color:#963b43; }
+.daily-report--ai { border-left:7px solid #3a83c6; }
+.daily-report--ai .dr-tag:not(.dr-tag-source) { background:#edf6ff; border-color:#c3ddf4; color:#1c548c; }
+.daily-report--education { border-left:7px solid #4f9b70; }
+.daily-report--education .dr-tag:not(.dr-tag-source) { background:#eef9f1; border-color:#c7e7d0; color:#34714d; }
+.daily-report--welfare { border-left:7px solid #d779a4; }
+.daily-report--welfare .dr-tag:not(.dr-tag-source) { background:#fff1f7; border-color:#f0c8da; color:#9d4e75; }
+.daily-report--business { border-left:7px solid #d4933d; }
+.daily-report--business .dr-tag:not(.dr-tag-source) { background:#fff7e9; border-color:#efd5a6; color:#986426; }
+.daily-report[hidden], .daily-filter-empty[hidden] { display:none; }
+
+@media (max-width: 760px) {
+  .daily-filter { gap:8px; }
+  .daily-filter-button { flex:1 1 calc(50% - 8px); min-width:0; padding:10px 8px; }
+  .daily-report { padding:17px 16px; }
+}
 
 /* ゴールド塗りボタン（AIクリエイティブの日報・コラム導線） */
 .btn-gold { background:#c9a13a; color:#1b2733; border:1px solid #b8912f; font-weight:700; }

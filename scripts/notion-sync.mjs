@@ -65,11 +65,18 @@ const PAGE_MAP = [
   { file: "roadmap.html", prefix: "08-13", label: "08-13 Roadmap" },
   { file: "contact.html", prefix: "08-14", label: "08-14 Contact" },
   { file: "seminar.html", prefix: "08-15", label: "08-15 勉強会活動" },
-  { file: "ai-daily.html", prefix: "08-16", label: "08-16 AIの日報", database: true },
+  {
+    file: "ai-daily.html",
+    prefix: "08-16",
+    label: "08-16 team AIC朝刊",
+    combinedDatabase: true,
+    databases: [
+      { id: "e09e1bd2aa7449a7b0e805eb4d84bc88", label: "AI日報アーカイブ", kind: "ai" },
+      { id: "39020f2ab64545b28e0c393100e17ca9", label: "日本の裏側アーカイブ", kind: "politics" },
+    ],
+  },
   { file: "philosophy.html", prefix: "08-17", label: "08-17 私とAIの哲学", database: true },
-  { file: "japan-inside.html", prefix: "08-18", label: "08-18 日本の裏側", database: true },
   { file: "my-journal.html", prefix: "08-20", label: "08-20 私のジャーナル", database: true },
-  { file: "git-github.html", prefix: "08-21", label: "08-21 お勉強会", episodes: true },
 ];
 
 // Heuristic guardrails. Never log the matched value itself, only the rule name.
@@ -178,9 +185,8 @@ async function syncPage(entry, rootChildren, token, logLines) {
         changedAny = changedAny || result.changed;
       }
     }
-  } else if (entry.database) {
-    const blocks = await getAllChildren(pageBlock.id, token);
-    const dbHtml = await renderDatabaseEntries(blocks, token, logLines, entry.label);
+  } else if (entry.combinedDatabase) {
+    const dbHtml = await renderCombinedDatabaseEntries(entry, token, logLines);
     const result = replaceBetweenMarkers(
       fileContent,
       "<!-- notion-sync:content:start -->",
@@ -189,14 +195,14 @@ async function syncPage(entry, rootChildren, token, logLines) {
     );
     fileContent = result.content;
     changedAny = changedAny || result.changed;
-  } else if (entry.episodes) {
+  } else if (entry.database) {
     const blocks = await getAllChildren(pageBlock.id, token);
-    const epHtml = await renderEpisodes(blocks, token, logLines, entry.label);
+    const dbHtml = await renderDatabaseEntries(blocks, token, logLines, entry.label);
     const result = replaceBetweenMarkers(
       fileContent,
       "<!-- notion-sync:content:start -->",
       "<!-- notion-sync:content:end -->",
-      epHtml || '<p class="daily-empty">（準備中）</p>'
+      dbHtml || '<p class="daily-empty">（準備中）</p>'
     );
     fileContent = result.content;
     changedAny = changedAny || result.changed;
@@ -346,15 +352,13 @@ function propToText(prop) {
   }
 }
 
-const DAILY_SKIP_PROPS = ["公開状態", "一次情報確認", "作成日時",
-  "連動キー", "哲学化状態", "関連哲学", "元ジャーナル", "示唆の起点", "関連分野", "AI・テク接点"];
+const DAILY_SKIP_PROPS = ["公開状態", "一次情報確認", "作成日時"];
 const DAILY_META_TYPES = ["date", "select", "status", "multi_select"];
-// 私のジャーナルのカテゴリ別・左線カラー（濃紺／スカイブルー／ゴールド／グリーン）
+// 私のジャーナルのカテゴリ別・左線カラー（濃紺／スカイブルー／ゴールド）
 const CATEGORY_COLORS = {
   "私のジャストアイデア": "#0d2a5f",
   "私が読んだ本": "#3a95d8",
   "活動を経てのジャーナリング": "#bf972c",
-  "ニュースからの気づき（示唆）": "#2b7d4b",
 };
 
 function entryPublished(page) {
@@ -389,16 +393,7 @@ async function renderDatabaseEntries(blocks, token, logLines, label) {
   } while (cursor && results.length < 300);
 
   const published = results.filter(entryPublished);
-  const kindRank = (pg) => {
-    const p = (pg.properties || {})["種別"];
-    const n = p && p.select ? p.select.name : "";
-    return n === "合成コラム(本命)" ? 0 : 1;
-  };
-  published.sort((a, b) => {
-    const kr = kindRank(a) - kindRank(b);
-    if (kr !== 0) return kr;
-    return entryDate(a) < entryDate(b) ? 1 : -1;
-  });
+  published.sort((a, b) => (entryDate(a) < entryDate(b) ? 1 : -1));
 
   const scanText = published
     .map((pg) => Object.values(pg.properties || {}).map(propToText).join("\n"))
@@ -421,22 +416,11 @@ async function renderDatabaseEntries(blocks, token, logLines, label) {
     }
     const metas = [];
     const fields = [];
-    let insightHtml = "";
     let borderColor = "";
     for (const k of Object.keys(props)) {
       if (DAILY_SKIP_PROPS.includes(k)) continue;
       const pr = props[k];
       if (pr.type === "title") continue;
-      if (k === "種別") {
-        const v = propToText(pr);
-        if (v) metas.unshift(`<span class="dr-kind">${escapeHtml(v)}</span>`);
-        continue;
-      }
-      if (k === "私の示唆") {
-        const v = plainTextOf(pr.rich_text);
-        if (v) insightHtml = `<div class="dr-insight"><span class="dr-insight-label">💡 私の示唆</span>${escapeHtml(v).replace(/\n/g, "<br>")}</div>`;
-        continue;
-      }
       if (k === "カテゴリ") {
         const cv = propToText(pr);
         if (cv) {
@@ -461,87 +445,127 @@ async function renderDatabaseEntries(blocks, token, logLines, label) {
       }
     }
     const styleAttr = borderColor ? ` style="border-left:7px solid ${borderColor}"` : "";
-    return `<article class="daily-report"${styleAttr}>\n<h3>${escapeHtml(titleText) || "（無題）"}</h3>\n<div class="dr-tags">${metas.join("")}</div>\n${fields.join("\n")}\n${insightHtml}\n</article>`;
+    return `<article class="daily-report"${styleAttr}>\n<h3>${escapeHtml(titleText) || "（無題）"}</h3>\n<div class="dr-tags">${metas.join("")}</div>\n${fields.join("\n")}\n</article>`;
   });
 
   logLines.push(`- OK: ${label} → 公開記事 ${published.length} 件を出力`);
   return `<div class="daily-reports">\n${cards.join("\n")}\n</div>`;
 }
 
-// ---------- お勉強会エピソード rendering ----------
-const SPEAKER_CLASS = { "神様": "god", "Gitさん": "git", "GitHub氏": "github" };
+// The two Notion databases remain separate because their schemas are different.
+// The public morning paper is the one place where their published facts are merged.
+async function renderCombinedDatabaseEntries(entry, token, logLines) {
+  const articles = [];
 
-function episodeChatHtml(dialogue) {
-  const lines = String(dialogue || "").split("\n").map((l) => l.trim()).filter(Boolean);
-  let html = "";
-  for (const line of lines) {
-    const idx = line.indexOf("｜");
-    if (idx === -1) continue;
-    const who = line.slice(0, idx).trim();
-    const text = line.slice(idx + 1).trim();
-    if (who === "ナレーション") {
-      html += `<div class="stage"><span>${escapeHtml(text)}</span></div>\n`;
+  for (const source of entry.databases) {
+    let pages;
+    try {
+      pages = await queryPublishedDatabase(source.id, token);
+    } catch (err) {
+      logLines.push(`- ERROR: ${source.label} の取得に失敗しました（${err.message}）`);
       continue;
     }
-    const cls = SPEAKER_CLASS[who] || "";
-    html += `<div class="msg ${cls}"><div class="chat-av ${cls}"></div><div class="msg-body"><div class="name">${escapeHtml(who)}</div><div class="bubble">${escapeHtml(text)}</div></div></div>\n`;
+
+    for (const page of pages) {
+      const scanText = Object.values(page.properties || {})
+        .map(propToText)
+        .join("\n");
+      const hits = scanForbidden(scanText);
+      if (hits.length > 0) {
+        logLines.push(`- SKIP (warning): ${source.label} の記事1件を公開NGパターン検知で除外（種別: ${hits.join(", ")}）`);
+        continue;
+      }
+      articles.push({ page, source });
+    }
+    logLines.push(`- OK: ${source.label} → 公開記事 ${pages.length} 件を統合対象に追加`);
   }
-  return html;
+
+  articles.sort((a, b) => {
+    const dateCompare = entryDate(b.page).localeCompare(entryDate(a.page));
+    return dateCompare || (b.page.created_time || "").localeCompare(a.page.created_time || "");
+  });
+
+  if (articles.length === 0) {
+    return `<div class="daily-reports" data-daily-results>\n<p class="daily-empty">まだ公開された記事はありません。Notionの公開状態を確認してください。</p>\n</div>`;
+  }
+
+  const cards = articles.map(({ page, source }) => renderMorningArticle(page, source));
+  return `<div class="daily-reports" data-daily-results>\n${cards.join("\n")}\n<p class="daily-empty daily-filter-empty" data-daily-filter-empty hidden>このジャンルの記事はまだありません。</p>\n</div>`;
 }
 
-async function renderEpisodes(blocks, token, logLines, label) {
-  const dbId = findChildDatabaseId(blocks);
-  if (!dbId) { logLines.push(`- WARN: ${label} に子データベースが見つかりませんでした。`); return ""; }
+async function queryPublishedDatabase(databaseId, token) {
   let results = [];
   let cursor;
   do {
     const body = { page_size: 100 };
     if (cursor) body.start_cursor = cursor;
-    const data = await notionPost(`/databases/${dbId}/query`, token, body);
+    const data = await notionPost(`/databases/${databaseId}/query`, token, body);
     results = results.concat(data.results || []);
     cursor = data.has_more ? data.next_cursor : undefined;
   } while (cursor && results.length < 300);
+  return results
+    .filter(entryPublished)
+    .sort((a, b) => entryDate(b).localeCompare(entryDate(a)));
+}
 
-  const published = results.filter(entryPublished);
-  const epNo = (pg) => {
-    const p = (pg.properties || {})["話数"];
-    return p && typeof p.number === "number" ? p.number : 9999;
+function getProperty(props, names) {
+  for (const name of names) {
+    if (props[name]) return props[name];
+  }
+  return null;
+}
+
+function getPropertyText(props, names) {
+  return propToText(getProperty(props, names));
+}
+
+function getPropertyUrl(props, names) {
+  const prop = getProperty(props, names);
+  return prop && prop.type === "url" ? prop.url || "" : "";
+}
+
+function normalizeMorningCategory(source, rawValue) {
+  if (source.kind === "politics") return { key: "politics", label: "政治・行政" };
+  if (rawValue.includes("教育")) return { key: "education", label: "教育" };
+  if (rawValue.includes("福祉")) return { key: "welfare", label: "福祉" };
+  if (rawValue.includes("ビジネス")) return { key: "business", label: "ビジネス" };
+  return { key: "ai", label: "AI・テクノロジー" };
+}
+
+function renderMorningArticle(page, source) {
+  const props = page.properties || {};
+  const title = getPropertyText(props, ["記事名", "Name"]) || "（無題）";
+  const category = normalizeMorningCategory(source, getPropertyText(props, ["分野", "カテゴリ"]));
+  const date = entryDate(page);
+  const importance = getPropertyText(props, ["重要度"]);
+  const sourceUrl = getPropertyUrl(props, ["出典"]);
+  const fields = [];
+  const addTextField = (label, names) => {
+    const value = getPropertyText(props, names);
+    if (value) fields.push(`<p class="dr-field"><strong>${escapeHtml(label)}：</strong>${escapeHtml(value).replace(/\n/g, "<br>")}</p>`);
   };
-  published.sort((a, b) => epNo(a) - epNo(b));
 
-  const scanText = published.map((pg) => {
-    const pr = pg.properties || {};
-    return [propToText(pr["会話"]), propToText(pr["学ぶこと"]), propToText(pr["図解キャプション"]), propToText(pr["タイトル"])].join("\n");
-  }).join("\n");
-  const hits = scanForbidden(scanText);
-  if (hits.length > 0) {
-    logLines.push(`- SKIP (warning): ${label} → 公開NGらしきパターンを検知（種別: ${hits.join(", ")}）`);
-    return "";
-  }
-  if (published.length === 0) {
-    return '<p class="daily-empty">まだ公開された回はありません。毎日1話ずつ増えていきます。</p>';
+  if (source.kind === "politics") {
+    addTextField("事実要約", ["事実要約", "内容", "本文"]);
+    addTextField("更新差分", ["更新差分"]);
+    addTextField("次に追う情報", ["次に追う情報"]);
+  } else {
+    addTextField("要約", ["要約", "内容", "本文"]);
+    addTextField("今後の注目点", ["今後の注目点"]);
   }
 
-  const eps = published.map((pg, i) => {
-    const pr = pg.properties || {};
-    let title = "";
-    for (const k of Object.keys(pr)) { if (pr[k].type === "title") { title = plainTextOf(pr[k].title); break; } }
-    const field = propToText(pr["分野"]);
-    const chat = episodeChatHtml(propToText(pr["会話"]));
-    const svg = propToText(pr["図解SVG"]);
-    const cap = propToText(pr["図解キャプション"]);
-    const openAttr = i === published.length - 1 ? " open" : "";
-    let body = `<div class="chat">\n${chat}`;
-    if (svg) {
-      body += `<figure class="ep-figure">${svg}` + (cap ? `<figcaption>${escapeHtml(cap)}</figcaption>` : "") + `</figure>\n`;
-    }
-    body += `</div>`;
-    const tag = field ? `<span class="tag">${escapeHtml(field)}</span>` : "";
-    return `<details class="ep"${openAttr}>\n<summary>${tag}${escapeHtml(title)}</summary>\n${body}\n</details>`;
-  });
+  if (sourceUrl) {
+    fields.push(`<p class="dr-field"><strong>出典：</strong><a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(sourceUrl)}</a></p>`);
+  }
 
-  logLines.push(`- OK: ${label} → 公開エピソード ${published.length} 話を出力`);
-  return eps.join("\n");
+  const tags = [
+    `<span class="dr-tag dr-tag-source">${escapeHtml(source.label)}</span>`,
+    `<span class="dr-tag">${escapeHtml(category.label)}</span>`,
+  ];
+  if (date) tags.push(`<span class="dr-tag">${escapeHtml(date)}</span>`);
+  if (importance) tags.push(`<span class="dr-tag">${escapeHtml(importance)}</span>`);
+
+  return `<article class="daily-report daily-report--${category.key}" data-daily-category="${category.key}">\n<h3>${escapeHtml(title)}</h3>\n<div class="dr-tags">${tags.join("")}</div>\n${fields.join("\n")}\n</article>`;
 }
 
 // ---------- Notion API ----------
