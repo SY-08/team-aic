@@ -235,3 +235,98 @@ main a:not(.btn):not(.brand):not(.site-nav a) {
   display:inline-block;font-weight:800;font-size:.74rem;color:#fff;
   background:#2a6fb5;border-radius:999px;padding:3px 11px;margin-right:6px;
 }
+
+/* ===== team AICの図書館 ===== */
+.library-page-header {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+.library-section { padding-top: 32px; }
+.library-guide {
+  max-width: 760px;
+  padding: 0 0 24px 18px;
+  border-left: 4px solid #2a6fb5;
+}
+.library-guide__label {
+  margin: 0 0 8px;
+  color: #2a6fb5;
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.library-guide h2 {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+}
+.library-guide p:last-child {
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+}
+.library-collections {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.library-collection {
+  display: flex;
+  min-height: 330px;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid rgba(42, 111, 181, .2);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(30, 74, 120, .08);
+}
+.library-collection::before {
+  width: 58px;
+  height: 5px;
+  margin-bottom: 22px;
+  border-radius: 999px;
+  background: #2a6fb5;
+  content: "";
+}
+.library-collection--journal::before { background: #4f8a6f; }
+.library-collection--philosophy::before { background: #6f5ba7; }
+.library-collection__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #5b738d;
+  font-size: .73rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+}
+.library-collection__type {
+  margin: 24px 0 7px;
+  color: #2a6fb5;
+  font-size: .84rem;
+  font-weight: 800;
+}
+.library-collection--journal .library-collection__type { color: #3d7358; }
+.library-collection--philosophy .library-collection__type { color: #5a478f; }
+.library-collection h2 {
+  margin: 0 0 12px;
+  font-size: 1.32rem;
+  line-height: 1.4;
+}
+.library-collection > p:not(.library-collection__type) {
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+}
+.library-collection .btn {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 10px 15px;
+}
+@media (max-width: 900px) {
+  .library-collections { grid-template-columns: 1fr; }
+  .library-collection { min-height: 0; }
+}
+@media (max-width: 760px) {
+  .library-page-header { padding-bottom: 16px; }
+  .library-section { padding-top: 24px; }
+  .library-guide { padding-left: 14px; }
+  .library-collection { padding: 20px; }
+}
