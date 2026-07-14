@@ -61,6 +61,15 @@
   .foods{font-size:26px;letter-spacing:2px;min-height:34px;margin-top:6px;}
   .praise{font-weight:900;color:var(--gold);font-size:22px;min-height:28px;}
   .mini{font-size:13px;color:#5a6f82;}
+  .idle{animation:bob 1.6s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  .hpbar{width:120px;height:12px;border-radius:8px;background:#e6ecf3;overflow:hidden;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.15);margin-top:5px}
+  .hpbar>i{display:block;height:100%;background:linear-gradient(90deg,#3ec06a,#7be0a0);transition:width .35s}
+  .dmg{position:fixed;font-weight:900;color:#ff5a3c;font-size:28px;text-shadow:0 2px 0 #fff,0 0 8px rgba(255,120,60,.5);pointer-events:none;z-index:31;animation:dmgA .85s forwards}
+  @keyframes dmgA{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}25%{opacity:1;transform:translate(-50%,-90%) scale(1.15)}100%{opacity:0;transform:translate(-50%,-160%) scale(1)}}
+  #fx{position:fixed;inset:0;pointer-events:none;z-index:30}
+  .shakeScreen{animation:shs .4s}
+  @keyframes shs{0%,100%{transform:translate(0,0)}20%{transform:translate(-7px,4px)}40%{transform:translate(7px,-4px)}60%{transform:translate(-5px,2px)}80%{transform:translate(5px,-2px)}}
 </style>
 </head>
 <body>
@@ -92,7 +101,7 @@
     <div class="stage" id="stage">
       <div class="cap" id="stageCap"></div>
       <div class="fighter"><img class="sprite" id="pSprite"><div class="lbl" id="pName"></div></div>
-      <div class="fighter"><img class="sprite" id="eSprite"><div class="lbl" id="eName"></div></div>
+      <div class="fighter"><img class="sprite" id="eSprite"><div class="lbl" id="eName"></div><div class="hpbar" id="eHp"><i style="width:100%"></i></div></div>
     </div>
     <div class="abacus">
       <div class="track" id="track"></div>
@@ -121,6 +130,7 @@
   </section>
 </div>
 <div class="flash" id="flash"></div>
+<canvas id="fx"></canvas>
 
 <script>
 (function(){
@@ -132,12 +142,13 @@ const PARTNERS=[
   {key:"kijimidori",name:"キジミドリ",attr:"くさ・かぜ",color:"#4faa4f",moves:["リーフカッター","かぜのつばさ","グリーンストーム"]}
 ];
 const ENEMIES=[
-  {key:"dokuchu",name:"ドクチュー",color:"#8a6fbf"},
+  // こわいキャラを かくしたい時は、その行の先頭に // をつけるだけ！
   {key:"hiepillar",name:"ヒエピラー",color:"#7fd3e0"},
   {key:"koromogura",name:"コロモグラ",color:"#b08a5a"},
   {key:"elebee",name:"エレビー",color:"#e0b13a"},
-  {key:"saborin",name:"サボリン",color:"#5fa84f"},
-  {key:"dokuronezu",name:"ドクロネズ",color:"#5b4a66"}
+  {key:"saborin",name:"サボリン",color:"#5fa84f"}
+  // ,{key:"dokuchu",name:"ドクチュー",color:"#8a6fbf"}    // ← ドクロ顔（こわい？）今はOFF
+  // ,{key:"dokuronezu",name:"ドクロネズ",color:"#5b4a66"} // ← ドクロ顔（こわい？）今はOFF
 ];
 const ATTR_COLOR={"でんき":"#f4d03f","ほのお":"#ff6a3d","みず":"#3aa0e0","くさ・かぜ":"#5fc46a"};
 const IDLE=["ためる…","かわす！","むにゃむにゃ ねる…","ようすを みている"];
@@ -180,25 +191,39 @@ function openMenu(){ if(partner) document.getElementById("menuPartner").textCont
 /* ---------- abacus + battle ---------- */
 let count=0, enemy=null, koFlag=false;
 const track=document.getElementById("track"), tensBox=document.getElementById("tens");
-function newEnemy(){ enemy=ENEMIES[Math.floor(Math.random()*ENEMIES.length)]; const es=document.getElementById("eSprite"); es.className="sprite"; setSprite(es,enemy); document.getElementById("eName").textContent=enemy.name; }
+function newEnemy(){ enemy=ENEMIES[Math.floor(Math.random()*ENEMIES.length)]; enemy.maxhp=3; enemy.hp=3; const es=document.getElementById("eSprite"); es.className="sprite idle"; setSprite(es,enemy); document.getElementById("eName").textContent=enemy.name; setHp(); }
+// ---- battle FX ----
+const fx=document.getElementById("fx"), fxc=fx.getContext("2d");
+let parts=[], fxRun=false;
+function fxSize(){ fx.width=innerWidth; fx.height=innerHeight; }
+addEventListener("resize",fxSize); fxSize();
+function burst(cx,cy,color,n){ for(let i=0;i<n;i++){ const a=Math.random()*Math.PI*2, sp=2+Math.random()*7.5; parts.push({x:cx,y:cy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-2,life:1,color:color,r:3+Math.random()*5}); } if(!fxRun){ fxRun=true; requestAnimationFrame(fxLoop);} }
+function fxLoop(){ fxc.clearRect(0,0,fx.width,fx.height); parts=parts.filter(p=>p.life>0); for(const p of parts){ p.x+=p.vx; p.y+=p.vy; p.vy+=0.25; p.life-=0.025; fxc.globalAlpha=Math.max(0,p.life); fxc.fillStyle=p.color; fxc.beginPath(); fxc.arc(p.x,p.y,p.r,0,7); fxc.fill(); } fxc.globalAlpha=1; if(parts.length){ requestAnimationFrame(fxLoop);} else { fxRun=false; } }
+function centerOf(el){ const r=el.getBoundingClientRect(); return {x:r.left+r.width/2, y:r.top+r.height/2}; }
+function shakeScreen(){ document.body.classList.remove("shakeScreen"); void document.body.offsetWidth; document.body.classList.add("shakeScreen"); }
+function damageNum(txt,color){ const c=centerOf(document.getElementById("eSprite")); const d=document.createElement("div"); d.className="dmg"; d.textContent=txt; if(color)d.style.color=color; d.style.left=c.x+"px"; d.style.top=(c.y-8)+"px"; document.body.appendChild(d); setTimeout(()=>d.remove(),860); }
+function setHp(){ const bar=document.querySelector("#eHp > i"); if(bar&&enemy) bar.style.width=Math.max(0,Math.round((enemy.hp/enemy.maxhp)*100))+"%"; }
 function drawBeads(){
   track.innerHTML=""; const ones=count%10; const cur=ones===0&&count>0?10:ones;
   for(let i=0;i<10;i++){ const b=document.createElement("div"); b.className="bead"+(i<cur?" done":" pending");
     const hue=(i*36); b.style.background="hsl("+hue+",75%,55%)"; track.appendChild(b);}
 }
 function drawTens(){ const tens=Math.floor(count/10); tensBox.innerHTML=""; for(let i=0;i<tens;i++){ const s=document.createElement("span"); s.className="tama"; s.textContent="🟦"; tensBox.appendChild(s);} if(tens>0){ const t=document.createElement("span"); t.className="mini"; t.style.marginLeft="6px"; t.textContent="＝ 10のたば ×"+tens+(count>=100?"（100は "+Math.floor(count/100)+"）":""); tensBox.appendChild(t);} }
-function startAbacus(){ count=0; koFlag=false; setSprite(document.getElementById("pSprite"),partner); document.getElementById("pName").textContent=partner.name; newEnemy(); render(); document.getElementById("stageCap").textContent="てきが あらわれた！"; }
+function startAbacus(){ count=0; koFlag=false; const ps=document.getElementById("pSprite"); setSprite(ps,partner); ps.classList.add("idle"); document.getElementById("pName").textContent=partner.name; newEnemy(); render(); document.getElementById("stageCap").textContent="てきが あらわれた！"; }
 function render(){ document.getElementById("numBig").textContent=count; drawBeads(); drawTens();
   document.getElementById("placeTxt").textContent = count>=1000?"1000まで きたよ！すごい！":"たまを かぞえて 10で ひっさつわざ！"; }
 function partnerAttack(small){
-  const ps=document.getElementById("pSprite"); ps.classList.remove("hit"); void ps.offsetWidth; ps.classList.add("hit");
-  if(small){ document.getElementById("stageCap").textContent=partner.name+"の たいあたり！"; return; }
+  const ps=document.getElementById("pSprite"), es=document.getElementById("eSprite");
+  ps.classList.remove("hit"); void ps.offsetWidth; ps.classList.add("hit");
+  const col=ATTR_COLOR[partner.attr]||"#2a6fb5"; const c=centerOf(es);
+  if(small){ enemy.hp=Math.max(1,enemy.hp-1); setHp(); burst(c.x,c.y,col,12); shakeScreen(); damageNum("１",col);
+    document.getElementById("stageCap").textContent=partner.name+"の たいあたり！"; return; }
   const mv=partner.moves[Math.floor(Math.random()*partner.moves.length)];
   document.getElementById("stageCap").textContent="⚡"+partner.name+"の『"+mv+"』！";
-  const fl=document.getElementById("flash"); fl.style.background=ATTR_COLOR[partner.attr]||"#2a6fb5"; fl.classList.remove("go"); void fl.offsetWidth; fl.classList.add("go");
-  const es=document.getElementById("eSprite"); es.classList.add("ko");
-  say(mv+"！");
-  setTimeout(()=>{ es.classList.remove("ko"); newEnemy(); document.getElementById("stageCap").textContent="つぎの てきだ！"; },760);
+  const fl=document.getElementById("flash"); fl.style.background=col; fl.classList.remove("go"); void fl.offsetWidth; fl.classList.add("go");
+  burst(c.x,c.y,col,64); shakeScreen(); damageNum("ドカーン！",col);
+  enemy.hp=0; setHp(); es.classList.remove("idle"); es.classList.add("ko"); say(mv+"！");
+  setTimeout(()=>{ es.classList.remove("ko"); newEnemy(); document.getElementById("stageCap").textContent="つぎの てきだ！"; },800);
 }
 function enemyIdle(){ const es=document.getElementById("eSprite"); const g=IDLE[Math.floor(Math.random()*IDLE.length)]; document.getElementById("stageCap").textContent=(enemy?enemy.name:"てき")+"は "+g;
   if(Math.random()<0.25){ const ps=document.getElementById("pSprite"); ps.classList.remove("shake"); void ps.offsetWidth; ps.classList.add("shake"); document.getElementById("stageCap").textContent=(enemy?enemy.name:"てき")+"の こうげき！"; } }
