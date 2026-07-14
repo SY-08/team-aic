@@ -114,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ["profile.html", "プロフィール"],
     ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
-    ["stats.html", "HPの閲覧数"],
     ["roadmap.html", "ロードマップ"],
     ["contact.html", "お問い合わせ"],
   ];
