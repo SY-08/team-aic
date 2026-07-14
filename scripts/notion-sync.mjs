@@ -334,13 +334,15 @@ function propToText(prop) {
   }
 }
 
-const DAILY_SKIP_PROPS = ["公開状態", "一次情報確認", "作成日時"];
+const DAILY_SKIP_PROPS = ["公開状態", "一次情報確認", "作成日時",
+  "連動キー", "哲学化状態", "関連哲学", "元ジャーナル", "示唆の起点", "関連分野", "AI・テク接点"];
 const DAILY_META_TYPES = ["date", "select", "status", "multi_select"];
-// 私のジャーナルのカテゴリ別・左線カラー（濃紺／スカイブルー／ゴールド）
+// 私のジャーナルのカテゴリ別・左線カラー（濃紺／スカイブルー／ゴールド／グリーン）
 const CATEGORY_COLORS = {
   "私のジャストアイデア": "#0d2a5f",
   "私が読んだ本": "#3a95d8",
   "活動を経てのジャーナリング": "#bf972c",
+  "ニュースからの気づき（示唆）": "#2b7d4b",
 };
 
 function entryPublished(page) {
@@ -375,7 +377,16 @@ async function renderDatabaseEntries(blocks, token, logLines, label) {
   } while (cursor && results.length < 300);
 
   const published = results.filter(entryPublished);
-  published.sort((a, b) => (entryDate(a) < entryDate(b) ? 1 : -1));
+  const kindRank = (pg) => {
+    const p = (pg.properties || {})["種別"];
+    const n = p && p.select ? p.select.name : "";
+    return n === "合成コラム(本命)" ? 0 : 1;
+  };
+  published.sort((a, b) => {
+    const kr = kindRank(a) - kindRank(b);
+    if (kr !== 0) return kr;
+    return entryDate(a) < entryDate(b) ? 1 : -1;
+  });
 
   const scanText = published
     .map((pg) => Object.values(pg.properties || {}).map(propToText).join("\n"))
@@ -398,11 +409,22 @@ async function renderDatabaseEntries(blocks, token, logLines, label) {
     }
     const metas = [];
     const fields = [];
+    let insightHtml = "";
     let borderColor = "";
     for (const k of Object.keys(props)) {
       if (DAILY_SKIP_PROPS.includes(k)) continue;
       const pr = props[k];
       if (pr.type === "title") continue;
+      if (k === "種別") {
+        const v = propToText(pr);
+        if (v) metas.unshift(`<span class="dr-kind">${escapeHtml(v)}</span>`);
+        continue;
+      }
+      if (k === "私の示唆") {
+        const v = plainTextOf(pr.rich_text);
+        if (v) insightHtml = `<div class="dr-insight"><span class="dr-insight-label">💡 私の示唆</span>${escapeHtml(v).replace(/\n/g, "<br>")}</div>`;
+        continue;
+      }
       if (k === "カテゴリ") {
         const cv = propToText(pr);
         if (cv) {
@@ -427,7 +449,7 @@ async function renderDatabaseEntries(blocks, token, logLines, label) {
       }
     }
     const styleAttr = borderColor ? ` style="border-left:7px solid ${borderColor}"` : "";
-    return `<article class="daily-report"${styleAttr}>\n<h3>${escapeHtml(titleText) || "（無題）"}</h3>\n<div class="dr-tags">${metas.join("")}</div>\n${fields.join("\n")}\n</article>`;
+    return `<article class="daily-report"${styleAttr}>\n<h3>${escapeHtml(titleText) || "（無題）"}</h3>\n<div class="dr-tags">${metas.join("")}</div>\n${fields.join("\n")}\n${insightHtml}\n</article>`;
   });
 
   logLines.push(`- OK: ${label} → 公開記事 ${published.length} 件を出力`);
