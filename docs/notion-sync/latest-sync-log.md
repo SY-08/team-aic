@@ -7,6 +7,29 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 
 ---
 
+## 2026-07-14 08:35:25 UTC — sync run
+- OK: 08-01 Home → index.html（変更なし）
+- OK: 08-02 About → about.html（変更なし）
+- OK: 08-03 Activities → activities.html（変更なし）
+- OK: 08-04 Profile → profile.html（変更なし）
+- OK: 08-05 Open Source → open-source.html（変更なし）
+- OK: 08-06 Live Build Log → live-build.html（変更なし）
+- OK: 08-09 Automation → automation.html（変更なし）
+- OK: 08-10 note Drafts → note-drafts.html（変更なし）
+- OK: 08-11 Book Materials → book.html（変更なし）
+- OK: 08-12 YouTube Drafts → youtube.html（変更なし）
+- OK: 08-13 Roadmap → roadmap.html（変更なし）
+- OK: 08-14 Contact → contact.html（変更なし）
+- OK: 08-15 勉強会活動 → seminar.html（変更なし）
+- OK: 08-16 AIの日報 → 公開記事 9 件を出力
+- OK: 08-16 AIの日報 → ai-daily.html（更新あり）
+- OK: 08-17 私とAIの哲学 → 公開記事 3 件を出力
+- OK: 08-17 私とAIの哲学 → philosophy.html（更新あり）
+- OK: 08-18 日本の裏側 → 公開記事 3 件を出力
+- OK: 08-18 日本の裏側 → japan-inside.html（更新あり）
+- OK: 08-20 私のジャーナル → 公開記事 2 件を出力
+- OK: 08-20 私のジャーナル → my-journal.html（更新あり）
+
 ## 2026-07-14 07:01:16 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
@@ -422,29 +445,6 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
 ## 2026-07-12 21:36:59 UTC — sync run
-- OK: 08-01 Home → index.html（変更なし）
-- OK: 08-02 About → about.html（変更なし）
-- OK: 08-03 Activities → activities.html（変更なし）
-- OK: 08-04 Profile → profile.html（変更なし）
-- OK: 08-05 Open Source → open-source.html（変更なし）
-- OK: 08-06 Live Build Log → live-build.html（変更なし）
-- OK: 08-09 Automation → automation.html（変更なし）
-- OK: 08-10 note Drafts → note-drafts.html（変更なし）
-- OK: 08-11 Book Materials → book.html（変更なし）
-- OK: 08-12 YouTube Drafts → youtube.html（変更なし）
-- OK: 08-13 Roadmap → roadmap.html（変更なし）
-- OK: 08-14 Contact → contact.html（変更なし）
-- OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 4 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 1 件を出力
-- OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 1 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
-- OK: 08-20 私のジャーナル → my-journal.html（変更なし）
-
-## 2026-07-12 20:43:03 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
