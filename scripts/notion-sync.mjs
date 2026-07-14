@@ -69,6 +69,7 @@ const PAGE_MAP = [
   { file: "philosophy.html", prefix: "08-17", label: "08-17 私とAIの哲学", database: true },
   { file: "japan-inside.html", prefix: "08-18", label: "08-18 日本の裏側", database: true },
   { file: "my-journal.html", prefix: "08-20", label: "08-20 私のジャーナル", database: true },
+  { file: "git-github.html", prefix: "08-21", label: "08-21 お勉強会", episodes: true },
 ];
 
 // Heuristic guardrails. Never log the matched value itself, only the rule name.
@@ -185,6 +186,17 @@ async function syncPage(entry, rootChildren, token, logLines) {
       "<!-- notion-sync:content:start -->",
       "<!-- notion-sync:content:end -->",
       dbHtml || '<p class="daily-empty">（準備中）</p>'
+    );
+    fileContent = result.content;
+    changedAny = changedAny || result.changed;
+  } else if (entry.episodes) {
+    const blocks = await getAllChildren(pageBlock.id, token);
+    const epHtml = await renderEpisodes(blocks, token, logLines, entry.label);
+    const result = replaceBetweenMarkers(
+      fileContent,
+      "<!-- notion-sync:content:start -->",
+      "<!-- notion-sync:content:end -->",
+      epHtml || '<p class="daily-empty">（準備中）</p>'
     );
     fileContent = result.content;
     changedAny = changedAny || result.changed;
@@ -454,6 +466,82 @@ async function renderDatabaseEntries(blocks, token, logLines, label) {
 
   logLines.push(`- OK: ${label} → 公開記事 ${published.length} 件を出力`);
   return `<div class="daily-reports">\n${cards.join("\n")}\n</div>`;
+}
+
+// ---------- お勉強会エピソード rendering ----------
+const SPEAKER_CLASS = { "神様": "god", "Gitさん": "git", "GitHub氏": "github" };
+
+function episodeChatHtml(dialogue) {
+  const lines = String(dialogue || "").split("\n").map((l) => l.trim()).filter(Boolean);
+  let html = "";
+  for (const line of lines) {
+    const idx = line.indexOf("｜");
+    if (idx === -1) continue;
+    const who = line.slice(0, idx).trim();
+    const text = line.slice(idx + 1).trim();
+    if (who === "ナレーション") {
+      html += `<div class="stage"><span>${escapeHtml(text)}</span></div>\n`;
+      continue;
+    }
+    const cls = SPEAKER_CLASS[who] || "";
+    html += `<div class="msg ${cls}"><div class="chat-av ${cls}"></div><div class="msg-body"><div class="name">${escapeHtml(who)}</div><div class="bubble">${escapeHtml(text)}</div></div></div>\n`;
+  }
+  return html;
+}
+
+async function renderEpisodes(blocks, token, logLines, label) {
+  const dbId = findChildDatabaseId(blocks);
+  if (!dbId) { logLines.push(`- WARN: ${label} に子データベースが見つかりませんでした。`); return ""; }
+  let results = [];
+  let cursor;
+  do {
+    const body = { page_size: 100 };
+    if (cursor) body.start_cursor = cursor;
+    const data = await notionPost(`/databases/${dbId}/query`, token, body);
+    results = results.concat(data.results || []);
+    cursor = data.has_more ? data.next_cursor : undefined;
+  } while (cursor && results.length < 300);
+
+  const published = results.filter(entryPublished);
+  const epNo = (pg) => {
+    const p = (pg.properties || {})["話数"];
+    return p && typeof p.number === "number" ? p.number : 9999;
+  };
+  published.sort((a, b) => epNo(a) - epNo(b));
+
+  const scanText = published.map((pg) => {
+    const pr = pg.properties || {};
+    return [propToText(pr["会話"]), propToText(pr["学ぶこと"]), propToText(pr["図解キャプション"]), propToText(pr["タイトル"])].join("\n");
+  }).join("\n");
+  const hits = scanForbidden(scanText);
+  if (hits.length > 0) {
+    logLines.push(`- SKIP (warning): ${label} → 公開NGらしきパターンを検知（種別: ${hits.join(", ")}）`);
+    return "";
+  }
+  if (published.length === 0) {
+    return '<p class="daily-empty">まだ公開された回はありません。毎日1話ずつ増えていきます。</p>';
+  }
+
+  const eps = published.map((pg, i) => {
+    const pr = pg.properties || {};
+    let title = "";
+    for (const k of Object.keys(pr)) { if (pr[k].type === "title") { title = plainTextOf(pr[k].title); break; } }
+    const field = propToText(pr["分野"]);
+    const chat = episodeChatHtml(propToText(pr["会話"]));
+    const svg = propToText(pr["図解SVG"]);
+    const cap = propToText(pr["図解キャプション"]);
+    const openAttr = i === published.length - 1 ? " open" : "";
+    let body = `<div class="chat">\n${chat}`;
+    if (svg) {
+      body += `<figure class="ep-figure">${svg}` + (cap ? `<figcaption>${escapeHtml(cap)}</figcaption>` : "") + `</figure>\n`;
+    }
+    body += `</div>`;
+    const tag = field ? `<span class="tag">${escapeHtml(field)}</span>` : "";
+    return `<details class="ep"${openAttr}>\n<summary>${tag}${escapeHtml(title)}</summary>\n${body}\n</details>`;
+  });
+
+  logLines.push(`- OK: ${label} → 公開エピソード ${published.length} 話を出力`);
+  return eps.join("\n");
 }
 
 // ---------- Notion API ----------
