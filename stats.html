@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>閲覧数ダッシュボード | team AIC｛team AI circle｝</title>
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <style>
   :root{
     --blue:#2a6fb5; --blue-dark:#1c548c; --gold:#bf972c; --gold-dark:#9c7a1f;
@@ -79,6 +79,8 @@
     <div style="text-align:right">
       <div class="updated" id="updated">読み込み中…</div>
       <button class="btn" id="refresh">↻ 最新に更新</button>
+      <button class="btn" id="skipBtn" style="background:#6b7b8b;margin-top:8px">自分をカウントから外す</button>
+      <div style="margin-top:6px"><a href="index.html" style="font-size:.82rem">← team AIC トップへ</a></div>
     </div>
   </header>
 
@@ -126,12 +128,18 @@
     ["seminar.html", "勉強会活動"],
     ["knowledge-monster.html", "ナレッジモンスター"],
     ["ai-creative.html", "AIクリエイティブ自由研究"],
+    ["git-github.html", "GitさんとGitHub氏のお勉強会"],
+    ["daily-column.html", "毎日の記録・コラム"],
+    ["ai-daily.html", "AIの日報"],
+    ["philosophy.html", "私とAIの哲学"],
+    ["japan-inside.html", "日本の裏側"],
+    ["my-journal.html", "私のジャーナル"],
     ["profile.html", "プロフィール"],
-    ["open-source.html", "活動の設計図"],
+    ["open-source.html", "オープンソース"],
     ["live-build.html", "活動共有ノート"],
     ["roadmap.html", "ロードマップ"],
     ["contact.html", "お問い合わせ"],
-    ["blueprints.html", "設計図"],
+    ["prompts.html", "プロンプト"],
     ["automation.html", "自動化"],
     ["note-drafts.html", "note下書き"],
     ["book.html", "本化素材"],
@@ -203,6 +211,28 @@
   }
 
   document.getElementById("refresh").addEventListener("click", load);
+
+  // 自分の端末をカウントから除外／復帰（GoatCounterのskipgcを使用）
+  (function(){
+    var q=(location.search||"").toLowerCase();
+    if(q.indexOf("skipgc=1")!==-1){ try{localStorage.setItem("skipgc","t");}catch(e){} }
+    if(q.indexOf("skipgc=0")!==-1){ try{localStorage.removeItem("skipgc");}catch(e){} }
+    var btn=document.getElementById("skipBtn");
+    function isSkipped(){ try{return localStorage.getItem("skipgc")==="t";}catch(e){return false;} }
+    function render(){
+      if(isSkipped()){ btn.textContent="✓ この端末は除外中（押すと戻す）"; btn.style.background="#2f9e63"; }
+      else{ btn.textContent="自分をカウントから外す"; btn.style.background="#6b7b8b"; }
+    }
+    btn.addEventListener("click",function(){
+      try{
+        if(isSkipped()){ localStorage.removeItem("skipgc"); alert("この端末のカウントを再開しました。"); }
+        else{ localStorage.setItem("skipgc","t"); alert("この端末（このブラウザ）では、以降ページ閲覧数をカウントしません。\n自分の訪問を除外して、純粋な数字を計測できます。\n\n※ スマホや他のブラウザでも見る場合は、それぞれで一度この操作をしてください。"); }
+      }catch(e){ alert("この環境では設定を保存できませんでした。"); }
+      render();
+    });
+    render();
+  })();
+
   load();
 </script>
 </body>

@@ -25,10 +25,10 @@
   .gg-cast .c { text-align:center; font-size:.82rem; color:#4a5b6b; }
   .chat-av { width:52px; height:52px; border-radius:50%; background:#fff; border:2px solid rgba(42,111,181,.35);
     background-size:cover; background-position:center; display:inline-flex; align-items:center; justify-content:center;
-    font-weight:800; font-size:.72rem; color:#fff; box-shadow:0 3px 8px rgba(20,60,110,.18); }
-  .chat-av.god    { background-color:#c9a13a; background-image:url('assets/img/git-github/god.png'); }
-  .chat-av.git    { background-color:#3aa564; background-image:url('assets/img/git-github/git.png'); }
-  .chat-av.github { background-color:#2b3440; background-image:url('assets/img/git-github/github.png'); }
+    font-size:0; color:transparent; box-shadow:0 3px 8px rgba(20,60,110,.18); flex:0 0 auto; }
+  .chat-av.god    { background-color:#fff; background-image:url('assets/img/git-github/god.png?v=2'); }
+  .chat-av.git    { background-color:#fff; background-image:url('assets/img/git-github/git.png?v=2'); }
+  .chat-av.github { background-color:#fff; background-image:url('assets/img/git-github/github.png?v=2'); }
   .gg-cast .chat-av { width:64px; height:64px; margin-bottom:6px; }
 
   .ep { border:1px solid var(--color-border,#e2e9f1); border-radius:16px; background:#fff; margin:16px 0;
@@ -54,6 +54,9 @@
   .stage { text-align:center; color:#6a7b8b; font-size:.86rem; margin:14px 0; }
   .stage span { background:rgba(255,255,255,.7); padding:5px 14px; border-radius:999px; }
   .ep-next { text-align:center; font-weight:700; color:#1c548c; padding:12px; background:#eaf5fd; }
+  .ep-figure{ margin:16px 0 4px; text-align:center; }
+  .ep-figure svg{ display:block; margin:0 auto; }
+  .ep-figure figcaption{ font-size:.86rem; color:#4a5b6b; margin-top:8px; line-height:1.6; }
 </style>
 </head>
 <body>
@@ -92,146 +95,53 @@
     <h2>お話一覧</h2>
     <p class="section-lead">上から順番に読むのがおすすめです。タイトルを押すと、その回のチャットが開きます。</p>
 
-    <details class="ep" open>
-      <summary><span class="tag">第一話</span>目を覚ますと、スカイブルーの世界</summary>
-      <div class="chat">
-        <div class="stage"><span>——気づけば、そこは一面スカイブルーの世界だった。</span></div>
-
-        <div class="msg git">
-          <div class="chat-av git">Git</div>
-          <div class="msg-body"><div class="name">Gitさん</div>
-            <div class="bubble">あれ…？ ここ、どこ…？（キョロキョロ）</div></div>
-        </div>
-        <div class="msg github">
-          <div class="chat-av github">GH</div>
-          <div class="msg-body"><div class="name">GitHub氏</div>
-            <div class="bubble">さあ…？ 気づいたら、この青い世界に立っていた…。</div></div>
-        </div>
-        <div class="msg git">
-          <div class="chat-av git">Git</div>
-          <div class="msg-body"><div class="name">Gitさん</div>
-            <div class="bubble">「Git」って名前だけは、なぜか覚えてる。でも、それ以外はまっしろ。</div></div>
-        </div>
-        <div class="msg github">
-          <div class="chat-av github">GH</div>
-          <div class="msg-body"><div class="name">GitHub氏</div>
-            <div class="bubble">奇遇だね。ぼくも「GitHub」って名前だけ分かる。中身はゼロ。</div></div>
-        </div>
-
-        <div class="stage"><span>——そこへ、金の輪っかを浮かべた者が、ふわりと現れた。</span></div>
-
-        <div class="msg god">
-          <div class="chat-av god">神</div>
-          <div class="msg-body"><div class="name">神様</div>
-            <div class="bubble">ふむ。目を覚ましたか、若人よ。お前たちのこと、教えてやろうか？</div></div>
-        </div>
-        <div class="msg git">
-          <div class="chat-av git">Git</div>
-          <div class="msg-body"><div class="name">Gitさん</div>
-            <div class="bubble">だれ…？ 急に出てきて、めっちゃあやしい…。</div></div>
-        </div>
-        <div class="msg github">
-          <div class="chat-av github">GH</div>
-          <div class="msg-body"><div class="name">GitHub氏</div>
-            <div class="bubble">ていうか神様、なんでスニーカー履いてるんですか。</div></div>
-        </div>
-        <div class="msg god">
-          <div class="chat-av god">神</div>
-          <div class="msg-body"><div class="name">神様</div>
-            <div class="bubble">…ふっ。細かいことを気にするな。走りやすいからだ。</div></div>
-        </div>
-        <div class="msg git">
-          <div class="chat-av git">Git</div>
-          <div class="msg-body"><div class="name">Gitさん</div>
-            <div class="bubble">走る神様……？（ますます怪しい）</div></div>
-        </div>
-        <div class="msg god">
-          <div class="chat-av god">神</div>
-          <div class="msg-body"><div class="name">神様</div>
-            <div class="bubble">まあ座れ。お前たちが「何者なのか」、ゆっくり教えてやる。損はさせん。</div></div>
-        </div>
-        <div class="msg github">
-          <div class="chat-av github">GH</div>
-          <div class="msg-body"><div class="name">GitHub氏</div>
-            <div class="bubble">（小声）どうする…？ スニーカー、まだ気になるけど…。</div></div>
-        </div>
-        <div class="msg git">
-          <div class="chat-av git">Git</div>
-          <div class="msg-body"><div class="name">Gitさん</div>
-            <div class="bubble">（小声）…名前しか分からんし、聞くだけ聞いてみるか。</div></div>
-        </div>
-        <div class="msg github">
-          <div class="chat-av github">GH</div>
-          <div class="msg-body"><div class="name">GitHub氏</div>
-            <div class="bubble">神様、お願いします。ぼくらのこと、教えてください。</div></div>
-        </div>
-        <div class="msg god">
-          <div class="chat-av god">神</div>
-          <div class="msg-body"><div class="name">神様</div>
-            <div class="bubble">よし。次回からまずは「Git」とは何者か、じっくり解き明かそう。心して待て。</div></div>
-        </div>
-      </div>
-      <div class="ep-next">つづく — 次回「Gitって、実は“セーブの神”だった」</div>
-    </details>
-
+    <!-- notion-sync:content:start -->
     <details class="ep">
-      <summary><span class="tag">第二話</span>Gitって、実は“セーブの神”だった</summary>
-      <div class="chat">
-        <div class="stage"><span>——お勉強会、はじまりはじまり。まずはGitさんの回。</span></div>
-
-        <div class="msg god">
-          <div class="chat-av god">神</div>
-          <div class="msg-body"><div class="name">神様</div>
-            <div class="bubble">さてGitよ。お前の正体を教えてやろう。お前は「記録する者」だ。</div></div>
-        </div>
-        <div class="msg git">
-          <div class="chat-av git">Git</div>
-          <div class="msg-body"><div class="name">Gitさん</div>
-            <div class="bubble">記録…？ なにを記録するの？</div></div>
-        </div>
-        <div class="msg god">
-          <div class="chat-av god">神</div>
-          <div class="msg-body"><div class="name">神様</div>
-            <div class="bubble">人が何かを作るとき、途中で「ここまでの状態」を保存したくなる。ゲームのセーブポイントのようにな。それを刻むのがお前の力——「コミット」だ。</div></div>
-        </div>
-        <div class="msg git">
-          <div class="chat-av git">Git</div>
-          <div class="msg-body"><div class="name">Gitさん</div>
-            <div class="bubble">コミット…！ なんか、かっこいい響き…！</div></div>
-        </div>
-        <div class="msg github">
-          <div class="chat-av github">GH</div>
-          <div class="msg-body"><div class="name">GitHub氏</div>
-            <div class="bubble">（にぎやかし）Gitさん、急に主人公っぽくなってきたね〜。うらやましいぞ〜。</div></div>
-        </div>
-        <div class="msg god">
-          <div class="chat-av god">神</div>
-          <div class="msg-body"><div class="name">神様</div>
-            <div class="bubble">コミットを重ねれば、「いつ・何を・なぜ変えたか」が全部たどれる。失敗しても、前のセーブに戻れるのだ。</div></div>
-        </div>
-        <div class="msg git">
-          <div class="chat-av git">Git</div>
-          <div class="msg-body"><div class="name">Gitさん</div>
-            <div class="bubble">つまりぼくがいれば……作るのが、怖くなくなる……？</div></div>
-        </div>
-        <div class="msg god">
-          <div class="chat-av god">神</div>
-          <div class="msg-body"><div class="name">神様</div>
-            <div class="bubble">そういうことだ。お前は「やり直せる勇気」を人に与える者。だから胸を張れ。</div></div>
-        </div>
-        <div class="msg github">
-          <div class="chat-av github">GH</div>
-          <div class="msg-body"><div class="name">GitHub氏</div>
-            <div class="bubble">いい話だ…（涙）。……で、神様、ぼくの出番は？</div></div>
-        </div>
-        <div class="msg god">
-          <div class="chat-av god">神</div>
-          <div class="msg-body"><div class="name">神様</div>
-            <div class="bubble">次回だ、GitHub。あわてるな。スニーカーの紐でも結んで待っておれ。</div></div>
-        </div>
-      </div>
-      <div class="ep-next">つづく — 次回、GitHub氏の正体にせまる</div>
-    </details>
+<summary><span class="tag">Git基礎</span>第1話 Gitってなに？＝作業のセーブ機能</summary>
+<div class="chat">
+<div class="stage"><span>——スカイブルーの世界。Gitさんは、自分が何者かを思い出せずにいた。</span></div>
+<div class="msg git"><div class="chat-av git"></div><div class="msg-body"><div class="name">Gitさん</div><div class="bubble">神様…。おれ「Git」って名前だけど、結局なにをする者なの？</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">ふむ。ひとことで言えば、お前は「作業のセーブ機能」じゃ。</div></div></div>
+<div class="msg git"><div class="chat-av git"></div><div class="msg-body"><div class="name">Gitさん</div><div class="bubble">セーブ…？ゲームの、あのセーブ？</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">そうじゃ。文章でもコードでも、区切りのいいところで「ここまで！」と記録を残す。それがお前の力じゃ。</div></div></div>
+<div class="msg github"><div class="chat-av github"></div><div class="msg-body"><div class="name">GitHub氏</div><div class="bubble">へぇ。じゃあ失敗しても、前のセーブに戻れるってこと？</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">その通り。だから安心して挑戦できる。消えて困るものを、時間ごと残せるんじゃ。</div></div></div>
+<div class="msg git"><div class="chat-av git"></div><div class="msg-body"><div class="name">Gitさん</div><div class="bubble">なるほど…！おれ、けっこう頼れるやつだったんだ。</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">図で見るとこうじゃ。作業して、節目でセーブ。これを繰り返すだけ。</div></div></div>
+<figure class="ep-figure"><svg viewBox='0 0 600 160' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:600px;height:auto' font-family='sans-serif'><line x1='40' y1='90' x2='560' y2='90' stroke='#b9d0ea' stroke-width='6' stroke-linecap='round'/><g font-size='13' fill='#5b6b7a' text-anchor='middle'><text x='110' y='132'>作業</text><text x='250' y='132'>作業</text><text x='390' y='132'>作業</text><text x='520' y='132'>今</text></g><circle cx='180' cy='90' r='16' fill='#2a6fb5'/><circle cx='320' cy='90' r='16' fill='#2a6fb5'/><circle cx='460' cy='90' r='16' fill='#2a6fb5'/><g font-size='12' fill='#1c548c' text-anchor='middle' font-weight='700'><text x='180' y='58'>セーブ</text><text x='320' y='58'>セーブ</text><text x='460' y='58'>セーブ</text></g><path d='M320,90 q-70,-48 -140,0' fill='none' stroke='#bf972c' stroke-width='3' stroke-dasharray='4 5'/><text x='250' y='26' font-size='12' fill='#9c7a1f' text-anchor='middle'>いつでも戻れる</text></svg><figcaption>Gitは「作業→セーブ（記録）」を繰り返す仕組み。ゲームのセーブポイントと同じで、いつでも前に戻れる。</figcaption></figure>
+</div>
+</details>
+<details class="ep">
+<summary><span class="tag">Git基礎</span>第2話 コミット＝セーブする</summary>
+<div class="chat">
+<div class="stage"><span>翌朝。Gitさんは「セーブのやり方」を知りたくなった。</span></div>
+<div class="msg git"><div class="chat-av git"></div><div class="msg-body"><div class="name">Gitさん</div><div class="bubble">神様、セーブって具体的にどうやるの？</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">その1回のセーブを「コミット」と呼ぶ。今の状態を写真に撮って、名前を付けて保存するイメージじゃ。</div></div></div>
+<div class="msg github"><div class="chat-av github"></div><div class="msg-body"><div class="name">GitHub氏</div><div class="bubble">名前？</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">「ここで何をしたか」を一言添える。例えば『トップページの文言を修正』のようにな。</div></div></div>
+<div class="msg git"><div class="chat-av git"></div><div class="msg-body"><div class="name">Gitさん</div><div class="bubble">あとで見たとき、何のセーブか分かるように…！</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">その通り。コミットが積み重なると、作業の歴史そのものになる。</div></div></div>
+<div class="msg github"><div class="chat-av github"></div><div class="msg-body"><div class="name">GitHub氏</div><div class="bubble">日記みたいだね。</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">よい例えじゃ。1コミット＝1ページの日記。図を見てみよ。</div></div></div>
+<figure class="ep-figure"><svg viewBox='0 0 600 200' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:600px;height:auto' font-family='sans-serif'><defs><marker id='ar2' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='30' y='55' width='150' height='90' rx='10' fill='#eaf3fc' stroke='#2a6fb5' stroke-width='2'/><text x='105' y='95' font-size='13' fill='#1c548c' text-anchor='middle'>今の状態</text><text x='105' y='116' font-size='11' fill='#5b6b7a' text-anchor='middle'>（ファイル）</text><rect x='30' y='158' width='250' height='26' rx='6' fill='#fff7e6' stroke='#e6cf92'/><text x='42' y='176' font-size='12' fill='#9c7a1f'>メモ：トップの文言を修正</text><path d='M188,100 L300,100' stroke='#bf972c' stroke-width='3' marker-end='url(#ar2)'/><text x='244' y='88' font-size='12' fill='#9c7a1f' text-anchor='middle' font-weight='700'>コミット</text><rect x='330' y='60' width='150' height='90' rx='10' fill='#ffffff' stroke='#b9d0ea'/><rect x='345' y='50' width='150' height='90' rx='10' fill='#ffffff' stroke='#b9d0ea'/><rect x='360' y='40' width='150' height='90' rx='10' fill='#dceafa' stroke='#2a6fb5' stroke-width='2'/><text x='435' y='82' font-size='12' fill='#1c548c' text-anchor='middle' font-weight='700'>記録</text><text x='435' y='102' font-size='11' fill='#5b6b7a' text-anchor='middle'>状態＋メモ</text><text x='300' y='195' font-size='12' fill='#5b6b7a' text-anchor='middle'>コミットが積み重なる＝作業の歴史</text></svg><figcaption>コミット＝「今の状態＋ひとことメモ」を1枚の記録として保存すること。積み重なると作業の歴史になる。</figcaption></figure>
+</div>
+</details>
+<details class="ep" open>
+<summary><span class="tag">GitHub基礎</span>第3話 GitHub＝みんなで見られる保管庫</summary>
+<div class="chat">
+<div class="stage"><span>セーブを覚えたGitさん。でも、GitHub氏はまだ自分が何者か分からない。</span></div>
+<div class="msg github"><div class="chat-av github"></div><div class="msg-body"><div class="name">GitHub氏</div><div class="bubble">神様…。おれ「GitHub」だけど、Gitと何が違うの？</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">Gitが手元でのセーブなら、GitHubは「そのセーブを、みんなが見られる場所に置く保管庫」じゃ。</div></div></div>
+<div class="msg git"><div class="chat-av git"></div><div class="msg-body"><div class="name">Gitさん</div><div class="bubble">おれのセーブを、ネットに置いておく所…？</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">そう。自分のパソコンが壊れても大丈夫。仲間と一緒に見て、直せる。</div></div></div>
+<div class="msg github"><div class="chat-av github"></div><div class="msg-body"><div class="name">GitHub氏</div><div class="bubble">だからおれ、いつも人がいっぱいいるのか…！</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">team AICのホームページも、GitHubに置いたものが世界に公開されておる。</div></div></div>
+<div class="msg git"><div class="chat-av git"></div><div class="msg-body"><div class="name">Gitさん</div><div class="bubble">手元でセーブ（Git）、ネットで共有（GitHub）。コンビなんだね。</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">その通り。二人で一人前じゃ。図を見よ。</div></div></div>
+<figure class="ep-figure"><svg viewBox='0 0 620 200' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='ar3' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='40' y='80' width='110' height='70' rx='6' fill='#eaf3fc' stroke='#2a6fb5' stroke-width='2'/><rect x='30' y='150' width='130' height='10' rx='4' fill='#2a6fb5'/><text x='95' y='120' font-size='12' fill='#1c548c' text-anchor='middle'>手元</text><text x='95' y='178' font-size='12' fill='#5b6b7a' text-anchor='middle'>Git（セーブ）</text><path d='M165,110 L250,110' stroke='#bf972c' stroke-width='3' marker-end='url(#ar3)'/><text x='207' y='98' font-size='12' fill='#9c7a1f' text-anchor='middle' font-weight='700'>push</text><rect x='260' y='70' width='160' height='90' rx='14' fill='#dceafa' stroke='#2a6fb5' stroke-width='2'/><text x='340' y='100' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>GitHub</text><text x='340' y='120' font-size='11' fill='#5b6b7a' text-anchor='middle'>みんなの保管庫</text><circle cx='300' cy='142' r='7' fill='#2a6fb5'/><circle cx='340' cy='142' r='7' fill='#2a6fb5'/><circle cx='380' cy='142' r='7' fill='#2a6fb5'/><path d='M425,115 L500,115' stroke='#bf972c' stroke-width='3' marker-end='url(#ar3)'/><text x='462' y='103' font-size='12' fill='#9c7a1f' text-anchor='middle' font-weight='700'>公開</text><rect x='505' y='80' width='95' height='70' rx='8' fill='#fff7e6' stroke='#e6cf92'/><text x='552' y='120' font-size='12' fill='#9c7a1f' text-anchor='middle'>公開HP</text></svg><figcaption>Git＝手元でセーブ／GitHub＝そのセーブをネットに置いて共有・公開する保管庫。二つで一人前。</figcaption></figure>
+</div>
+</details>
+    <!-- notion-sync:content:end -->
 
     <div class="callout" style="margin-top:22px">
       <span class="emoji">🪄</span>

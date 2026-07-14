@@ -11,13 +11,13 @@
 // 1) サックスブルー・テーマを（未読み込みなら）読み込む
 (function () {
   try {
-    var V = "assets/css/theme-sax-blue.css?v=8";
+    var V = "assets/css/theme-sax-blue.css?v=9";
     var link = [].filter.call(
       document.querySelectorAll('link[rel="stylesheet"]'),
       function (l) { return (l.getAttribute("href") || "").indexOf("theme-sax-blue.css") !== -1; }
     )[0];
     if (link) {
-      if ((link.getAttribute("href") || "").indexOf("v=8") === -1) link.setAttribute("href", V);
+      if ((link.getAttribute("href") || "").indexOf("v=9") === -1) link.setAttribute("href", V);
     } else {
       var n = document.createElement("link");
       n.rel = "stylesheet";
@@ -42,7 +42,25 @@
   } catch (e) {}
 })();
 
+// 1c) 自分のアクセスを計測から外す（自分の端末だけカウントしない）
+//   使い方：カウントしたくない端末で「?skipgc=1」を付けて1回開く（例：stats.html?skipgc=1）。
+//           以降その端末（ブラウザ）ではGoatCounterがカウントしない。解除は「?skipgc=0」。
+(function () {
+  try {
+    var q = (location.search || "").toLowerCase();
+    if (q.indexOf("skipgc=1") !== -1) {
+      localStorage.setItem("skipgc", "t");
+      alert("この端末（このブラウザ）では、以降ページ閲覧数をカウントしません。\n自分の訪問を除外して、純粋な閲覧数を計測できます。");
+    }
+    if (q.indexOf("skipgc=0") !== -1) {
+      localStorage.removeItem("skipgc");
+      alert("この端末の閲覧数カウントを再開しました。");
+    }
+  } catch (e) {}
+})();
+
 // 2) ページ別アクセス解析（GoatCounter） — 全ページで自動カウント
+//   ※ localStorage の "skipgc"="t" が設定された端末はGoatCounter側で自動的に計測から除外されます。
 (function () {
   try {
     var g = document.createElement("script");
@@ -284,6 +302,27 @@ document.addEventListener("DOMContentLoaded", function () {
         h.style.lineHeight = "1.25";
         h.style.color = "#1c548c";
       });
+    }
+  } catch (e) {}
+
+  // プロフィールページ：横塚翔太の顔写真をページ見出しに差し込む
+  //   （profile.html はNotion同期ページなので、写真はここ（main.js）から挿入して同期でも消えないようにする）
+  try {
+    if (current === "profile.html" && !document.getElementById("profilePhoto")) {
+      var ph = document.querySelector(".page-header.wrap") || document.querySelector(".page-header");
+      if (ph) {
+        var img = document.createElement("img");
+        img.id = "profilePhoto";
+        img.src = "assets/img/profile/yokozuka.png";
+        img.alt = "横塚翔太";
+        img.loading = "lazy";
+        img.onerror = function () { this.style.display = "none"; };
+        img.style.cssText =
+          "width:132px;height:132px;border-radius:50%;object-fit:cover;" +
+          "display:block;margin:0 0 16px;border:4px solid #fff;" +
+          "box-shadow:0 8px 22px rgba(28,84,140,.28);";
+        ph.insertBefore(img, ph.firstChild);
+      }
     }
   } catch (e) {}
 
