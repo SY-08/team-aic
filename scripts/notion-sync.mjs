@@ -24,6 +24,8 @@ const NOTION_API_BASE = "https://api.notion.com/v1";
 const NOTION_VERSION = "2022-06-28";
 const MAX_LOG_ENTRIES = 20;
 
+// Auto-publish is intentionally opt-in per mapping. Only the four public
+// content databases requested for this workflow set autoPublish: true.
 const PAGE_MAP = [
   {
     file: "index.html",
@@ -70,13 +72,14 @@ const PAGE_MAP = [
     prefix: "08-16",
     label: "08-16 team AIC朝刊",
     combinedDatabase: true,
+    autoPublish: true,
     databases: [
       { id: "e09e1bd2aa7449a7b0e805eb4d84bc88", label: "AI日報アーカイブ", kind: "ai" },
       { id: "39020f2ab64545b28e0c393100e17ca9", label: "日本の裏側アーカイブ", kind: "politics" },
     ],
   },
-  { file: "philosophy.html", prefix: "08-17", label: "08-17 私とAIの哲学", database: true },
-  { file: "my-journal.html", prefix: "08-20", label: "08-20 私のジャーナル", database: true },
+  { file: "philosophy.html", prefix: "08-17", label: "08-17 私とAIの哲学", database: true, autoPublish: true },
+  { file: "my-journal.html", prefix: "08-20", label: "08-20 私のジャーナル", database: true, autoPublish: true },
 ];
 
 // Heuristic guardrails. Never log the matched value itself, only the rule name.
@@ -197,7 +200,7 @@ async function syncPage(entry, rootChildren, token, logLines) {
     changedAny = changedAny || result.changed;
   } else if (entry.database) {
     const blocks = await getAllChildren(pageBlock.id, token);
-    const dbHtml = await renderDatabaseEntries(blocks, token, logLines, entry.label);
+    const dbHtml = await renderDatabaseEntries(blocks, token, logLines, entry.label, entry.autoPublish);
     const result = replaceBetweenMarkers(
       fileContent,
       "<!-- notion-sync:content:start -->",
@@ -376,7 +379,7 @@ function entryDate(page) {
   return page.created_time || "";
 }
 
-async function renderDatabaseEntries(blocks, token, logLines, label) {
+async function renderDatabaseEntries(blocks, token, logLines, label, autoPublish = false) {
   const dbId = findChildDatabaseId(blocks);
   if (!dbId) {
     logLines.push(`- WARN: ${label} に子データベースが見つかりませんでした。`);
@@ -392,7 +395,7 @@ async function renderDatabaseEntries(blocks, token, logLines, label) {
     cursor = data.has_more ? data.next_cursor : undefined;
   } while (cursor && results.length < 300);
 
-  const published = results.filter(entryPublished);
+  const published = results.filter((page) => autoPublish || entryPublished(page));
   published.sort((a, b) => (entryDate(a) < entryDate(b) ? 1 : -1));
 
   const scanText = published
@@ -448,7 +451,7 @@ async function renderDatabaseEntries(blocks, token, logLines, label) {
     return `<article class="daily-report"${styleAttr}>\n<h3>${escapeHtml(titleText) || "（無題）"}</h3>\n<div class="dr-tags">${metas.join("")}</div>\n${fields.join("\n")}\n</article>`;
   });
 
-  logLines.push(`- OK: ${label} → 公開記事 ${published.length} 件を出力`);
+  logLines.push(`- OK: ${label} → ${autoPublish ? "自動公開" : "公開状態=公開"}の記事 ${published.length} 件を出力`);
   return `<div class="daily-reports">\n${cards.join("\n")}\n</div>`;
 }
 
@@ -460,7 +463,7 @@ async function renderCombinedDatabaseEntries(entry, token, logLines) {
   for (const source of entry.databases) {
     let pages;
     try {
-      pages = await queryPublishedDatabase(source.id, token);
+      pages = await queryPublishedDatabase(source.id, token, entry.autoPublish);
     } catch (err) {
       logLines.push(`- ERROR: ${source.label} の取得に失敗しました（${err.message}）`);
       continue;
@@ -477,7 +480,7 @@ async function renderCombinedDatabaseEntries(entry, token, logLines) {
       }
       articles.push({ page, source });
     }
-    logLines.push(`- OK: ${source.label} → 公開記事 ${pages.length} 件を統合対象に追加`);
+    logLines.push(`- OK: ${source.label} → ${entry.autoPublish ? "自動公開" : "公開状態=公開"}の記事 ${pages.length} 件を統合対象に追加`);
   }
 
   articles.sort((a, b) => {
@@ -486,14 +489,14 @@ async function renderCombinedDatabaseEntries(entry, token, logLines) {
   });
 
   if (articles.length === 0) {
-    return `<div class="daily-reports" data-daily-results>\n<p class="daily-empty">まだ公開された記事はありません。Notionの公開状態を確認してください。</p>\n</div>`;
+    return `<div class="daily-reports" data-daily-results>\n<p class="daily-empty">対象データベースに記事がありません。</p>\n</div>`;
   }
 
   const cards = articles.map(({ page, source }) => renderMorningArticle(page, source));
   return `<div class="daily-reports" data-daily-results>\n${cards.join("\n")}\n<p class="daily-empty daily-filter-empty" data-daily-filter-empty hidden>このジャンルの記事はまだありません。</p>\n</div>`;
 }
 
-async function queryPublishedDatabase(databaseId, token) {
+async function queryPublishedDatabase(databaseId, token, autoPublish = false) {
   let results = [];
   let cursor;
   do {
@@ -504,7 +507,7 @@ async function queryPublishedDatabase(databaseId, token) {
     cursor = data.has_more ? data.next_cursor : undefined;
   } while (cursor && results.length < 300);
   return results
-    .filter(entryPublished)
+    .filter((page) => autoPublish || entryPublished(page))
     .sort((a, b) => entryDate(b).localeCompare(entryDate(a)));
 }
 
