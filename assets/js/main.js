@@ -11,13 +11,13 @@
 // 1) サックスブルー・テーマを（未読み込みなら）読み込む
 (function () {
   try {
-    var V = "assets/css/theme-sax-blue.css?v=8";
+    var V = "assets/css/theme-sax-blue.css?v=9";
     var link = [].filter.call(
       document.querySelectorAll('link[rel="stylesheet"]'),
       function (l) { return (l.getAttribute("href") || "").indexOf("theme-sax-blue.css") !== -1; }
     )[0];
     if (link) {
-      if ((link.getAttribute("href") || "").indexOf("v=8") === -1) link.setAttribute("href", V);
+      if ((link.getAttribute("href") || "").indexOf("v=9") === -1) link.setAttribute("href", V);
     } else {
       var n = document.createElement("link");
       n.rel = "stylesheet";
