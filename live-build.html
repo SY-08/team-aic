@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>活動共有ノート | team AIC｛team AI circle｝</title>
-<meta name="description" content="team AICの活動共有ノート。今日やったこと・決めたこと・次にやることを、誰でもわかる言葉で記録しています。">
+<meta name="description" content="team AICの活動共有ノート。GitHubの作業履歴を、専門用語のやさしい説明とジャーナリングを添えて記録します。">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://sy-08.github.io/team-aic/live-build.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="活動共有ノート | team AIC｛team AI circle｝">
-<meta property="og:description" content="今日やったこと・決めたこと・次にやることを記録する活動共有ノート。">
+<meta property="og:description" content="GitHubの作業履歴を、専門用語のやさしい説明とジャーナリングを添えて記録する活動共有ノート。">
 <meta property="og:url" content="https://sy-08.github.io/team-aic/live-build.html">
 <meta property="og:site_name" content="team AIC">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232a6fb5'/%3E%3Ctext x='32' y='42' font-size='30' font-family='Arial, sans-serif' font-weight='700' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/theme-sax-blue.css?v=3">
+<link rel="stylesheet" href="assets/css/theme-sax-blue.css?v=10">
 </head>
 <body>
 <header class="site-header">
@@ -44,122 +44,39 @@
   <div class="wrap notion-sync">
     <!-- notion-sync:badge:start -->
     <span class="notion-sync-badge">🔄 Synced from Notion: 08 Website CMS</span>
-    <span class="notion-sync-meta">08-06 Live Build Log ・ Last content update: 2026-07-12 12:22:01 UTC</span>
+    <span class="notion-sync-meta">08-06 活動共有ノート ・ Notionを正本として同期</span>
     <!-- notion-sync:badge:end -->
   </div>
 
   <div class="page-header wrap">
-    <span class="eyebrow">オープンソース / 活動共有ノート</span>
+    <span class="eyebrow">活動の記録 / Notion同期</span>
     <h1>活動共有ノート</h1>
-    <p class="lead">完成した記事ではなく、進行中の記録です。各項目は「→ やさしい説明（かっこ内は専門的な内容）」の形で書いています。</p>
+    <p class="lead">GitHubに残る作業履歴を、Notionで1日単位の記録に整理します。専門用語はやさしく言い換え、最後に自分自身の振り返りを重ねていきます。</p>
   </div>
 
-  <section class="section wrap">
-    <div class="log-entry">
-      <span class="log-date">2026-07-09</span>
-      <h3>勉強会活動ページを作った</h3>
-
-      <h4>今日やったこと</h4>
-      <p>team AICで実際にやった作業を、初心者向けの勉強会やデモに育てるための入口ページを作りました。</p>
-      <ul style="list-style:none;padding-left:0;margin-left:0">
-        <li>→ メニューに「勉強会活動」を追加しました（共通メニュー <code>assets/js/main.js</code> を更新）</li>
-        <li>→ 小学生、幼稚園・保育園、地域企業・商店街、高齢者向けの勉強会案を整理しました（対象別コンテンツのたたき台）</li>
-        <li>→ 勉強会依頼・相談を受け付けるフォームを作りました（FormSubmitでメール送信）</li>
-        <li>→ 活動ログから、講座・デモ・スライドへ育てる流れを設計図にも追記しました</li>
-      </ul>
-
-      <h4>決めたこと</h4>
-      <p>勉強会は、流行りのAI紹介ではなく、team AICが実際にやった作業から派生させます。</p>
-      <ul style="list-style:none;padding-left:0;margin-left:0">
-        <li>→ 活動共有ノートを、振り返りと教材化の元データにします</li>
-        <li>→ 最初は文章ベースで公開し、あとからスライドや配布資料を追加します</li>
-        <li>→ 参加者がその場でできる小さなデモを必ず入れます</li>
-      </ul>
-
-      <h4>次にやること</h4>
-      <p>各対象向けに、1本ずつ具体的な講座台本とスライド構成を作っていきます。</p>
-    </div>
-
-    <div class="log-entry">
-      <span class="log-date">2026-07-07</span>
-      <h3>ホームページとNotionの自動連携のしくみを作った</h3>
-
-      <h4>今日やったこと</h4>
-      <p>ホームページの原稿をNotionに書くだけで、自動でサイトに反映される仕組みの「土台」を作りました。</p>
-      <ul style="list-style:none;padding-left:0;margin-left:0">
-        <li>→ ホームページの大もとの原稿を、Notionの1か所にまとめる方針にしました（Notion「08 Website CMS」を正本とする同期のしくみを設計）</li>
-        <li>→ Notionに書いた文章を、自動でホームページの形に変換するプログラムを作りました（ページ本文をHTMLへ変換する <code>scripts/notion-sync.mjs</code>）</li>
-        <li>→ 決まった時間に自動で反映する“自動処理”を用意しました。手動でも動かせます（GitHub Actions <code>.github/workflows/notion-sync.yml</code>）</li>
-        <li>→ ホームページのメニューの並びを、Notionの構成に合わせて整理しました（08の階層構造をナビゲーションに反映）</li>
-        <li>→ 各ページに「Notionから自動で反映しています」という表示を付けました（Synced from Notion バッジを追加）</li>
-        <li>→ パスワードなど公開してはいけない情報を見つけたら、自動で止める安全装置を付けました（公開NGパターン検知で出力をスキップ）</li>
-      </ul>
-
-      <h4>決めたこと</h4>
-      <p>これからはホームページを直接いじらず、Notionを編集して自動で反映する運用にします。</p>
-      <ul style="list-style:none;padding-left:0;margin-left:0">
-        <li>→ ホームページの更新は、Notionを編集して反映する形にします（HPをGitHubで直接編集せず、Notion「08 Website CMS」を正本に同期）</li>
-        <li>→ 変わったところがある時だけ記録します。無駄な更新は作りません（差分がある場合のみコミット）</li>
-        <li>→ 出してはいけない言葉が入ったページは公開せず、記録に注意書きを残します（公開NG検知でスキップし同期ログに警告）</li>
-      </ul>
-
-      <h4>次にやること</h4>
-      <p>このあと、Notionと自動反映をつなぐ設定をして、実際に反映されるか確かめます。</p>
-      <ul style="list-style:none;padding-left:0;margin-left:0">
-        <li>→ NotionとGitHubをつなぐ“合いカギ”を登録します（GitHub Secrets に NOTION_TOKEN / NOTION_08_WEBSITE_CMS_PAGE_ID を設定）</li>
-        <li>→ 自動処理を1回手で動かして、ちゃんと反映されるか確かめます（Actionsを手動実行し初回同期を確認）</li>
-        <li>→ Notion側の各ページを整えて、反映結果を確認します（08配下の各ページを整備）</li>
-      </ul>
-    </div>
-
-    <div class="log-entry">
-      <span class="log-date">2026-07-07</span>
-      <h3>team AIC 公式サイトを公開した</h3>
-
-      <h4>今日やったこと</h4>
-      <p>team AICの公式ホームページを作って、インターネット上に公開しました。</p>
-      <ul style="list-style:none;padding-left:0;margin-left:0">
-        <li>→ ホームページの土台一式を作りました（HTML / CSS / JS の初期サイト）</li>
-        <li>→ 白ベースのやさしいデザインにしました</li>
-        <li>→ トップ・team AICについて・活動内容・プロフィールなど計13ページを作りました</li>
-        <li>→ 記録・下書き・設計図をためる置き場を用意しました（docs 配下）</li>
-        <li>→ 公開してはいけない情報のチェックリストを作りました</li>
-      </ul>
-
-      <h4>決めたこと</h4>
-      <p>「完成してから出す」のではなく、「作りながら公開する」進め方にしました。</p>
-      <ul style="list-style:none;padding-left:0;margin-left:0">
-        <li>→ デザインは、白ベースのやさしい印象にします</li>
-        <li>→ 完成記事ではなく、作っている途中の記録を公開します</li>
-        <li>→ Notionで考え、GitHubで中継し、ホームページで公開する、という役割分担にします</li>
-      </ul>
-
-      <h4>次にやること</h4>
-      <p>Notionとホームページのつなぎ方を整理して、少しずつ中身を増やしていきます。</p>
-      <ul style="list-style:none;padding-left:0;margin-left:0">
-        <li>→ Notionからホームページへ反映する流れを整理して確認します</li>
-        <li>→ 設計図・本化素材・動画下書きの中身を少しずつためます</li>
-        <li>→ SNSでシェアした時に出る画像やファビコンなどの素材を用意します（OGP画像・ファビコン）</li>
-        <li>→ noteへ初めて転記するタイミングを検討します</li>
-      </ul>
-    </div>
-
-    <div class="callout">
-      <span class="emoji">🪵</span>
-      <div>
-        新しい記録は、この上に追記していく形でためていきます。
-      </div>
-    </div>
+  <section class="section wrap notion-content" id="notion-synced">
+    <p class="section-lead">この説明はNotion「08-06 活動共有ノート」から自動同期されます。</p>
+    <!-- notion-sync:content:start -->
+    <p>活動共有ノートを読み込んでいます。</p>
+    <!-- notion-sync:content:end -->
   </section>
 
-  <section class="section wrap notion-content" id="notion-synced">
-    <h2>Notion同期コンテンツ</h2>
-    <p class="section-lead">この下は、Notion「08 Website CMS」の 08-06 から自動同期されるセクションです。</p>
-    <!-- notion-sync:content:start -->
-    <h2>活動共有ノートについて</h2>
-<p>team AICが「何を作り、何を考え、どう改善しているか」を、完成を待たず、進みながら残していくページです。</p>
-<p>日々の詳しい記録と振り返り（ジャーナリング）は「活動ログ」で1日1本にまとめ、そこから抽出した学びや気づきは「私のジャーナル」に、思考の傾向は「横塚モデル」に整理しています。事実は事実として、意見は意見として、分けて積み重ねています。</p>
-    <!-- notion-sync:content:end -->
+  <section class="section wrap" aria-labelledby="activity-log-title">
+    <h2 id="activity-log-title">今日までの活動記録</h2>
+    <p class="section-lead">GitHubに残る作業の履歴を、Notionで1日ごとのノートにまとめています。技術用語は、その場で意味が分かるように説明を添えています。</p>
+    <!-- notion-sync:activity-log:start -->
+    <p class="daily-empty">Notionの活動ログを読み込んでいます。</p>
+    <!-- notion-sync:activity-log:end -->
+  </section>
+
+  <section class="section wrap">
+    <div class="callout">
+      <span class="emoji">✍</span>
+      <div>
+        <strong>ジャーナリング</strong><br>
+        GitHubの履歴だけでは残らない迷いや気付きは、Notionの各活動記録の最後に追記します。技術の記録と人の振り返りを、同じ1日のノートに残します。
+      </div>
+    </div>
   </section>
 </main>
 
