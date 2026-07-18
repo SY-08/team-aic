@@ -2,181 +2,192 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>マクロ経済シナジーMAP｜日本の経済を冒険する | team AIC</title>
-<meta name="description" content="日本のGDPから、産業・歳出・歳入・国の借金までを、開くほど広がるマインドマップで紐解く。誰でも操作できる経済の地図。">
+<meta name="description" content="日本のGDPから産業・歳出・歳入・国の借金までを、開くほど広がるマインドマップで紐解く。大きい数字から小さい数字へ、つながり（シナジー）も見える経済の地図。">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://sy-08.github.io/team-aic/macro-map.html">
 <style>
-  :root{ --blue:#2a6fb5; --blueD:#1c548c; --ink:#22303c; --paper:#eef4fb; }
+  :root{ --blue:#2a6fb5; --blueD:#1c548c; --ink:#22303c; }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;height:100%;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;color:var(--ink);overflow:hidden;}
-  body{background:radial-gradient(1200px 700px at 30% 20%,#eaf3ff 0%,#dce9f7 55%,#cfe0f2 100%);}
-  #bar{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.82);backdrop-filter:blur(6px);border-bottom:1px solid #d5e3f2;}
-  #bar h1{font-size:clamp(15px,3.4vw,20px);margin:0;color:var(--blueD);}
-  #bar .hint{font-size:12px;color:#5a6f82;margin-left:auto;}
-  #bar a{font-size:13px;color:var(--blue);text-decoration:none;font-weight:700;}
-  .zoombtn{border:0;background:#fff;color:var(--blueD);font-weight:900;width:38px;height:38px;border-radius:12px;box-shadow:0 3px 8px rgba(20,60,110,.15);cursor:pointer;font-size:18px;}
-  #zoom{position:fixed;right:14px;bottom:16px;z-index:10;display:flex;flex-direction:column;gap:8px;}
-  #stage{position:fixed;inset:0;top:0;cursor:grab;overflow:hidden;}
+  body{background:radial-gradient(1200px 800px at 50% 30%,#eef6ff 0%,#dfeaf7 55%,#d0e0f2 100%);}
+  #bar{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;gap:10px;padding:9px 14px;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border-bottom:1px solid #d5e3f2;}
+  #bar h1{font-size:clamp(14px,3.4vw,19px);margin:0;color:var(--blueD);white-space:nowrap;}
+  #bar .sp{margin-left:auto;display:flex;gap:8px;align-items:center;}
+  #bar button,#bar a{font-size:12.5px;font-weight:700;border:0;background:#eaf3ff;color:var(--blueD);border-radius:999px;padding:7px 12px;text-decoration:none;cursor:pointer;}
+  #hint{position:fixed;top:46px;left:0;right:0;text-align:center;font-size:12px;color:#5a6f82;z-index:9;pointer-events:none;}
+  #stage{position:fixed;inset:0;cursor:grab;overflow:hidden;}
   #stage.drag{cursor:grabbing;}
-  #world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform;}
+  #world{position:absolute;left:0;top:0;transform-origin:0 0;transition:transform .5s cubic-bezier(.22,.61,.36,1);}
   svg#links{position:absolute;left:0;top:0;overflow:visible;pointer-events:none;}
-  .node{position:absolute;width:220px;transform:translate(-0px,-50%);}
-  .card{background:#fff;border-radius:16px;padding:11px 13px;box-shadow:0 8px 22px rgba(20,60,110,.14);border-left:7px solid var(--blue);cursor:pointer;transition:box-shadow .15s,transform .15s;}
-  .card:hover{box-shadow:0 12px 28px rgba(20,60,110,.22);transform:translateY(-1px);}
-  .card .lbl{font-weight:800;font-size:14px;line-height:1.35;}
-  .card .val{font-weight:900;font-size:20px;color:var(--blueD);margin-top:2px;}
-  .card .val small{font-size:12px;font-weight:700;color:#6a7b8b;margin-left:3px;}
-  .card .note{font-size:12px;color:#5a6f82;line-height:1.55;margin-top:5px;display:none;}
+  .node{position:absolute;width:236px;transform:translateY(-50%);}
+  .card{background:#fff;border-radius:16px;padding:11px 14px;box-shadow:0 8px 22px rgba(20,60,110,.16);border-left:8px solid var(--blue);cursor:pointer;transition:box-shadow .15s,transform .12s;}
+  .card:hover{box-shadow:0 12px 30px rgba(20,60,110,.24);}
+  .card:active{transform:scale(.99);}
+  .lbl{font-weight:800;font-size:14.5px;line-height:1.35;}
+  .val{font-weight:900;font-size:22px;color:var(--blueD);margin-top:3px;}
+  .val small{font-size:12px;font-weight:700;color:#6a7b8b;margin-left:3px;}
+  .pct{font-size:11px;font-weight:800;color:#fff;border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:middle;}
+  .note{font-size:12px;color:#556575;line-height:1.6;margin-top:6px;display:none;}
   .card.open .note{display:block;}
-  .card .tag{display:inline-block;font-size:10.5px;font-weight:800;color:#fff;border-radius:999px;padding:1px 8px;margin-top:5px;}
-  .card .kids{font-size:11px;color:var(--blue);font-weight:800;margin-top:6px;}
-  .root .card{border-left-width:0;border-top:7px solid var(--blueD);text-align:center;}
-  .root .card .val{font-size:30px;}
-  .legend{position:fixed;left:14px;bottom:16px;z-index:10;background:rgba(255,255,255,.9);border-radius:14px;padding:10px 12px;box-shadow:0 6px 16px rgba(20,60,110,.14);font-size:12px;max-width:240px;}
-  .legend b{display:block;margin-bottom:4px;color:var(--blueD);}
-  .legend span{display:inline-flex;align-items:center;gap:5px;margin:2px 8px 2px 0;}
-  .legend i{width:12px;height:12px;border-radius:3px;display:inline-block;}
-  @media(max-width:640px){ .legend{display:none;} }
+  .kids{font-size:11.5px;color:var(--blue);font-weight:800;margin-top:7px;}
+  .root .card{border-left:0;border-top:8px solid var(--blueD);text-align:center;}
+  .root .val{font-size:32px;}
+  .legend{position:fixed;left:12px;bottom:12px;z-index:10;background:rgba(255,255,255,.92);border-radius:14px;padding:9px 12px;box-shadow:0 6px 16px rgba(20,60,110,.14);font-size:11.5px;max-width:230px;line-height:1.7;}
+  .legend b{color:var(--blueD);}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:4px;vertical-align:middle;}
+  .legend .syn{width:16px;border-top:2px dashed #e0663a;display:inline-block;vertical-align:middle;margin-right:4px;}
+  #zoom{position:fixed;right:12px;bottom:12px;z-index:10;display:flex;flex-direction:column;gap:8px;}
+  .zoombtn{border:0;background:#fff;color:var(--blueD);font-weight:900;width:42px;height:42px;border-radius:13px;box-shadow:0 3px 8px rgba(20,60,110,.18);cursor:pointer;font-size:19px;}
+  @media(max-width:560px){ .legend{font-size:10.5px;max-width:170px;padding:7px 9px;} .node{width:210px;} }
 </style>
 </head>
 <body>
 <div id="bar">
   <h1>🗾 マクロ経済シナジーMAP</h1>
-  <span class="hint">カードを タップで ひらく／ドラッグで うごく</span>
-  <a href="index.html">← team AIC</a>
-</div>
-<div id="stage">
-  <div id="world">
-    <svg id="links"></svg>
+  <div class="sp">
+    <button id="fitAll">ぜんたい</button>
+    <a href="index.html">← team AIC</a>
   </div>
 </div>
+<div id="hint">カードを タップで ひらく／あいた所へ ズームします</div>
+<div id="stage"><div id="world"><svg id="links"></svg></div></div>
 <div id="zoom">
   <button class="zoombtn" id="zin">＋</button>
   <button class="zoombtn" id="zout">－</button>
-  <button class="zoombtn" id="zreset" style="font-size:13px">⟳</button>
 </div>
 <div class="legend">
-  <b>この地図のみかた</b>
-  <span><i style="background:#3aa564"></i>産業（生み出す）</span>
-  <span><i style="background:#e0663a"></i>歳出（使う）</span>
-  <span><i style="background:#2a6fb5"></i>歳入（集める）</span>
-  <span><i style="background:#5b4a66"></i>国の借金</span>
-  <span><i style="background:#8a6fbf"></i>貿易</span>
-  <div style="margin-top:6px;color:#6a7b8b">出典：総務省統計局 国民経済計算／財務省</div>
+  <b>みかた</b><br>
+  <i style="background:#3aa564"></i>産業（生み出す）　<i style="background:#e0663a"></i>歳出（使う）<br>
+  <i style="background:#2a6fb5"></i>歳入（集める）　<i style="background:#5b4a66"></i>国の借金<br>
+  <span class="syn"></span>シナジー（お金のつながり）<br>
+  <span style="color:#6a7b8b">出典：内閣府 国民経済計算／財務省 令和5年度決算。数字は概算。</span>
 </div>
 
 <script>
 (function(){
 "use strict";
-const C={ind:"#3aa564",out:"#e0663a",inc:"#2a6fb5",debt:"#5b4a66",trade:"#8a6fbf",root:"#1c548c"};
-let uid=0; const N=(o)=>({id:"n"+(uid++),open:false,children:[],...o});
+var C={root:"#1c548c",ind:"#3aa564",out:"#e0663a",inc:"#2a6fb5",debt:"#5b4a66",world:"#8a6fbf"};
+var uid=0; function N(o){o.id=o.id||("n"+(uid++)); o.open=false; o.children=o.children||[]; return o;}
 
-const DATA=N({label:"日本の GDP（2023年・名目）",val:"591.5",unit:"兆円",color:C.root,
-  note:"日本ぜんたいが 1年で生み出した ねうちの合計。2013年は 486.2兆円 → 10年で +105兆円 ふえた。",
+// ===== データ（大きい→小さい。各層は親に足し上がる。※概算・丸め差あり） =====
+var DATA=N({key:"root",label:"日本の経済（マクロ）",color:C.root,
+  note:"大きな数字から 小さな数字へ、順に ひらいて 紐解こう。GDP（生み出す）と 財政（使う・集める）は 別のツリー。点線は お金のつながり（シナジー）。",
   children:[
-   N({label:"① 産業でわける（だれが生み出す？）",color:C.ind,note:"GDPは 働く分野ごとに 分けられる。大きい順にならべたよ。",children:[
-     N({label:"医療・福祉",val:"57.7",unit:"兆円",color:C.ind,note:"最大級。高齢化で のびる。介護・医療・保健。2013年 43.4兆円。"}),
-     N({label:"建設",val:"36.4",unit:"兆円",color:C.ind,note:"家・ビル・道路をつくる。2013年 29.5兆円。"}),
-     N({label:"専門・科学技術／業務支援",val:"36.4",unit:"兆円",color:C.ind,note:"研究・IT・コンサルなど。2013年 27.4兆円。のびた。"}),
-     N({label:"住宅賃貸業",val:"32.5",unit:"兆円",color:C.ind,note:"家ちんなど。2013年 29.8兆円。"}),
-     N({label:"卸売",val:"31.7",unit:"兆円",color:C.ind,note:"お店に商品を おろす仕事。2013年 28.9兆円。"}),
-     N({label:"小売",val:"31.5",unit:"兆円",color:C.ind,note:"お店で うる仕事。2013年 28.8兆円。"}),
-     N({label:"金融・保険",val:"29.2",unit:"兆円",color:C.ind,note:"銀行・ほけん。2013年 20.2兆円 → 大きくのびた。"}),
-     N({label:"公務",val:"27.3",unit:"兆円",color:C.ind,note:"役所などの仕事。2013年 22.7兆円。"}),
-     N({label:"運輸・郵便",val:"26.2",unit:"兆円",color:C.ind,note:"モノや人をはこぶ。2013年 22.2兆円。"}),
-     N({label:"化学",val:"19.9",unit:"兆円",color:C.ind,note:"くすり・素材など。2013年 14.7兆円。"}),
-     N({label:"宿泊・飲食",val:"14.0",unit:"兆円",color:C.ind,note:"ホテル・レストラン。2013年 9.4兆円。"}),
-     N({label:"食料品（製造）",val:"12.5",unit:"兆円",color:C.ind,note:"食べ物をつくる。2013年 9.8兆円。"}),
-     N({label:"教育",val:"9.5",unit:"兆円",color:C.ind,note:"学校・大学など。2013年 8.8兆円。"}),
-     N({label:"農業",val:"8.9",unit:"兆円",color:C.ind,note:"お米・やさいなど。2013年 7.9兆円。"})
-   ]}),
-   N({label:"② 国の 使いみち（歳出）2023年度・実績",val:"127.6",unit:"兆円",color:C.out,note:"国が 1年で 使ったお金。大きい順。",children:[
-     N({label:"社会保障",val:"43.8",unit:"兆円",color:C.out,note:"年金・医療・介護・子育て。いちばん大きい。"}),
-     N({label:"国債費",val:"25.2",unit:"兆円",color:C.out,note:"借金の へんさいと 利子。→「国の借金」につながる。"}),
-     N({label:"地方交付税交付金等",val:"18.4",unit:"兆円",color:C.out,note:"地方の 役所へ 配るお金。"}),
-     N({label:"防衛",val:"12.8",unit:"兆円",color:C.out,note:"国をまもる ためのお金。"}),
-     N({label:"公共事業",val:"8.2",unit:"兆円",color:C.out,note:"道路・橋・堤防など。"}),
-     N({label:"文教・科学振興",val:"8.2",unit:"兆円",color:C.out,note:"教育と 研究のお金。"})
-   ]}),
-   N({label:"③ 国の お金の集め方（歳入）2023年度",val:"127.6",unit:"兆円",color:C.inc,note:"使うお金は どこから？ 集め方の うちわけ。",children:[
-     N({label:"税収",val:"71.1",unit:"兆円",color:C.inc,note:"所得税・法人税・消費税で 約8わり。"}),
-     N({label:"公債金（国債発行）",val:"43.9",unit:"兆円",color:C.inc,note:"たりない分を 借金で まかなう。これが つもって「国の借金」に。"}),
-     N({label:"その他収入",val:"12.5",unit:"兆円",color:C.inc,note:"税金いがいの 収入。"})
-   ]}),
-   N({label:"④ 国の 借金（国債発行残高）",val:"約1,054",unit:"兆円",color:C.debt,note:"毎年の 公債金が つみ重なった 総額（2025年3月末）。GDP 591兆円の 約1.8倍。使いみちの『国債費』で 少しずつ返している。"}),
-   N({label:"⑤ 貿易（サービス・デジタル）",color:C.trade,note:"モノだけでなく、サービスや データの やり取りも 大事に。",children:[
-     N({label:"サービス貿易",color:C.trade,note:"旅行・輸送・知的財産など、形のない やり取り。"}),
-     N({label:"デジタル貿易",color:C.trade,note:"データ・ソフト・オンラインサービスの やり取り。これから のびる分野。"})
-   ]})
-  ]
-});
+   N({key:"gdp",label:"① 生産＝GDP（2023年・名目）",val:"591.5",unit:"兆円",color:C.ind,
+     note:"国内で 1年に 生み出した 付加価値の 合計。産業別に 分解できる（合計はGDPに一致）。2013年は 486.2兆円。",
+     children:[
+       N({label:"医療・福祉",val:"57.8",color:C.ind,pct:"10%"}),
+       N({label:"専門・科学技術／業務支援",val:"36.4",color:C.ind,pct:"6%"}),
+       N({label:"建設",val:"36.4",color:C.ind,pct:"6%"}),
+       N({label:"住宅賃貸業",val:"32.6",color:C.ind,pct:"6%"}),
+       N({label:"卸売",val:"31.7",color:C.ind,pct:"5%"}),
+       N({label:"小売",val:"31.5",color:C.ind,pct:"5%"}),
+       N({label:"金融・保険",val:"29.3",color:C.ind,pct:"5%"}),
+       N({label:"公務",val:"27.3",color:C.ind,pct:"5%"}),
+       N({label:"運輸・郵便",val:"26.2",color:C.ind,pct:"4%"}),
+       N({label:"化学",val:"19.9",color:C.ind,pct:"3%"}),
+       N({label:"宿泊・飲食",val:"14.0",color:C.ind,pct:"2%"}),
+       N({label:"一次金属・食料品ほか製造（一部）",val:"25.3",color:C.ind,pct:"4%",note:"一次金属12.8＋食料品12.5 など、内訳にある製造業。"}),
+       N({label:"教育",val:"9.5",color:C.ind,pct:"2%"}),
+       N({label:"農林水産",val:"10.4",color:C.ind,pct:"2%"}),
+       N({label:"その他の産業（未内訳）",val:"約173",color:C.ind,pct:"29%",note:"機械・自動車などの製造、情報通信業、電気・ガス・水道 ほか。元データに個別の数字が無いぶんをまとめた（GDPに足し上げるための残り）。"})
+     ]}),
+   N({key:"fisc",label:"② 財政（国の予算・2023年度／一般会計 決算）",color:C.out,
+     note:"国が 1年で 使うお金（歳出）と、集めるお金（歳入）。GDPとは 別のはなし。",
+     children:[
+       N({key:"out",label:"歳出（使いみち）",val:"127.6",unit:"兆円",color:C.out,note:"国が使ったお金の 合計。大きい順。",
+         children:[
+           N({key:"out_social",label:"社会保障",val:"36.2",color:C.out,pct:"28%",note:"年金・医療・介護・子育て。いちばん大きい。※元データの43.8は分類差で、決算では36.2。"}),
+           N({key:"out_debt",label:"国債費",val:"25.5",color:C.out,pct:"20%",note:"借金の へんさいと 利子。→「国の借金」につながる。"}),
+           N({label:"地方交付税交付金等",val:"17.2",color:C.out,pct:"14%"}),
+           N({label:"防衛・公共事業・文教・予備費 ほか",val:"48.7",color:C.out,pct:"38%",note:"防衛、道路など公共事業、教育・研究、物価/経済対策の予備費 などの合計。"})
+         ]}),
+       N({key:"inc",label:"歳入（集め方）",val:"127.6",unit:"兆円",color:C.inc,note:"使うお金は どこから来る？",
+         children:[
+           N({key:"inc_tax",label:"税収",val:"約72",color:C.inc,pct:"56%",note:"所得税・法人税・消費税で 約8わり。経済活動（GDP）から生まれる。"}),
+           N({key:"inc_kousai",label:"公債金（借金）",val:"約44",color:C.inc,pct:"34%",note:"たりない分を 国債（借金）でまかなう。これが つもって「国の借金」に。"}),
+           N({label:"その他収入",val:"約12",color:C.inc,pct:"10%"})
+         ]})
+     ]}),
+   N({key:"debt",label:"③ 国の借金（国債発行残高）",val:"約1,054",unit:"兆円",color:C.debt,
+     note:"毎年の「公債金」が つみ重なった 総額（2025年3月末）。GDP 591兆円の 約1.8倍。歳出の「国債費」で 少しずつ返す。"}),
+   N({key:"world",label:"④ 世界とのつながり（拡張）",color:C.world,
+     note:"貿易・エネルギー・食料などで 日本は 世界と つながる。ここから『世界地理・宗教・街』のMAPへ 連結していく（今後）。",
+     children:[
+       N({label:"貿易（モノ・サービス・デジタル）",color:C.world,note:"輸出入、サービス貿易、データのやり取り。"}),
+       N({label:"世界地理・宗教・街（別MAP）",color:C.world,note:"各国のGDPや文化・都市を、同じ仕組みのMAPでつなぐ構想。"})
+     ]})
+  ]});
 
-const world=document.getElementById("world"), stage=document.getElementById("stage"), svg=document.getElementById("links");
-const COLW=270, ROWH=96;
-let nodeEls={};
-function buildEls(node){ const d=document.createElement("div"); d.className="node"+(node===DATA?" root":""); d.dataset.id=node.id;
-  const hasKids=node.children&&node.children.length;
-  d.innerHTML="<div class='card' style='border-color:"+node.color+"'>"+
-    "<div class='lbl'>"+node.label+"</div>"+
-    (node.val?"<div class='val'>"+node.val+"<small>"+(node.unit||"")+"</small></div>":"")+
-    "<div class='note'>"+node.note+"</div>"+
-    (hasKids?"<div class='kids' data-k>▸ ひらく（"+node.children.length+"）</div>":"")+
-    "</div>";
-  world.appendChild(d); nodeEls[node.id]=d;
-  d.querySelector(".card").addEventListener("click",()=>toggle(node));
-  if(hasKids) node.children.forEach(buildEls);
+// synergy links (from-key -> to-key)
+var SYN=[["inc_tax","gdp","GDP→税収"],["out_social","gdp","社会保障→産業"],["inc_kousai","debt","借金がつもる"],["debt","out_debt","国債費で返す"]];
+
+var world=document.getElementById("world"),stage=document.getElementById("stage"),svg=document.getElementById("links");
+var COLW=300,ROWH=112,CARDW=236,els={},byKey={};
+function build(node){ var d=document.createElement("div"); d.className="node"+(node.key==="root"?" root":""); d.dataset.id=node.id;
+  var kids=node.children.length;
+  d.innerHTML="<div class='card' style='border-color:"+node.color+"'><div class='lbl'>"+node.label+(node.pct?"<span class='pct' style='background:"+node.color+"'>"+node.pct+"</span>":"")+"</div>"+
+    (node.val?"<div class='val'>"+node.val+"<small>"+(node.unit||"兆円")+"</small></div>":"")+
+    "<div class='note'>"+(node.note||"")+"</div>"+
+    (kids?"<div class='kids' data-k>▸ ひらく（"+kids+"）</div>":"")+"</div>";
+  world.appendChild(d); els[node.id]=d; if(node.key)byKey[node.key]=node;
+  d.querySelector(".card").addEventListener("click",function(){ onClick(node); });
+  node.children.forEach(build);
 }
-function toggle(node){ const card=nodeEls[node.id].querySelector(".card"); card.classList.toggle("open");
-  if(node.children&&node.children.length){ node.open=!node.open; const k=card.querySelector("[data-k]"); if(k)k.textContent=(node.open?"▾ とじる（":"▸ ひらく（")+node.children.length+"）"; layout(); }
+function onClick(node){ var card=els[node.id].querySelector(".card"); card.classList.toggle("open");
+  if(node.children.length){ node.open=!node.open; var k=card.querySelector("[data-k]"); if(k)k.textContent=(node.open?"▾ とじる（":"▸ ひらく（")+node.children.length+"）";
+    layout(); focus(node.open?[node].concat(node.children):[node]); }
 }
-// measure visible leaf-rows
-function measure(node){ if(!node.open||!node.children.length) return 1; let s=0; node.children.forEach(c=>s+=measure(c)); return s; }
-function assign(node,depth,top,pos){ const h=measure(node); node._x=depth; node._y=top+h/2;
-  if(node.open&&node.children.length){ let cur=top; node.children.forEach(c=>{ assign(c,depth+1,cur,pos); cur+=measure(c); }); }
-  pos.push(node);
-}
-function visibleNodes(node,arr){ arr.push(node); if(node.open) node.children.forEach(c=>visibleNodes(c,arr)); return arr; }
-function layout(){
-  const pos=[]; assign(DATA,0,0,pos);
-  const vis=visibleNodes(DATA,[]);
-  // hide all, show visible
-  Object.values(nodeEls).forEach(el=>el.style.display="none");
-  let links="";
-  vis.forEach(node=>{ const el=nodeEls[node.id]; el.style.display="block";
-    const X=node._x*COLW+40, Y=node._y*ROWH+30;
-    el.style.left=X+"px"; el.style.top=Y+"px";
-    if(node.open){ node.children.forEach(c=>{ const x1=X+220, y1=Y, x2=c._x*COLW+40, y2=c._y*ROWH+30;
-      const mx=(x1+x2)/2; links+="<path d='M"+x1+","+y1+" C"+mx+","+y1+" "+mx+","+y2+" "+x2+","+y2+"' stroke='"+c.color+"' stroke-width='2.5' fill='none' opacity='.5'/>"; }); }
-  });
+function measure(n){ if(!n.open||!n.children.length)return 1; var s=0; n.children.forEach(function(c){s+=measure(c);}); return s; }
+function assign(n,d,top){ var h=measure(n); n._x=d; n._y=top+h/2; if(n.open&&n.children.length){ var cur=top; n.children.forEach(function(c){ assign(c,d+1,cur); cur+=measure(c); }); } }
+function visible(n,a){ a.push(n); if(n.open)n.children.forEach(function(c){visible(c,a);}); return a; }
+function xy(n){ return {x:n._x*COLW+30, y:n._y*ROWH+30}; }
+function layout(){ assign(DATA,0,0); var vis=visible(DATA,[]);
+  for(var id in els) els[id].style.display="none";
+  var links="";
+  vis.forEach(function(n){ var el=els[n.id]; el.style.display="block"; var p=xy(n); el.style.left=p.x+"px"; el.style.top=p.y+"px";
+    if(n.open) n.children.forEach(function(c){ var a=xy(n),b=xy(c); var x1=a.x+CARDW,x2=b.x,mx=(x1+x2)/2;
+      links+="<path d='M"+x1+","+a.y+" C"+mx+","+a.y+" "+mx+","+b.y+" "+x2+","+b.y+"' stroke='"+c.color+"' stroke-width='2.5' fill='none' opacity='.55'/>"; }); });
+  // synergy dashed links (only when both visible)
+  var visSet={}; vis.forEach(function(n){visSet[n.id]=1;});
+  SYN.forEach(function(s){ var f=byKey[s[0]],t=byKey[s[1]]; if(f&&t&&visSet[f.id]&&visSet[t.id]){ var a=xy(f),b=xy(t);
+    var x1=a.x+CARDW/2,y1=a.y,x2=b.x+CARDW/2,y2=b.y,my=(y1+y2)/2;
+    links+="<path d='M"+x1+","+y1+" C"+x1+","+my+" "+x2+","+my+" "+x2+","+y2+"' stroke='#e0663a' stroke-width='2' stroke-dasharray='5 5' fill='none' opacity='.7'/>"; } });
   svg.innerHTML=links;
-  // size world
-  let maxX=0,maxY=0; vis.forEach(n=>{ maxX=Math.max(maxX,n._x*COLW+300); maxY=Math.max(maxY,n._y*ROWH+120); });
+  var maxX=0,maxY=0; vis.forEach(function(n){ var p=xy(n); maxX=Math.max(maxX,p.x+320); maxY=Math.max(maxY,p.y+140); });
   world.style.width=maxX+"px"; world.style.height=maxY+"px"; svg.setAttribute("width",maxX); svg.setAttribute("height",maxY);
 }
+var scale=1,tx=0,ty=0;
+function applyT(){ world.style.transform="translate("+tx+"px,"+ty+"px) scale("+scale+")"; }
+function focus(nodes){ // fit view to given nodes (world coords)
+  var minX=1e9,minY=1e9,maxX=-1e9,maxY=-1e9;
+  nodes.forEach(function(n){ var p=xy(n); minX=Math.min(minX,p.x); maxX=Math.max(maxX,p.x+CARDW); minY=Math.min(minY,p.y-40); maxY=Math.max(maxY,p.y+70); });
+  var w=maxX-minX,h=maxY-minY, sw=stage.clientWidth, sh=stage.clientHeight-70;
+  var pad=40; var s=Math.min((sw-pad*2)/w,(sh-pad*2)/h,1.25); s=Math.max(.4,s);
+  scale=s; tx=(sw-w*s)/2 - minX*s; ty=70+(sh-h*s)/2 - minY*s; applyT();
+}
+function fitAll(){ DATA.open=true; DATA.children.forEach(function(c){c.open=false;}); refreshKidsLabels(); layout(); focus(visible(DATA,[])); }
+function refreshKidsLabels(){ visible(DATA,[]).forEach(function(n){ if(n.children.length){ var k=els[n.id].querySelector("[data-k]"); if(k)k.textContent=(n.open?"▾ とじる（":"▸ ひらく（")+n.children.length+"）"; } }); }
 
-buildEls(DATA);
-DATA.open=true; // start with main branches open
-DATA.children.forEach(c=>{ /* keep sub closed */ });
-// open root's kids labels
-(function(){ const card=nodeEls[DATA.id].querySelector(".card"); card.classList.add("open"); const k=card.querySelector("[data-k]"); if(k)k.textContent="▾ とじる（"+DATA.children.length+"）"; })();
-layout();
+build(DATA);
+DATA.open=true;
+layout(); refreshKidsLabels(); focus([DATA].concat(DATA.children));
 
-/* pan & zoom */
-let scale=0.9, tx=30, ty=90, panning=false, sx=0, sy=0, ox=0, oy=0;
-function apply(){ world.style.transform="translate("+tx+"px,"+ty+"px) scale("+scale+")"; }
-apply();
-stage.addEventListener("mousedown",e=>{ if(e.target.closest(".card"))return; panning=true; stage.classList.add("drag"); sx=e.clientX; sy=e.clientY; ox=tx; oy=ty; });
-addEventListener("mousemove",e=>{ if(!panning)return; tx=ox+(e.clientX-sx); ty=oy+(e.clientY-sy); apply(); });
-addEventListener("mouseup",()=>{ panning=false; stage.classList.remove("drag"); });
-stage.addEventListener("touchstart",e=>{ if(e.target.closest(".card"))return; const t=e.touches[0]; panning=true; sx=t.clientX; sy=t.clientY; ox=tx; oy=ty; },{passive:true});
-stage.addEventListener("touchmove",e=>{ if(!panning)return; const t=e.touches[0]; tx=ox+(t.clientX-sx); ty=oy+(t.clientY-sy); apply(); },{passive:true});
-stage.addEventListener("touchend",()=>{ panning=false; });
-stage.addEventListener("wheel",e=>{ e.preventDefault(); const d=e.deltaY<0?1.1:0.9; scale=Math.min(1.8,Math.max(0.35,scale*d)); apply(); },{passive:false});
-document.getElementById("zin").onclick=()=>{ scale=Math.min(1.8,scale*1.15); apply(); };
-document.getElementById("zout").onclick=()=>{ scale=Math.max(0.35,scale*0.87); apply(); };
-document.getElementById("zreset").onclick=()=>{ scale=0.9; tx=30; ty=90; apply(); };
+stage.addEventListener("mousedown",function(e){ if(e.target.closest(".card"))return; world.style.transition="none"; var sx=e.clientX,sy=e.clientY,ox=tx,oy=ty; stage.classList.add("drag");
+  function mv(ev){ tx=ox+(ev.clientX-sx); ty=oy+(ev.clientY-sy); applyT(); }
+  function up(){ document.removeEventListener("mousemove",mv); document.removeEventListener("mouseup",up); stage.classList.remove("drag"); world.style.transition=""; }
+  document.addEventListener("mousemove",mv); document.addEventListener("mouseup",up); });
+stage.addEventListener("touchstart",function(e){ if(e.target.closest(".card"))return; world.style.transition="none"; var t=e.touches[0],sx=t.clientX,sy=t.clientY,ox=tx,oy=ty;
+  function mv(ev){ var t2=ev.touches[0]; tx=ox+(t2.clientX-sx); ty=oy+(t2.clientY-sy); applyT(); }
+  function up(){ stage.removeEventListener("touchmove",mv); stage.removeEventListener("touchend",up); world.style.transition=""; }
+  stage.addEventListener("touchmove",mv,{passive:true}); stage.addEventListener("touchend",up); },{passive:true});
+stage.addEventListener("wheel",function(e){ e.preventDefault(); world.style.transition="none"; var d=e.deltaY<0?1.12:0.89; scale=Math.min(2,Math.max(.35,scale*d)); applyT(); },{passive:false});
+document.getElementById("zin").onclick=function(){ world.style.transition=""; scale=Math.min(2,scale*1.18); applyT(); };
+document.getElementById("zout").onclick=function(){ world.style.transition=""; scale=Math.max(.35,scale*0.85); applyT(); };
+document.getElementById("fitAll").onclick=fitAll;
+addEventListener("resize",function(){ focus([DATA].concat(DATA.children)); });
 })();
 </script>
 </body>
