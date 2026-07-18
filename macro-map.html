@@ -40,7 +40,11 @@
   .legend .syn{width:16px;border-top:2px dashed #e0663a;display:inline-block;vertical-align:middle;margin-right:4px;}
   #zoom{position:fixed;right:12px;bottom:12px;z-index:10;display:flex;flex-direction:column;gap:8px;}
   .zoombtn{border:0;background:#fff;color:var(--blueD);font-weight:900;width:42px;height:42px;border-radius:13px;box-shadow:0 3px 8px rgba(20,60,110,.18);cursor:pointer;font-size:19px;}
-  @media(max-width:560px){ .legend{font-size:10.5px;max-width:170px;padding:7px 9px;} .node{width:210px;} }
+  .valrow{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-top:4px}
+  .share{font-weight:900;font-size:17px}
+  .barwrap{height:10px;border-radius:6px;background:#eef2f7;overflow:hidden;margin-top:6px}
+  .barwrap>i{display:block;height:100%;border-radius:6px;transition:width .4s}
+  @media(max-width:560px){ .legend{font-size:10.5px;max-width:170px;padding:7px 9px;} .node{width:214px;} }
 </style>
 </head>
 <body>
@@ -126,19 +130,29 @@ var SYN=[["inc_tax","gdp","GDP→税収"],["out_social","gdp","社会保障→�
 
 var world=document.getElementById("world"),stage=document.getElementById("stage"),svg=document.getElementById("links");
 var COLW=300,ROWH=112,CARDW=236,els={},byKey={};
+function num(v){ if(v==null)return null; var n=parseFloat(String(v).replace(/[^0-9.]/g,"")); return isNaN(n)?null:n; }
+function precompute(node,parent){ node._parent=parent; node._num=num(node.val); var pv=parent?parent._num:null;
+  if(pv&&node._num!=null){ node._share=node._num/pv; node._pct=Math.round(node._share*100); } else { node._share=null; }
+  node.children.forEach(function(c){ precompute(c,node); }); }
 function build(node){ var d=document.createElement("div"); d.className="node"+(node.key==="root"?" root":""); d.dataset.id=node.id;
   var kids=node.children.length;
-  d.innerHTML="<div class='card' style='border-color:"+node.color+"'><div class='lbl'>"+node.label+(node.pct?"<span class='pct' style='background:"+node.color+"'>"+node.pct+"</span>":"")+"</div>"+
-    (node.val?"<div class='val'>"+node.val+"<small>"+(node.unit||"兆円")+"</small></div>":"")+
+  var body = node._share!=null
+    ? "<div class='valrow'>"+(node.val?"<span class='val'>"+node.val+"<small>"+(node.unit||"兆円")+"</small></span>":"<span></span>")+"<span class='share' style='color:"+node.color+"'>"+node._pct+"%</span></div><div class='barwrap'><i style='width:"+Math.max(2,Math.round(node._share*100))+"%;background:"+node.color+"'></i></div>"
+    : (node.val?"<div class='val'>"+node.val+"<small>"+(node.unit||"兆円")+"</small></div>":"");
+  d.innerHTML="<div class='card' style='border-color:"+node.color+"'><div class='lbl'>"+node.label+"</div>"+body+
     "<div class='note'>"+(node.note||"")+"</div>"+
     (kids?"<div class='kids' data-k>▸ ひらく（"+kids+"）</div>":"")+"</div>";
   world.appendChild(d); els[node.id]=d; if(node.key)byKey[node.key]=node;
-  d.querySelector(".card").addEventListener("click",function(){ onClick(node); });
+  d.querySelector(".card").addEventListener("click",function(){ openNode(node); });
   node.children.forEach(build);
 }
-function onClick(node){ var card=els[node.id].querySelector(".card"); card.classList.toggle("open");
-  if(node.children.length){ node.open=!node.open; var k=card.querySelector("[data-k]"); if(k)k.textContent=(node.open?"▾ とじる（":"▸ ひらく（")+node.children.length+"）";
-    layout(); focus(node.open?[node].concat(node.children):[node]); }
+function closeAll(n){ n.open=false; var el=els[n.id]; if(el){ var cd=el.querySelector(".card"); if(cd)cd.classList.remove("open"); var k=el.querySelector("[data-k]"); if(k&&n.children.length)k.textContent="▸ ひらく（"+n.children.length+"）"; } n.children.forEach(closeAll); }
+function openNode(node){ var card=els[node.id].querySelector(".card"); card.classList.toggle("open");
+  if(!node.children.length) return;
+  if(!node.open){ if(node._parent){ node._parent.children.forEach(function(s){ if(s!==node) closeAll(s); }); } node.open=true; }
+  else { closeAll(node); }
+  var k=card.querySelector("[data-k]"); if(k)k.textContent=(node.open?"▾ とじる（":"▸ ひらく（")+node.children.length+"）";
+  layout(); focus(node.open?[node].concat(node.children):[node]);
 }
 function measure(n){ if(!n.open||!n.children.length)return 1; var s=0; n.children.forEach(function(c){s+=measure(c);}); return s; }
 function assign(n,d,top){ var h=measure(n); n._x=d; n._y=top+h/2; if(n.open&&n.children.length){ var cur=top; n.children.forEach(function(c){ assign(c,d+1,cur); cur+=measure(c); }); } }
@@ -165,13 +179,13 @@ function focus(nodes){ // fit view to given nodes (world coords)
   var minX=1e9,minY=1e9,maxX=-1e9,maxY=-1e9;
   nodes.forEach(function(n){ var p=xy(n); minX=Math.min(minX,p.x); maxX=Math.max(maxX,p.x+CARDW); minY=Math.min(minY,p.y-40); maxY=Math.max(maxY,p.y+70); });
   var w=maxX-minX,h=maxY-minY, sw=stage.clientWidth, sh=stage.clientHeight-70;
-  var pad=40; var s=Math.min((sw-pad*2)/w,(sh-pad*2)/h,1.25); s=Math.max(.4,s);
+  var pad=28; var s=Math.min((sw-pad*2)/w,(sh-pad*2)/h,1.5); s=Math.max(.45,s);
   scale=s; tx=(sw-w*s)/2 - minX*s; ty=70+(sh-h*s)/2 - minY*s; applyT();
 }
 function fitAll(){ DATA.open=true; DATA.children.forEach(function(c){c.open=false;}); refreshKidsLabels(); layout(); focus(visible(DATA,[])); }
 function refreshKidsLabels(){ visible(DATA,[]).forEach(function(n){ if(n.children.length){ var k=els[n.id].querySelector("[data-k]"); if(k)k.textContent=(n.open?"▾ とじる（":"▸ ひらく（")+n.children.length+"）"; } }); }
 
-build(DATA);
+precompute(DATA,null); build(DATA);
 DATA.open=true;
 layout(); refreshKidsLabels(); focus([DATA].concat(DATA.children));
 
