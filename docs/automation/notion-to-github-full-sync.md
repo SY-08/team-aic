@@ -35,7 +35,7 @@ GitHub Pages（公開サイト）
 | 08-03 Activities | `activities.html`（08-03-01〜04はページ内セクションとして反映） |
 | 08-04 Profile | `profile.html` |
 | 08-05 活動の設計図 | `open-source.html` |
-| 08-06 Live Build Log | `live-build.html` |
+| 08-06 活動共有ノート | `live-build.html` |
 | 08-07 Blueprints | `blueprints.html` |
 | 08-09 Automation | `automation.html`（08-09-01〜03はページ内セクションとして反映） |
 | 08-10 note Drafts | `note-drafts.html` |

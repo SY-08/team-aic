@@ -50,7 +50,12 @@ const PAGE_MAP = [
   },
   { file: "profile.html", prefix: "08-04", label: "08-04 Profile" },
   { file: "open-source.html", prefix: "08-05", label: "08-05 Open Source" },
-  { file: "live-build.html", prefix: "08-06", label: "08-06 Live Build Log" },
+  {
+    file: "live-build.html",
+    prefix: "08-06",
+    label: "08-06 活動共有ノート",
+    activityLog: true,
+  },
   {
     file: "automation.html",
     prefix: "08-09",
@@ -198,6 +203,21 @@ async function syncPage(entry, rootChildren, token, logLines) {
     );
     fileContent = result.content;
     changedAny = changedAny || result.changed;
+  } else if (entry.activityLog) {
+    const introResult = await renderAndApplySection(fileContent, pageBlock, null, entry.label, token, logLines);
+    fileContent = introResult.content;
+    changedAny = changedAny || introResult.changed;
+
+    const blocks = await getAllChildren(pageBlock.id, token);
+    const activityHtml = await renderActivityLogEntries(blocks, token, logLines, entry.label);
+    const activityResult = replaceBetweenMarkers(
+      fileContent,
+      "<!-- notion-sync:activity-log:start -->",
+      "<!-- notion-sync:activity-log:end -->",
+      activityHtml || '<p class="daily-empty">活動記録は準備中です。</p>'
+    );
+    fileContent = activityResult.content;
+    changedAny = changedAny || activityResult.changed;
   } else if (entry.database) {
     const blocks = await getAllChildren(pageBlock.id, token);
     const dbHtml = await renderDatabaseEntries(blocks, token, logLines, entry.label, entry.autoPublish);
@@ -453,6 +473,84 @@ async function renderDatabaseEntries(blocks, token, logLines, label, autoPublish
 
   logLines.push(`- OK: ${label} → ${autoPublish ? "自動公開" : "公開状態=公開"}の記事 ${published.length} 件を出力`);
   return `<div class="daily-reports">\n${cards.join("\n")}\n</div>`;
+}
+
+// 活動共有ノートは、Notionの「活動ログ」データベースを正本として表示する。
+// GitHub Actionsが書く技術記録と、Notionで追記するジャーナリングを同じ1日分の記録に残す。
+async function renderActivityLogEntries(blocks, token, logLines, label) {
+  const dbId = findChildDatabaseId(blocks);
+  if (!dbId) {
+    logLines.push(`- WARN: ${label} に子データベース「活動ログ」が見つかりませんでした。`);
+    return "";
+  }
+
+  let results = [];
+  let cursor;
+  do {
+    const body = { page_size: 100 };
+    if (cursor) body.start_cursor = cursor;
+    const data = await notionPost(`/databases/${dbId}/query`, token, body);
+    results = results.concat(data.results || []);
+    cursor = data.has_more ? data.next_cursor : undefined;
+  } while (cursor && results.length < 300);
+
+  // GitHub由来の自動記録は公開し、手動で書いた記録はNotionの
+  // 「公開する」をオンにした場合だけ公開する。個人的な下書きの誤公開を防ぐ。
+  const published = results.filter(activityEntryPublished);
+  published.sort((a, b) => entryDate(b).localeCompare(entryDate(a)));
+  const cards = [];
+
+  for (const page of published) {
+    const props = page.properties || {};
+    let bodyBlocks = [];
+    try {
+      bodyBlocks = await getAllChildren(page.id, token);
+    } catch (err) {
+      logLines.push(`- WARN: 活動ログ1件の本文取得に失敗しました（${err.message}）`);
+    }
+
+    const scanText = [
+      ...Object.values(props).map(propToText),
+      ...bodyBlocks.map(plainTextOfBlock),
+    ].join("\n");
+    const hits = scanForbidden(scanText);
+    if (hits.length > 0) {
+      logLines.push(`- SKIP (warning): ${label} の活動記録1件を公開NGパターン検知で除外（種別: ${hits.join(", ")}）`);
+      continue;
+    }
+
+    const title = getPropertyText(props, ["ログ名", "Name"]) || "（無題の活動記録）";
+    const date = entryDate(page);
+    const summary = getPropertyText(props, ["要約"]);
+    const tags = ["記録元", "領域", "タグ"]
+      .map((name) => getPropertyText(props, [name]))
+      .filter(Boolean)
+      .map((value) => `<span class="activity-log-card__tag">${escapeHtml(value)}</span>`)
+      .join("");
+    const bodyHtml = blocksToHtml(bodyBlocks).trim();
+
+    cards.push(
+      `<article class="activity-log-card">\n` +
+      `<p class="activity-log-card__date">${escapeHtml(date)}</p>\n` +
+      `<h3>${escapeHtml(title)}</h3>\n` +
+      `${tags ? `<div class="activity-log-card__tags">${tags}</div>\n` : ""}` +
+      `${summary ? `<p class="activity-log-card__summary">${escapeHtml(summary)}</p>\n` : ""}` +
+      `<div class="activity-log-card__body">${bodyHtml || "<p>記録の本文は準備中です。</p>"}</div>\n` +
+      `</article>`
+    );
+  }
+
+  logLines.push(`- OK: ${label} → 公開対象の活動ログ ${cards.length} 件を出力`);
+  return cards.length
+    ? `<div class="activity-log-list">\n${cards.join("\n")}\n</div>`
+    : '<p class="daily-empty">活動ログに記録がまだありません。</p>';
+}
+
+function activityEntryPublished(page) {
+  const props = page.properties || {};
+  const source = getPropertyText(props, ["記録元"]);
+  const manualPublish = props["公開する"];
+  return source === "GitHub自動集計" || Boolean(manualPublish && manualPublish.checkbox);
 }
 
 // The two Notion databases remain separate because their schemas are different.

@@ -55,7 +55,7 @@ GitHub Actionsによる自動同期（`scripts/notion-sync.mjs` / `.github/workf
 ├── seminar.html            勉強会活動
 ├── profile.html            プロフィール
 ├── open-source.html       活動の設計図
-├── live-build.html         活動共有ノート（実行中のログ）
+├── live-build.html         活動共有ノート（Notion正本の1日単位の活動記録）
 ├── blueprints.html         Blueprints（設計図）
 ├── automation.html         Automation（Notion同期の仕組み）
 ├── note-drafts.html       Note Drafts（note転記の下書き）
@@ -74,7 +74,7 @@ GitHub Actionsによる自動同期（`scripts/notion-sync.mjs` / `.github/workf
 ├── .github/workflows/
 │   └── notion-sync.yml     Notion Sync GitHub Actions（手動実行 / 1時間おきスケジュール）
 └── docs/
-    ├── live-log/           実行ログの本体（Markdown）
+    ├── live-log/           活動共有ノートの履歴（Markdown）
     ├── blueprints/         設計図・構成図の本体
     ├── manga/              漫画関連の素材（AIクリエイティブ自由研究）
     ├── note-drafts/        note転記用下書きの本体

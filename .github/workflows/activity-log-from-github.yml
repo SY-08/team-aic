@@ -1,0 +1,44 @@
+name: Activity log from GitHub
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # 23:55 JST。1日のGitHub作業をNotionの活動共有ノートへまとめる。
+    - cron: "55 14 * * *"
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "遡って記録する日数（1〜14）"
+        required: false
+        default: "14"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: activity-log-from-github
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Write GitHub activity to Notion
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_ACTIVITY_LOG_DATABASE_ID: "4a94b0fb-3ce7-4300-b228-1b10d9847994"
+          # mainへ反映したときは直近14日を再集計して、初回の履歴も取り込む。
+          # 毎晩の定期実行では当日分だけを更新する。
+          ACTIVITY_LOG_DAYS: ${{ github.event_name == 'schedule' && '1' || github.event.inputs.days || '14' }}
+        run: node scripts/activity-log-from-github.mjs
