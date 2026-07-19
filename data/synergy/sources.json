@@ -1,0 +1,50 @@
+{
+ "asOf": "2026-07-19",
+ "defaultRate": {
+  "usdJpy": 150,
+  "note": "円換算＝米ドル額×表示レート（画面上部で変更可）。基準日は概算・固定レート。"
+ },
+ "sources": {
+  "imf_weo": {
+   "name": "IMF 世界経済見通し（WEO）",
+   "url": "https://data.imf.org/Datasets/WEO"
+  },
+  "wdi": {
+   "name": "世界銀行 WDI",
+   "url": "https://wdi.worldbank.org/table/wv.1"
+  },
+  "un_wpp": {
+   "name": "国連 世界人口推計（WPP2024）",
+   "url": "https://population.un.org/wpp/"
+  },
+  "cao_sna": {
+   "name": "内閣府 国民経済計算（GDP統計）",
+   "url": "https://www.esri.cao.go.jp/jp/sna/menu.html"
+  },
+  "cao_kenmin": {
+   "name": "内閣府 県民経済計算",
+   "url": "https://www.esri.cao.go.jp/jp/sna/sonota/kenmin/kenmin_top.html"
+  },
+  "mof_budget": {
+   "name": "財務省 予算・決算",
+   "url": "https://www.mof.go.jp/policy/budget/budger_workflow/account/"
+  },
+  "mof_jgb": {
+   "name": "財務省 国債・債務残高",
+   "url": "https://www.mof.go.jp/jgbs/reference/appendix/index.htm"
+  },
+  "mhlw": {
+   "name": "厚生労働省 社会保障関係資料",
+   "url": "https://www.mhlw.go.jp/"
+  },
+  "mofa": {
+   "name": "外務省 各国基礎データ",
+   "url": "https://www.mofa.go.jp/mofaj/area/"
+  },
+  "user_sheet": {
+   "name": "利用者スプレッドシート（正本・未確認）",
+   "url": "",
+   "status": "未確認：共有設定とCSV出力可否の確認が必要"
+  }
+ }
+}
