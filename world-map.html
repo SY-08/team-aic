@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>マクロ経済シナジーMAP｜日本の経済を冒険する | team AIC</title>
-<meta name="description" content="日本のGDPから産業・歳出・歳入・国の借金までを、開くほど広がるマインドマップで紐解く。大きい数字から小さい数字へ、つながり（シナジー）も見える経済の地図。">
+<title>世界のGDP・地理MAP｜世界を冒険する | team AIC</title>
+<meta name="description" content="世界各国のGDP（名目・公的データ）を、大きい順に開いて紐解く地図。日本はマクロ経済MAPへ連結。">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://sy-08.github.io/team-aic/macro-map.html">
+<link rel="canonical" href="https://sy-08.github.io/team-aic/world-map.html">
 <style>
   :root{ --blue:#2a6fb5; --blueD:#1c548c; --ink:#22303c; }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -49,10 +49,10 @@
 </head>
 <body>
 <div id="bar">
-  <h1>🗾 マクロ経済シナジーMAP</h1>
+  <h1>🌍 世界のGDP・地理MAP</h1>
   <div class="sp">
     <button id="fitAll">ぜんたい</button>
-    <a href="index.html">← team AIC</a>
+    <a href="macro-map.html">← 日本のMAP</a>
   </div>
 </div>
 <div id="hint">カードを タップで ひらく／あいた所へ ズームします</div>
@@ -63,10 +63,9 @@
 </div>
 <div class="legend">
   <b>みかた</b><br>
-  <i style="background:#3aa564"></i>産業（生み出す）　<i style="background:#e0663a"></i>歳出（使う）<br>
-  <i style="background:#2a6fb5"></i>歳入（集める）　<i style="background:#5b4a66"></i>国の借金<br>
-  <span class="syn"></span>シナジー（お金のつながり）<br>
-  <span style="color:#6a7b8b">出典：内閣府 国民経済計算／財務省 令和5年度決算。数字は概算。</span>
+  国ごとの <b>GDP（名目・米ドル）</b>と 世界に占める割合。<br>
+  カードを ひらくと 人口・つながり・別MAPへ。<br>
+  <span style="color:#6a7b8b">出典：IMF／世界銀行／国連。数字は概算（2023）。</span>
 </div>
 
 <script>
@@ -76,57 +75,28 @@ var C={root:"#1c548c",ind:"#3aa564",out:"#e0663a",inc:"#2a6fb5",debt:"#5b4a66",w
 var uid=0; function N(o){o.id=o.id||("n"+(uid++)); o.open=false; o.children=o.children||[]; return o;}
 
 // ===== データ（大きい→小さい。各層は親に足し上がる。※概算・丸め差あり） =====
-var DATA=N({key:"root",label:"日本の経済（マクロ）",color:C.root,
-  note:"大きな数字から 小さな数字へ、順に ひらいて 紐解こう。GDP（生み出す）と 財政（使う・集める）は 別のツリー。点線は お金のつながり（シナジー）。",
+var DATA=N({key:"root",label:"世界のGDP（名目・2023）",val:"約106",unit:"兆ドル",color:C.root,
+  note:"世界ぜんたいが 1年で 生み出した 価値（名目・米ドル）。出典：IMF／世界銀行。大きい順に 国で 分解。日本の中身は『マクロ経済MAP』へ。",
   children:[
-   N({key:"gdp",label:"① 生産＝GDP（2023年・名目）",val:"591.5",unit:"兆円",color:C.ind,
-     note:"国内で 1年に 生み出した 付加価値の 合計。産業別に 分解できる（合計はGDPに一致）。2013年は 486.2兆円。",
+   N({label:"アメリカ",val:"27.4",unit:"兆ドル",color:"#2a6fb5",note:"人口 約3.4億人。世界最大の経済。"}),
+   N({label:"中国",val:"17.8",unit:"兆ドル",color:"#e0552f",note:"人口 約14.1億人。"}),
+   N({label:"ドイツ",val:"4.5",unit:"兆ドル",color:"#6a5fa0",note:"人口 約0.84億人。欧州最大の経済。"}),
+   N({key:"jp",label:"日本",val:"4.2",unit:"兆ドル",color:"#c9a13a",note:"人口 約1.24億人。＝約591兆円。中身は『マクロ経済MAP』へ。",
      children:[
-       N({label:"医療・福祉",val:"57.8",color:C.ind,pct:"10%"}),
-       N({label:"専門・科学技術／業務支援",val:"36.4",color:C.ind,pct:"6%"}),
-       N({label:"建設",val:"36.4",color:C.ind,pct:"6%"}),
-       N({label:"住宅賃貸業",val:"32.6",color:C.ind,pct:"6%"}),
-       N({label:"卸売",val:"31.7",color:C.ind,pct:"5%"}),
-       N({label:"小売",val:"31.5",color:C.ind,pct:"5%"}),
-       N({label:"金融・保険",val:"29.3",color:C.ind,pct:"5%"}),
-       N({label:"公務",val:"27.3",color:C.ind,pct:"5%"}),
-       N({label:"運輸・郵便",val:"26.2",color:C.ind,pct:"4%"}),
-       N({label:"化学",val:"19.9",color:C.ind,pct:"3%"}),
-       N({label:"宿泊・飲食",val:"14.0",color:C.ind,pct:"2%"}),
-       N({label:"一次金属・食料品ほか製造（一部）",val:"25.3",color:C.ind,pct:"4%",note:"一次金属12.8＋食料品12.5 など、内訳にある製造業。"}),
-       N({label:"教育",val:"9.5",color:C.ind,pct:"2%"}),
-       N({label:"農林水産",val:"10.4",color:C.ind,pct:"2%"}),
-       N({label:"その他の産業（未内訳）",val:"約173",color:C.ind,pct:"29%",note:"機械・自動車などの製造、情報通信業、電気・ガス・水道 ほか。元データに個別の数字が無いぶんをまとめた（GDPに足し上げるための残り）。"})
+       N({label:"→ マクロ経済MAP（日本の中身）",color:"#c9a13a",link:"macro-map.html",note:"GDP591兆円の産業内訳・国の予算・借金へ。"}),
+       N({label:"宗教（参考）",color:"#8a6fbf",note:"神道・仏教が中心。今後くわしく。"}),
+       N({label:"主な都市",color:"#3aa564",note:"東京・大阪・名古屋 など。今後くわしく。"})
      ]}),
-   N({key:"fisc",label:"② 財政（国の予算・2023年度／一般会計 決算）",color:C.out,
-     note:"国が 1年で 使うお金（歳出）と、集めるお金（歳入）。GDPとは 別のはなし。",
-     children:[
-       N({key:"out",label:"歳出（使いみち）",val:"127.6",unit:"兆円",color:C.out,note:"国が使ったお金の 合計。大きい順。",
-         children:[
-           N({key:"out_social",label:"社会保障",val:"36.2",color:C.out,pct:"28%",note:"年金・医療・介護・子育て。いちばん大きい。※元データの43.8は分類差で、決算では36.2。"}),
-           N({key:"out_debt",label:"国債費",val:"25.5",color:C.out,pct:"20%",note:"借金の へんさいと 利子。→「国の借金」につながる。"}),
-           N({label:"地方交付税交付金等",val:"17.2",color:C.out,pct:"14%"}),
-           N({label:"防衛・公共事業・文教・予備費 ほか",val:"48.7",color:C.out,pct:"38%",note:"防衛、道路など公共事業、教育・研究、物価/経済対策の予備費 などの合計。"})
-         ]}),
-       N({key:"inc",label:"歳入（集め方）",val:"127.6",unit:"兆円",color:C.inc,note:"使うお金は どこから来る？",
-         children:[
-           N({key:"inc_tax",label:"税収",val:"約72",color:C.inc,pct:"56%",note:"所得税・法人税・消費税で 約8わり。経済活動（GDP）から生まれる。"}),
-           N({key:"inc_kousai",label:"公債金（借金）",val:"約44",color:C.inc,pct:"34%",note:"たりない分を 国債（借金）でまかなう。これが つもって「国の借金」に。"}),
-           N({label:"その他収入",val:"約12",color:C.inc,pct:"10%"})
-         ]})
-     ]}),
-   N({key:"debt",label:"③ 国の借金（国債発行残高）",val:"約1,054",unit:"兆円",color:C.debt,
-     note:"毎年の「公債金」が つみ重なった 総額（2025年3月末）。GDP 591兆円の 約1.8倍。歳出の「国債費」で 少しずつ返す。"}),
-   N({key:"world",label:"④ 世界とのつながり（拡張）",color:C.world,
-     note:"貿易・エネルギー・食料などで 日本は 世界と つながる。ここから『世界地理・宗教・街』のMAPへ 連結していく（今後）。",
-     children:[
-       N({label:"貿易（モノ・サービス・デジタル）",color:C.world,note:"輸出入、サービス貿易、データのやり取り。"}),
-       N({label:"→ 世界のGDP・地理MAP",color:C.world,link:"world-map.html",note:"各国のGDP（公的データ）や文化・都市を、同じ仕組みのMAPでつなぐ。"})
-     ]})
+   N({label:"インド",val:"3.6",unit:"兆ドル",color:"#3aa564",note:"人口 約14.3億人（世界最多）。"}),
+   N({label:"イギリス",val:"3.3",unit:"兆ドル",color:"#6a5fa0",note:"人口 約0.68億人。"}),
+   N({label:"フランス",val:"3.0",unit:"兆ドル",color:"#6a5fa0",note:"人口 約0.65億人。"}),
+   N({label:"イタリア",val:"2.3",unit:"兆ドル",color:"#6a5fa0",note:"人口 約0.59億人。"}),
+   N({label:"ブラジル",val:"2.2",unit:"兆ドル",color:"#d98a2b",note:"人口 約2.16億人。南米最大。"}),
+   N({label:"カナダ",val:"2.1",unit:"兆ドル",color:"#2a6fb5",note:"人口 約0.40億人。"}),
+   N({label:"ロシア",val:"2.0",unit:"兆ドル",color:"#5b4a66",note:"人口 約1.44億人。"}),
+   N({label:"その他の国々",val:"約34",unit:"兆ドル",color:"#9aa7b4",note:"上位以外の 世界の国々の合計（世界GDPに足し上げるための残り）。"})
   ]});
-
-// synergy links (from-key -> to-key)
-var SYN=[["inc_tax","gdp","GDP→税収"],["out_social","gdp","社会保障→産業"],["inc_kousai","debt","借金がつもる"],["debt","out_debt","国債費で返す"]];
+var SYN=[];
 
 var world=document.getElementById("world"),stage=document.getElementById("stage"),svg=document.getElementById("links");
 var COLW=300,ROWH=112,CARDW=236,els={},byKey={};
