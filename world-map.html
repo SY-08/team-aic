@@ -2,104 +2,112 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>シナジーMAP｜世界と日本の経済・財政・地政学 | team AIC</title>
-<meta name="description" content="世界15か国と日本の経済・人口・財政・社会保障・地政学を、比較・掘り下げ・関係の追跡で読み解く分析マップ。全数値に対象年・出典つき。">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>シナジーMAP｜世界と日本を一枚で繋ぐ | team AIC</title>
+<meta name="description" content="世界15か国と日本の経済・産業・財政・社会保障・地政学を、すべて繋がる一枚のマインドマップで探索。地図を主役にするマップモードも。">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://sy-08.github.io/team-aic/world-map.html">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-:root{--blue:#2a6fb5;--blueD:#1c548c;--gold:#c9a13a;--ink:#22303c;--line:#d5e3f2;--bg:#f2f7fc;--red:#d0453b;--green:#2e8b57;}
-*{box-sizing:border-box;}
-html,body{margin:0;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;color:var(--ink);background:var(--bg);}
-a{color:var(--blueD);}
-#hdr{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
-#hdr .r1{display:flex;align-items:center;gap:10px;padding:8px 14px;flex-wrap:wrap;}
-#hdr h1{font-size:clamp(15px,3.6vw,20px);margin:0;color:var(--blueD);}
-#hdr .meta{margin-left:auto;display:flex;gap:8px;align-items:center;font-size:12px;flex-wrap:wrap;}
-#hdr .meta .chip{background:#eef5fc;border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-weight:700;color:#3a5570;}
-#rateIn{width:64px;border:1px solid var(--line);border-radius:8px;padding:3px 6px;font-weight:800;font-size:13px;color:var(--blueD);}
-#tabs{display:flex;gap:4px;padding:0 10px 8px;overflow-x:auto;}
-.tab{border:0;background:#e8f0f9;color:#3a5570;font-weight:800;font-size:13px;border-radius:10px 10px 0 0;padding:9px 14px;cursor:pointer;white-space:nowrap;}
-.tab.on{background:var(--blueD);color:#fff;}
-main{max-width:1200px;margin:0 auto;padding:14px;}
-.view{display:none;} .view.on{display:block;}
-.grid{display:grid;gap:12px;}
-.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:0 4px 14px rgba(30,70,120,.06);}
-.card h2{font-size:16px;margin:0 0 8px;color:var(--blueD);}
-.card h3{font-size:14px;margin:12px 0 6px;color:var(--blueD);}
-.src{font-size:11px;color:#6a7b8b;margin-top:8px;line-height:1.6;}
-.chipRow{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0;}
-.mchip{border:0;background:#eaf3ff;color:var(--blueD);font-weight:800;font-size:12.5px;border-radius:999px;padding:7px 12px;cursor:pointer;}
-.mchip.on{background:var(--blueD);color:#fff;}
-.statusChip{display:inline-block;font-size:10.5px;font-weight:800;border-radius:999px;padding:2px 8px;background:#fdf1d8;color:#8a5a12;margin-left:6px;vertical-align:middle;}
-table.t{width:100%;border-collapse:collapse;font-size:13px;}
-table.t th{text-align:left;color:#5a6f82;font-size:11.5px;padding:6px 6px;border-bottom:2px solid var(--line);white-space:nowrap;}
-table.t td{padding:7px 6px;border-bottom:1px solid #edf3f9;vertical-align:top;}
-table.t tr.sel td{background:#f0f7ff;}
-table.t tr.click{cursor:pointer;}
-.bar{height:9px;border-radius:5px;background:#eef2f7;overflow:hidden;min-width:60px;}
-.bar>i{display:block;height:100%;border-radius:5px;background:var(--blue);}
-.num{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap;}
-.pos{color:var(--green);} .neg{color:var(--red);}
-.cty-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;}
-.cty{background:#fff;border:1px solid var(--line);border-left:6px solid var(--blue);border-radius:12px;padding:11px 13px;cursor:pointer;transition:box-shadow .15s;}
-.cty:hover{box-shadow:0 6px 18px rgba(30,70,120,.14);}
-.cty.sel{outline:3px solid rgba(201,161,58,.55);}
-.cty .nm{font-weight:900;font-size:15px;}
-.cty .five{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;margin-top:7px;font-size:12.5px;font-weight:800;}
-.cty .five b{display:block;font-size:10px;color:#7a8ea0;font-weight:800;}
-.map-wrap{height:340px;border-radius:12px;overflow:hidden;border:1px solid var(--line);}
-details.acc{background:#fff;border:1px solid var(--line);border-radius:12px;margin:8px 0;}
-details.acc>summary{cursor:pointer;padding:11px 14px;font-weight:800;font-size:14px;color:var(--blueD);list-style:none;display:flex;align-items:center;gap:8px;}
-details.acc>summary::before{content:"▸";transition:transform .15s;}
-details.acc[open]>summary::before{transform:rotate(90deg);}
-details.acc>.bd{padding:2px 14px 14px;}
-.subtabs{display:flex;gap:6px;margin:8px 0;flex-wrap:wrap;}
-.pair{display:grid;grid-template-columns:110px 1fr 74px;gap:6px;align-items:center;font-size:12.5px;margin:3px 0;}
-.pair .lbl{font-weight:800;color:#5a6f82;font-size:11px;text-align:right;}
-.flow-note{background:#fdf8ec;border:1px solid #ecd9a8;border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.7;margin:8px 0;}
-.insight{border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.8;margin:8px 0;}
-.insight.obs{background:#eef7f0;border:1px solid #bfe0c8;}
-.insight.cau{background:#fdf1f0;border:1px solid #ecc4c0;}
-.insight.q{background:#eef3fb;border:1px solid #c7d8ee;}
-.insight b.ttl{display:block;margin-bottom:4px;}
-.legendGeo{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;font-weight:700;margin:8px 0;}
-.legendGeo i{display:inline-block;width:18px;height:4px;border-radius:2px;margin-right:4px;vertical-align:middle;}
-.btn{border:0;background:#eaf3ff;color:var(--blueD);font-weight:800;font-size:12.5px;border-radius:9px;padding:8px 13px;cursor:pointer;}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-@media(max-width:820px){.two{grid-template-columns:1fr;}}
-#insp{position:fixed;right:0;top:0;bottom:0;width:min(430px,94vw);background:#fff;z-index:60;box-shadow:-8px 0 30px rgba(20,50,90,.25);transform:translateX(105%);transition:transform .22s;display:flex;flex-direction:column;}
-#insp.on{transform:none;}
-#insp .hd{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line);}
-#insp .hd b{font-size:16px;color:var(--blueD);}
-#insp .bd{overflow:auto;padding:12px 14px;flex:1;}
-#inspClose{margin-left:auto;border:0;background:#eef5fc;border-radius:9px;width:32px;height:32px;font-size:16px;font-weight:900;cursor:pointer;color:var(--blueD);}
-footer{max-width:1200px;margin:10px auto 30px;padding:0 14px;font-size:11.5px;color:#6a7b8b;line-height:1.8;}
-.err{background:#fdf1f0;border:1px solid #ecc4c0;border-radius:10px;padding:12px;font-size:13px;}
-svg text{font-family:inherit;}
+  :root{ --blue:#2a6fb5; --blueD:#1c548c; --gold:#c9a13a; --ink:#22303c; --red:#d0453b; --green:#2e8b57; }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;height:100%;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;color:var(--ink);overflow:hidden;}
+  body{background:radial-gradient(1200px 800px at 50% 30%,#eef6ff 0%,#dfeaf7 55%,#d0e0f2 100%);}
+  #bar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(255,255,255,.9);backdrop-filter:blur(6px);border-bottom:1px solid #d5e3f2;flex-wrap:wrap;}
+  #bar h1{font-size:clamp(13px,3.2vw,18px);margin:0;color:var(--blueD);white-space:nowrap;}
+  #bar .sp{margin-left:auto;display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+  #bar button,#bar a{font-size:12.5px;font-weight:800;border:0;background:#eaf3ff;color:var(--blueD);border-radius:999px;padding:7px 12px;text-decoration:none;cursor:pointer;}
+  .modeSw{display:flex;background:#e3edf8;border-radius:999px;padding:3px;gap:2px;}
+  .modeSw button{background:transparent;padding:6px 13px;border-radius:999px;}
+  .modeSw button.on{background:var(--blueD);color:#fff;}
+  #rateIn{width:52px;border:1px solid #cfe0f2;border-radius:8px;padding:3px 5px;font-weight:800;font-size:12.5px;color:var(--blueD);}
+  #hint{position:fixed;top:50px;left:0;right:0;text-align:center;font-size:12px;color:#5a6f82;z-index:9;pointer-events:none;}
+  #geo{position:fixed;inset:0;z-index:0;opacity:.30;filter:grayscale(.35) saturate(.85);pointer-events:none;transition:opacity .4s;}
+  body.mapmode #geo{opacity:1;filter:none;pointer-events:auto;}
+  #stage{position:fixed;inset:0;cursor:grab;overflow:hidden;z-index:1;}
+  #stage.drag{cursor:grabbing;}
+  body.mapmode #stage{display:none;}
+  #world{position:absolute;left:0;top:0;transform-origin:0 0;transition:transform .5s cubic-bezier(.22,.61,.36,1);}
+  svg#links{position:absolute;left:0;top:0;overflow:visible;pointer-events:none;}
+  .node{position:absolute;width:238px;transform:translateY(-50%);}
+  .card{background:#fff;border-radius:15px;padding:10px 13px;box-shadow:0 8px 22px rgba(20,60,110,.16);border-left:8px solid var(--blue);cursor:pointer;transition:box-shadow .15s,transform .12s;}
+  .card:hover{box-shadow:0 12px 30px rgba(20,60,110,.24);}
+  .card:active{transform:scale(.99);}
+  .lbl{font-weight:800;font-size:14px;line-height:1.35;}
+  .val{font-weight:900;font-size:20px;color:var(--blueD);margin-top:2px;}
+  .val small{font-size:11px;font-weight:700;color:#6a7b8b;margin-left:3px;}
+  .valrow{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-top:3px}
+  .share{font-weight:900;font-size:16px}
+  .barwrap{height:9px;border-radius:6px;background:#eef2f7;overflow:hidden;margin-top:5px}
+  .barwrap>i{display:block;height:100%;border-radius:6px;transition:width .4s}
+  .yen{font-size:12px;color:#7a5b1f;font-weight:800;margin-top:4px}
+  .mg{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;font-size:12px;font-weight:800;color:#243748;margin-top:6px;background:#f4f9ff;border-radius:9px;padding:6px 8px;line-height:1.45}
+  .mg b{display:block;color:#8395a6;font-weight:800;font-size:9.5px}
+  .debtline{font-size:12px;font-weight:800;color:#5b4a66;background:#f3eef7;border-radius:8px;padding:4px 7px;margin-top:5px}
+  .plan{font-size:12px;font-weight:800;color:#8a5a12;background:#fdf4e0;border-radius:8px;padding:4px 7px;margin-top:5px}
+  .note{font-size:11.5px;color:#556575;line-height:1.65;margin-top:6px;display:none;}
+  .card.open .note{display:block;}
+  .kids{font-size:11px;color:var(--blue);font-weight:800;margin-top:6px;}
+  .root .card{border-left:0;border-top:8px solid var(--blueD);text-align:center;}
+  .root .val{font-size:30px;}
+  .pos{color:var(--green)!important} .neg{color:var(--red)!important}
+  .legend{position:fixed;left:12px;bottom:12px;z-index:15;background:rgba(255,255,255,.93);border-radius:14px;padding:9px 12px;box-shadow:0 6px 16px rgba(20,60,110,.14);font-size:11.5px;max-width:240px;line-height:1.7;}
+  .legend b{color:var(--blueD);}
+  #zoom{position:fixed;right:12px;bottom:12px;z-index:15;display:flex;flex-direction:column;gap:8px;}
+  body.mapmode #zoom,body.mapmode #stageLegend{display:none;}
+  .zoombtn{border:0;background:#fff;color:var(--blueD);font-weight:900;width:42px;height:42px;border-radius:13px;box-shadow:0 3px 8px rgba(20,60,110,.18);cursor:pointer;font-size:19px;}
+  #mapLegend{position:fixed;left:12px;bottom:12px;z-index:15;background:rgba(255,255,255,.95);border-radius:14px;padding:10px 13px;box-shadow:0 6px 16px rgba(20,60,110,.16);font-size:12px;line-height:1.9;display:none;max-width:260px;}
+  body.mapmode #mapLegend{display:block;}
+  #mapLegend .lg{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+  #mapLegend label{cursor:pointer;font-weight:700;}
+  #mapLegend i{display:inline-block;width:16px;height:4px;border-radius:2px;vertical-align:middle;margin-right:3px}
+  .ov{position:fixed;inset:0;z-index:40;background:rgba(20,40,70,.4);display:none;align-items:center;justify-content:center;padding:16px;}
+  .ov.on{display:flex;}
+  .ovcard{background:#fff;border-radius:18px;max-width:640px;width:100%;max-height:84vh;overflow:auto;padding:16px;box-shadow:0 20px 50px rgba(0,0,0,.35);}
+  .ovcard h3{margin:0 0 6px;color:var(--blueD);}
+  .ovClose{border:0;background:#eaf3ff;color:var(--blueD);font-weight:900;width:34px;height:34px;border-radius:10px;cursor:pointer;font-size:18px;float:right;}
+  .cmpTabs{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 10px}
+  .cmpTab{border:0;background:#eaf3ff;color:var(--blueD);font-weight:800;font-size:12px;border-radius:999px;padding:6px 11px;cursor:pointer}
+  .cmpTab.on{background:var(--blueD);color:#fff}
+  .cmpT{width:100%;border-collapse:collapse;font-size:13px}
+  .cmpT th{color:#5a6f82;text-align:left;padding:6px 4px;font-size:11.5px}
+  .cmpT td{border-top:1px solid #eef2f7;padding:7px 4px}
+  .err{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;z-index:30;}
+  .err>div{background:#fff;border:1px solid #ecc4c0;border-radius:14px;padding:18px;max-width:520px;font-size:14px;line-height:1.8;box-shadow:0 10px 30px rgba(0,0,0,.15);}
+  @media(max-width:560px){ .legend,#mapLegend{font-size:10.5px;max-width:180px;} .node{width:212px;} }
 </style>
 </head>
 <body>
-<header id="hdr">
-  <div class="r1">
-    <h1>🌍 シナジーMAP｜世界と日本の経済・財政・地政学</h1>
-    <div class="meta">
-      <span class="chip">GDP等: 2024年 / 債務: 2023年 / 日本財政: 2023年度</span>
-      <span class="chip">表示レート 1$=<input id="rateIn" type="number" value="150" min="50" max="300">円</span>
-      <button class="btn" id="srcBtn">出典一覧</button>
-      <a class="btn" href="index.html" style="text-decoration:none">← team AIC</a>
-    </div>
+<div id="bar">
+  <h1>🌍 シナジーMAP（世界と日本）</h1>
+  <div class="sp">
+    <div class="modeSw" id="modeSw"><button data-mode="synergy" class="on">🧠 シナジー</button><button data-mode="map">🗺️ マップ</button></div>
+    <span style="font-size:11.5px;color:#5a6f82">1$=<input id="rateIn" type="number" value="150" min="50" max="300">円</span>
+    <button id="cmp">📊 ランキング</button>
+    <button id="fitAll">ぜんたい</button>
+    <a href="synergy-data.html">📑 データ整理版</a>
+    <a href="index.html">← team AIC</a>
   </div>
-  <nav id="tabs"></nav>
-</header>
-<main id="main"><div class="card">読み込み中…（データファイルを取得しています）</div></main>
-<aside id="insp" aria-label="詳細">
-  <div class="hd"><b id="inspTitle"></b><button id="inspClose" aria-label="閉じる">×</button></div>
-  <div class="bd" id="inspBody"></div>
-</aside>
-<footer id="foot"></footer>
-<script src="assets/js/synergy-map.js" defer></script>
+</div>
+<div id="hint">カードを タップで ひらく／点線は「お金や関係のつながり」／背景の地図は指す国へ動く</div>
+<div id="geo"></div>
+<div id="stage"><div id="world"><svg id="links"></svg></div></div>
+<div id="zoom"><button class="zoombtn" id="zin">＋</button><button class="zoombtn" id="zout">－</button></div>
+<div class="legend" id="stageLegend">
+  <b>みかた（シナジーモード）</b><br>
+  国＝GDP・円換算・人口・一人当たり・増減率・債務。<br>
+  ひらくと 産業（国内順位）／示唆。日本＝生産・財政・借金の全構造。<br>
+  <span style="color:#e0663a">━ ━</span> 点線＝お金/関係のつながり。<br>
+  <span style="color:#6a7b8b">出典：IMF/世界銀行/国連/財務省/内閣府（概算・1$=<span id="lgRate">150</span>円）</span>
+</div>
+<div id="mapLegend">
+  <b>🗺️ マップモード（地政学）</b><br>
+  ●＝国（大きさ＝GDP）。線＝国どうしの関係。国をタップで詳細。
+  <div class="lg" id="mapFilters"></div>
+</div>
+<div class="ov" id="cmpOv"><div class="ovcard"><button class="ovClose" data-close>×</button><h3>国ランキング（指標ボタンで切替）</h3><div id="cmpBody"></div></div></div>
+<div class="ov" id="infoOv"><div class="ovcard"><button class="ovClose" data-close>×</button><div id="infoBody"></div></div></div>
+<script src="assets/js/synergy-mindmap.js" defer></script>
 </body>
 </html>
