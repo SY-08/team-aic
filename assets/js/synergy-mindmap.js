@@ -96,7 +96,11 @@ function buildTree(){
   DATA=N({key:"root",label:"🌍 世界のGDP（名目・2024）",val:"約110",unit:"兆ドル",color:C.root,
     note:"世界全体が1年で生み出した価値。出典：IMF/世界銀行/国連。国カードにGDP・円換算・人口・一人当たり・増減率・債務。開くと産業(国内順位)や示唆。日本を開くと生産→財政→借金の全構造へ。点線はお金や関係の『つながり』。右上でマップモードに切替。",
     children:[geoNode].concat(countries).concat([other])});
-  SYN=[["inc-bond","issue-new"],["out-bond","manki"],["kofu","med"]];
+  SYN=[
+    ["inc-bond","issue-new","同じお金：歳入の借金＝新規国債の発行"],
+    ["out-bond","manki","満期173兆の一部15.5兆を現金償還＝国債費に計上"],
+    ["kofu","med","交付税(使途自由の一般財源)の一部が地方の医療費負担4〜5兆へ"]
+  ];
 }
 
 /* ---------- engine ---------- */
@@ -152,7 +156,11 @@ function layout(){var vis=visible(DATA,[]);
       links+="<path d='M"+x1+","+a.y+" C"+mx+","+a.y+" "+mx+","+b.y+" "+x2+","+b.y+"' stroke='"+c.color+"' stroke-width='2.5' fill='none' opacity='.5'/>";});});
   var vs={};vis.forEach(function(n){vs[n.id]=1;});
   SYN.forEach(function(p){var f=byKey[p[0]],t=byKey[p[1]];if(f&&t&&vs[f.id]&&vs[t.id]){var a=xy(f),b=xy(t),x1=a.x+CARDW,x2=b.x+CARDW,mx=Math.max(x1,x2)+70;
-    links+="<path d='M"+x1+","+a.y+" C"+mx+","+a.y+" "+mx+","+b.y+" "+x2+","+b.y+"' stroke='#e0663a' stroke-width='2.4' stroke-dasharray='6 5' fill='none' opacity='.7'/>";}});
+    links+="<path d='M"+x1+","+a.y+" C"+mx+","+a.y+" "+mx+","+b.y+" "+x2+","+b.y+"' stroke='#e0663a' stroke-width='2.4' stroke-dasharray='6 5' fill='none' opacity='.7'/>";
+    var lbl=p[2]||"", midy=(a.y+b.y)/2;
+    if(lbl){var w=lbl.length*11.5+16;
+      links+="<rect x='"+(mx-w/2)+"' y='"+(midy-12)+"' width='"+w+"' height='24' rx='12' fill='#fff' stroke='#e0663a' stroke-width='1.2'/>";
+      links+="<text x='"+mx+"' y='"+(midy+4)+"' font-size='11.5' fill='#c2451f' text-anchor='middle' font-weight='800'>"+esc(lbl)+"</text>";}}});
   svg.innerHTML=links;
   var mx=0,my=0;vis.forEach(function(n){var p=xy(n);mx=Math.max(mx,p.x+340);my=Math.max(my,p.y+(n._h||88)+40);});
   world.style.width=mx+"px";world.style.height=my+"px";svg.setAttribute("width",mx);svg.setAttribute("height",my);}
@@ -179,6 +187,12 @@ function buildMapLayer(){
     mk.bindTooltip(c.flag+" "+c.name+"（GDP "+c.gdpUsdTrn+"兆$ / 債務比 "+((D.debt.records[c.id]||{}).debtGdpPct||"-")+"%）");
     mk.on("click",function(){showCountryInfo(c.id);});
     mk._cty=c; mapMarkers.push(mk);
+  });
+  (D.geo.chokepoints||[]).forEach(function(cp){
+    var ic=L.divIcon({className:"choke-ic",html:"<div style='font-size:22px;line-height:22px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))'>"+(cp.icon||"⚠️")+"</div>",iconSize:[26,26],iconAnchor:[13,13]});
+    var mk=L.marker(cp.ll,{icon:ic,zIndexOffset:1000});
+    mk.bindTooltip("<b>⚠️ "+esc(cp.name)+(cp.risk?"（"+esc(cp.risk)+"）":"")+"</b><br>"+esc(cp.desc),{sticky:true});
+    mk._choke=true; mapMarkers.push(mk);
   });
   D.geo.relations.forEach(function(r){var a=cty(r.a),b=cty(r.b),t=types[r.type];
     var ln=L.polyline([a.ll,b.ll],{color:t.color,weight:2.6,opacity:.75,dashArray:r.type==="tension"?"6 6":null});
