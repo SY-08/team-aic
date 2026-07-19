@@ -83,7 +83,26 @@ const PAGE_MAP = [
       { id: "39020f2ab64545b28e0c393100e17ca9", label: "日本の裏側アーカイブ", kind: "politics" },
     ],
   },
-  { file: "philosophy.html", prefix: "08-17", label: "08-17 私とAIの哲学", database: true, autoPublish: true },
+  {
+    file: "philosophy.html",
+    prefix: "08-17",
+    label: "08-17 私とAIの哲学",
+    database: true,
+    intro: true,
+    publicationPaused: true,
+  },
+  {
+    prefix: "08-22",
+    label: "08-22 私の哲学",
+    mirrorOnly: true,
+    mirrors: [
+      {
+        file: "philosophy.html",
+        marker: "personal-philosophy",
+        label: "08-22 私の哲学（私とAIの哲学の冒頭）",
+      },
+    ],
+  },
   { file: "my-journal.html", prefix: "08-20", label: "08-20 私のジャーナル", database: true, autoPublish: true },
 ];
 
@@ -144,6 +163,11 @@ async function syncPage(entry, rootChildren, token, logLines) {
   const pageBlock = findChildPageByPrefix(rootChildren, entry.prefix);
   if (!pageBlock) {
     logLines.push(`- WARN: Notion側に ${entry.label} に該当する子ページが見つかりませんでした。`);
+    return;
+  }
+
+  if (entry.mirrorOnly) {
+    await syncMirrors(entry, pageBlock, token, logLines);
     return;
   }
 
@@ -219,8 +243,23 @@ async function syncPage(entry, rootChildren, token, logLines) {
     fileContent = activityResult.content;
     changedAny = changedAny || activityResult.changed;
   } else if (entry.database) {
+    if (entry.intro) {
+      const introResult = await renderAndApplySection(
+        fileContent,
+        pageBlock,
+        "intro",
+        `${entry.label}（編集ルール）`,
+        token,
+        logLines,
+        { stripFirstHeading: true }
+      );
+      fileContent = introResult.content;
+      changedAny = changedAny || introResult.changed;
+    }
     const blocks = await getAllChildren(pageBlock.id, token);
-    const dbHtml = await renderDatabaseEntries(blocks, token, logLines, entry.label, entry.autoPublish);
+    const dbHtml = entry.publicationPaused
+      ? renderPublicationPausedNotice()
+      : await renderDatabaseEntries(blocks, token, logLines, entry.label, entry.autoPublish);
     const result = replaceBetweenMarkers(
       fileContent,
       "<!-- notion-sync:content:start -->",
@@ -243,11 +282,47 @@ async function syncPage(entry, rootChildren, token, logLines) {
   } else {
     logLines.push(`- OK: ${entry.label} → ${entry.file}（変更なし）`);
   }
+
+  if (entry.mirrors) {
+    await syncMirrors(entry, pageBlock, token, logLines);
+  }
 }
 
-async function renderAndApplySection(fileContent, pageBlock, marker, label, token, logLines) {
+async function syncMirrors(entry, pageBlock, token, logLines) {
+  for (const mirror of entry.mirrors) {
+    const mirrorPath = path.join(ROOT_DIR, mirror.file);
+    let mirrorContent;
+    try {
+      mirrorContent = await fs.readFile(mirrorPath, "utf8");
+    } catch {
+      logLines.push(`- ERROR: ${mirror.file} が見つからないため ${mirror.label} を反映できません。`);
+      continue;
+    }
+
+    const result = await renderAndApplySection(
+      mirrorContent,
+      pageBlock,
+      mirror.marker,
+      mirror.label,
+      token,
+      logLines,
+      { stripFirstHeading: true }
+    );
+    if (result.changed) {
+      await fs.writeFile(mirrorPath, result.content, "utf8");
+      logLines.push(`- OK: ${mirror.label} → ${mirror.file}（更新あり）`);
+    } else {
+      logLines.push(`- OK: ${mirror.label} → ${mirror.file}（変更なし）`);
+    }
+  }
+}
+
+async function renderAndApplySection(fileContent, pageBlock, marker, label, token, logLines, options = {}) {
   const blocks = await getAllChildren(pageBlock.id, token);
-  const plainText = blocks.map(plainTextOfBlock).join("\n");
+  const renderBlocks = options.stripFirstHeading && blocks[0] && blocks[0].type === "heading_1"
+    ? blocks.slice(1)
+    : blocks;
+  const plainText = renderBlocks.map(plainTextOfBlock).join("\n");
 
   const forbiddenHits = scanForbidden(plainText);
   if (forbiddenHits.length > 0) {
@@ -257,7 +332,7 @@ async function renderAndApplySection(fileContent, pageBlock, marker, label, toke
     return { content: fileContent, changed: false };
   }
 
-  const html = blocksToHtml(blocks).trim() || "<p>（Notion側に本文がありません）</p>";
+  const html = blocksToHtml(renderBlocks).trim() || "<p>（Notion側に本文がありません）</p>";
   const startMarker = marker ? `<!-- notion-sync:content:${marker}:start -->` : `<!-- notion-sync:content:start -->`;
   const endMarker = marker ? `<!-- notion-sync:content:${marker}:end -->` : `<!-- notion-sync:content:end -->`;
   return replaceBetweenMarkers(fileContent, startMarker, endMarker, html);
@@ -375,7 +450,11 @@ function propToText(prop) {
   }
 }
 
-const DAILY_SKIP_PROPS = ["公開状態", "一次情報確認", "作成日時"];
+const DAILY_SKIP_PROPS = [
+  "公開状態", "一次情報確認", "作成日時",
+  "画像URL", "画像ライセンス", "画像クレジット", "画像利用確認", "画像代替テキスト",
+  "図解形式", "図解データ", "挿絵URL", "挿絵ライセンス", "挿絵クレジット", "挿絵利用確認", "挿絵代替テキスト",
+];
 const DAILY_META_TYPES = ["date", "select", "status", "multi_select"];
 // 私のジャーナルのカテゴリ別・左線カラー（濃紺／スカイブルー／ゴールド）
 const CATEGORY_COLORS = {
@@ -439,6 +518,16 @@ async function renderDatabaseEntries(blocks, token, logLines, label, autoPublish
     }
     const metas = [];
     const fields = [];
+    const journalDiagram = renderJournalDiagram(props);
+    const journalIllustration = renderApprovedVisual(props, {
+      urlNames: ["挿絵URL"],
+      licenseNames: ["挿絵ライセンス"],
+      creditNames: ["挿絵クレジット"],
+      approvalNames: ["挿絵利用確認"],
+      altNames: ["挿絵代替テキスト"],
+      className: "journal-illustration",
+      fallbackAlt: "ジャーナルに添えられた挿絵",
+    });
     let borderColor = "";
     for (const k of Object.keys(props)) {
       if (DAILY_SKIP_PROPS.includes(k)) continue;
@@ -468,11 +557,15 @@ async function renderDatabaseEntries(blocks, token, logLines, label, autoPublish
       }
     }
     const styleAttr = borderColor ? ` style="border-left:7px solid ${borderColor}"` : "";
-    return `<article class="daily-report"${styleAttr}>\n<h3>${escapeHtml(titleText) || "（無題）"}</h3>\n<div class="dr-tags">${metas.join("")}</div>\n${fields.join("\n")}\n</article>`;
+    return `<article class="daily-report"${styleAttr}>\n<h3>${escapeHtml(titleText) || "（無題）"}</h3>\n<div class="dr-tags">${metas.join("")}</div>\n${journalIllustration}\n${fields.join("\n")}\n${journalDiagram}\n</article>`;
   });
 
   logLines.push(`- OK: ${label} → ${autoPublish ? "自動公開" : "公開状態=公開"}の記事 ${published.length} 件を出力`);
   return `<div class="daily-reports">\n${cards.join("\n")}\n</div>`;
+}
+
+function renderPublicationPausedNotice() {
+  return `<aside class="philosophy-publication-notice" aria-labelledby="philosophy-preparing-title">\n<h2 id="philosophy-preparing-title">コラムは編集準備中です</h2>\n<p>いまは、毎週のジャーナルをどう読み、どのように哲学へ育てるかのルールを整えています。既存記事は削除せず、公開表示だけを一時停止しています。</p>\n<p>編集方針と「私の哲学」を土台に、新しいコラムから順に公開します。</p>\n</aside>`;
 }
 
 // 活動共有ノートは、Notionの「活動ログ」データベースを正本として表示する。
@@ -625,6 +718,58 @@ function getPropertyUrl(props, names) {
   return prop && prop.type === "url" ? prop.url || "" : "";
 }
 
+function getPropertyChecked(props, names) {
+  const prop = getProperty(props, names);
+  return Boolean(prop && prop.type === "checkbox" && prop.checkbox);
+}
+
+function safeHttpUrl(value) {
+  try {
+    const parsed = new URL(value);
+    return parsed.protocol === "https:" || parsed.protocol === "http:" ? parsed.href : "";
+  } catch {
+    return "";
+  }
+}
+
+function renderApprovedVisual(props, options) {
+  const url = safeHttpUrl(getPropertyUrl(props, options.urlNames));
+  const approved = getPropertyChecked(props, options.approvalNames);
+  const license = getPropertyText(props, options.licenseNames);
+  const credit = getPropertyText(props, options.creditNames);
+  if (!url || !approved || !license || !credit) return "";
+
+  const alt = getPropertyText(props, options.altNames) || options.fallbackAlt;
+  return `<figure class="${escapeHtml(options.className)}">\n<img src="${escapeHtml(url)}" alt="${escapeHtml(alt)}" loading="lazy">\n<figcaption>${escapeHtml(credit)} / ${escapeHtml(license)}</figcaption>\n</figure>`;
+}
+
+function renderJournalDiagram(props) {
+  const type = getPropertyText(props, ["図解形式"]);
+  const raw = getPropertyText(props, ["図解データ"]);
+  if (!type || !raw) return "";
+
+  const caption = `<p class="journal-diagram__label">図解: ${escapeHtml(type)}</p>`;
+  if (type === "2軸マトリクス") {
+    const cells = raw.split("｜").map((value) => value.trim()).filter(Boolean);
+    if (cells.length === 4) {
+      return `<section class="journal-diagram journal-diagram--matrix" aria-label="${escapeHtml(type)}">${caption}<div class="journal-matrix"><span>${escapeHtml(cells[0])}</span><span>${escapeHtml(cells[1])}</span><span>${escapeHtml(cells[2])}</span><span>${escapeHtml(cells[3])}</span></div></section>`;
+    }
+  }
+  if (type === "因果関係" || type === "手順図") {
+    const steps = raw.split(/→|->/).map((value) => value.trim()).filter(Boolean);
+    if (steps.length > 1) {
+      return `<section class="journal-diagram journal-diagram--flow" aria-label="${escapeHtml(type)}">${caption}<ol>${steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol></section>`;
+    }
+  }
+  if (type === "比較表") {
+    const rows = raw.split(/\r?\n/).map((line) => line.split("｜").map((cell) => cell.trim())).filter((cells) => cells.length === 2 && cells[0] && cells[1]);
+    if (rows.length) {
+      return `<section class="journal-diagram journal-diagram--compare" aria-label="${escapeHtml(type)}">${caption}<dl>${rows.map(([term, detail]) => `<dt>${escapeHtml(term)}</dt><dd>${escapeHtml(detail)}</dd>`).join("")}</dl></section>`;
+    }
+  }
+  return `<aside class="journal-diagram journal-diagram--note" aria-label="${escapeHtml(type)}">${caption}<p>${escapeHtml(raw).replace(/\n/g, "<br>")}</p></aside>`;
+}
+
 function normalizeMorningCategory(source, rawValue) {
   if (source.kind === "politics") return { key: "politics", label: "政治・行政" };
   if (rawValue.includes("教育")) return { key: "education", label: "教育" };
@@ -659,6 +804,16 @@ function renderMorningArticle(page, source) {
     fields.push(`<p class="dr-field"><strong>出典：</strong><a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(sourceUrl)}</a></p>`);
   }
 
+  const editorialImage = renderApprovedVisual(props, {
+    urlNames: ["画像URL"],
+    licenseNames: ["画像ライセンス"],
+    creditNames: ["画像クレジット"],
+    approvalNames: ["画像利用確認"],
+    altNames: ["画像代替テキスト"],
+    className: "article-visual article-visual--news",
+    fallbackAlt: "記事に関連する画像",
+  });
+
   const tags = [
     `<span class="dr-tag dr-tag-source">${escapeHtml(source.label)}</span>`,
     `<span class="dr-tag">${escapeHtml(category.label)}</span>`,
@@ -666,7 +821,7 @@ function renderMorningArticle(page, source) {
   if (date) tags.push(`<span class="dr-tag">${escapeHtml(date)}</span>`);
   if (importance) tags.push(`<span class="dr-tag">${escapeHtml(importance)}</span>`);
 
-  return `<article class="daily-report daily-report--${category.key}" data-daily-category="${category.key}">\n<h3>${escapeHtml(title)}</h3>\n<div class="dr-tags">${tags.join("")}</div>\n${fields.join("\n")}\n</article>`;
+  return `<article class="daily-report daily-report--${category.key}" data-daily-category="${category.key}">\n<h3>${escapeHtml(title)}</h3>\n<div class="dr-tags">${tags.join("")}</div>\n${editorialImage}\n${fields.join("\n")}\n</article>`;
 }
 
 // ---------- Notion API ----------

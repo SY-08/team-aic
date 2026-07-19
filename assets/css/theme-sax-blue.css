@@ -464,3 +464,182 @@ main a:not(.btn):not(.brand):not(.site-nav a) {
   .activity-log-card { padding: 19px 17px; }
   .activity-log-card__body pre { padding: 12px; font-size: .76rem; }
 }
+
+/* ===== 私のジャーナル: 便箋と手帳の読み味 ===== */
+.journal-page {
+  position: relative;
+  isolation: isolate;
+  padding-bottom: 54px;
+}
+.journal-page::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-color: #f7f4e9;
+  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 33px, rgba(74, 124, 174, .13) 34px, transparent 35px);
+  content: "";
+}
+.journal-page .page-header { padding-top: 42px; }
+.journal-page .daily-report {
+  position: relative;
+  overflow: hidden;
+  border-color: #ded6bc;
+  border-radius: 8px;
+  background-color: #fffdf5;
+  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgba(76, 130, 184, .11) 32px, transparent 33px);
+  box-shadow: 3px 4px 0 rgba(112, 91, 54, .08), 0 11px 22px rgba(74, 89, 106, .10);
+}
+.journal-page .daily-report::before {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 28px;
+  height: 6px;
+  border: 1px solid rgba(68, 73, 81, .48);
+  border-radius: 2px;
+  background: #6b7480;
+  box-shadow: 21px -9px 0 -2px #e5c36a;
+  transform: rotate(-41deg);
+  content: "";
+}
+.journal-page .daily-report h3 {
+  max-width: calc(100% - 64px);
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+}
+.journal-page .dr-body,
+.journal-page .dr-field { position: relative; z-index: 1; }
+.journal-page .dr-body {
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  line-height: 2;
+}
+.journal-illustration,
+.article-visual { margin: 16px 0; }
+.journal-illustration img,
+.article-visual img {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  border: 1px solid rgba(53, 82, 107, .18);
+  border-radius: 8px;
+  object-fit: cover;
+}
+.journal-illustration figcaption,
+.article-visual figcaption {
+  margin-top: 7px;
+  color: #687887;
+  font-size: .76rem;
+  line-height: 1.55;
+}
+.journal-diagram {
+  margin: 20px 0 4px;
+  padding: 14px;
+  border: 1px dashed #8da6bd;
+  border-radius: 7px;
+  background: rgba(238, 247, 253, .78);
+}
+.journal-diagram__label {
+  margin: 0 0 10px;
+  color: #265e93;
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+}
+.journal-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid #a8bfd1;
+  background: #a8bfd1;
+}
+.journal-matrix span {
+  min-height: 64px;
+  padding: 12px;
+  background: #fffdf5;
+  color: #324c62;
+  font-size: .88rem;
+  line-height: 1.65;
+}
+.journal-diagram--flow ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.journal-diagram--flow li {
+  flex: 1 1 130px;
+  padding: 10px;
+  border: 1px solid #c8dae9;
+  border-radius: 5px;
+  background: #fff;
+  color: #38566d;
+  font-size: .88rem;
+  line-height: 1.6;
+}
+.journal-diagram--compare dl {
+  display: grid;
+  grid-template-columns: minmax(88px, .6fr) minmax(0, 1.4fr);
+  margin: 0;
+  border-top: 1px solid #c8dae9;
+}
+.journal-diagram--compare dt,
+.journal-diagram--compare dd {
+  margin: 0;
+  padding: 9px 8px;
+  border-bottom: 1px solid #c8dae9;
+}
+.journal-diagram--compare dt { color: #265e93; font-weight: 800; }
+.journal-diagram--compare dd { border-left: 1px solid #c8dae9; color: #38566d; }
+
+/* ===== 私とAIの哲学: 編集中の読み場 ===== */
+.philosophy-page { padding-bottom: 52px; background: #fbfcfe; }
+.philosophy-page__header { padding-top: 44px; }
+.philosophy-personal,
+.philosophy-editorial,
+.philosophy-articles { max-width: 900px; }
+.philosophy-personal {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: 20px 36px;
+  padding: 28px;
+  border: 1px solid #d7d3ea;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 9px 24px rgba(69, 58, 114, .08);
+}
+.philosophy-personal__head .eyebrow,
+.philosophy-editorial .eyebrow { margin: 0 0 10px; color: #5d4b92; }
+.philosophy-personal h2,
+.philosophy-editorial h2 { margin: 0 0 12px; color: #2d2548; }
+.philosophy-personal__head > p:last-child { margin: 0; color: #5c5a68; line-height: 1.8; }
+.philosophy-personal__content { color: #393447; line-height: 1.85; }
+.philosophy-personal__content h2,
+.philosophy-personal__content h3 { margin-top: 0; }
+.philosophy-personal .btn { grid-column: 1 / -1; justify-self: start; }
+.philosophy-editorial { padding-top: 38px; }
+.philosophy-editorial__head { max-width: 650px; padding-left: 18px; border-left: 4px solid #6f5ba7; }
+.philosophy-editorial .notion-content > h2,
+.philosophy-editorial .notion-content > h3 { margin-top: 30px; color: #2d2548; }
+.philosophy-editorial .notion-content p,
+.philosophy-editorial .notion-content li { color: #4e4b59; line-height: 1.9; }
+.philosophy-publication-notice {
+  padding: 24px;
+  border: 1px dashed #b9b3d4;
+  border-radius: 9px;
+  background: #f7f5fc;
+}
+.philosophy-publication-notice h2 { margin: 0 0 10px; color: #43376e; font-size: 1.15rem; }
+.philosophy-publication-notice p { margin: 0; color: #5d5870; line-height: 1.8; }
+.philosophy-publication-notice p + p { margin-top: 8px; }
+/* Older columns remain in the source until the next Notion sync replaces them. */
+.philosophy-articles .daily-reports[hidden] { display: none !important; }
+@media (max-width: 760px) {
+  .journal-page .page-header,
+  .philosophy-page__header { padding-top: 28px; }
+  .journal-page .daily-report::before { top: 15px; right: 16px; }
+  .journal-page .daily-report h3 { max-width: calc(100% - 52px); }
+  .journal-matrix span { min-height: 54px; padding: 9px; font-size: .8rem; }
+  .philosophy-personal { grid-template-columns: 1fr; padding: 21px; }
+}
