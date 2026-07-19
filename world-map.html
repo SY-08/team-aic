@@ -48,6 +48,14 @@
   .barwrap>i{display:block;height:100%;border-radius:6px;transition:width .4s}
   #geo{position:fixed;inset:0;z-index:0;opacity:.32;filter:grayscale(.35) saturate(.85);pointer-events:none;}
   .stats{font-size:12px;color:#4a6076;font-weight:700;margin-top:5px}
+  .mg{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;font-size:11.5px;color:#42566a;margin-top:7px;line-height:1.55}
+  .mg b{color:#8395a6;font-weight:800;font-size:10px}
+  .cmpTabs{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 10px}
+  .cmpTab{border:0;background:#eaf3ff;color:var(--blueD);font-weight:800;font-size:12px;border-radius:999px;padding:6px 11px;cursor:pointer}
+  .cmpTab.on{background:var(--blueD);color:#fff}
+  .cmpT{width:100%;border-collapse:collapse;font-size:13px}
+  .cmpT th{color:#5a6f82;text-align:left;padding:6px 4px;font-size:11.5px}
+  .cmpT td{border-top:1px solid #eef2f7;padding:8px 4px}
   @media(max-width:560px){ .legend{font-size:10.5px;max-width:170px;padding:7px 9px;} .node{width:214px;} }
 </style>
 </head>
@@ -55,6 +63,7 @@
 <div id="bar">
   <h1>🌍 シナジーMAP（世界と日本）</h1>
   <div class="sp">
+    <button id="cmp">📊 ランキング</button>
     <button id="fitAll">ぜんたい</button>
     <a href="index.html">← team AIC</a>
   </div>
@@ -73,6 +82,12 @@
   <span style="color:#6a7b8b">出典：IMF／世界銀行／国連。数字は概算（2023）。</span>
 </div>
 
+<div id="cmpOv" style="display:none;position:fixed;inset:0;z-index:40;background:rgba(20,40,70,.4);align-items:center;justify-content:center;padding:16px">
+  <div style="background:#fff;border-radius:18px;max-width:640px;width:100%;max-height:84vh;overflow:auto;padding:16px;box-shadow:0 20px 50px rgba(0,0,0,.35)">
+    <div style="display:flex;align-items:center;margin-bottom:6px"><b style="font-size:18px;color:var(--blueD)">国ランキング（指標ボタンで切替）</b><button id="cmpClose" style="margin-left:auto;border:0;background:#eaf3ff;color:var(--blueD);font-weight:900;width:34px;height:34px;border-radius:10px;cursor:pointer;font-size:18px">×</button></div>
+    <div id="cmpBody"></div>
+  </div>
+</div>
 <script>
 (function(){
 "use strict";
@@ -80,13 +95,13 @@ var C={root:"#1c548c",ind:"#3aa564",out:"#e0663a",inc:"#2a6fb5",debt:"#5b4a66",w
 var uid=0; function N(o){o.id=o.id||("n"+(uid++)); o.open=false; o.children=o.children||[]; return o;}
 
 // ===== データ（大きい→小さい。各層は親に足し上がる。※概算・丸め差あり） =====
-var DATA=N({key:"root",label:"世界のGDP（名目・2023）",val:"約106",unit:"兆ドル",color:C.root,
+var DATA=N({key:"root",label:"世界のGDP（名目・2024）",val:"約110",unit:"兆ドル",color:C.root,
   note:"世界ぜんたいが1年で生み出した価値（名目・米ドル）。出典：IMF／世界銀行／国連。大きい順に国で分解。国を開くと 人口・一人当たり・地政学。日本を開くと 経済の中身へ。背景の地図はカーソルを合わせた国へ動く。",
   children:[
-   N({label:"アメリカ",val:"27.4",unit:"兆ドル",pop:3.4,ll:[39,-98],color:"#2a6fb5",note:"地政学：基軸通貨ドル。世界最大の軍事力・NATOの中心。IT・金融・エネルギーが強い。日欧などと同盟。"}),
-   N({label:"中国",val:"17.8",unit:"兆ドル",pop:14.1,ll:[35,105],color:"#e0552f",note:"地政学：人口大国・「世界の工場」。一帯一路で影響力拡大。台湾・南シナ海が焦点。"}),
-   N({label:"ドイツ",val:"4.5",unit:"兆ドル",pop:0.84,ll:[51,10],color:"#6a5fa0",note:"地政学：EUの経済的中心。製造・輸出が強い。エネルギー供給の転換が課題。"}),
-   N({key:"jp",label:"日本",val:"4.2",unit:"兆ドル",pop:1.24,ll:[36,138],color:"#c9a13a",note:"地政学：資源を輸入に頼る貿易立国。日米同盟が安全保障の柱。少子高齢化が課題。↓ 経済の中身をひらく。",
+   N({label:"アメリカ",val:"29.2",unit:"兆ドル",pop:3.42,popM:342,pg:0.5,gg:2.8,ll:[39,-98],color:"#2a6fb5",note:"地政学：基軸通貨ドル。世界最大の軍事力・NATOの中心。IT・金融・エネルギーが強い。日欧などと同盟。"}),
+   N({label:"中国",val:"18.7",unit:"兆ドル",pop:14.10,popM:1410,pg:-0.1,gg:5.0,ll:[35,105],color:"#e0552f",note:"地政学：人口大国・「世界の工場」。一帯一路で影響力拡大。台湾・南シナ海が焦点。"}),
+   N({label:"ドイツ",val:"4.7",unit:"兆ドル",pop:0.84,popM:84,pg:0.1,gg:-0.2,ll:[51,10],color:"#6a5fa0",note:"地政学：EUの経済的中心。製造・輸出が強い。エネルギー供給の転換が課題。"}),
+   N({key:"jp",label:"日本",val:"4.0",unit:"兆ドル",pop:1.24,popM:124,pg:-0.5,gg:0.1,ll:[36,138],color:"#c9a13a",note:"地政学：資源を輸入に頼る貿易立国。日米同盟が安全保障の柱。少子高齢化が課題。↓ 経済の中身をひらく。",
      children:[
        N({key:"gdp",label:"① 生産＝GDP（2023・名目）",val:"591.5",unit:"兆円",color:C.ind,note:"日本国内で1年に生み出した付加価値。産業別に分解（合計はGDPに一致）。",
          children:[
@@ -124,14 +139,18 @@ var DATA=N({key:"root",label:"世界のGDP（名目・2023）",val:"約106",unit
          ]}),
        N({key:"debt",label:"③ 国の借金（国債残高）",val:"約1,054",unit:"兆円",color:C.debt,note:"公債金が積み上がった総額（2025.3末）。GDPの約1.8倍。"})
      ]}),
-   N({label:"インド",val:"3.6",unit:"兆ドル",pop:14.3,ll:[22,79],color:"#3aa564",note:"地政学：世界最多の人口。非同盟・多極外交。IT産業が強い。"}),
-   N({label:"イギリス",val:"3.3",unit:"兆ドル",pop:0.68,ll:[54,-2],color:"#6a5fa0",note:"地政学：EU離脱後の再定義。金融都市ロンドン。国連常任理事国・核保有。"}),
-   N({label:"フランス",val:"3.0",unit:"兆ドル",pop:0.65,ll:[47,2],color:"#6a5fa0",note:"地政学：EUの政治的中心の一つ。国連常任理事国・核保有。"}),
-   N({label:"イタリア",val:"2.3",unit:"兆ドル",pop:0.59,ll:[42,13],color:"#6a5fa0",note:"地政学：製造・観光が柱。財政と人口減が課題。"}),
-   N({label:"ブラジル",val:"2.2",unit:"兆ドル",pop:2.16,ll:[-10,-52],color:"#d98a2b",note:"地政学：南米最大・資源大国（鉄・大豆）。BRICSの一角。"}),
-   N({label:"カナダ",val:"2.1",unit:"兆ドル",pop:0.40,ll:[56,-106],color:"#2a6fb5",note:"地政学：資源（石油・木材）大国。米国と経済的に一体。"}),
-   N({label:"ロシア",val:"2.0",unit:"兆ドル",pop:1.44,ll:[61,105],color:"#5b4a66",note:"地政学：資源（石油・ガス）大国。国連常任理事国。ウクライナ情勢で西側と対立。"}),
-   N({label:"その他の国々",val:"約34",unit:"兆ドル",color:"#9aa7b4",note:"上位以外の世界の国々の合計（世界GDPに足し上げるための残り）。"})
+   N({label:"インド",val:"3.9",unit:"兆ドル",pop:14.51,popM:1451,pg:0.9,gg:6.5,ll:[22,79],color:"#3aa564",note:"地政学：世界最多の人口。非同盟・多極外交。IT産業が強い。"}),
+   N({label:"イギリス",val:"3.6",unit:"兆ドル",pop:0.69,popM:69,pg:0.6,gg:0.9,ll:[54,-2],color:"#6a5fa0",note:"地政学：EU離脱後の再定義。金融都市ロンドン。国連常任理事国・核保有。"}),
+   N({label:"フランス",val:"3.2",unit:"兆ドル",pop:0.66,popM:66,pg:0.2,gg:1.1,ll:[47,2],color:"#6a5fa0",note:"地政学：EUの政治的中心の一つ。国連常任理事国・核保有。"}),
+   N({label:"イタリア",val:"2.4",unit:"兆ドル",pop:0.59,popM:59,pg:-0.3,gg:0.7,ll:[42,13],color:"#6a5fa0",note:"地政学：製造・観光が柱。財政と人口減が課題。"}),
+   N({label:"ブラジル",val:"2.2",unit:"兆ドル",pop:2.12,popM:212,pg:0.4,gg:3.0,ll:[-10,-52],color:"#d98a2b",note:"地政学：南米最大・資源大国（鉄・大豆）。BRICSの一角。"}),
+   N({label:"カナダ",val:"2.2",unit:"兆ドル",pop:0.41,popM:41,pg:1.0,gg:1.3,ll:[56,-106],color:"#2a6fb5",note:"地政学：資源（石油・木材）大国。米国と経済的に一体。"}),
+   N({label:"ロシア",val:"2.2",unit:"兆ドル",pop:1.44,popM:144,pg:-0.4,gg:3.6,ll:[61,105],color:"#5b4a66",note:"地政学：資源（石油・ガス）大国。国連常任理事国。ウクライナ情勢で西側と対立。"}),
+   N({label:"韓国",val:"1.9",unit:"兆ドル",pop:0.52,popM:52,pg:-0.1,gg:2.2,ll:[36,128],color:"#3aa564",note:"地政学：半導体・造船・K文化。北朝鮮と対峙し米韓同盟が柱。少子化が深刻。"}),
+   N({label:"メキシコ",val:"1.85",unit:"兆ドル",pop:1.30,popM:130,pg:0.6,gg:1.5,ll:[23,-102],color:"#d98a2b",note:"地政学：北米供給網の要（ニアショア）。米国向け製造輸出が拡大。"}),
+   N({label:"オーストラリア",val:"1.8",unit:"兆ドル",pop:0.27,popM:27,pg:1.2,gg:1.1,ll:[-25,134],color:"#2a6fb5",note:"地政学：資源大国。対中依存と米英豪AUKUSの間でバランス。"}),
+   N({label:"スペイン",val:"1.7",unit:"兆ドル",pop:0.48,popM:48,pg:0.5,gg:3.1,ll:[40,-4],color:"#6a5fa0",note:"地政学：観光・再エネ。EU南部の成長株。"}),
+   N({label:"その他の国々",val:"約26",unit:"兆ドル",color:"#9aa7b4",note:"上位以外の世界の国々の合計（世界GDPに足し上げるための残り）。"})
   ]});
 var SYN=[];
 
@@ -142,7 +161,13 @@ function precompute(node,parent){ node._parent=parent; node._num=num(node.val); 
   var sameU=parent&&((parent.unit||"兆円")===(node.unit||"兆円"));
   if(pv&&node._num!=null&&sameU){ node._share=node._num/pv; node._pct=Math.round(node._share*100); } else { node._share=null; }
   node.children.forEach(function(c){ precompute(c,node); }); }
-function percapHtml(node){ if(node.pop&&node._num!=null){ var v=Math.round(node._num*1e4/node.pop/100)*100; return "<div class='stats'>人口 "+node.pop+"億 ・ 一人当たり $"+v.toLocaleString()+"</div>"; } return node.pop?"<div class='stats'>人口 "+node.pop+"億</div>":""; }
+function yenHtml(node){ if((node.unit||"")==="兆ドル"&&node._num!=null){ var y=Math.round(node._num*150); return "<div class='stats' style='color:#7a5b1f'>≈ 日本円 約"+y.toLocaleString()+"兆円</div>"; } return ""; }
+function sgn(x){ return (x>0?"+":"")+x+"%"; }
+function sgc(x){ return x>0?"#2e8b57":(x<0?"#d0453b":"#6a7b8b"); }
+function percapHtml(node){ if(node.gg!==undefined&&node._num!=null){ var pc=Math.round(node._num*1e4/node.pop/100)*100;
+    return "<div class='mg'><div><b>人口</b> "+node.popM.toLocaleString()+"百万</div><div><b>1人当たり</b> $"+pc.toLocaleString()+"</div>"+
+      "<div><b>人口増減</b> <span style='color:"+sgc(node.pg)+"'>"+sgn(node.pg)+"</span></div><div><b>GDP成長</b> <span style='color:"+sgc(node.gg)+"'>"+sgn(node.gg)+"</span></div></div>"; }
+  return node.pop?"<div class='stats'>人口 "+node.pop+"億</div>":""; }
 var map=null;
 function initMap(){ try{ map=L.map("geo",{zoomControl:false,attributionControl:false,dragging:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,touchZoom:false,tap:false}).setView([25,12],2); L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:6}).addTo(map); }catch(e){} }
 function flyTo(ll){ if(map&&ll){ map.flyTo(ll,4,{duration:1.1}); } }
@@ -151,7 +176,7 @@ function build(node){ var d=document.createElement("div"); d.className="node"+(n
   var body = node._share!=null
     ? "<div class='valrow'>"+(node.val?"<span class='val'>"+node.val+"<small>"+(node.unit||"兆円")+"</small></span>":"<span></span>")+"<span class='share' style='color:"+node.color+"'>"+node._pct+"%</span></div><div class='barwrap'><i style='width:"+Math.max(2,Math.round(node._share*100))+"%;background:"+node.color+"'></i></div>"
     : (node.val?"<div class='val'>"+node.val+"<small>"+(node.unit||"兆円")+"</small></div>":"");
-  d.innerHTML="<div class='card' style='border-color:"+node.color+"'><div class='lbl'>"+node.label+"</div>"+body+percapHtml(node)+
+  d.innerHTML="<div class='card' style='border-color:"+node.color+"'><div class='lbl'>"+node.label+"</div>"+body+yenHtml(node)+percapHtml(node)+
     "<div class='note'>"+(node.note||"")+"</div>"+
     (kids?"<div class='kids' data-k>▸ ひらく（"+kids+"）</div>":"")+"</div>";
   world.appendChild(d); els[node.id]=d; if(node.key)byKey[node.key]=node;
@@ -161,30 +186,38 @@ function build(node){ var d=document.createElement("div"); d.className="node"+(n
   node.children.forEach(build);
 }
 function closeAll(n){ n.open=false; var el=els[n.id]; if(el){ var cd=el.querySelector(".card"); if(cd)cd.classList.remove("open"); var k=el.querySelector("[data-k]"); if(k&&n.children.length)k.textContent="▸ ひらく（"+n.children.length+"）"; } n.children.forEach(closeAll); }
-function openNode(node){ var card=els[node.id].querySelector(".card"); card.classList.toggle("open");
-  if(!node.children.length) return;
-  if(!node.open){ if(node._parent){ node._parent.children.forEach(function(s){ if(s!==node) closeAll(s); }); } node.open=true; }
-  else { closeAll(node); }
-  var k=card.querySelector("[data-k]"); if(k)k.textContent=(node.open?"▾ とじる（":"▸ ひらく（")+node.children.length+"）";
-  layout(); focus(node.open?[node].concat(node.children):[node]);
+function openNode(node){ var card=els[node.id].querySelector(".card");
+  var bx=(node._x!=null?node._x*COLW+40:0), by=(node._cy!=null?node._cy+40:0);
+  var sbx=bx*scale+tx, sby=by*scale+ty;
+  card.classList.toggle("open");
+  if(node.children.length){
+    if(!node.open){ node.open=true; }
+    else { closeAll(node); }
+    var k=card.querySelector("[data-k]"); if(k)k.textContent=(node.open?"▾ とじる（":"▸ ひらく（")+node.children.length+"）";
+  }
+  layout();
+  var ax=(node._x*COLW+40)*scale, ay=(node._cy+40)*scale;
+  tx=sbx-ax; ty=sby-ay; applyT();
 }
-function measure(n){ if(!n.open||!n.children.length)return 1; var s=0; n.children.forEach(function(c){s+=measure(c);}); return s; }
-function assign(n,d,top){ var h=measure(n); n._x=d; n._y=top+h/2; if(n.open&&n.children.length){ var cur=top; n.children.forEach(function(c){ assign(c,d+1,cur); cur+=measure(c); }); } }
 function visible(n,a){ a.push(n); if(n.open)n.children.forEach(function(c){visible(c,a);}); return a; }
-function xy(n){ return {x:n._x*COLW+30, y:n._y*ROWH+30}; }
-function layout(){ assign(DATA,0,0); var vis=visible(DATA,[]);
+function assignPos(node,depth,top){ var H=node._h||88, GAP=18;
+  if(!node.open||!node.children.length){ node._x=depth; node._cy=top+H/2; return H; }
+  var cur=top, firstC=null, lastC=null;
+  node.children.forEach(function(c){ var sp=assignPos(c,depth+1,cur); if(firstC===null)firstC=c._cy; lastC=c._cy; cur+=sp+GAP; });
+  node._x=depth; node._cy=(firstC+lastC)/2; return Math.max(cur-GAP-top, H);
+}
+function xy(n){ return {x:n._x*COLW+40, y:n._cy+40}; }
+function layout(){ var vis=visible(DATA,[]);
   for(var id in els) els[id].style.display="none";
+  vis.forEach(function(n){ els[n.id].style.display="block"; });
+  vis.forEach(function(n){ n._h=els[n.id].offsetHeight||88; });
+  assignPos(DATA,0,0);
   var links="";
-  vis.forEach(function(n){ var el=els[n.id]; el.style.display="block"; var p=xy(n); el.style.left=p.x+"px"; el.style.top=p.y+"px";
+  vis.forEach(function(n){ var el=els[n.id]; var p=xy(n); el.style.left=p.x+"px"; el.style.top=p.y+"px";
     if(n.open) n.children.forEach(function(c){ var a=xy(n),b=xy(c); var x1=a.x+CARDW,x2=b.x,mx=(x1+x2)/2;
       links+="<path d='M"+x1+","+a.y+" C"+mx+","+a.y+" "+mx+","+b.y+" "+x2+","+b.y+"' stroke='"+c.color+"' stroke-width='2.5' fill='none' opacity='.55'/>"; }); });
-  // synergy dashed links (only when both visible)
-  var visSet={}; vis.forEach(function(n){visSet[n.id]=1;});
-  SYN.forEach(function(s){ var f=byKey[s[0]],t=byKey[s[1]]; if(f&&t&&visSet[f.id]&&visSet[t.id]){ var a=xy(f),b=xy(t);
-    var x1=a.x+CARDW/2,y1=a.y,x2=b.x+CARDW/2,y2=b.y,my=(y1+y2)/2;
-    links+="<path d='M"+x1+","+y1+" C"+x1+","+my+" "+x2+","+my+" "+x2+","+y2+"' stroke='#e0663a' stroke-width='2' stroke-dasharray='5 5' fill='none' opacity='.7'/>"; } });
   svg.innerHTML=links;
-  var maxX=0,maxY=0; vis.forEach(function(n){ var p=xy(n); maxX=Math.max(maxX,p.x+320); maxY=Math.max(maxY,p.y+140); });
+  var maxX=0,maxY=0; vis.forEach(function(n){ var p=xy(n); maxX=Math.max(maxX,p.x+340); maxY=Math.max(maxY,p.y+(n._h||88)+40); });
   world.style.width=maxX+"px"; world.style.height=maxY+"px"; svg.setAttribute("width",maxX); svg.setAttribute("height",maxY);
 }
 var scale=1,tx=0,ty=0;
@@ -201,7 +234,8 @@ function refreshKidsLabels(){ visible(DATA,[]).forEach(function(n){ if(n.childre
 
 initMap(); precompute(DATA,null); build(DATA);
 DATA.open=true;
-layout(); refreshKidsLabels(); focus([DATA].concat(DATA.children));
+refreshKidsLabels(); initView();
+function initView(){ layout(); scale=0.95; var rx=(0*COLW+40)*scale; tx=90-rx; ty=Math.max(80,(stage.clientHeight/2)-((DATA._cy+40)*scale)); applyT(); }
 
 stage.addEventListener("mousedown",function(e){ if(e.target.closest(".card"))return; world.style.transition="none"; var sx=e.clientX,sy=e.clientY,ox=tx,oy=ty; stage.classList.add("drag");
   function mv(ev){ tx=ox+(ev.clientX-sx); ty=oy+(ev.clientY-sy); applyT(); }
@@ -215,7 +249,27 @@ stage.addEventListener("wheel",function(e){ e.preventDefault(); world.style.tran
 document.getElementById("zin").onclick=function(){ world.style.transition=""; scale=Math.min(2,scale*1.18); applyT(); };
 document.getElementById("zout").onclick=function(){ world.style.transition=""; scale=Math.max(.35,scale*0.85); applyT(); };
 document.getElementById("fitAll").onclick=fitAll;
-addEventListener("resize",function(){ focus([DATA].concat(DATA.children)); });
+addEventListener("resize",function(){ applyT(); });
+function metricByK(k){ for(var i=0;i<METRICS.length;i++) if(METRICS[i].k===k) return METRICS[i]; return METRICS[0]; }
+var METRICS=[
+ {k:"gdp",label:"GDP",get:function(c){return c._num;},fmt:function(c){return c.val+"兆$ ≈"+Math.round(c._num*150).toLocaleString()+"兆円";}},
+ {k:"pop",label:"人口",get:function(c){return c.pop;},fmt:function(c){return c.popM.toLocaleString()+"百万人";}},
+ {k:"pc",label:"一人当たりGDP",get:function(c){return c._num/c.pop;},fmt:function(c){return "$"+(Math.round(c._num*1e4/c.pop/100)*100).toLocaleString();}},
+ {k:"pg",label:"人口増減率",get:function(c){return c.pg;},fmt:function(c){return (c.pg>0?"+":"")+c.pg+"%";}},
+ {k:"gg",label:"GDP成長率",get:function(c){return c.gg;},fmt:function(c){return (c.gg>0?"+":"")+c.gg+"%";}}
+];
+function buildCmp(mk){ var rows=DATA.children.filter(function(c){return c.gg!==undefined;}); var m=metricByK(mk);
+  rows.sort(function(a,b){return m.get(b)-m.get(a);});
+  var tabs=""; METRICS.forEach(function(x){ tabs+="<button class='cmpTab"+(x.k===m.k?" on":"")+"' data-m='"+x.k+"'>"+x.label+"</button>"; });
+  var h="<div class='cmpTabs'>"+tabs+"</div><table class='cmpT'><tr><th>順位</th><th>国</th><th>"+m.label+"</th></tr>";
+  rows.forEach(function(c,i){ h+="<tr><td style='font-weight:800;color:#8395a6'>"+(i+1)+"</td><td style='font-weight:800;color:"+c.color+"'>"+c.label+"</td><td style='font-weight:800'>"+m.fmt(c)+"</td></tr>"; });
+  h+="</table><div style='font-size:11px;color:#6a7b8b;margin-top:8px'>出典：IMF世界経済見通し2024／世界銀行／国連WPP2024（概算・毎年更新）。円換算＝1$≈150円。一人当たり＝GDP÷人口。</div>";
+  var body=document.getElementById("cmpBody"); body.innerHTML=h;
+  body.querySelectorAll(".cmpTab").forEach(function(b){ b.onclick=function(){ buildCmp(b.dataset.m); }; });
+}
+document.getElementById("cmp").onclick=function(){ buildCmp("gdp"); document.getElementById("cmpOv").style.display="flex"; };
+document.getElementById("cmpClose").onclick=function(){ document.getElementById("cmpOv").style.display="none"; };
+document.getElementById("cmpOv").addEventListener("click",function(e){ if(e.target.id==="cmpOv") this.style.display="none"; });
 })();
 </script>
 </body>
