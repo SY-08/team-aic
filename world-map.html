@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>シナジーMAP｜世界と日本の経済・地理 | team AIC</title>
+<meta name="description" content="世界各国のGDP（名目・公的データ）を、大きい順に開いて紐解く地図。日本はマクロ経済MAPへ連結。">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://sy-08.github.io/team-aic/world-map.html">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root{ --blue:#2a6fb5; --blueD:#1c548c; --ink:#22303c; }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;height:100%;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;color:var(--ink);overflow:hidden;}
+  body{background:radial-gradient(1200px 800px at 50% 30%,#eef6ff 0%,#dfeaf7 55%,#d0e0f2 100%);}
+  #bar{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;gap:10px;padding:9px 14px;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border-bottom:1px solid #d5e3f2;}
+  #bar h1{font-size:clamp(14px,3.4vw,19px);margin:0;color:var(--blueD);white-space:nowrap;}
+  #bar .sp{margin-left:auto;display:flex;gap:8px;align-items:center;}
+  #bar button,#bar a{font-size:12.5px;font-weight:700;border:0;background:#eaf3ff;color:var(--blueD);border-radius:999px;padding:7px 12px;text-decoration:none;cursor:pointer;}
+  #hint{position:fixed;top:46px;left:0;right:0;text-align:center;font-size:12px;color:#5a6f82;z-index:9;pointer-events:none;}
+  #stage{position:fixed;inset:0;cursor:grab;overflow:hidden;z-index:1;}
+  #stage.drag{cursor:grabbing;}
+  #world{position:absolute;left:0;top:0;transform-origin:0 0;transition:transform .5s cubic-bezier(.22,.61,.36,1);}
+  svg#links{position:absolute;left:0;top:0;overflow:visible;pointer-events:none;}
+  .node{position:absolute;width:236px;transform:translateY(-50%);}
+  .card{background:#fff;border-radius:16px;padding:11px 14px;box-shadow:0 8px 22px rgba(20,60,110,.16);border-left:8px solid var(--blue);cursor:pointer;transition:box-shadow .15s,transform .12s;}
+  .card:hover{box-shadow:0 12px 30px rgba(20,60,110,.24);}
+  .card:active{transform:scale(.99);}
+  .lbl{font-weight:800;font-size:14.5px;line-height:1.35;}
+  .val{font-weight:900;font-size:22px;color:var(--blueD);margin-top:3px;}
+  .val small{font-size:12px;font-weight:700;color:#6a7b8b;margin-left:3px;}
+  .pct{font-size:11px;font-weight:800;color:#fff;border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:middle;}
+  .note{font-size:12px;color:#556575;line-height:1.6;margin-top:6px;display:none;}
+  .card.open .note{display:block;}
+  .kids{font-size:11.5px;color:var(--blue);font-weight:800;margin-top:7px;}
+  .root .card{border-left:0;border-top:8px solid var(--blueD);text-align:center;}
+  .root .val{font-size:32px;}
+  .legend{position:fixed;left:12px;bottom:12px;z-index:10;background:rgba(255,255,255,.92);border-radius:14px;padding:9px 12px;box-shadow:0 6px 16px rgba(20,60,110,.14);font-size:11.5px;max-width:230px;line-height:1.7;}
+  .legend b{color:var(--blueD);}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:4px;vertical-align:middle;}
+  .legend .syn{width:16px;border-top:2px dashed #e0663a;display:inline-block;vertical-align:middle;margin-right:4px;}
+  #zoom{position:fixed;right:12px;bottom:12px;z-index:10;display:flex;flex-direction:column;gap:8px;}
+  .zoombtn{border:0;background:#fff;color:var(--blueD);font-weight:900;width:42px;height:42px;border-radius:13px;box-shadow:0 3px 8px rgba(20,60,110,.18);cursor:pointer;font-size:19px;}
+  .valrow{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-top:4px}
+  .share{font-weight:900;font-size:17px}
+  .barwrap{height:10px;border-radius:6px;background:#eef2f7;overflow:hidden;margin-top:6px}
+  .barwrap>i{display:block;height:100%;border-radius:6px;transition:width .4s}
+  #geo{position:fixed;inset:0;z-index:0;opacity:.32;filter:grayscale(.35) saturate(.85);pointer-events:none;}
+  .stats{font-size:12px;color:#4a6076;font-weight:700;margin-top:5px}
+  @media(max-width:560px){ .legend{font-size:10.5px;max-width:170px;padding:7px 9px;} .node{width:214px;} }
+</style>
+</head>
+<body>
+<div id="bar">
+  <h1>🌍 シナジーMAP（世界と日本）</h1>
+  <div class="sp">
+    <button id="fitAll">ぜんたい</button>
+    <a href="index.html">← team AIC</a>
+  </div>
+</div>
+<div id="hint">カードを タップで ひらく／あいた所へ ズームします</div>
+<div id="geo"></div>
+<div id="stage"><div id="world"><svg id="links"></svg></div></div>
+<div id="zoom">
+  <button class="zoombtn" id="zin">＋</button>
+  <button class="zoombtn" id="zout">－</button>
+</div>
+<div class="legend">
+  <b>みかた</b><br>
+  国ごとの <b>GDP（名目・米ドル）</b>と 世界に占める割合。<br>
+  カードを ひらくと 人口・つながり・別MAPへ。<br>
+  <span style="color:#6a7b8b">出典：IMF／世界銀行／国連。数字は概算（2023）。</span>
+</div>
+
+<script>
+(function(){
+"use strict";
+var C={root:"#1c548c",ind:"#3aa564",out:"#e0663a",inc:"#2a6fb5",debt:"#5b4a66",world:"#8a6fbf"};
+var uid=0; function N(o){o.id=o.id||("n"+(uid++)); o.open=false; o.children=o.children||[]; return o;}
+
+// ===== データ（大きい→小さい。各層は親に足し上がる。※概算・丸め差あり） =====
+var DATA=N({key:"root",label:"世界のGDP（名目・2023）",val:"約106",unit:"兆ドル",color:C.root,
+  note:"世界ぜんたいが1年で生み出した価値（名目・米ドル）。出典：IMF／世界銀行／国連。大きい順に国で分解。国を開くと 人口・一人当たり・地政学。日本を開くと 経済の中身へ。背景の地図はカーソルを合わせた国へ動く。",
+  children:[
+   N({label:"アメリカ",val:"27.4",unit:"兆ドル",pop:3.4,ll:[39,-98],color:"#2a6fb5",note:"地政学：基軸通貨ドル。世界最大の軍事力・NATOの中心。IT・金融・エネルギーが強い。日欧などと同盟。"}),
+   N({label:"中国",val:"17.8",unit:"兆ドル",pop:14.1,ll:[35,105],color:"#e0552f",note:"地政学：人口大国・「世界の工場」。一帯一路で影響力拡大。台湾・南シナ海が焦点。"}),
+   N({label:"ドイツ",val:"4.5",unit:"兆ドル",pop:0.84,ll:[51,10],color:"#6a5fa0",note:"地政学：EUの経済的中心。製造・輸出が強い。エネルギー供給の転換が課題。"}),
+   N({key:"jp",label:"日本",val:"4.2",unit:"兆ドル",pop:1.24,ll:[36,138],color:"#c9a13a",note:"地政学：資源を輸入に頼る貿易立国。日米同盟が安全保障の柱。少子高齢化が課題。↓ 経済の中身をひらく。",
+     children:[
+       N({key:"gdp",label:"① 生産＝GDP（2023・名目）",val:"591.5",unit:"兆円",color:C.ind,note:"日本国内で1年に生み出した付加価値。産業別に分解（合計はGDPに一致）。",
+         children:[
+           N({label:"医療・福祉",val:"57.8",unit:"兆円",color:C.ind}),
+           N({label:"専門・科学技術／業務支援",val:"36.4",unit:"兆円",color:C.ind}),
+           N({label:"建設",val:"36.4",unit:"兆円",color:C.ind}),
+           N({label:"住宅賃貸業",val:"32.6",unit:"兆円",color:C.ind}),
+           N({label:"卸売",val:"31.7",unit:"兆円",color:C.ind}),
+           N({label:"小売",val:"31.5",unit:"兆円",color:C.ind}),
+           N({label:"金融・保険",val:"29.3",unit:"兆円",color:C.ind}),
+           N({label:"公務",val:"27.3",unit:"兆円",color:C.ind}),
+           N({label:"運輸・郵便",val:"26.2",unit:"兆円",color:C.ind}),
+           N({label:"化学",val:"19.9",unit:"兆円",color:C.ind}),
+           N({label:"宿泊・飲食",val:"14.0",unit:"兆円",color:C.ind}),
+           N({label:"一次金属・食料品ほか製造（一部）",val:"25.3",unit:"兆円",color:C.ind}),
+           N({label:"教育",val:"9.5",unit:"兆円",color:C.ind}),
+           N({label:"農林水産",val:"10.4",unit:"兆円",color:C.ind}),
+           N({label:"その他の産業（未内訳）",val:"約173",unit:"兆円",color:C.ind,note:"機械・自動車などの製造、情報通信業、電気・ガス・水道 ほか。GDPに足し上げるための残り。"})
+         ]}),
+       N({key:"fisc",label:"② 財政（国の予算・決算）",unit:"兆円",color:C.out,note:"国が使う/集めるお金。",
+         children:[
+           N({key:"out",label:"歳出（使いみち）",val:"127.6",unit:"兆円",color:C.out,note:"国が使ったお金の合計。",
+             children:[
+               N({label:"社会保障",val:"36.2",unit:"兆円",color:C.out,note:"年金・医療・介護・子育て。※決算値。"}),
+               N({label:"国債費",val:"25.5",unit:"兆円",color:C.out,note:"借金の返済と利子。"}),
+               N({label:"地方交付税交付金等",val:"17.2",unit:"兆円",color:C.out}),
+               N({label:"防衛・公共事業・文教・予備費 ほか",val:"48.7",unit:"兆円",color:C.out})
+             ]}),
+           N({key:"inc",label:"歳入（集め方）",val:"127.6",unit:"兆円",color:C.inc,note:"使うお金はどこから？",
+             children:[
+               N({label:"税収",val:"約72",unit:"兆円",color:C.inc,note:"所得税・法人税・消費税で約8割。"}),
+               N({label:"公債金（借金）",val:"約44",unit:"兆円",color:C.inc,note:"足りない分を国債で。→国の借金へ。"}),
+               N({label:"その他収入",val:"約12",unit:"兆円",color:C.inc})
+             ]})
+         ]}),
+       N({key:"debt",label:"③ 国の借金（国債残高）",val:"約1,054",unit:"兆円",color:C.debt,note:"公債金が積み上がった総額（2025.3末）。GDPの約1.8倍。"})
+     ]}),
+   N({label:"インド",val:"3.6",unit:"兆ドル",pop:14.3,ll:[22,79],color:"#3aa564",note:"地政学：世界最多の人口。非同盟・多極外交。IT産業が強い。"}),
+   N({label:"イギリス",val:"3.3",unit:"兆ドル",pop:0.68,ll:[54,-2],color:"#6a5fa0",note:"地政学：EU離脱後の再定義。金融都市ロンドン。国連常任理事国・核保有。"}),
+   N({label:"フランス",val:"3.0",unit:"兆ドル",pop:0.65,ll:[47,2],color:"#6a5fa0",note:"地政学：EUの政治的中心の一つ。国連常任理事国・核保有。"}),
+   N({label:"イタリア",val:"2.3",unit:"兆ドル",pop:0.59,ll:[42,13],color:"#6a5fa0",note:"地政学：製造・観光が柱。財政と人口減が課題。"}),
+   N({label:"ブラジル",val:"2.2",unit:"兆ドル",pop:2.16,ll:[-10,-52],color:"#d98a2b",note:"地政学：南米最大・資源大国（鉄・大豆）。BRICSの一角。"}),
+   N({label:"カナダ",val:"2.1",unit:"兆ドル",pop:0.40,ll:[56,-106],color:"#2a6fb5",note:"地政学：資源（石油・木材）大国。米国と経済的に一体。"}),
+   N({label:"ロシア",val:"2.0",unit:"兆ドル",pop:1.44,ll:[61,105],color:"#5b4a66",note:"地政学：資源（石油・ガス）大国。国連常任理事国。ウクライナ情勢で西側と対立。"}),
+   N({label:"その他の国々",val:"約34",unit:"兆ドル",color:"#9aa7b4",note:"上位以外の世界の国々の合計（世界GDPに足し上げるための残り）。"})
+  ]});
+var SYN=[];
+
+var world=document.getElementById("world"),stage=document.getElementById("stage"),svg=document.getElementById("links");
+var COLW=300,ROWH=112,CARDW=236,els={},byKey={};
+function num(v){ if(v==null)return null; var n=parseFloat(String(v).replace(/[^0-9.]/g,"")); return isNaN(n)?null:n; }
+function precompute(node,parent){ node._parent=parent; node._num=num(node.val); var pv=parent?parent._num:null;
+  var sameU=parent&&((parent.unit||"兆円")===(node.unit||"兆円"));
+  if(pv&&node._num!=null&&sameU){ node._share=node._num/pv; node._pct=Math.round(node._share*100); } else { node._share=null; }
+  node.children.forEach(function(c){ precompute(c,node); }); }
+function percapHtml(node){ if(node.pop&&node._num!=null){ var v=Math.round(node._num*1e4/node.pop/100)*100; return "<div class='stats'>人口 "+node.pop+"億 ・ 一人当たり $"+v.toLocaleString()+"</div>"; } return node.pop?"<div class='stats'>人口 "+node.pop+"億</div>":""; }
+var map=null;
+function initMap(){ try{ map=L.map("geo",{zoomControl:false,attributionControl:false,dragging:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,touchZoom:false,tap:false}).setView([25,12],2); L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:6}).addTo(map); }catch(e){} }
+function flyTo(ll){ if(map&&ll){ map.flyTo(ll,4,{duration:1.1}); } }
+function build(node){ var d=document.createElement("div"); d.className="node"+(node.key==="root"?" root":""); d.dataset.id=node.id;
+  var kids=node.children.length;
+  var body = node._share!=null
+    ? "<div class='valrow'>"+(node.val?"<span class='val'>"+node.val+"<small>"+(node.unit||"兆円")+"</small></span>":"<span></span>")+"<span class='share' style='color:"+node.color+"'>"+node._pct+"%</span></div><div class='barwrap'><i style='width:"+Math.max(2,Math.round(node._share*100))+"%;background:"+node.color+"'></i></div>"
+    : (node.val?"<div class='val'>"+node.val+"<small>"+(node.unit||"兆円")+"</small></div>":"");
+  d.innerHTML="<div class='card' style='border-color:"+node.color+"'><div class='lbl'>"+node.label+"</div>"+body+percapHtml(node)+
+    "<div class='note'>"+(node.note||"")+"</div>"+
+    (kids?"<div class='kids' data-k>▸ ひらく（"+kids+"）</div>":"")+"</div>";
+  world.appendChild(d); els[node.id]=d; if(node.key)byKey[node.key]=node;
+  var card=d.querySelector(".card");
+  card.addEventListener("click",function(){ if(node.link){location.href=node.link;return;} if(node.ll)flyTo(node.ll); openNode(node); });
+  if(node.ll) card.addEventListener("mouseenter",function(){ flyTo(node.ll); });
+  node.children.forEach(build);
+}
+function closeAll(n){ n.open=false; var el=els[n.id]; if(el){ var cd=el.querySelector(".card"); if(cd)cd.classList.remove("open"); var k=el.querySelector("[data-k]"); if(k&&n.children.length)k.textContent="▸ ひらく（"+n.children.length+"）"; } n.children.forEach(closeAll); }
+function openNode(node){ var card=els[node.id].querySelector(".card"); card.classList.toggle("open");
+  if(!node.children.length) return;
+  if(!node.open){ if(node._parent){ node._parent.children.forEach(function(s){ if(s!==node) closeAll(s); }); } node.open=true; }
+  else { closeAll(node); }
+  var k=card.querySelector("[data-k]"); if(k)k.textContent=(node.open?"▾ とじる（":"▸ ひらく（")+node.children.length+"）";
+  layout(); focus(node.open?[node].concat(node.children):[node]);
+}
+function measure(n){ if(!n.open||!n.children.length)return 1; var s=0; n.children.forEach(function(c){s+=measure(c);}); return s; }
+function assign(n,d,top){ var h=measure(n); n._x=d; n._y=top+h/2; if(n.open&&n.children.length){ var cur=top; n.children.forEach(function(c){ assign(c,d+1,cur); cur+=measure(c); }); } }
+function visible(n,a){ a.push(n); if(n.open)n.children.forEach(function(c){visible(c,a);}); return a; }
+function xy(n){ return {x:n._x*COLW+30, y:n._y*ROWH+30}; }
+function layout(){ assign(DATA,0,0); var vis=visible(DATA,[]);
+  for(var id in els) els[id].style.display="none";
+  var links="";
+  vis.forEach(function(n){ var el=els[n.id]; el.style.display="block"; var p=xy(n); el.style.left=p.x+"px"; el.style.top=p.y+"px";
+    if(n.open) n.children.forEach(function(c){ var a=xy(n),b=xy(c); var x1=a.x+CARDW,x2=b.x,mx=(x1+x2)/2;
+      links+="<path d='M"+x1+","+a.y+" C"+mx+","+a.y+" "+mx+","+b.y+" "+x2+","+b.y+"' stroke='"+c.color+"' stroke-width='2.5' fill='none' opacity='.55'/>"; }); });
+  // synergy dashed links (only when both visible)
+  var visSet={}; vis.forEach(function(n){visSet[n.id]=1;});
+  SYN.forEach(function(s){ var f=byKey[s[0]],t=byKey[s[1]]; if(f&&t&&visSet[f.id]&&visSet[t.id]){ var a=xy(f),b=xy(t);
+    var x1=a.x+CARDW/2,y1=a.y,x2=b.x+CARDW/2,y2=b.y,my=(y1+y2)/2;
+    links+="<path d='M"+x1+","+y1+" C"+x1+","+my+" "+x2+","+my+" "+x2+","+y2+"' stroke='#e0663a' stroke-width='2' stroke-dasharray='5 5' fill='none' opacity='.7'/>"; } });
+  svg.innerHTML=links;
+  var maxX=0,maxY=0; vis.forEach(function(n){ var p=xy(n); maxX=Math.max(maxX,p.x+320); maxY=Math.max(maxY,p.y+140); });
+  world.style.width=maxX+"px"; world.style.height=maxY+"px"; svg.setAttribute("width",maxX); svg.setAttribute("height",maxY);
+}
+var scale=1,tx=0,ty=0;
+function applyT(){ world.style.transform="translate("+tx+"px,"+ty+"px) scale("+scale+")"; }
+function focus(nodes){ // fit view to given nodes (world coords)
+  var minX=1e9,minY=1e9,maxX=-1e9,maxY=-1e9;
+  nodes.forEach(function(n){ var p=xy(n); minX=Math.min(minX,p.x); maxX=Math.max(maxX,p.x+CARDW); minY=Math.min(minY,p.y-40); maxY=Math.max(maxY,p.y+70); });
+  var w=maxX-minX,h=maxY-minY, sw=stage.clientWidth, sh=stage.clientHeight-70;
+  var pad=28; var s=Math.min((sw-pad*2)/w,(sh-pad*2)/h,1.5); s=Math.max(.45,s);
+  scale=s; tx=(sw-w*s)/2 - minX*s; ty=70+(sh-h*s)/2 - minY*s; applyT();
+}
+function fitAll(){ DATA.open=true; DATA.children.forEach(function(c){c.open=false;}); refreshKidsLabels(); layout(); focus(visible(DATA,[])); }
+function refreshKidsLabels(){ visible(DATA,[]).forEach(function(n){ if(n.children.length){ var k=els[n.id].querySelector("[data-k]"); if(k)k.textContent=(n.open?"▾ とじる（":"▸ ひらく（")+n.children.length+"）"; } }); }
+
+initMap(); precompute(DATA,null); build(DATA);
+DATA.open=true;
+layout(); refreshKidsLabels(); focus([DATA].concat(DATA.children));
+
+stage.addEventListener("mousedown",function(e){ if(e.target.closest(".card"))return; world.style.transition="none"; var sx=e.clientX,sy=e.clientY,ox=tx,oy=ty; stage.classList.add("drag");
+  function mv(ev){ tx=ox+(ev.clientX-sx); ty=oy+(ev.clientY-sy); applyT(); }
+  function up(){ document.removeEventListener("mousemove",mv); document.removeEventListener("mouseup",up); stage.classList.remove("drag"); world.style.transition=""; }
+  document.addEventListener("mousemove",mv); document.addEventListener("mouseup",up); });
+stage.addEventListener("touchstart",function(e){ if(e.target.closest(".card"))return; world.style.transition="none"; var t=e.touches[0],sx=t.clientX,sy=t.clientY,ox=tx,oy=ty;
+  function mv(ev){ var t2=ev.touches[0]; tx=ox+(t2.clientX-sx); ty=oy+(t2.clientY-sy); applyT(); }
+  function up(){ stage.removeEventListener("touchmove",mv); stage.removeEventListener("touchend",up); world.style.transition=""; }
+  stage.addEventListener("touchmove",mv,{passive:true}); stage.addEventListener("touchend",up); },{passive:true});
+stage.addEventListener("wheel",function(e){ e.preventDefault(); world.style.transition="none"; var d=e.deltaY<0?1.12:0.89; scale=Math.min(2,Math.max(.35,scale*d)); applyT(); },{passive:false});
+document.getElementById("zin").onclick=function(){ world.style.transition=""; scale=Math.min(2,scale*1.18); applyT(); };
+document.getElementById("zout").onclick=function(){ world.style.transition=""; scale=Math.max(.35,scale*0.85); applyT(); };
+document.getElementById("fitAll").onclick=fitAll;
+addEventListener("resize",function(){ focus([DATA].concat(DATA.children)); });
+})();
+</script>
+</body>
+</html>

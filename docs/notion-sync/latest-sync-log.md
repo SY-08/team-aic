@@ -7,7 +7,7 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 
 ---
 
-## 2026-07-14 11:15:21 UTC — sync run
+## 2026-07-19 09:41:47 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -21,89 +21,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 10 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 3 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 3 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 2 件を出力
-- OK: 08-20 私のジャーナル → my-journal.html（変更なし）
-- OK: 08-21 お勉強会 → 公開エピソード 3 話を出力
-- OK: 08-21 お勉強会 → git-github.html（変更なし）
-
-## 2026-07-14 11:08:16 UTC — sync run
-- OK: 08-01 Home → index.html（変更なし）
-- OK: 08-02 About → about.html（変更なし）
-- OK: 08-03 Activities → activities.html（変更なし）
-- OK: 08-04 Profile → profile.html（変更なし）
-- OK: 08-05 Open Source → open-source.html（変更なし）
-- OK: 08-06 Live Build Log → live-build.html（変更なし）
-- OK: 08-09 Automation → automation.html（変更なし）
-- OK: 08-10 note Drafts → note-drafts.html（変更なし）
-- OK: 08-11 Book Materials → book.html（変更なし）
-- OK: 08-12 YouTube Drafts → youtube.html（変更なし）
-- OK: 08-13 Roadmap → roadmap.html（変更なし）
-- OK: 08-14 Contact → contact.html（変更なし）
-- OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 10 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 3 件を出力
-- OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 3 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 2 件を出力
-- OK: 08-20 私のジャーナル → my-journal.html（変更なし）
-- OK: 08-21 お勉強会 → 公開エピソード 3 話を出力
-- OK: 08-21 お勉強会 → git-github.html（更新あり）
-
-## 2026-07-14 10:43:01 UTC — sync run
-- OK: 08-01 Home → index.html（変更なし）
-- OK: 08-02 About → about.html（変更なし）
-- OK: 08-03 Activities → activities.html（変更なし）
-- OK: 08-04 Profile → profile.html（変更なし）
-- OK: 08-05 Open Source → open-source.html（変更なし）
-- OK: 08-06 Live Build Log → live-build.html（変更なし）
-- OK: 08-09 Automation → automation.html（変更なし）
-- OK: 08-10 note Drafts → note-drafts.html（変更なし）
-- OK: 08-11 Book Materials → book.html（変更なし）
-- OK: 08-12 YouTube Drafts → youtube.html（変更なし）
-- OK: 08-13 Roadmap → roadmap.html（変更なし）
-- OK: 08-14 Contact → contact.html（変更なし）
-- OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 10 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（更新あり）
-- OK: 08-17 私とAIの哲学 → 公開記事 3 件を出力
-- OK: 08-17 私とAIの哲学 → philosophy.html（更新あり）
-- OK: 08-18 日本の裏側 → 公開記事 3 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（更新あり）
-- OK: 08-20 私のジャーナル → 公開記事 2 件を出力
-- OK: 08-20 私のジャーナル → my-journal.html（更新あり）
-
-## 2026-07-14 09:43:01 UTC — sync run
-- OK: 08-01 Home → index.html（変更なし）
-- OK: 08-02 About → about.html（変更なし）
-- OK: 08-03 Activities → activities.html（変更なし）
-- OK: 08-04 Profile → profile.html（変更なし）
-- OK: 08-05 Open Source → open-source.html（変更なし）
-- OK: 08-06 Live Build Log → live-build.html（変更なし）
-- OK: 08-09 Automation → automation.html（変更なし）
-- OK: 08-10 note Drafts → note-drafts.html（変更なし）
-- OK: 08-11 Book Materials → book.html（変更なし）
-- OK: 08-12 YouTube Drafts → youtube.html（変更なし）
-- OK: 08-13 Roadmap → roadmap.html（変更なし）
-- OK: 08-14 Contact → contact.html（変更なし）
-- OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 10 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 3 件を出力
-- OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 3 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 2 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-14 08:50:53 UTC — sync run
+## 2026-07-19 07:24:25 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -117,62 +43,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 10 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（更新あり）
-- OK: 08-17 私とAIの哲学 → 公開記事 3 件を出力
-- OK: 08-17 私とAIの哲学 → philosophy.html（更新あり）
-- OK: 08-18 日本の裏側 → 公開記事 3 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（更新あり）
-- OK: 08-20 私のジャーナル → 公開記事 2 件を出力
-- OK: 08-20 私のジャーナル → my-journal.html（更新あり）
-
-## 2026-07-14 08:35:25 UTC — sync run
-- OK: 08-01 Home → index.html（変更なし）
-- OK: 08-02 About → about.html（変更なし）
-- OK: 08-03 Activities → activities.html（変更なし）
-- OK: 08-04 Profile → profile.html（変更なし）
-- OK: 08-05 Open Source → open-source.html（変更なし）
-- OK: 08-06 Live Build Log → live-build.html（変更なし）
-- OK: 08-09 Automation → automation.html（変更なし）
-- OK: 08-10 note Drafts → note-drafts.html（変更なし）
-- OK: 08-11 Book Materials → book.html（変更なし）
-- OK: 08-12 YouTube Drafts → youtube.html（変更なし）
-- OK: 08-13 Roadmap → roadmap.html（変更なし）
-- OK: 08-14 Contact → contact.html（変更なし）
-- OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 9 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（更新あり）
-- OK: 08-17 私とAIの哲学 → 公開記事 3 件を出力
-- OK: 08-17 私とAIの哲学 → philosophy.html（更新あり）
-- OK: 08-18 日本の裏側 → 公開記事 3 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（更新あり）
-- OK: 08-20 私のジャーナル → 公開記事 2 件を出力
-- OK: 08-20 私のジャーナル → my-journal.html（更新あり）
-
-## 2026-07-14 07:01:16 UTC — sync run
-- OK: 08-01 Home → index.html（変更なし）
-- OK: 08-02 About → about.html（変更なし）
-- OK: 08-03 Activities → activities.html（変更なし）
-- OK: 08-04 Profile → profile.html（変更なし）
-- OK: 08-05 Open Source → open-source.html（変更なし）
-- OK: 08-06 Live Build Log → live-build.html（変更なし）
-- OK: 08-09 Automation → automation.html（変更なし）
-- OK: 08-10 note Drafts → note-drafts.html（変更なし）
-- OK: 08-11 Book Materials → book.html（変更なし）
-- OK: 08-12 YouTube Drafts → youtube.html（変更なし）
-- OK: 08-13 Roadmap → roadmap.html（変更なし）
-- OK: 08-14 Contact → contact.html（変更なし）
-- OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-14 04:37:39 UTC — sync run
+## 2026-07-19 04:58:02 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -186,16 +65,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-14 01:13:31 UTC — sync run
+## 2026-07-19 01:20:52 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -209,16 +87,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-13 23:40:34 UTC — sync run
+## 2026-07-18 23:39:56 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -232,16 +109,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-13 23:12:54 UTC — sync run
+## 2026-07-18 23:02:38 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -255,16 +131,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-13 22:42:19 UTC — sync run
+## 2026-07-18 22:36:03 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -278,16 +153,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-13 21:42:16 UTC — sync run
+## 2026-07-18 21:38:04 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -301,16 +175,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-13 20:05:18 UTC — sync run
+## 2026-07-18 20:39:08 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -324,16 +197,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-13 18:25:11 UTC — sync run
+## 2026-07-18 19:57:06 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -347,16 +219,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-13 16:22:20 UTC — sync run
+## 2026-07-18 18:42:37 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -370,16 +241,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-13 13:56:37 UTC — sync run
+## 2026-07-18 17:45:03 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -393,16 +263,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-13 11:48:13 UTC — sync run
+## 2026-07-18 16:41:28 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -416,16 +285,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-13 08:41:59 UTC — sync run
+## 2026-07-18 15:42:25 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -439,16 +307,15 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）
 
-## 2026-07-13 05:22:11 UTC — sync run
+## 2026-07-18 14:13:29 UTC — sync run
 - OK: 08-01 Home → index.html（変更なし）
 - OK: 08-02 About → about.html（変更なし）
 - OK: 08-03 Activities → activities.html（変更なし）
@@ -462,11 +329,120 @@ Notion「08 Website CMS」からGitHub Pagesへ同期した結果を記録する
 - OK: 08-13 Roadmap → roadmap.html（変更なし）
 - OK: 08-14 Contact → contact.html（変更なし）
 - OK: 08-15 勉強会活動 → seminar.html（変更なし）
-- OK: 08-16 AIの日報 → 公開記事 8 件を出力
-- OK: 08-16 AIの日報 → ai-daily.html（変更なし）
-- OK: 08-17 私とAIの哲学 → 公開記事 2 件を出力
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
 - OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
-- OK: 08-18 日本の裏側 → 公開記事 2 件を出力
-- OK: 08-18 日本の裏側 → japan-inside.html（変更なし）
-- OK: 08-20 私のジャーナル → 公開記事 1 件を出力
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
+- OK: 08-20 私のジャーナル → my-journal.html（変更なし）
+
+## 2026-07-18 12:43:54 UTC — sync run
+- OK: 08-01 Home → index.html（変更なし）
+- OK: 08-02 About → about.html（変更なし）
+- OK: 08-03 Activities → activities.html（変更なし）
+- OK: 08-04 Profile → profile.html（変更なし）
+- OK: 08-05 Open Source → open-source.html（変更なし）
+- OK: 08-06 Live Build Log → live-build.html（変更なし）
+- OK: 08-09 Automation → automation.html（変更なし）
+- OK: 08-10 note Drafts → note-drafts.html（変更なし）
+- OK: 08-11 Book Materials → book.html（変更なし）
+- OK: 08-12 YouTube Drafts → youtube.html（変更なし）
+- OK: 08-13 Roadmap → roadmap.html（変更なし）
+- OK: 08-14 Contact → contact.html（変更なし）
+- OK: 08-15 勉強会活動 → seminar.html（変更なし）
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
+- OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
+- OK: 08-20 私のジャーナル → my-journal.html（変更なし）
+
+## 2026-07-18 11:41:58 UTC — sync run
+- OK: 08-01 Home → index.html（変更なし）
+- OK: 08-02 About → about.html（変更なし）
+- OK: 08-03 Activities → activities.html（変更なし）
+- OK: 08-04 Profile → profile.html（変更なし）
+- OK: 08-05 Open Source → open-source.html（変更なし）
+- OK: 08-06 Live Build Log → live-build.html（変更なし）
+- OK: 08-09 Automation → automation.html（変更なし）
+- OK: 08-10 note Drafts → note-drafts.html（変更なし）
+- OK: 08-11 Book Materials → book.html（変更なし）
+- OK: 08-12 YouTube Drafts → youtube.html（変更なし）
+- OK: 08-13 Roadmap → roadmap.html（変更なし）
+- OK: 08-14 Contact → contact.html（変更なし）
+- OK: 08-15 勉強会活動 → seminar.html（変更なし）
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
+- OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
+- OK: 08-20 私のジャーナル → my-journal.html（変更なし）
+
+## 2026-07-18 10:06:59 UTC — sync run
+- OK: 08-01 Home → index.html（変更なし）
+- OK: 08-02 About → about.html（変更なし）
+- OK: 08-03 Activities → activities.html（変更なし）
+- OK: 08-04 Profile → profile.html（変更なし）
+- OK: 08-05 Open Source → open-source.html（変更なし）
+- OK: 08-06 Live Build Log → live-build.html（変更なし）
+- OK: 08-09 Automation → automation.html（変更なし）
+- OK: 08-10 note Drafts → note-drafts.html（変更なし）
+- OK: 08-11 Book Materials → book.html（変更なし）
+- OK: 08-12 YouTube Drafts → youtube.html（変更なし）
+- OK: 08-13 Roadmap → roadmap.html（変更なし）
+- OK: 08-14 Contact → contact.html（変更なし）
+- OK: 08-15 勉強会活動 → seminar.html（変更なし）
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
+- OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
+- OK: 08-20 私のジャーナル → my-journal.html（変更なし）
+
+## 2026-07-18 08:29:31 UTC — sync run
+- OK: 08-01 Home → index.html（変更なし）
+- OK: 08-02 About → about.html（変更なし）
+- OK: 08-03 Activities → activities.html（変更なし）
+- OK: 08-04 Profile → profile.html（変更なし）
+- OK: 08-05 Open Source → open-source.html（変更なし）
+- OK: 08-06 Live Build Log → live-build.html（変更なし）
+- OK: 08-09 Automation → automation.html（変更なし）
+- OK: 08-10 note Drafts → note-drafts.html（変更なし）
+- OK: 08-11 Book Materials → book.html（変更なし）
+- OK: 08-12 YouTube Drafts → youtube.html（変更なし）
+- OK: 08-13 Roadmap → roadmap.html（変更なし）
+- OK: 08-14 Contact → contact.html（変更なし）
+- OK: 08-15 勉強会活動 → seminar.html（変更なし）
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
+- OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
+- OK: 08-20 私のジャーナル → my-journal.html（変更なし）
+
+## 2026-07-18 06:51:22 UTC — sync run
+- OK: 08-01 Home → index.html（変更なし）
+- OK: 08-02 About → about.html（変更なし）
+- OK: 08-03 Activities → activities.html（変更なし）
+- OK: 08-04 Profile → profile.html（変更なし）
+- OK: 08-05 Open Source → open-source.html（変更なし）
+- OK: 08-06 Live Build Log → live-build.html（変更なし）
+- OK: 08-09 Automation → automation.html（変更なし）
+- OK: 08-10 note Drafts → note-drafts.html（変更なし）
+- OK: 08-11 Book Materials → book.html（変更なし）
+- OK: 08-12 YouTube Drafts → youtube.html（変更なし）
+- OK: 08-13 Roadmap → roadmap.html（変更なし）
+- OK: 08-14 Contact → contact.html（変更なし）
+- OK: 08-15 勉強会活動 → seminar.html（変更なし）
+- OK: AI日報アーカイブ → 自動公開の記事 21 件を統合対象に追加
+- OK: 日本の裏側アーカイブ → 自動公開の記事 6 件を統合対象に追加
+- OK: 08-16 team AIC朝刊 → ai-daily.html（変更なし）
+- OK: 08-17 私とAIの哲学 → 自動公開の記事 4 件を出力
+- OK: 08-17 私とAIの哲学 → philosophy.html（変更なし）
+- OK: 08-20 私のジャーナル → 自動公開の記事 13 件を出力
 - OK: 08-20 私のジャーナル → my-journal.html（変更なし）

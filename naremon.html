@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ナレッジモンスター｜あそんでまなぶ</title>
+<meta name="robots" content="index, follow">
+<style>
+  :root{ --blue:#2a6fb5; --blueD:#1c548c; --gold:#c9a13a; --ink:#22303c; --line:#cfe0f2; }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none;}
+  html,body{margin:0;height:100%;font-family:"Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;color:var(--ink);}
+  body{background:linear-gradient(180deg,#bfe3ff 0%,#eaf6ff 45%,#eafbe9 100%);overflow:hidden;}
+  #app{position:fixed;inset:0;display:flex;flex-direction:column;}
+  .screen{flex:1;display:none;flex-direction:column;align-items:center;justify-content:flex-start;padding:14px;overflow:auto;}
+  .screen.on{display:flex;}
+  h1{font-size:clamp(24px,6vw,42px);margin:8px 0 4px;color:var(--blueD);text-shadow:0 2px 0 #fff;}
+  .sub{color:#4a6076;font-size:clamp(13px,3.4vw,16px);margin:0 0 12px;text-align:center;}
+  .btn{border:0;border-radius:999px;background:var(--blue);color:#fff;font-weight:800;font-size:clamp(16px,4.4vw,22px);padding:15px 24px;box-shadow:0 8px 0 #1c5893,0 12px 22px rgba(20,60,110,.25);cursor:pointer;}
+  .btn:active{transform:translateY(4px);box-shadow:0 4px 0 #1c5893;}
+  .btn.gold{background:var(--gold);box-shadow:0 8px 0 #96741f,0 12px 22px rgba(150,110,20,.25);}
+  .btn.ghost{background:#fff;color:var(--blueD);box-shadow:0 6px 0 #cfe0f2;}
+  .btn:disabled{opacity:.45;box-shadow:none;transform:none;}
+  .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:center;}
+  .back{position:fixed;top:12px;left:12px;z-index:20;font-size:15px;padding:9px 15px;}
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:560px;width:100%;}
+  .card{background:#fff;border:3px solid var(--line);border-radius:22px;padding:12px;text-align:center;cursor:pointer;box-shadow:0 10px 24px rgba(42,111,181,.12);}
+  .card.sel{border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,161,58,.3),0 10px 24px rgba(42,111,181,.18);}
+  .sprite{width:118px;height:118px;object-fit:contain;filter:drop-shadow(0 6px 8px rgba(0,0,0,.15));}
+  .cname{font-weight:800;font-size:19px;margin-top:2px;}
+  .cattr{display:inline-block;font-size:12px;font-weight:800;color:#fff;border-radius:999px;padding:2px 10px;margin-top:3px;}
+  .stage{position:relative;display:flex;justify-content:space-around;align-items:flex-end;max-width:560px;width:100%;height:172px;}
+  .fighter{display:flex;flex-direction:column;align-items:center;gap:3px;}
+  .fighter .sprite{width:112px;height:112px;transition:transform .18s;}
+  .fighter .lbl{font-weight:800;font-size:13px;}
+  .cap{position:absolute;top:2px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.9);border-radius:999px;padding:5px 14px;font-weight:800;color:var(--blueD);font-size:14px;white-space:nowrap;box-shadow:0 3px 8px rgba(0,0,0,.1);}
+  .hit{animation:hit .5s;} @keyframes hit{0%{transform:scale(1)}30%{transform:scale(1.15) rotate(-6deg)}100%{transform:scale(1)}}
+  .ko{animation:ko .7s forwards;} @keyframes ko{to{transform:translateY(28px) rotate(28deg);opacity:0;}}
+  .idle{animation:bob 1.6s ease-in-out infinite;} @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  .flash{position:fixed;inset:0;pointer-events:none;opacity:0;z-index:15;} .flash.go{animation:fl .6s;} @keyframes fl{0%{opacity:0}30%{opacity:.5}100%{opacity:0}}
+  .hpbar{width:118px;height:12px;border-radius:8px;background:#e6ecf3;overflow:hidden;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.15);}
+  .hpbar>i{display:block;height:100%;background:linear-gradient(90deg,#3ec06a,#7be0a0);transition:width .35s}
+  .dmg{position:fixed;font-weight:900;color:#ff5a3c;font-size:26px;text-shadow:0 2px 0 #fff,0 0 8px rgba(255,120,60,.5);pointer-events:none;z-index:31;animation:dmgA .85s forwards}
+  @keyframes dmgA{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}25%{opacity:1;transform:translate(-50%,-90%) scale(1.1)}100%{opacity:0;transform:translate(-50%,-160%) scale(1)}}
+  #fx{position:fixed;inset:0;pointer-events:none;z-index:30}
+  .shakeScreen{animation:shs .4s} @keyframes shs{0%,100%{transform:translate(0,0)}20%{transform:translate(-7px,4px)}40%{transform:translate(7px,-4px)}60%{transform:translate(-5px,2px)}80%{transform:translate(5px,-2px)}}
+  /* shop */
+  .panel{background:#fff;border:3px solid var(--line);border-radius:18px;padding:12px;max-width:560px;width:100%;box-shadow:0 8px 20px rgba(42,111,181,.1);margin-top:6px}
+  .bubble{background:#fff7e6;border:2px solid #e6cf92;border-radius:14px;padding:10px 14px;font-weight:800;color:#7a5b1f;font-size:18px;display:inline-block}
+  .prod{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .prod button{font-size:34px;background:#f2f8ff;border:2px solid #dbe8f6;border-radius:16px;padding:10px 4px 6px;cursor:pointer}
+  .prod button:active{transform:scale(.94)}
+  .prod .pn{display:block;font-size:12px;font-weight:800;color:#4a6076;margin-top:2px}
+  .tray{min-height:52px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center;background:#f7fbff;border:2px dashed #cfe0f2;border-radius:14px;padding:8px;font-size:34px;margin-top:8px}
+  .coins{display:flex;gap:10px;justify-content:center;margin-top:6px}
+  .coin{border:0;border-radius:50%;width:74px;height:74px;font-weight:900;color:#5a4410;cursor:pointer;box-shadow:0 6px 0 rgba(0,0,0,.18)}
+  .coin.c1{background:radial-gradient(circle at 40% 35%,#ffe9a8,#e7b53c)}
+  .coin.c10{background:radial-gradient(circle at 40% 35%,#ffd88a,#d98a2b)}
+  .coin:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(0,0,0,.18)}
+  .bignum{font-size:40px;font-weight:900;color:var(--blueD)}
+  /* word */
+  .wordpic{font-size:70px;line-height:1;margin:2px}
+  .wordtxt{font-size:34px;font-weight:900;letter-spacing:6px;color:#9fb2c4}
+  .wordtxt b{color:var(--blueD)}
+  #pad{touch-action:none;border-radius:14px;background:#fbfdff;display:block;border:3px solid var(--line)}
+  #fx{background:transparent}
+  .praise{font-weight:900;color:var(--gold);font-size:22px;min-height:28px}
+  .mini{font-size:13px;color:#5a6f82;text-align:center}
+</style>
+</head>
+<body>
+<div id="app">
+  <section class="screen on" id="s-home">
+    <h1>ナレッジモンスター</h1>
+    <p class="sub">あそんで まなぼう！　まずは パートナーを えらんでね</p>
+    <div class="cards" id="charCards"></div>
+    <div class="row" style="margin-top:16px"><button class="btn gold" id="toMenu" disabled>この こで あそぶ →</button></div>
+  </section>
+
+  <section class="screen" id="s-menu">
+    <button class="btn ghost back" data-go="s-home">← もどる</button>
+    <h1 style="margin-top:38px">なにで あそぶ？</h1>
+    <p class="sub" id="menuPartner"></p>
+    <div class="row" style="flex-direction:column;gap:16px;margin-top:6px">
+      <button class="btn" data-go="s-shop">🛒 ナレモンショップ（おかね）</button>
+      <button class="btn" data-go="s-word">✍️ ことばバトル（ひらがな）</button>
+    </div>
+  </section>
+
+  <!-- SHOP -->
+  <section class="screen" id="s-shop">
+    <button class="btn ghost back" data-go="s-menu">← もどる</button>
+    <div class="stage" style="height:150px;margin-top:26px">
+      <div class="cap" id="shopCap"></div>
+      <div class="fighter"><img class="sprite" id="shopClerk"><div class="lbl" id="clerkName"></div></div>
+      <div class="fighter"><img class="sprite" id="shopCust"><div class="lbl" id="custName">おきゃくさん</div></div>
+    </div>
+    <div class="panel" id="shopPanel"></div>
+  </section>
+
+  <!-- WORD -->
+  <section class="screen" id="s-word">
+    <button class="btn ghost back" data-go="s-menu">← もどる</button>
+    <div class="stage" style="height:150px;margin-top:26px">
+      <div class="cap" id="wCap"></div>
+      <div class="fighter"><img class="sprite" id="wP"><div class="lbl" id="wPName"></div></div>
+      <div class="fighter"><img class="sprite" id="wE"><div class="lbl" id="wEName"></div><div class="hpbar"><i id="wHp" style="width:100%"></i></div></div>
+    </div>
+    <div class="wordpic" id="wordPic">🍓</div>
+    <div class="wordtxt" id="wordTxt"></div>
+    <div class="mini" id="wKanaHint">この もじを かいてね</div>
+    <canvas id="pad" width="300" height="300" style="margin-top:6px"></canvas>
+    <div class="praise" id="wPraise"></div>
+    <div class="row" style="margin-top:6px">
+      <button class="btn ghost" id="wClear">けす</button>
+      <button class="btn gold" id="wDone">かけた！</button>
+    </div>
+  </section>
+</div>
+<div class="flash" id="flash"></div>
+<canvas id="fx"></canvas>
+
+<script>
+(function(){
+"use strict";
+const PARTNERS=[
+  {key:"goronyan",name:"ゴロニャン",attr:"でんき",color:"#f4b731",moves:["ビリビリショック","いなずまダッシュ","サンダーボルト"]},
+  {key:"hinokoma",name:"ヒノコマ",attr:"ほのお",color:"#e0552f",moves:["ファイアタックル","ほのおのうず","だいかえん"]},
+  {key:"sarumizu",name:"サルミズ",attr:"みず",color:"#2a86c8",moves:["アクアスプラッシュ","うずしお","ハイドロポンプ"]},
+  {key:"kijimidori",name:"キジミドリ",attr:"くさ・かぜ",color:"#4faa4f",moves:["リーフカッター","かぜのつばさ","グリーンストーム"]}
+];
+// おきゃくさん / てき（こわいキャラを かくす時は行の先頭に // をつける）
+const ENEMIES=[
+  {key:"dokuchu",name:"ドクチュー",color:"#8a6fbf"},
+  {key:"hiepillar",name:"ヒエピラー",color:"#7fd3e0"},
+  {key:"koromogura",name:"コロモグラ",color:"#b08a5a"},
+  {key:"saborin",name:"サボリン",color:"#5fa84f"},
+  {key:"dokuronezu",name:"ドクロネズ",color:"#5b4a66"}
+  // ,{key:"elebee",name:"エレビー",color:"#e0b13a"}  // ← こわい？ 今はOFF
+];
+const ATTR_COLOR={"でんき":"#f4d03f","ほのお":"#ff6a3d","みず":"#3aa0e0","くさ・かぜ":"#5fc46a"};
+
+function ph(color,label){
+  const s="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><ellipse cx='60' cy='104' rx='34' ry='8' fill='rgba(0,0,0,.12)'/><circle cx='60' cy='60' r='40' fill='"+color+"' stroke='#00000022' stroke-width='3'/><circle cx='46' cy='54' r='7' fill='#fff'/><circle cx='74' cy='54' r='7' fill='#fff'/><circle cx='47' cy='55' r='3.5' fill='#22303c'/><circle cx='75' cy='55' r='3.5' fill='#22303c'/><path d='M50 74 q10 8 20 0' stroke='#22303c' stroke-width='3' fill='none' stroke-linecap='round'/><text x='60' y='114' font-size='13' font-weight='700' fill='#22303c' text-anchor='middle'>"+label+"</text></svg>";
+  return "data:image/svg+xml;utf8,"+encodeURIComponent(s);
+}
+function setSprite(img,ch){ img.alt=ch.name; img.onerror=function(){img.onerror=null;img.src=ph(ch.color,ch.name);}; img.src="assets/img/naremon/"+ch.key+".png"; }
+function say(t){ try{ if(!window.speechSynthesis)return; const u=new SpeechSynthesisUtterance(t); u.lang="ja-JP"; u.rate=1; u.pitch=1.15; speechSynthesis.cancel(); speechSynthesis.speak(u);}catch(e){} }
+function show(id){ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on")); document.getElementById(id).classList.add("on"); }
+function rand(a){ return a[Math.floor(Math.random()*a.length)]; }
+
+/* FX */
+const fx=document.getElementById("fx"), fxc=fx.getContext("2d"); let parts=[],fxRun=false;
+function fxSize(){ fx.width=innerWidth; fx.height=innerHeight; } addEventListener("resize",fxSize); fxSize();
+function burst(cx,cy,color,n){ for(let i=0;i<n;i++){const a=Math.random()*6.283,sp=2+Math.random()*7.5; parts.push({x:cx,y:cy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-2,life:1,color:color,r:3+Math.random()*5});} if(!fxRun){fxRun=true;requestAnimationFrame(fxLoop);} }
+function fxLoop(){ fxc.clearRect(0,0,fx.width,fx.height); parts=parts.filter(p=>p.life>0); for(const p of parts){p.x+=p.vx;p.y+=p.vy;p.vy+=0.25;p.life-=0.025;fxc.globalAlpha=Math.max(0,p.life);fxc.fillStyle=p.color;fxc.beginPath();fxc.arc(p.x,p.y,p.r,0,7);fxc.fill();} fxc.globalAlpha=1; if(parts.length)requestAnimationFrame(fxLoop); else fxRun=false; }
+function centerOf(el){ const r=el.getBoundingClientRect(); return {x:r.left+r.width/2,y:r.top+r.height/2}; }
+function shakeScreen(){ document.body.classList.remove("shakeScreen"); void document.body.offsetWidth; document.body.classList.add("shakeScreen"); }
+function dmgNum(el,txt,color){ const c=centerOf(el); const d=document.createElement("div"); d.className="dmg"; d.textContent=txt; if(color)d.style.color=color; d.style.left=c.x+"px"; d.style.top=(c.y-8)+"px"; document.body.appendChild(d); setTimeout(()=>d.remove(),860); }
+function flashCol(col){ const fl=document.getElementById("flash"); fl.style.background=col; fl.classList.remove("go"); void fl.offsetWidth; fl.classList.add("go"); }
+function techFX(pSpriteEl,eSpriteEl,attr,big){ const col=ATTR_COLOR[attr]||"#2a6fb5"; const c=centerOf(eSpriteEl); pSpriteEl.classList.remove("hit"); void pSpriteEl.offsetWidth; pSpriteEl.classList.add("hit"); burst(c.x,c.y,col,big?60:16); shakeScreen(); if(big)flashCol(col); }
+
+/* character select */
+let partner=null;
+const cc=document.getElementById("charCards");
+PARTNERS.forEach(p=>{ const d=document.createElement("div"); d.className="card";
+  d.innerHTML="<img class='sprite'><div class='cname'>"+p.name+"</div><span class='cattr' style='background:"+(ATTR_COLOR[p.attr]||"#2a6fb5")+"'>"+p.attr+"</span>";
+  setSprite(d.querySelector("img"),p);
+  d.addEventListener("click",()=>{ partner=p; document.querySelectorAll(".card").forEach(x=>x.classList.remove("sel")); d.classList.add("sel"); document.getElementById("toMenu").disabled=false; say(p.name+"、よろしくね！"); });
+  cc.appendChild(d); });
+document.getElementById("toMenu").addEventListener("click",()=>{ if(partner){openMenu();show("s-menu");} });
+function openMenu(){ document.getElementById("menuPartner").textContent="パートナー：「"+partner.name+"」（"+partner.attr+"）"; }
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>{ const g=b.getAttribute("data-go"); if(g==="s-menu")openMenu(); if(g==="s-shop")startShop(); if(g==="s-word")startWord(); show(g); }));
+
+/* ============ SHOP ============ */
+const PRODUCTS=[{k:"ice",e:"🍦",n:"アイス",p:3},{k:"juice",e:"🥤",n:"ジュース",p:4},{k:"pote",e:"🍟",n:"ポテト",p:5},{k:"burg",e:"🍔",n:"ハンバーガー",p:7}];
+let shopLv=0, order=[], made=[], payAmt=0, changeTgt=0, changeCur=0, shopStep="";
+function startShop(){ shopLv=0; setSprite(document.getElementById("shopClerk"),partner); document.getElementById("shopClerk").classList.add("idle"); document.getElementById("clerkName").textContent=partner.name+"（てんいん）"; nextCustomer(); }
+function nextCustomer(){ const cust=rand(ENEMIES); const cs=document.getElementById("shopCust"); cs.className="sprite idle"; setSprite(cs,cust); document.getElementById("custName").textContent=cust.name;
+  const nItems=shopLv<3?1:2; order=[]; for(let i=0;i<nItems;i++) order.push(rand(PRODUCTS));
+  made=[]; shopStep="make";
+  document.getElementById("shopCap").textContent="いらっしゃいませ！";
+  renderShopOrder(); }
+function orderText(){ return order.map(o=>o.e+o.n).join("と"); }
+function renderShopOrder(){
+  const total=order.reduce((s,o)=>s+o.p,0);
+  const P=document.getElementById("shopPanel");
+  P.innerHTML="<div style='text-align:center'><span class='bubble'>「"+orderText()+" ください！」</span></div>"+
+    "<div class='mini' style='margin:8px 0 4px'>ちゅうもんの しなものを タップして つくろう</div>"+
+    "<div class='prod' id='prodBtns'></div>"+
+    "<div class='tray' id='tray'></div>"+
+    "<div class='row' style='margin-top:10px'><button class='btn gold' id='giveBtn' disabled>できた！わたす</button></div>";
+  const pb=document.getElementById("prodBtns");
+  PRODUCTS.forEach(pr=>{ const b=document.createElement("button"); b.innerHTML=pr.e+"<span class='pn'>"+pr.n+"</span>"; b.onclick=()=>addMade(pr); pb.appendChild(b); });
+  say(orderText()+" ください！");
+  updateTray();
+}
+function needCount(k){ return order.filter(o=>o.k===k).length; }
+function madeCount(k){ return made.filter(o=>o.k===k).length; }
+function addMade(pr){ if(madeCount(pr.k)>=needCount(pr.k)){ document.getElementById("shopCap").textContent="それは ちゅうもんに ないみたい"; return; } made.push(pr); updateTray(); }
+function updateTray(){ const t=document.getElementById("tray"); t.textContent=made.map(o=>o.e).join(" ")||"（ここに しなものが ならぶよ）";
+  const ok = order.length===made.length && order.every(o=>madeCount(o.k)===needCount(o.k));
+  const g=document.getElementById("giveBtn"); g.disabled=!ok; g.onclick=goPay; }
+function goPay(){ const total=order.reduce((s,o)=>s+o.p,0); payAmt = total<=10?10:20; changeTgt=payAmt-total; changeCur=0; shopStep="change";
+  document.getElementById("shopCap").textContent="ありがとう！";
+  const P=document.getElementById("shopPanel");
+  P.innerHTML="<div style='text-align:center'><span class='bubble'>「"+payAmt+"えん どうぞ」</span></div>"+
+    "<div class='mini' style='margin:8px 0'>おかね "+payAmt+"えん － おだい "+total+"えん ＝ <b>おつり "+changeTgt+"えん</b><br>1えんと 10えんで、おつりを つくってね</div>"+
+    "<div class='row'><div>おつり</div><div class='bignum' id='chNow'>0</div><div>えん</div></div>"+
+    "<div class='coins'><button class='coin c1' id='c1'>1えん</button><button class='coin c10' id='c10'>10えん</button><button class='btn ghost' id='chReset' style='align-self:center'>やりなおす</button></div>"+
+    "<div class='tray' id='chTray'></div>"+
+    "<div class='row' style='margin-top:8px'><button class='btn gold' id='chOk'>これで OK</button></div>";
+  document.getElementById("c1").onclick=()=>addCoin(1);
+  document.getElementById("c10").onclick=()=>addCoin(10);
+  document.getElementById("chReset").onclick=()=>{changeCur=0;renderCoins();};
+  document.getElementById("chOk").onclick=checkChange;
+  say("おつりは "+changeTgt+"えん だよ");
+  renderCoins();
+}
+let coinList=[];
+function addCoin(v){ changeCur+=v; coinList.push(v); say(String(changeCur)); renderCoins(); }
+function renderCoins(){ if(changeCur===0)coinList=[]; document.getElementById("chNow").textContent=changeCur;
+  document.getElementById("chTray").textContent=coinList.map(v=>v===10?"🟠":"🟡").join(" ")||"（ここに おかねが ならぶよ）"; }
+function checkChange(){ const cs=document.getElementById("shopCust");
+  if(changeCur===changeTgt){ techFX(document.getElementById("shopClerk"),cs,partner.attr,true); document.getElementById("shopCap").textContent="ぴったり！ありがとう！"; say("せいかい！ぴったりだね！");
+    shopLv++; setTimeout(nextCustomer,1200); }
+  else if(changeCur>changeTgt){ document.getElementById("shopCap").textContent="ちょっと おおいよ。へらそう"; say("すこし おおいよ"); }
+  else { document.getElementById("shopCap").textContent="もうすこし！"; say("もうすこし"); } }
+
+/* ============ WORD BATTLE ============ */
+const WORDS=[{w:"いちご",e:"🍓"},{w:"いぬ",e:"🐶"},{w:"りんご",e:"🍎"},{w:"ねこ",e:"🐱"},{w:"さかな",e:"🐟"},{w:"うさぎ",e:"🐰"},{w:"みかん",e:"🍊"},{w:"ばなな",e:"🍌"},{w:"くるま",e:"🚗"},{w:"ぞう",e:"🐘"}];
+let wWord=null, wIdx=0, wEnemy=null, drawing=false;
+const pad=document.getElementById("pad"), pctx=pad.getContext("2d");
+function startWord(){ setSprite(document.getElementById("wP"),partner); document.getElementById("wP").classList.add("idle"); document.getElementById("wPName").textContent=partner.name; newWordEnemy(); }
+function newWordEnemy(){ wEnemy=rand(ENEMIES); const es=document.getElementById("wE"); es.className="sprite idle"; setSprite(es,wEnemy); document.getElementById("wEName").textContent=wEnemy.name;
+  wWord=rand(WORDS); wIdx=0; document.getElementById("wordPic").textContent=wWord.e; document.getElementById("wHp").style.width="100%";
+  document.getElementById("wCap").textContent="「"+wWord.w+"」を かこう！"; document.getElementById("wPraise").textContent=""; say(wWord.w); loadKana(); }
+function renderWordTxt(){ let h=""; for(let i=0;i<wWord.w.length;i++){ h+= i<wIdx?wWord.w[i] : (i===wIdx?"<b>"+wWord.w[i]+"</b>":"<span style='opacity:.4'>"+wWord.w[i]+"</span>"); } document.getElementById("wordTxt").innerHTML=h; }
+function sizePad(){ const w=Math.min(300,Math.floor(innerWidth*0.8)); pad.width=w; pad.height=w; }
+function loadKana(){ sizePad(); renderWordTxt(); document.getElementById("wKanaHint").textContent="「"+wWord.w[wIdx]+"」を かいてね"; drawGuide(); }
+function drawGuide(){ pctx.clearRect(0,0,pad.width,pad.height); pctx.save(); pctx.globalAlpha=0.3; pctx.fillStyle="#2a6fb5"; pctx.font="bold "+Math.floor(pad.height*0.72)+"px 'Hiragino Maru Gothic ProN','Yu Gothic',sans-serif"; pctx.textAlign="center"; pctx.textBaseline="middle"; pctx.fillText(wWord.w[wIdx],pad.width/2,pad.height/2+6); pctx.restore(); }
+function pos(e){ const r=pad.getBoundingClientRect(); const t=e.touches?e.touches[0]:e; return {x:(t.clientX-r.left)*(pad.width/r.width),y:(t.clientY-r.top)*(pad.height/r.height)}; }
+function pdown(e){ e.preventDefault(); drawing=true; const p=pos(e); pctx.strokeStyle="#e0552f"; pctx.lineWidth=14; pctx.lineCap="round"; pctx.lineJoin="round"; pctx.beginPath(); pctx.moveTo(p.x,p.y); }
+function pmove(e){ if(!drawing)return; e.preventDefault(); const p=pos(e); pctx.lineTo(p.x,p.y); pctx.stroke(); }
+function pup(){ drawing=false; }
+pad.addEventListener("mousedown",pdown); pad.addEventListener("mousemove",pmove); addEventListener("mouseup",pup);
+pad.addEventListener("touchstart",pdown,{passive:false}); pad.addEventListener("touchmove",pmove,{passive:false}); pad.addEventListener("touchend",pup);
+document.getElementById("wClear").onclick=drawGuide;
+document.getElementById("wDone").onclick=function(){
+  var es=document.getElementById("wE");
+  techFX(document.getElementById("wP"),es,partner.attr,false); dmgNum(es,wWord.w[wIdx],ATTR_COLOR[partner.attr]); say(wWord.w[wIdx]);
+  wIdx++;
+  document.getElementById("wHp").style.width=Math.round((1-wIdx/wWord.w.length)*100)+"%";
+  if(wIdx>=wWord.w.length){
+    var mv=rand(partner.moves); techFX(document.getElementById("wP"),es,partner.attr,true); dmgNum(es,"ドカーン！",ATTR_COLOR[partner.attr]);
+    es.classList.remove("idle"); es.classList.add("ko"); document.getElementById("wPraise").textContent="「"+wWord.w+"」かけたね！ "+partner.name+"の『"+mv+"』！"; say(wWord.w+"、かけたね！");
+    setTimeout(newWordEnemy,1300);
+  } else { loadKana(); }
+};
+addEventListener("resize",function(){ if(document.getElementById("s-word").classList.contains("on")) loadKana(); });
+})();
+</script>
+</body>
+</html>
