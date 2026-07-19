@@ -1,0 +1,88 @@
+{
+ "meta": {
+  "period": "2023年",
+  "unit": "兆円（円換算・利用者データ）／比率=%",
+  "definition": "一般政府グロス債務ベースの概算（IMF WEO系の定義）。中央政府債務のみ等の別定義とは比較不可。",
+  "source": "user_sheet",
+  "crossCheck": "imf_weo",
+  "status": "概算・一次照合待ち",
+  "retrievedAt": "2026-07-19"
+ },
+ "records": {
+  "us": {
+   "gdpYenTrn": 3881,
+   "debtYenTrn": 4774,
+   "debtGdpPct": 123.0
+  },
+  "cn": {
+   "gdpYenTrn": 2492,
+   "debtYenTrn": 1994,
+   "debtGdpPct": 80.0
+  },
+  "de": {
+   "gdpYenTrn": 623,
+   "debtYenTrn": 396,
+   "debtGdpPct": 63.6
+  },
+  "jp": {
+   "gdpYenTrn": 588,
+   "debtYenTrn": 1470,
+   "debtGdpPct": 249.7
+  },
+  "in": {
+   "gdpYenTrn": 522,
+   "debtYenTrn": 423,
+   "debtGdpPct": 81.0
+  },
+  "gb": {
+   "gdpYenTrn": 503,
+   "debtYenTrn": 509,
+   "debtGdpPct": 101.3
+  },
+  "fr": {
+   "gdpYenTrn": 454,
+   "debtYenTrn": 503,
+   "debtGdpPct": 111.0
+  },
+  "it": {
+   "gdpYenTrn": 330,
+   "debtYenTrn": 434,
+   "debtGdpPct": 134.8
+  },
+  "ca": {
+   "gdpYenTrn": 312,
+   "debtYenTrn": 336,
+   "debtGdpPct": 107.5
+  },
+  "ru": {
+   "gdpYenTrn": 314,
+   "debtYenTrn": 56,
+   "debtGdpPct": 18.0
+  },
+  "kr": {
+   "gdpYenTrn": 241,
+   "debtYenTrn": 130,
+   "debtGdpPct": 54.0
+  },
+  "br": {
+   "gdpYenTrn": 304,
+   "debtYenTrn": 267,
+   "debtGdpPct": 88.0
+  },
+  "au": {
+   "gdpYenTrn": 238,
+   "debtYenTrn": 145,
+   "debtGdpPct": 61.0
+  },
+  "es": {
+   "gdpYenTrn": 224,
+   "debtYenTrn": 249,
+   "debtGdpPct": 111.0
+  },
+  "mx": {
+   "gdpYenTrn": 199,
+   "debtYenTrn": 107,
+   "debtGdpPct": 54.0
+  }
+ }
+}
