@@ -122,6 +122,9 @@ document.addEventListener("DOMContentLoaded", function () {
     "open-source.html", "live-build.html", "prompts.html",
     "automation.html", "note-drafts.html", "book.html", "youtube.html",
   ];
+  var LIBRARY_FAMILY = [
+    "daily-column.html", "ai-daily.html", "philosophy.html", "my-journal.html",
+  ];
 
   var nav = document.getElementById("siteNav");
   if (nav) {
@@ -129,6 +132,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var navHrefs = NAV.map(function (n) { return n[0]; });
     if (navHrefs.indexOf(current) === -1 && FAMILY.indexOf(current) !== -1) {
       activeTop = "open-source.html";
+    } else if (navHrefs.indexOf(current) === -1 && LIBRARY_FAMILY.indexOf(current) !== -1) {
+      activeTop = "daily-column.html";
     }
     nav.innerHTML = NAV.map(function (n) {
       var cls = n[0] === activeTop ? ' class="active"' : "";
