@@ -519,7 +519,7 @@ async function renderDatabaseEntries(blocks, token, logLines, label, autoPublish
     const metas = [];
     const fields = [];
     const journalDiagram = renderJournalDiagram(props);
-    const journalIllustration = renderApprovedVisual(props, {
+    const approvedJournalIllustration = renderApprovedVisual(props, {
       urlNames: ["挿絵URL"],
       licenseNames: ["挿絵ライセンス"],
       creditNames: ["挿絵クレジット"],
@@ -528,6 +528,10 @@ async function renderDatabaseEntries(blocks, token, logLines, label, autoPublish
       className: "journal-illustration",
       fallbackAlt: "ジャーナルに添えられた挿絵",
     });
+    // A supplied, licensed illustration takes precedence. Until one exists, give
+    // every journal entry a small category-aware notebook sketch instead of a
+    // blank visual area.
+    const journalIllustration = approvedJournalIllustration || renderJournalDoodle(props, titleText);
     let borderColor = "";
     for (const k of Object.keys(props)) {
       if (DAILY_SKIP_PROPS.includes(k)) continue;
@@ -743,10 +747,53 @@ function renderApprovedVisual(props, options) {
   return `<figure class="${escapeHtml(options.className)}">\n<img src="${escapeHtml(url)}" alt="${escapeHtml(alt)}" loading="lazy">\n<figcaption>${escapeHtml(credit)} / ${escapeHtml(license)}</figcaption>\n</figure>`;
 }
 
+function journalDoodleTheme(props, title) {
+  const text = [
+    title,
+    getPropertyText(props, ["内容", "本文"]),
+    getPropertyText(props, ["関連分野", "示唆の起点", "カテゴリ"]),
+  ].join(" ");
+
+  if (/社会実装|現場|運用|仕組み|連携/.test(text)) return { key: "field", label: "現場へつなぐ" };
+  if (/教育|学校|学び|学習|教員/.test(text)) return { key: "learning", label: "学びを育てる" };
+  if (/福祉|介護|障害|医療|ケア/.test(text)) return { key: "care", label: "支え合いを考える" };
+  if (/政治|行政|国会|制度|法律/.test(text)) return { key: "public", label: "制度を見つめる" };
+  if (/ビジネス|企業|仕事|雇用|経営/.test(text)) return { key: "work", label: "仕事を組み替える" };
+  if (/AI|データ|技術|DX|自動化/.test(text)) return { key: "technology", label: "技術を使いこなす" };
+  return { key: "insight", label: "気づきを育てる" };
+}
+
+function journalDoodleMark(key) {
+  switch (key) {
+    case "field":
+      return `<circle cx="154" cy="105" r="17"/><circle cx="246" cy="72" r="17"/><circle cx="288" cy="142" r="17"/><path d="M170 98 L229 78 M259 85 L278 127 M171 114 L273 137"/><path d="M129 163 C166 142 198 179 229 156 C255 137 284 164 314 147"/>`;
+    case "learning":
+      return `<path d="M158 78 C188 66 216 72 232 92 L232 158 C213 139 185 135 158 147 Z M232 92 C248 72 277 66 306 78 L306 147 C279 135 251 139 232 158"/><path d="M232 92 L232 158 M176 102 L214 96 M176 119 L214 113 M250 96 L288 102 M250 113 L288 119"/>`;
+    case "care":
+      return `<path d="M231 157 C193 128 166 108 166 81 C166 62 180 51 197 51 C213 51 225 61 231 73 C237 61 249 51 265 51 C282 51 296 62 296 81 C296 108 269 128 231 157 Z"/><path d="M142 154 C163 130 183 129 205 147 M320 154 C299 130 279 129 257 147"/>`;
+    case "public":
+      return `<path d="M161 86 L231 52 L301 86 Z M173 91 L173 147 M202 91 L202 147 M231 91 L231 147 M260 91 L260 147 M289 91 L289 147 M153 151 L309 151"/><path d="M141 171 L321 171"/>`;
+    case "work":
+      return `<path d="M164 155 L164 119 L192 119 L192 155 M207 155 L207 92 L235 92 L235 155 M250 155 L250 68 L278 68 L278 155"/><path d="M157 76 C190 91 222 72 252 78 C273 82 292 66 310 49"/><path d="M296 51 L312 48 L306 64"/>`;
+    case "technology":
+      return `<rect x="187" y="75" width="88" height="70" rx="14"/><circle cx="211" cy="101" r="6"/><circle cx="251" cy="101" r="6"/><path d="M203 124 L259 124 M231 75 L231 55 M187 98 L164 98 M275 98 L298 98 M199 145 L184 164 M263 145 L278 164"/><circle cx="231" cy="55" r="5"/><circle cx="164" cy="98" r="5"/><circle cx="298" cy="98" r="5"/>`;
+    default:
+      return `<path d="M231 55 C201 55 181 77 181 105 C181 126 192 140 207 150 L207 165 L255 165 L255 150 C270 140 281 126 281 105 C281 77 261 55 231 55 Z"/><path d="M214 180 L248 180 M219 191 L243 191 M231 35 L231 20 M177 56 L164 43 M285 56 L298 43 M166 111 L147 111 M296 111 L315 111"/>`;
+  }
+}
+
+function renderJournalDoodle(props, title) {
+  const theme = journalDoodleTheme(props, title);
+  const svg = `<svg viewBox="0 0 460 220" role="img" aria-label="${escapeHtml(theme.label)}を表す手帳風の線画" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${journalDoodleMark(theme.key)}<path d="M83 37 C98 27 112 40 126 31 M337 39 C352 27 367 42 381 31 M91 188 C116 177 138 196 163 184 M296 188 C322 177 343 196 370 184" stroke-width="2"/></g><g fill="currentColor"><circle cx="122" cy="67" r="3"/><circle cx="342" cy="152" r="3"/><path d="M356 89 l5 11 11 5 -11 5 -5 11 -5 -11 -11 -5 11 -5 z"/></g><text x="231" y="207" text-anchor="middle" font-size="15" font-family="sans-serif" fill="currentColor">${escapeHtml(theme.label)}</text></svg>`;
+  return `<figure class="journal-doodle journal-doodle--${theme.key}">${svg}<figcaption>手帳の余白メモ: 記事テーマから自動で添える小さな線画</figcaption></figure>`;
+}
+
 function renderJournalDiagram(props) {
   const type = getPropertyText(props, ["図解形式"]);
   const raw = getPropertyText(props, ["図解データ"]);
-  if (!type || !raw) return "";
+  if (!type || !raw) {
+    return `<section class="journal-diagram journal-diagram--flow journal-diagram--default" aria-label="示唆を考える流れ"><p class="journal-diagram__label">図解: 示唆を考える流れ</p><ol><li>変化を捉える</li><li>本当の課題を見る</li><li>小さく試す</li><li>問いを続ける</li></ol></section>`;
+  }
 
   const caption = `<p class="journal-diagram__label">図解: ${escapeHtml(type)}</p>`;
   if (type === "2軸マトリクス") {
