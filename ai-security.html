@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI時代のセキュリティと実行方法 | team AIC｛team AI circle｝</title>
+<meta name="description" content="AIエージェントを安全に動かすために、何を隠し何を出さないか。『家のゲーム機』のたとえと図解でやさしく解説します。">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://sy-08.github.io/team-aic/ai-security.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI時代のセキュリティと実行方法 | team AIC">
+<meta property="og:description" content="AIを安全に動かすために隠すべき情報と、安全な実行の考え方を図解で。">
+<meta property="og:url" content="https://sy-08.github.io/team-aic/ai-security.html">
+<meta property="og:site_name" content="team AIC">
+<link rel="icon" href="assets/img/ai-creative/km-logo-round.png">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/theme-sax-blue.css?v=7">
+<style>
+  :root{ --sec-green:#2cb696; }
+  .sec-wrap{max-width:820px;margin:0 auto;padding:0 18px;}
+  .sec-hero{padding:30px 0 8px;}
+  .sec-hero .eyebrow{display:inline-block;font-weight:800;font-size:.78rem;letter-spacing:.08em;color:#fff;background:var(--sec-green);border-radius:999px;padding:4px 12px;}
+  .sec-hero h1{font-size:clamp(1.7rem,4.6vw,2.5rem);margin:12px 0 8px;line-height:1.3;}
+  .sec-hero .lead{color:#4a5b6b;max-width:720px;line-height:1.9;}
+  .sec-card{background:#fff;border:1px solid #e2e9f1;border-left:5px solid var(--sec-green);border-radius:16px;padding:18px 20px;margin:16px 0;box-shadow:0 8px 22px rgba(30,70,120,.06);}
+  .sec-card h2{font-size:1.2rem;margin:0 0 8px;color:#1c3b33;}
+  .sec-card h3{font-size:1.02rem;margin:16px 0 6px;color:#1c548c;}
+  .sec-card p,.sec-card li{line-height:1.9;color:#33424f;}
+  .fig{margin:14px 0;text-align:center;background:#f4fbf8;border:1px solid #d5ede5;border-radius:14px;padding:14px;}
+  .fig svg{display:block;margin:0 auto;max-width:100%;height:auto;}
+  .fig figcaption{font-size:.86rem;color:#4a5b6b;margin-top:8px;line-height:1.7;}
+  table.sec-t{width:100%;border-collapse:collapse;font-size:.92rem;margin:8px 0;}
+  table.sec-t th{text-align:left;background:#eaf7f2;color:#1c3b33;padding:8px 10px;border-bottom:2px solid #cdeae0;font-size:.82rem;}
+  table.sec-t td{padding:9px 10px;border-bottom:1px solid #eef4f1;vertical-align:top;}
+  .badge{display:inline-block;font-size:.72rem;font-weight:800;border-radius:999px;padding:2px 9px;background:#fdecec;color:#c0392b;}
+  .ok{background:#e8f7f0;color:#1e7a54;}
+  .kanjo{background:linear-gradient(180deg,#eafaf4,#ffffff);border:1px solid #bfe6d7;border-radius:16px;padding:18px 20px;margin:16px 0;}
+  .kanjo .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-weight:800;color:#1c3b33;font-size:.9rem;margin-top:8px;}
+  .kanjo .flow span{background:#fff;border:1px solid #cdeae0;border-radius:10px;padding:7px 11px;}
+  .kanjo .flow .gate{background:var(--sec-green);color:#fff;border-color:var(--sec-green);}
+  .kanjo .flow b{color:#2cb696;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html"><span class="brand-mark">AIC</span><span class="brand-name">team AIC<small>{team AI circle}</small></span></a>
+    <nav class="site-nav" id="siteNav"></nav>
+    <button class="nav-toggle" id="navToggle" aria-label="メニュー" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<main>
+  <section class="sec-hero sec-wrap">
+    <span class="eyebrow">AI Creative 自由研究 / Security</span>
+    <h1>AI時代に気をつける<br>セキュリティと実行方法</h1>
+    <p class="lead">AIエージェント（Claudeなどが自分でPCやサーバーを操作する仕組み）を使うと、できることが一気に増えます。便利な一方で、「うっかり見せてはいけないものを外に出してしまう」危険も増えます。ここでは、<b>何を隠し、何を出さないか</b>を、<b>「家のゲーム機」のたとえ</b>と図解でやさしく整理します。</p>
+  </section>
+
+  <section class="sec-wrap">
+    <div class="sec-card">
+      <h2>たとえ：AIエージェント＝「家のゲーム機をネット越しに操作する」</h2>
+      <p>自宅のゲーム機（サーバーやPC）を、外出先のスマホからネット越しに動かす——AIエージェントはこれに似ています。とても便利ですが、<b>「家の場所」や「合鍵」を人に教えてしまうと、知らない誰かが勝手に入って操作できる</b>ようになります。だから「便利さ」と同じだけ「何を秘密にするか」が大事になります。</p>
+      <div class="fig">
+        <svg viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans JP',sans-serif">
+          <rect x="30" y="60" width="150" height="90" rx="12" fill="#eafaf4" stroke="#2cb696" stroke-width="2"/>
+          <text x="105" y="95" font-size="13" font-weight="700" fill="#1c3b33" text-anchor="middle">スマホ</text>
+          <text x="105" y="116" font-size="11" fill="#4a5b6b" text-anchor="middle">外から操作</text>
+          <path d="M182,105 L300,105" stroke="#2cb696" stroke-width="3" marker-end="url(#a)"/>
+          <text x="241" y="94" font-size="11" fill="#1e7a54" text-anchor="middle" font-weight="700">合鍵で接続</text>
+          <rect x="305" y="45" width="180" height="120" rx="14" fill="#fff" stroke="#2cb696" stroke-width="2"/>
+          <text x="395" y="80" font-size="14" font-weight="800" fill="#1c3b33" text-anchor="middle">家のゲーム機</text>
+          <text x="395" y="103" font-size="11" fill="#4a5b6b" text-anchor="middle">＝サーバー / PC</text>
+          <text x="395" y="123" font-size="11" fill="#4a5b6b" text-anchor="middle">AIがここを操作</text>
+          <rect x="315" y="132" width="70" height="22" rx="6" fill="#eafaf4" stroke="#bfe6d7"/><text x="350" y="147" font-size="10" fill="#1e7a54" text-anchor="middle">セーブデータ</text>
+          <rect x="405" y="132" width="70" height="22" rx="6" fill="#fdf4e0" stroke="#e6cf92"/><text x="440" y="147" font-size="10" fill="#9c7a1f" text-anchor="middle">合鍵・住所</text>
+          <path d="M487,105 L590,105" stroke="#c0392b" stroke-width="3" stroke-dasharray="6 5" marker-end="url(#r)"/>
+          <text x="538" y="94" font-size="11" fill="#c0392b" text-anchor="middle" font-weight="700">漏れると危険</text>
+          <rect x="595" y="70" width="100" height="70" rx="10" fill="#fdecec" stroke="#e0663a"/>
+          <text x="645" y="100" font-size="12" fill="#c0392b" text-anchor="middle" font-weight="700">知らない人</text>
+          <text x="645" y="120" font-size="10" fill="#c0392b" text-anchor="middle">勝手に操作</text>
+          <defs>
+            <marker id="a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2cb696"/></marker>
+            <marker id="r" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#c0392b"/></marker>
+          </defs>
+        </svg>
+        <figcaption>便利さ（外から操作）と危険（合鍵・住所が漏れる）は表裏一体。だから「秘密にするもの」を決めておく。</figcaption>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <h2>絶対に外に出さないもの（＝家の住所・合鍵）</h2>
+      <p>下の情報は、公開ページ・SNS・記事・スクリーンショットに<b>絶対に載せない</b>ようにします。「家のゲーム機」でいうと、それぞれ次のようなものにあたります。</p>
+      <table class="sec-t">
+        <tr><th>出さない情報</th><th>家のゲーム機でいうと</th><th>なぜ危険か</th></tr>
+        <tr><td>私設IPアドレス（192.168.系）</td><td>家の中の場所・住所</td><td>どこに何があるか分かり、狙われやすくなる</td></tr>
+        <tr><td>機器の固有デバイスID</td><td>ゲーム機の製造番号</td><td>その1台を特定・追跡される</td></tr>
+        <tr><td>接続用URL（claude.ai/code/session_ 等）</td><td>ゲーム機を遠隔操作する合鍵リンク</td><td>持った人がそのまま操作できてしまう</td></tr>
+        <tr><td>OSのユーザー名・ホスト名</td><td>家の表札・部屋の名前</td><td>個人や環境が特定される</td></tr>
+        <tr><td>内部パス（/home/ユーザー名 等）</td><td>棚のどこにセーブデータがあるか</td><td>攻撃の手がかり・個人特定になる</td></tr>
+        <tr><td>APIキー・トークン</td><td>アカウントの合鍵（パスワード）</td><td>一度出たら勝手に使われ、課金や乗っ取りに</td></tr>
+        <tr><td>生（未加工）のスクリーンショット</td><td>家の中を撮った写真</td><td>背景に住所・名前・鍵が写り込む</td></tr>
+      </table>
+      <p style="margin-top:10px">team AICでは、これらは<b>非公開ルールの正本</b>としてリポジトリの最重要箇所に置き、公開前に必ずチェックします。</p>
+    </div>
+
+    <div class="kanjo sec-wrap" style="padding-left:20px;padding-right:20px">
+      <h2 style="margin:0 0 4px;color:#1c3b33;font-size:1.2rem">仕組み：「公開前チェック（関所）」で自動的に安全にする</h2>
+      <p style="line-height:1.9;color:#33424f;margin:6px 0">人間が毎回目視するのは限界があります。そこで team AIC では、<b>公開の直前に「関所（かんしょ）」を1つ置き</b>、上の危険情報が残っていないかを自動でチェックします。見つかっても<b>止めずに、安全側へ自動で直して（伏字・マスク・クリーン図解に差し替え）そのまま公開</b>し、直した内容はログに残します。既存の「Notion→GitHub→ホームページ」の流れは壊しません。</p>
+      <div class="flow">
+        <span>Notionに記録</span><b>→</b><span>ビルド（HTML化）</span><b>→</b><span class="gate">🛡️ 関所チェック＋自動修復</span><b>→</b><span>GitHub Pagesで公開</span>
+      </div>
+      <p style="line-height:1.9;color:#33424f;margin:10px 0 0;font-size:.9rem">例：本文中の <code>192.168.10.5</code> → <code>192.168.x.x</code> に伏字化／画面写真の該当箇所を黒塗り／必要なら本物の画面ではなく「コマンド付きの再現ブロック」や「再現カード（クリーン図解）」に差し替え。</p>
+    </div>
+
+    <div class="sec-card">
+      <h2>安全にAIエージェントを動かす5つの心がけ</h2>
+      <ol>
+        <li><b>限られた場所で動かす</b>：家全体の鍵を渡すのではなく、「この部屋だけ」と決めた作業フォルダの中で動かす。<span class="badge ok">最小権限</span></li>
+        <li><b>合鍵はプロンプトに書かない</b>：APIキー・パスワードは会話や設定ファイルに直書きせず、環境変数や秘密情報（Secrets）として渡す。</li>
+        <li><b>外に出す前に必ず関所を通す</b>：公開物は人＋自動チェックの二重で、危険情報が残っていないか確認する。</li>
+        <li><b>写真は「再現」で見せる</b>：本物のスクショではなく、コマンド付きの再現ブロックやクリーン図解にすると、写り込み事故が起きない。</li>
+        <li><b>実体のない数字を飾らない</b>：フォロワー数・いいね等の「見栄えのための数字」やアカウント機能は載せない（正直版）。信頼は事実で作る。</li>
+      </ol>
+    </div>
+
+    <div class="sec-card" style="border-left-color:#c9a13a">
+      <h2>まとめ</h2>
+      <p>AIエージェントは「家のゲーム機を外から操作する」ような強力な仕組みです。<b>住所（IP）・合鍵（キー/トークン・接続URL）・部屋の名前（ユーザー名/パス）・家の中の写真（生スクショ）</b>を外に出さないこと。そして、うっかりを防ぐために<b>公開の直前に自動で直す「関所」</b>を置くこと。この2つで、便利さを保ったまま安全に発信できます。</p>
+    </div>
+
+    <div class="cta-row" style="margin:6px 0 30px">
+      <a class="btn btn-secondary" href="ai-creative.html">← AIクリエイティブ自由研究へ戻る</a>
+      <a class="btn btn-secondary" href="open-source.html">オープンソースの考え方へ</a>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-links"></div>
+    <p>&copy; <span id="year"></span> team AIC - team AI circle. Machida, Japan.</p>
+    <p class="footer-note">本サイトは実行中のプロジェクトの記録です。内容は随時更新されます。</p>
+  </div>
+</footer>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
