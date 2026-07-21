@@ -1,0 +1,58 @@
+name: Git/GitHub course daily publish
+
+on:
+  schedule:
+    # 08:10 JST. GitHubの作業履歴がない日も、次の完成原稿を1話公開する。
+    - cron: "10 23 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: git-github-course-daily-publish
+  cancel-in-progress: false
+
+jobs:
+  publish-next-lesson:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate the prepared course
+        run: node scripts/git-github-course-auto-update.mjs --check
+
+      - name: Publish the next lesson
+        run: node scripts/git-github-course-auto-update.mjs --publish-next
+
+      - name: Commit and push when a lesson was published
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No lesson remains to publish."
+            exit 0
+          fi
+
+          git config user.name "git-github-course-bot"
+          git config user.email "git-github-course-bot@users.noreply.github.com"
+          git add git-github.html docs/git-github-course/update-state.json
+          git commit -m "course: publish next Git/GitHub lesson"
+
+          for i in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin main; then
+              echo "Published successfully on attempt $i."
+              exit 0
+            fi
+            echo "Push attempt $i failed; retrying in 5 seconds."
+            sleep 5
+          done
+
+          echo "Could not publish after 5 attempts." >&2
+          exit 1
