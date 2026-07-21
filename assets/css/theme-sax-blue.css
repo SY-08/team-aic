@@ -513,6 +513,7 @@ main a:not(.btn):not(.brand):not(.site-nav a) {
   line-height: 2;
 }
 .journal-illustration,
+.journal-doodle,
 .article-visual { margin: 16px 0; }
 .journal-illustration img,
 .article-visual img {
@@ -524,12 +525,36 @@ main a:not(.btn):not(.brand):not(.site-nav a) {
   object-fit: cover;
 }
 .journal-illustration figcaption,
+.journal-doodle figcaption,
 .article-visual figcaption {
   margin-top: 7px;
   color: #687887;
   font-size: .76rem;
   line-height: 1.55;
 }
+.journal-doodle {
+  overflow: hidden;
+  padding: 8px 14px 10px;
+  border: 1px dashed rgba(73, 94, 113, .38);
+  border-radius: 7px;
+  background: rgba(255, 252, 239, .84);
+  color: #315a7a;
+  transform: rotate(-.35deg);
+}
+.journal-doodle svg {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  margin: 0 auto;
+}
+.journal-doodle--field { color: #4f7b63; }
+.journal-doodle--learning { color: #3a78a6; }
+.journal-doodle--care { color: #a66270; }
+.journal-doodle--public { color: #6a6683; }
+.journal-doodle--work { color: #9a7131; }
+.journal-doodle--technology { color: #2f7190; }
+.journal-doodle--insight { color: #8b6b36; }
 .journal-diagram {
   margin: 20px 0 4px;
   padding: 14px;
@@ -577,6 +602,10 @@ main a:not(.btn):not(.brand):not(.site-nav a) {
   color: #38566d;
   font-size: .88rem;
   line-height: 1.6;
+}
+.journal-diagram--default {
+  border-style: dashed;
+  background: rgba(255, 252, 239, .84);
 }
 .journal-diagram--compare dl {
   display: grid;
