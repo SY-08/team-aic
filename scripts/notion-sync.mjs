@@ -24,18 +24,6 @@ const NOTION_API_BASE = "https://api.notion.com/v1";
 const NOTION_VERSION = "2022-06-28";
 const MAX_LOG_ENTRIES = 20;
 
-// Journal illustrations are intentionally opt-in. A generic generated doodle
-// makes an article look finished without helping the reader understand it, so
-// only a supplied/approved image or a deliberately created editorial asset is
-// rendered.
-const JOURNAL_EDITORIAL_VISUALS = {
-  "2026-07-21-yahoo-morning-integrated-insight": {
-    src: "assets/img/journal/2026-07-21-social-implementation.png",
-    alt: "地域の関係者がAI導入後の運用と評価を一緒に検討している様子",
-    caption: "AI生成の編集イラスト。技術を導入するだけでなく、現場の運用と評価をともに設計する場面を表しています。",
-  },
-};
-
 // Auto-publish is intentionally opt-in per mapping. Only the four public
 // content databases requested for this workflow set autoPublish: true.
 const PAGE_MAP = [
@@ -531,7 +519,6 @@ async function renderDatabaseEntries(blocks, token, logLines, label, autoPublish
     const metas = [];
     const fields = [];
     const journalDiagram = renderJournalDiagram(props, titleText);
-    const journalIllustration = renderJournalIllustration(props);
     let borderColor = "";
     for (const k of Object.keys(props)) {
       if (DAILY_SKIP_PROPS.includes(k)) continue;
@@ -561,7 +548,7 @@ async function renderDatabaseEntries(blocks, token, logLines, label, autoPublish
       }
     }
     const styleAttr = borderColor ? ` style="border-left:7px solid ${borderColor}"` : "";
-    return `<article class="daily-report"${styleAttr}>\n<h3>${escapeHtml(titleText) || "（無題）"}</h3>\n<div class="dr-tags">${metas.join("")}</div>\n${journalIllustration}\n${fields.join("\n")}\n${journalDiagram}\n</article>`;
+    return `<article class="daily-report"${styleAttr}>\n<h3>${escapeHtml(titleText) || "（無題）"}</h3>\n<div class="dr-tags">${metas.join("")}</div>\n${journalDiagram}\n${fields.join("\n")}\n</article>`;
   });
 
   logLines.push(`- OK: ${label} → ${autoPublish ? "自動公開" : "公開状態=公開"}の記事 ${published.length} 件を出力`);
@@ -745,25 +732,6 @@ function renderApprovedVisual(props, options) {
 
   const alt = getPropertyText(props, options.altNames) || options.fallbackAlt;
   return `<figure class="${escapeHtml(options.className)}">\n<img src="${escapeHtml(url)}" alt="${escapeHtml(alt)}" loading="lazy">\n<figcaption>${escapeHtml(credit)} / ${escapeHtml(license)}</figcaption>\n</figure>`;
-}
-
-function renderJournalIllustration(props) {
-  const suppliedIllustration = renderApprovedVisual(props, {
-    urlNames: ["挿絵URL"],
-    licenseNames: ["挿絵ライセンス"],
-    creditNames: ["挿絵クレジット"],
-    approvalNames: ["挿絵利用確認"],
-    altNames: ["挿絵代替テキスト"],
-    className: "journal-illustration",
-    fallbackAlt: "ジャーナルに添えられた挿絵",
-  });
-  if (suppliedIllustration) return suppliedIllustration;
-
-  const key = getPropertyText(props, ["連動キー"]);
-  const editorialVisual = JOURNAL_EDITORIAL_VISUALS[key];
-  if (!editorialVisual) return "";
-
-  return `<figure class="journal-illustration journal-illustration--editorial">\n<img src="${escapeHtml(editorialVisual.src)}" alt="${escapeHtml(editorialVisual.alt)}" loading="lazy">\n<figcaption>${escapeHtml(editorialVisual.caption)}</figcaption>\n</figure>`;
 }
 
 function renderJournalDiagram(props, title) {

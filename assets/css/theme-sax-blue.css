@@ -512,36 +512,6 @@ main a:not(.btn):not(.brand):not(.site-nav a) {
   font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
   line-height: 2;
 }
-.journal-illustration,
-.article-visual { margin: 18px 0 22px; }
-.journal-illustration img,
-.article-visual img {
-  display: block;
-  width: 100%;
-  max-height: 520px;
-  border: 1px solid rgba(53, 82, 107, .18);
-  border-radius: 8px;
-  object-fit: cover;
-}
-.journal-illustration figcaption,
-.article-visual figcaption {
-  margin-top: 7px;
-  color: #687887;
-  font-size: .76rem;
-  line-height: 1.55;
-}
-.journal-illustration--editorial {
-  padding: 8px;
-  border: 1px solid #d4c39a;
-  border-radius: 5px;
-  background: #f5edda;
-  box-shadow: 2px 3px 0 rgba(112, 91, 54, .1);
-  transform: rotate(-.18deg);
-}
-.journal-illustration--editorial img {
-  border-radius: 2px;
-  aspect-ratio: 16 / 9;
-}
 .journal-diagram {
   margin: 24px 0 4px;
 }

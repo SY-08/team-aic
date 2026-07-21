@@ -311,6 +311,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   } catch (e) {}
 
+  // 私のジャーナルでは、Notionの図解を記事の入口に置く。
+  try {
+    if (current === "my-journal.html") {
+      document.querySelectorAll(".daily-report").forEach(function (report) {
+        var tags = report.querySelector(".dr-tags");
+        var diagram = report.querySelector(".journal-diagram");
+        if (tags && diagram) {
+          tags.insertAdjacentElement("afterend", diagram);
+        }
+      });
+    }
+  } catch (e) {}
+
   // プロフィールページ：横塚翔太の顔写真をページ見出しに差し込む
   //   （profile.html はNotion同期ページなので、写真はここ（main.js）から挿入して同期でも消えないようにする）
   try {
