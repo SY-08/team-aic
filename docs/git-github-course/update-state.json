@@ -1,0 +1,25 @@
+{
+  "courseTitle": "GitさんとGitHub氏のお勉強会",
+  "totalLessons": 18,
+  "publishedLessonIds": [1, 2, 3],
+  "lastPublishedLessonId": 3,
+  "lastPublishedAt": null,
+  "completedAt": null,
+  "history": [
+    {
+      "lessonId": 1,
+      "source": "初回公開済み",
+      "publishedAt": "initial"
+    },
+    {
+      "lessonId": 2,
+      "source": "初回公開済み",
+      "publishedAt": "initial"
+    },
+    {
+      "lessonId": 3,
+      "source": "初回公開済み",
+      "publishedAt": "initial"
+    }
+  ]
+}

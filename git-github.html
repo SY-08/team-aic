@@ -57,6 +57,18 @@
   .ep-figure{ margin:16px 0 4px; text-align:center; }
   .ep-figure svg{ display:block; margin:0 auto; }
   .ep-figure figcaption{ font-size:.86rem; color:#4a5b6b; margin-top:8px; line-height:1.6; }
+  .course-guide { border:1px solid #c9ddf0; border-radius:14px; background:#f7fbff; padding:18px 20px; margin:0 0 22px; }
+  .course-guide h3 { margin:0 0 8px; color:#1c548c; font-size:1rem; }
+  .course-guide p { margin:0; color:#4a5b6b; line-height:1.75; }
+  .course-guide details { margin-top:13px; }
+  .course-guide summary { cursor:pointer; color:#1c548c; font-weight:800; }
+  .course-guide ol { columns:2; gap:28px; padding-left:22px; margin:12px 0 0; color:#4a5b6b; line-height:1.75; }
+  .course-status { margin:22px 0 0; border-left:4px solid #2a6fb5; background:#f2f8ff; padding:12px 15px; color:#365c7d; line-height:1.7; }
+  .lesson-practice { margin:14px 0 0; padding:12px 14px; border:1px dashed #9fc2e4; border-radius:10px; background:rgba(255,255,255,.82); }
+  .lesson-practice strong { display:block; color:#1c548c; margin-bottom:5px; }
+  .lesson-practice ul { margin:5px 0 0; padding-left:1.2em; }
+  .lesson-note { margin:12px 0 0; color:#765d19; font-size:.9rem; line-height:1.7; }
+  @media (max-width: 680px) { .course-guide ol { columns:1; } }
 </style>
 </head>
 <body>
@@ -94,6 +106,33 @@
   <section class="section wrap" style="padding-top:0">
     <h2>お話一覧</h2>
     <p class="section-lead">上から順番に読むのがおすすめです。タイトルを押すと、その回のチャットが開きます。</p>
+    <div class="course-guide">
+      <h3>全18話で、GitとGitHubの基礎を一周します</h3>
+      <p>第1〜3話は公開済みです。第4話からは、GitHub Actionsが毎朝1話ずつ、自動で公開します。GitHub上の作業履歴がない日でも、用意した順番どおりに進むため、途中で止まりません。</p>
+      <details>
+        <summary>全18話の道のりを見る</summary>
+        <ol>
+          <li>Git＝作業のセーブ</li>
+          <li>コミット＝名前付きのセーブ</li>
+          <li>GitHub＝共有できる保管庫</li>
+          <li>リポジトリ＝プロジェクトの保管箱</li>
+          <li>手元とネットの二つの場所</li>
+          <li>git status＝まず現在地を見る</li>
+          <li>git add＝保存する変更を選ぶ</li>
+          <li>push＝GitHubへ届ける</li>
+          <li>fetch / pull＝最新を受け取る</li>
+          <li>ブランチ＝別の作業道</li>
+          <li>Pull Request＝変更の提案書</li>
+          <li>レビュー＝取り込む前の読み合わせ</li>
+          <li>Merge / Confirm merge＝公開版へ取り込む</li>
+          <li>コンフリクト＝違う変更を整える</li>
+          <li>GitHub Actions＝自動で動く係</li>
+          <li>GitHub Pages＝サイトを公開する場所</li>
+          <li>秘密情報を守る</li>
+          <li>最初の一周＝変更から公開まで</li>
+        </ol>
+      </details>
+    </div>
 
     <!-- notion-sync:content:start -->
 <details class="ep">
@@ -142,13 +181,19 @@
 </div>
 </details>
 <!-- notion-sync:content:end -->
+    <!-- git-github:auto-lessons:start -->
+    <!-- git-github:auto-lessons:end -->
 
     <div class="callout" style="margin-top:22px">
       <span class="emoji">🪄</span>
       <div>
-        このお勉強会は、これから少しずつ増やしていきます。横塚がClaudeやCodexと実際に使ったGit／GitHubの操作を、神様・Gitさん・GitHub氏の会話として、Notion経由で自動的にコラム化していく予定です。
+        このお勉強会は、GitHub Actionsが毎朝1話ずつ更新します。お話の原稿と公開順はGitHubで管理し、GitHubの作業履歴がない日でも、全18話を最後まで自動で届けます。
       </div>
     </div>
+
+    <!-- git-github:auto-status:start -->
+    <p class="course-status">公開済み：第1〜3話／次回：第4話「リポジトリ＝プロジェクトの保管箱」。GitHub Actionsが毎朝1話ずつ公開します。</p>
+    <!-- git-github:auto-status:end -->
 
     <div class="cta-row" style="margin-top:18px">
       <a class="btn btn-secondary" href="ai-creative.html">AIクリエイティブ自由研究へ戻る</a>
