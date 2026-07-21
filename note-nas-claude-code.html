@@ -81,82 +81,106 @@
   <p class="lead">この記事は2部構成です。前半「やさしい版」は<b>“家のゲーム機”のたとえだけ</b>で、専門用語なし。後半「くわしい版」は用語もそのままきっちり。好きな方からどうぞ。（※個人が特定される情報＝IPアドレスなどは伏字にしています）</p>
 
   <span class="partmark">🟢 やさしい版（はじめての人へ）</span>
-  <p>ぜんぶ「家に置いたゲーム機」でたとえます。</p>
+  <p>ぜんぶ「家に置いた<b>ゲーム機</b>」でたとえます。まず“たとえの約束”を先に見ると、迷わず読めます。</p>
+
+  <div class="repcard">
+    <div class="top">🎮 たとえの約束（対応表）<span class="win">この記事で統一</span></div>
+    <table>
+      <tr><td>NAS（家のサーバー）</td><td>🕹️ ゲーム機の<b>本体</b>（電源つけっぱOK・画面は普段つながない）</td></tr>
+      <tr><td>AI（Claude Code）</td><td>🎮 本体で動かす<b>ソフト</b>（ゲーム）</td></tr>
+      <tr><td>パソコン・スマホ</td><td>🕹️ <b>コントローラー</b>（遠くから操作する）</td></tr>
+      <tr><td>SSH接続</td><td>🔌 操作と電源を同時に送る<b>特殊ケーブル</b>（抜くとソフトも止まる）</td></tr>
+      <tr><td>tmux</td><td>🔋 本体に足す<b>消えない電源</b>（ケーブルを抜いても動き続ける）</td></tr>
+      <tr><td>作業フォルダ</td><td>💾 <b>セーブデータ</b>（manga-production）</td></tr>
+      <tr><td>Syncthing</td><td>🔁 本体と手元で<b>セーブを同じ中身にそろえる係</b></td></tr>
+    </table>
+  </div>
 
   <h2>今日やったこと（ひとことで）</h2>
-  <p>家に置いた“据え置きゲーム機”（NAS）の中でAIの相棒を動かし、スマホからも呼べるようにして、手元のパソコンと「セーブデータ（作業フォルダ）」を自動でそろえられるようにした一日。</p>
+  <p>家に置いた「ゲーム機の<b>本体</b>」（NAS）の中で<b>AIというソフト</b>を動かし、パソコンやスマホの<b>コントローラー</b>からいつでも呼べるようにして、手元の<b>セーブ</b>（作業フォルダ）と自動でそろえられるようにした一日。</p>
 
-  <h2>今日のゴール</h2>
+  <h2>今日のゴール（4つ）</h2>
   <ul>
-    <li>家のゲーム機に、AIの相棒を住まわせる</li>
-    <li>スマホからそのAIを呼べるようにする</li>
-    <li>コントローラーを抜いても、AIがゲーム機の中で動き続けるようにする</li>
-    <li>手元のパソコンと家のゲーム機で、作業フォルダ（セーブ）を自動でそろえる</li>
+    <li>ゲーム機の<b>本体</b>（NAS）に、<b>AIというソフト</b>を入れて動かす</li>
+    <li>パソコンとスマホ、どちらの<b>コントローラー</b>からもそのソフトを呼べるようにする</li>
+    <li><b>ケーブルを抜いても</b>、ソフトが本体の中で動き続けるようにする（＝本体に内蔵電源＝tmux）</li>
+    <li>本体と手元で、<b>セーブ</b>（作業フォルダ）を自動でそろえる</li>
   </ul>
 
   <div class="fig">
-    <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg">
-      <rect x="270" y="80" width="190" height="90" rx="16" fill="#2cb696" stroke="#249c80" stroke-width="2"/>
-      <text x="365" y="112" font-size="15" font-weight="900" fill="#fff" text-anchor="middle">🕹️ 家のゲーム機（NAS）</text>
-      <text x="365" y="136" font-size="12" fill="#eafaf4" text-anchor="middle">AIの相棒がずっと稼働</text>
-      <rect x="40" y="30" width="150" height="60" rx="12" fill="#eaf3fc" stroke="#12507a" stroke-width="2"/><text x="115" y="58" font-size="13" font-weight="700" fill="#12507a" text-anchor="middle">🎮 パソコン</text><text x="115" y="76" font-size="10.5" fill="#4a5b6b" text-anchor="middle">コントローラー</text>
-      <rect x="40" y="150" width="150" height="60" rx="12" fill="#eaf3fc" stroke="#12507a" stroke-width="2"/><text x="115" y="178" font-size="13" font-weight="700" fill="#12507a" text-anchor="middle">📱 スマホ</text><text x="115" y="196" font-size="10.5" fill="#4a5b6b" text-anchor="middle">コントローラー</text>
-      <path d="M192,62 C240,66 245,110 268,118" stroke="#12507a" stroke-width="2.4" fill="none" marker-end="url(#ar)"/>
-      <path d="M192,178 C240,172 245,140 268,132" stroke="#12507a" stroke-width="2.4" fill="none" marker-end="url(#ar)"/>
-      <text x="228" y="96" font-size="10.5" fill="#12507a" text-anchor="middle" font-weight="700">操作</text>
-      <rect x="540" y="95" width="150" height="60" rx="12" fill="#fdf0dc" stroke="#d98b3a" stroke-width="2"/><text x="615" y="121" font-size="13" font-weight="700" fill="#a86a1e" text-anchor="middle">💾 手元のセーブ</text><text x="615" y="140" font-size="10.5" fill="#a86a1e" text-anchor="middle">作業フォルダ</text>
-      <path d="M462,125 L536,125" stroke="#d98b3a" stroke-width="2.6" fill="none" marker-start="url(#aro)" marker-end="url(#aro)"/>
-      <text x="499" y="112" font-size="10.5" fill="#a86a1e" text-anchor="middle" font-weight="700">自動でそろえる</text>
+    <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg">
+      <rect x="255" y="80" width="210" height="100" rx="16" fill="#2cb696" stroke="#249c80" stroke-width="2"/>
+      <text x="360" y="110" font-size="15" font-weight="900" fill="#fff" text-anchor="middle">🕹️ ゲーム機の本体（NAS）</text>
+      <rect x="285" y="122" width="150" height="42" rx="10" fill="#d7f2e9" stroke="#bfe6d7"/><text x="360" y="140" font-size="12" fill="#175f4e" text-anchor="middle" font-weight="700">🎮 ソフト＝AI</text><text x="360" y="156" font-size="10" fill="#2f8f76" text-anchor="middle">本体の中で動く</text>
+      <rect x="40" y="34" width="150" height="58" rx="12" fill="#eaf3fc" stroke="#12507a" stroke-width="2"/><text x="115" y="60" font-size="12.5" font-weight="700" fill="#12507a" text-anchor="middle">🕹️ パソコン</text><text x="115" y="78" font-size="10.5" fill="#4a5b6b" text-anchor="middle">コントローラー</text>
+      <rect x="40" y="168" width="150" height="58" rx="12" fill="#eaf3fc" stroke="#12507a" stroke-width="2"/><text x="115" y="194" font-size="12.5" font-weight="700" fill="#12507a" text-anchor="middle">📱 スマホ</text><text x="115" y="212" font-size="10.5" fill="#4a5b6b" text-anchor="middle">コントローラー</text>
+      <path d="M192,63 C238,70 240,110 253,120" stroke="#12507a" stroke-width="2.4" fill="none" marker-end="url(#ar)"/>
+      <path d="M192,197 C238,190 240,150 253,140" stroke="#12507a" stroke-width="2.4" fill="none" marker-end="url(#ar)"/>
+      <text x="224" y="102" font-size="10.5" fill="#12507a" text-anchor="middle" font-weight="700">操作</text>
+      <rect x="545" y="105" width="150" height="60" rx="12" fill="#fdf0dc" stroke="#d98b3a" stroke-width="2"/><text x="620" y="131" font-size="12.5" font-weight="700" fill="#a86a1e" text-anchor="middle">💾 手元のセーブ</text><text x="620" y="150" font-size="10.5" fill="#a86a1e" text-anchor="middle">作業フォルダ</text>
+      <path d="M467,130 L541,130" stroke="#d98b3a" stroke-width="2.6" fill="none" marker-start="url(#aro)" marker-end="url(#aro)"/>
+      <text x="504" y="118" font-size="10.5" fill="#a86a1e" text-anchor="middle" font-weight="700">自動でそろえる</text>
       <defs>
         <marker id="ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#12507a"/></marker>
         <marker id="aro" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#d98b3a"/></marker>
       </defs>
     </svg>
-    <figcaption>パソコン・スマホは“コントローラー”。家のゲーム機（NAS）の中でAIが動き、手元のセーブと自動でそろう。</figcaption>
+    <figcaption>本体（NAS）の中で「ソフト＝AI」が動く。パソコン・スマホは“コントローラー”。手元のセーブとは自動でそろう。</figcaption>
   </div>
 
   <h2>やったこと（順番に）</h2>
   <ul>
-    <li>手元のパソコンを“コントローラー”にして、家のゲーム機に遠くからつなぐ。</li>
-    <li>そのゲーム機の中に、AIの相棒を住まわせる。</li>
-    <li>スマホも“コントローラー”として、同じAIを呼べるように設定。</li>
-    <li>コントローラーを抜いてもAIが動き続ける“留守番モード”をON。</li>
-    <li>手元のパソコンと家のゲーム機で、セーブ（作業フォルダ）を自動でそろえる係を用意。</li>
-    <li>実際にマンガ一式（約1.5GB）が、まるっと家のゲーム機にそろったのを確認。</li>
+    <li>パソコンを“コントローラー”にして、家のゲーム機の本体に遠くからつなぐ。</li>
+    <li>その本体の中に、AIというソフトを入れて動かす。</li>
+    <li>スマホも“コントローラー”として、同じソフトを呼べるように設定。</li>
+    <li>ケーブルを抜いてもソフトが動き続ける“本体の内蔵電源”（tmux）をON。</li>
+    <li>本体と手元で、セーブ（作業フォルダ）を自動でそろえる係を用意。</li>
+    <li>実際にマンガ一式（約1.5GB）が、まるっと本体にそろったのを確認。</li>
   </ul>
 
-  <h2>学び（家のゲーム機でたとえると）</h2>
-  <h3>① 家のゲーム機（NAS）とAI</h3>
-  <p>NASは「家に置いた、電源つけっぱなしのゲーム機」。その中でAIの相棒が動く。ずっと起きているから、いつでも働いてもらえる。手元のパソコンやスマホは“コントローラー”で、遠くからこのゲーム機を動かす。</p>
-  <h3>② なぜ最初は「線を抜くと止まる」のか</h3>
-  <p>最初、AIは“あなたのコントローラーの線”につながって動いている。しかもこの線は、操作だけでなく「動き続けるための電源」も一緒に送っている（＝電源つきのコントローラーケーブル）。だから線を抜くと、電源も一緒に切れて、AIも止まってしまう。ここまでが“最初の状態”。</p>
-  <h3>③ どうやって止まらないようにするか（留守番モード）</h3>
-  <p>そこで、ゲーム機本体に“自前の電源”を持たせる設定を入れる。電源が本体から出るようになるので、あなたが操作の線を抜いても、ゲーム機の中でAIは動き続ける。あとはPCのコントローラーでもスマホのコントローラーでも、好きなときに差して操作できる。これで“どこにいてもAIを呼べる”状態になる。</p>
+  <h2>なぜこの4つが大事か（3つのポイント）</h2>
+  <h3>① 本体はゲーム機、AIはソフト</h3>
+  <p>NASは家に置いた“ゲーム機の本体”。ずっと電源を入れておけるから、いつでも働いてもらえる。AI（Claude）は、その本体で動かす“ソフト”。本体には画面をつながないので、操作はパソコンやスマホという“コントローラー”を使って遠くから行う。</p>
+  <h3>② なぜ最初は「ケーブルを抜くと止まる」のか</h3>
+  <p>最初、コントローラー（パソコン）と本体をつなぐケーブル（SSH）は、“操作”だけでなく“電源”も一緒に送っている特殊なケーブル。だからケーブルを抜くと、電源も切れて、ソフト（AI）も止まってしまう。ここが最初の状態。</p>
+  <h3>③ 止まらないようにする＝本体に「内蔵電源」を足す（tmux）</h3>
+  <p>そこで、本体の中に“消えない電源”（tmux）を用意する。電源が本体から出るようになるので、コントローラーのケーブルを抜いても、ソフトは本体の中で動き続ける。あとはパソコンでもスマホでも、好きなときにコントローラーを差して操作すればいい。これで“どこにいてもAIを呼べる”状態になる。</p>
 
   <div class="fig">
     <svg viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg">
       <rect x="20" y="24" width="330" height="162" rx="14" fill="#fff1f1" stroke="#e26a6a" stroke-width="1.5"/>
-      <text x="185" y="50" font-size="13" font-weight="800" fill="#8a2b2b" text-anchor="middle">❌ ふつう：線を抜くと止まる</text>
-      <rect x="55" y="70" width="120" height="66" rx="10" fill="#fff" stroke="#e26a6a"/><text x="115" y="98" font-size="11" fill="#8a2b2b" text-anchor="middle">🎮 コントローラー</text><text x="115" y="116" font-size="10" fill="#b06a6a" text-anchor="middle">操作＋電源</text>
-      <path d="M177,103 L235,103" stroke="#e26a6a" stroke-width="2.4" marker-end="url(#rb)"/>
-      <rect x="238" y="70" width="92" height="66" rx="10" fill="#ffe3e3" stroke="#e26a6a"/><text x="284" y="106" font-size="12" fill="#8a2b2b" text-anchor="middle">🎯 AI</text>
-      <text x="185" y="172" font-size="10.5" fill="#8a2b2b" text-anchor="middle">線を抜く＝電源も切れる → AIも停止</text>
+      <text x="185" y="50" font-size="13" font-weight="800" fill="#8a2b2b" text-anchor="middle">❌ ふつう：ケーブルを抜くと止まる</text>
+      <rect x="45" y="70" width="140" height="66" rx="10" fill="#fff" stroke="#e26a6a"/><text x="115" y="96" font-size="11" fill="#8a2b2b" text-anchor="middle">🔌 ケーブル(SSH)</text><text x="115" y="114" font-size="10" fill="#b06a6a" text-anchor="middle">操作＋電源</text>
+      <path d="M187,103 L235,103" stroke="#e26a6a" stroke-width="2.4" marker-end="url(#rb)"/>
+      <rect x="238" y="70" width="94" height="66" rx="10" fill="#ffe3e3" stroke="#e26a6a"/><text x="285" y="99" font-size="12" fill="#8a2b2b" text-anchor="middle">🎮 ソフト</text><text x="285" y="117" font-size="10" fill="#b06a6a" text-anchor="middle">(AI)</text>
+      <text x="185" y="172" font-size="10.5" fill="#8a2b2b" text-anchor="middle">ケーブルを抜く＝電源も切れる → ソフトも停止</text>
       <rect x="370" y="24" width="330" height="162" rx="14" fill="#e7f7f2" stroke="#2cb696" stroke-width="1.5"/>
-      <text x="535" y="50" font-size="13" font-weight="800" fill="#175f4e" text-anchor="middle">✅ 留守番モード：抜いても動く</text>
-      <rect x="392" y="70" width="130" height="66" rx="10" fill="#fff" stroke="#2cb696"/><text x="457" y="94" font-size="11" fill="#175f4e" text-anchor="middle">🕹️ ゲーム機に</text><text x="457" y="112" font-size="11" fill="#175f4e" text-anchor="middle">電源を内蔵（tmux）</text>
-      <path d="M524,103 L578,103" stroke="#2cb696" stroke-width="2.4" marker-end="url(#gb)"/>
-      <rect x="581" y="70" width="98" height="66" rx="10" fill="#d7f2e9" stroke="#2cb696"/><text x="630" y="99" font-size="12" fill="#175f4e" text-anchor="middle">🎯 AI</text><text x="630" y="117" font-size="9.5" fill="#2f8f76" text-anchor="middle">動き続ける</text>
-      <text x="535" y="172" font-size="10.5" fill="#175f4e" text-anchor="middle">🎮📱 コントローラーは自由に抜き差し（操作だけ）</text>
+      <text x="535" y="50" font-size="13" font-weight="800" fill="#175f4e" text-anchor="middle">✅ 本体に内蔵電源(tmux)：抜いても動く</text>
+      <rect x="392" y="70" width="132" height="66" rx="10" fill="#fff" stroke="#2cb696"/><text x="458" y="94" font-size="11" fill="#175f4e" text-anchor="middle">🔋 本体に内蔵の</text><text x="458" y="112" font-size="11" fill="#175f4e" text-anchor="middle">消えない電源(tmux)</text>
+      <path d="M526,103 L578,103" stroke="#2cb696" stroke-width="2.4" marker-end="url(#gb)"/>
+      <rect x="581" y="70" width="98" height="66" rx="10" fill="#d7f2e9" stroke="#2cb696"/><text x="630" y="99" font-size="12" fill="#175f4e" text-anchor="middle">🎮 ソフト</text><text x="630" y="117" font-size="9.5" fill="#2f8f76" text-anchor="middle">動き続ける</text>
+      <text x="535" y="172" font-size="10.5" fill="#175f4e" text-anchor="middle">🕹️📱 コントローラーは自由に抜き差し（操作だけ）</text>
       <defs><marker id="rb" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e26a6a"/></marker><marker id="gb" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2cb696"/></marker></defs>
     </svg>
-    <figcaption>「操作」と「電源」を分けるのがコツ。電源を本体（tmux）に内蔵すれば、操作のケーブルは抜き差し自由。</figcaption>
+    <figcaption>コツは「操作」と「電源」を分けること。電源を本体（tmux）に内蔵すれば、操作のケーブルは抜き差し自由。</figcaption>
   </div>
 
-  <h3>④ 2台で同じセーブを共有する</h3>
-  <p>別のゲーム機（手元のパソコン）と家のゲーム機（NAS）で、「セーブデータ（作業フォルダ）」をいつも同じ状態にそろえる機能を入れた。片方でセーブを更新すると、もう片方にも自動で反映される。だから手元で描いても、家のゲーム機のAIが作っても、両方いつも同じ中身。</p>
+  <h3>④ 2つの場所でセーブをそろえる（Syncthing）</h3>
+  <p>本体（NAS）と手元（パソコン）で、“セーブデータ”（作業フォルダ）をいつも同じ中身にそろえる係（Syncthing）を入れた。片方でセーブを更新すると、もう片方にも自動で反映される。だから手元で描いても、本体のAIが作っても、両方いつも同じ中身。</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 720 150" xmlns="http://www.w3.org/2000/svg">
+      <rect x="40" y="45" width="210" height="60" rx="12" fill="#12507a" stroke="#0f2b46" stroke-width="2"/><text x="145" y="72" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">💾 手元のセーブ（PC）</text><text x="145" y="90" font-size="10.5" fill="#cfe0ee" text-anchor="middle">作業フォルダ</text>
+      <rect x="470" y="45" width="210" height="60" rx="12" fill="#2cb696" stroke="#249c80" stroke-width="2"/><text x="575" y="72" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">🕹️ 本体のセーブ（NAS）</text><text x="575" y="90" font-size="10.5" fill="#eafaf4" text-anchor="middle">AIもここを読み書き</text>
+      <path d="M252,75 L468,75" stroke="#2cb696" stroke-width="2.8" fill="none" marker-start="url(#s2)" marker-end="url(#s2)"/>
+      <text x="360" y="62" font-size="12" fill="#175f4e" text-anchor="middle" font-weight="800">Syncthingがいつも同じ中身にそろえる</text>
+      <defs><marker id="s2" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2cb696"/></marker></defs>
+    </svg>
+    <figcaption>本体（NAS）と手元（PC）のセーブを、Syncthingが自動で同じ中身にそろえる。</figcaption>
+  </div>
 
   <h2>今日の気持ち</h2>
-  <p>はじめての言葉ばかりだったけど、ぜんぶ“家のゲーム機”にたとえたら、驚くほどスッと分かった。むずかしいものは、知っているものに置きかえればいい。しかも、たとえが最後まで筋道どおりだと、途中で迷わず理解が進む——そう実感できた一日。</p>
+  <p>はじめての言葉ばかりだったけど、ぜんぶ“ゲーム機（本体＋ソフト＋コントローラー）”にたとえたら、驚くほどスッと分かった。むずかしいものは、知っているものに置きかえればいい。しかも、たとえが最後まで筋道どおりだと、途中で迷わず理解が進む——そう実感できた一日。</p>
 
   <span class="partmark d">🔧 くわしい版（用語そのまま）</span>
 
