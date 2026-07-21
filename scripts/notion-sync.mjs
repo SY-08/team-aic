@@ -734,7 +734,101 @@ function renderApprovedVisual(props, options) {
   return `<figure class="${escapeHtml(options.className)}">\n<img src="${escapeHtml(url)}" alt="${escapeHtml(alt)}" loading="lazy">\n<figcaption>${escapeHtml(credit)} / ${escapeHtml(license)}</figcaption>\n</figure>`;
 }
 
+function journalPlainText(value) {
+  return String(value || "")
+    .replace(/<br\s*\/?\s*>/gi, "\n")
+    .replace(/<\/?[^>]+>/g, " ")
+    .replace(/\r/g, "")
+    .replace(/\u00a0/g, " ")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n[ \t]+/g, "\n")
+    .trim();
+}
+
+function extractJournalSections(value) {
+  const text = journalPlainText(value);
+  const sections = new Map();
+  const pattern = /(?:^|\n)\s*(\d+)\.\s*([^：:\n]+)[：:]\s*([\s\S]*?)(?=\n\s*\d+\.\s*[^：:\n]+[：:]|$)/g;
+  let match;
+  while ((match = pattern.exec(text))) {
+    const number = Number(match[1]);
+    const heading = match[2].trim();
+    const detail = match[3].replace(/\s+/g, " ").trim();
+    if (Number.isFinite(number) && heading && detail) {
+      sections.set(number, { heading, detail });
+    }
+  }
+  return { text, sections };
+}
+
+function journalSentence(value) {
+  return String(value || "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(/(?<=[。！？])/)[0]
+    ?.trim() || "";
+}
+
+function uniqueJournalSteps(steps) {
+  const seen = new Set();
+  return steps.filter((step) => {
+    const key = `${step.heading}|${step.detail}`;
+    if (!step.detail || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function buildJournalDiagramFromContent(props) {
+  const { text, sections } = extractJournalSections(getPropertyText(props, ["内容", "本文", "要約"]));
+  if (!text) return null;
+
+  const numberedSteps = [
+    [1, "変化"],
+    [3, "ボトルネック"],
+    [7, "小さく試すこと"],
+    [8, "問い"],
+  ].map(([number, role]) => {
+    const section = sections.get(number);
+    return section ? { role, ...section } : null;
+  }).filter(Boolean);
+
+  if (numberedSteps.length >= 2) {
+    const experiment = sections.get(7)?.detail;
+    const question = sections.get(8)?.detail;
+    return {
+      steps: numberedSteps,
+      takeaway: experiment && question
+        ? `${experiment} この試行を通じて、「${question}」を確かめる。`
+        : numberedSteps.map((step) => step.detail).join(" "),
+    };
+  }
+
+  const paragraphs = text.split(/\n{2,}/).map((value) => value.trim()).filter(Boolean);
+  const questionMatch = text.match(/今後問い続けること[：:]?\s*([^\n]+)/);
+  const experimentMatch = text.match(/(TEAM AIC[^。！？\n]*[。！？])/);
+  const fallbackSteps = uniqueJournalSteps([
+    { role: "観察", heading: "この記事の観察", detail: journalSentence(paragraphs[0] || text) },
+    experimentMatch ? { role: "試すこと", heading: "TEAM AICで試すこと", detail: experimentMatch[1].trim() } : null,
+    questionMatch ? { role: "問い", heading: "今後問い続けること", detail: questionMatch[1].trim() } : null,
+    { role: "読み解き", heading: "記事から読む論点", detail: journalSentence(paragraphs.at(-1) || text) },
+  ].filter(Boolean));
+
+  if (!fallbackSteps.length) return null;
+  return {
+    steps: fallbackSteps.slice(0, 4),
+    takeaway: fallbackSteps.map((step) => step.detail).join(" "),
+  };
+}
+
+function renderJournalContentDiagram(title, diagram) {
+  return `<section class="journal-diagram journal-diagram--causal" data-journal-diagram-source="article" aria-label="記事の論点整理"><div class="journal-diagram__heading"><p class="journal-diagram__label">図解: 記事の論点整理</p><h4>${escapeHtml(title || "この記事から読み取る論点")}</h4></div><ol class="journal-causal-map">${diagram.steps.map((step, index) => `<li><span class="journal-causal-map__number">${String(index + 1).padStart(2, "0")}</span><span class="journal-causal-map__role">${escapeHtml(step.role)}</span><strong>${escapeHtml(step.heading)}</strong><p>${escapeHtml(step.detail)}</p></li>`).join("")}</ol><p class="journal-diagram__takeaway"><strong>読み取り</strong>${escapeHtml(diagram.takeaway)}</p></section>`;
+}
+
 function renderJournalDiagram(props, title) {
+  const contentDiagram = buildJournalDiagramFromContent(props);
+  if (contentDiagram) return renderJournalContentDiagram(title, contentDiagram);
+
   const type = getPropertyText(props, ["図解形式"]);
   const raw = getPropertyText(props, ["図解データ"]);
   if (!type || !raw) return "";
