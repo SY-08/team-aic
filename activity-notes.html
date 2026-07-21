@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>活動共有ノート | team AIC｛team AI circle｝</title>
+<meta name="description" content="team AICの活動共有ノート。完成品だけでなく、実行の過程・学び・つまずきを、実行しながら記事として公開していきます。">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://sy-08.github.io/team-aic/activity-notes.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="活動共有ノート | team AIC">
+<meta property="og:description" content="実行の過程をそのまま共有する、note風の活動ノート。">
+<meta property="og:site_name" content="team AIC">
+<link rel="icon" href="assets/img/ai-creative/km-logo-round.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{ --g:#2cb696; --gd:#249c80; --ink:#1b2b28; --tx:#33403c; --sub:#6b7684; --line:#e8eeeb; --bg:#ffffff; --soft:#f4f9f7; }
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:var(--bg);color:var(--tx);font-family:"Noto Sans JP",system-ui,sans-serif;line-height:1.8;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topbar .in{max-width:820px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:10px;}
+  .topbar .brand{font-weight:900;color:var(--ink);font-size:1rem;}
+  .topbar .brand b{color:var(--g);}
+  .topbar .sp{margin-left:auto;display:flex;gap:14px;font-size:.86rem;}
+  .topbar .sp a{color:var(--sub);font-weight:700;}
+  .hero{max-width:820px;margin:0 auto;padding:34px 20px 6px;}
+  .hero .eyebrow{display:inline-block;font-weight:800;font-size:.76rem;letter-spacing:.08em;color:#fff;background:var(--g);border-radius:999px;padding:4px 13px;}
+  .hero h1{font-size:clamp(1.7rem,4.8vw,2.4rem);margin:14px 0 8px;color:var(--ink);font-weight:900;letter-spacing:.01em;}
+  .hero p{color:var(--sub);max-width:640px;font-size:.98rem;line-height:1.9;}
+  .list{max-width:820px;margin:8px auto 40px;padding:0 20px;display:grid;gap:16px;}
+  .post{display:grid;grid-template-columns:150px 1fr;gap:18px;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:box-shadow .16s,transform .12s;}
+  .post:hover{box-shadow:0 12px 30px rgba(30,70,55,.10);transform:translateY(-1px);}
+  .post .thumb{background:linear-gradient(135deg,#2cb696,#8fe0cd);display:flex;align-items:center;justify-content:center;font-size:2.4rem;min-height:120px;}
+  .post .body{padding:16px 18px 16px 0;}
+  .post .date{font-size:.78rem;color:var(--sub);font-weight:700;}
+  .post h2{font-size:1.14rem;margin:5px 0 6px;color:var(--ink);font-weight:900;line-height:1.5;}
+  .post p{font-size:.9rem;color:#51605b;margin:0 0 10px;line-height:1.75;}
+  .post .chips{display:flex;gap:6px;flex-wrap:wrap;}
+  .chip{font-size:.72rem;font-weight:700;color:var(--gd);background:#eafaf4;border:1px solid #cdeae0;border-radius:999px;padding:2px 10px;}
+  .post .more{display:inline-block;margin-top:10px;color:var(--gd);font-weight:800;font-size:.86rem;}
+  .soon{max-width:820px;margin:0 auto 50px;padding:14px 20px;color:var(--sub);font-size:.9rem;text-align:center;}
+  footer{border-top:1px solid var(--line);color:var(--sub);font-size:.8rem;}
+  footer .in{max-width:820px;margin:0 auto;padding:20px;line-height:1.8;}
+  @media(max-width:560px){ .post{grid-template-columns:1fr;} .post .thumb{min-height:96px;} .post .body{padding:0 16px 16px;} }
+</style>
+</head>
+<body>
+<div class="topbar"><div class="in">
+  <a class="brand" href="index.html">team <b>AIC</b> ノート</a>
+  <div class="sp"><a href="ai-creative.html">自由研究</a><a href="open-source.html">オープンソース</a><a href="index.html">home</a></div>
+</div></div>
+
+<section class="hero">
+  <span class="eyebrow">活動共有ノート</span>
+  <h1>実行しながら、そのまま共有するノート。</h1>
+  <p>完成した結果だけでなく、考えたこと・つまずき・学びを、進めながら記事にして置いていきます。むずかしい話も「家のゲーム機」のたとえと図解でやさしく。※見栄えのための数字（フォロワー・スキ等）は載せない正直版です。</p>
+</section>
+
+<div class="list">
+  <a class="post" href="note-nas-claude-code.html">
+    <div class="thumb">🕹️🤖</div>
+    <div class="body">
+      <div class="date">2026年7月21日</div>
+      <h2>自宅NASにClaude Codeを導入して、スマホからも動かせる「創作基地」を作った日</h2>
+      <p>家の“据え置きゲーム機”（NAS）の中でAIを動かし、スマホからも呼べて、電源（操作の線）を抜いても動き続け、PCと作業フォルダを自動同期。SSH・tmux・Docker・Syncthingを、家のゲーム機のたとえと図解でやさしく。</p>
+      <div class="chips"><span class="chip">#自動化</span><span class="chip">#図解</span><span class="chip">#ジャーナリング</span></div>
+      <span class="more">読む →</span>
+    </div>
+  </a>
+</div>
+
+<p class="soon">記事はこれから少しずつ増えていきます。</p>
+
+<footer><div class="in">
+  team AIC｛team AI circle｝ ・ Machida, Japan. ／ 実行の過程をそのまま共有する活動ノート。機微情報（IP・デバイスID・接続URL等）は公開前に伏字にしています。<br>&copy; <span id="yr"></span> team AIC
+</div></footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</body>
+</html>

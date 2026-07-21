@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自宅NASにClaude Codeを導入・スマホ操作・常時起動・ローカル⇄NAS同期 | team AIC</title>
+<meta name="description" content="自宅のUGREEN NASにClaude Codeを入れ、スマホから操作、電源を切っても動き続ける常時起動、PCとNASの作業フォルダ自動同期までを『家のゲーム機』のたとえと図解でやさしく解説。">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://sy-08.github.io/team-aic/note-nas-claude-code.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自宅NASにClaude Codeを導入した日｜team AIC">
+<meta property="og:description" content="家のゲーム機のたとえで、NAS×AI×常時起動×同期をやさしく。">
+<meta property="og:site_name" content="team AIC">
+<link rel="icon" href="assets/img/ai-creative/km-logo-round.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{ --g:#2cb696; --gd:#249c80; --ink:#1b2b28; --tx:#33403c; --sub:#6b7684; --line:#e8eeeb; --bg:#ffffff; --soft:#f4f9f7; }
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:var(--bg);color:var(--tx);font-family:"Noto Sans JP",system-ui,sans-serif;line-height:1.9;-webkit-font-smoothing:antialiased;}
+  a{color:var(--gd);}
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topbar .in{max-width:760px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:10px;}
+  .topbar .brand{font-weight:900;color:var(--ink);text-decoration:none;font-size:1rem;letter-spacing:.01em;}
+  .topbar .brand b{color:var(--g);}
+  .topbar .sp{margin-left:auto;display:flex;gap:14px;font-size:.86rem;}
+  .topbar .sp a{color:var(--sub);text-decoration:none;font-weight:700;}
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px;}
+  .cover{background:linear-gradient(120deg,#e7f7f2,#f4f9f7);border-radius:20px;margin:22px auto 0;max-width:720px;padding:30px 26px;border:1px solid #dcefe8;}
+  .cover .chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
+  .chip{font-size:.74rem;font-weight:700;color:var(--gd);background:#dcf3ec;border:1px solid #bfe6d7;border-radius:999px;padding:3px 11px;}
+  h1.title{font-size:clamp(1.5rem,4.6vw,2.15rem);line-height:1.42;margin:4px 0 0;color:var(--ink);font-weight:900;}
+  .byline{display:flex;align-items:center;gap:10px;margin-top:16px;color:var(--sub);font-size:.9rem;}
+  .avatar{width:38px;height:38px;border-radius:50%;background:var(--g);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:.9rem;}
+  .byline b{color:var(--ink);}
+  article{padding:8px 0 20px;}
+  article h2{font-size:1.32rem;margin:34px 0 10px;color:var(--ink);font-weight:900;padding-bottom:8px;border-bottom:2px solid var(--soft);}
+  article h3{font-size:1.08rem;margin:24px 0 6px;color:var(--gd);font-weight:700;}
+  article p{margin:10px 0;}
+  article ul,article ol{padding-left:1.3em;}
+  article li{margin:6px 0;}
+  .lead{background:var(--soft);border-left:4px solid var(--g);border-radius:0 12px 12px 0;padding:12px 16px;color:#40514c;font-size:.96rem;}
+  .partmark{display:inline-block;font-size:.8rem;font-weight:800;color:#fff;background:var(--g);border-radius:999px;padding:3px 13px;margin:38px 0 2px;}
+  .partmark.d{background:#12507a;}
+  .term{background:#16211d;border-radius:14px;padding:14px 16px;margin:12px 0;overflow:auto;box-shadow:0 6px 18px rgba(20,40,35,.18);}
+  .term .h{color:#7fd4bd;font-size:.72rem;font-weight:700;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+  .term code{display:block;font-family:"SFMono-Regular",Consolas,Menlo,monospace;font-size:.86rem;line-height:1.85;color:#e6f2ee;white-space:pre;}
+  .term code .p{color:#5bd0aa;}
+  .term code .c{color:#8aa0a8;}
+  .repcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0;box-shadow:0 6px 16px rgba(30,60,50,.05);}
+  .repcard .top{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--ink);}
+  .repcard .win{font-size:.68rem;color:var(--sub);background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:1px 7px;margin-left:auto;}
+  .repcard table{width:100%;border-collapse:collapse;font-size:.86rem;margin-top:8px;}
+  .repcard td{padding:6px 6px;border-top:1px solid var(--soft);vertical-align:top;}
+  .repcard td:first-child{color:var(--sub);white-space:nowrap;width:38%;}
+  .fig{margin:16px 0;text-align:center;background:var(--soft);border:1px solid #dcefe8;border-radius:16px;padding:16px;}
+  .fig svg{display:block;margin:0 auto;max-width:100%;height:auto;}
+  .fig figcaption{font-size:.85rem;color:var(--sub);margin-top:8px;line-height:1.7;}
+  .note-emph{background:#fff8ec;border:1px solid #f0dcae;border-radius:12px;padding:12px 15px;font-size:.94rem;color:#6e5a2b;margin:12px 0;}
+  .backrow{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 40px;}
+  .backrow a{text-decoration:none;font-weight:700;font-size:.9rem;color:var(--gd);background:#eafaf4;border:1px solid #cdeae0;border-radius:10px;padding:9px 14px;}
+  footer{border-top:1px solid var(--line);color:var(--sub);font-size:.8rem;}
+  footer .in{max-width:720px;margin:0 auto;padding:20px;line-height:1.8;}
+  code.inl{background:var(--soft);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-family:Consolas,Menlo,monospace;font-size:.86em;color:#1c5f4e;}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="in">
+  <a class="brand" href="index.html">team <b>AIC</b> ノート</a>
+  <div class="sp"><a href="activity-notes.html">記事一覧</a><a href="ai-creative.html">自由研究</a><a href="index.html">home</a></div>
+</div></div>
+
+<div class="cover">
+  <div class="chips"><span class="chip">#自動化</span><span class="chip">#図解</span><span class="chip">#ジャーナリング</span></div>
+  <h1 class="title">自宅NASにClaude Codeを導入して、<br>スマホからも動かせる「創作基地」を作った日</h1>
+  <div class="byline"><span class="avatar">横</span><div>横塚 翔太　<b>team AIC</b><br><span style="font-size:.82rem">2026年7月21日</span></div></div>
+</div>
+
+<div class="wrap"><article>
+  <p class="lead">この記事は2部構成です。前半「やさしい版」は<b>“家のゲーム機”のたとえだけ</b>で、専門用語なし。後半「くわしい版」は用語もそのままきっちり。好きな方からどうぞ。（※個人が特定される情報＝IPアドレスなどは伏字にしています）</p>
+
+  <span class="partmark">🟢 やさしい版（はじめての人へ）</span>
+  <p>ぜんぶ「家に置いたゲーム機」でたとえます。</p>
+
+  <h2>今日やったこと（ひとことで）</h2>
+  <p>家に置いた“据え置きゲーム機”（NAS）の中でAIの相棒を動かし、スマホからも呼べるようにして、手元のパソコンと「セーブデータ（作業フォルダ）」を自動でそろえられるようにした一日。</p>
+
+  <h2>今日のゴール</h2>
+  <ul>
+    <li>家のゲーム機に、AIの相棒を住まわせる</li>
+    <li>スマホからそのAIを呼べるようにする</li>
+    <li>コントローラーを抜いても、AIがゲーム機の中で動き続けるようにする</li>
+    <li>手元のパソコンと家のゲーム機で、作業フォルダ（セーブ）を自動でそろえる</li>
+  </ul>
+
+  <div class="fig">
+    <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg">
+      <rect x="270" y="80" width="190" height="90" rx="16" fill="#2cb696" stroke="#249c80" stroke-width="2"/>
+      <text x="365" y="112" font-size="15" font-weight="900" fill="#fff" text-anchor="middle">🕹️ 家のゲーム機（NAS）</text>
+      <text x="365" y="136" font-size="12" fill="#eafaf4" text-anchor="middle">AIの相棒がずっと稼働</text>
+      <rect x="40" y="30" width="150" height="60" rx="12" fill="#eaf3fc" stroke="#12507a" stroke-width="2"/><text x="115" y="58" font-size="13" font-weight="700" fill="#12507a" text-anchor="middle">🎮 パソコン</text><text x="115" y="76" font-size="10.5" fill="#4a5b6b" text-anchor="middle">コントローラー</text>
+      <rect x="40" y="150" width="150" height="60" rx="12" fill="#eaf3fc" stroke="#12507a" stroke-width="2"/><text x="115" y="178" font-size="13" font-weight="700" fill="#12507a" text-anchor="middle">📱 スマホ</text><text x="115" y="196" font-size="10.5" fill="#4a5b6b" text-anchor="middle">コントローラー</text>
+      <path d="M192,62 C240,66 245,110 268,118" stroke="#12507a" stroke-width="2.4" fill="none" marker-end="url(#ar)"/>
+      <path d="M192,178 C240,172 245,140 268,132" stroke="#12507a" stroke-width="2.4" fill="none" marker-end="url(#ar)"/>
+      <text x="228" y="96" font-size="10.5" fill="#12507a" text-anchor="middle" font-weight="700">操作</text>
+      <rect x="540" y="95" width="150" height="60" rx="12" fill="#fdf0dc" stroke="#d98b3a" stroke-width="2"/><text x="615" y="121" font-size="13" font-weight="700" fill="#a86a1e" text-anchor="middle">💾 手元のセーブ</text><text x="615" y="140" font-size="10.5" fill="#a86a1e" text-anchor="middle">作業フォルダ</text>
+      <path d="M462,125 L536,125" stroke="#d98b3a" stroke-width="2.6" fill="none" marker-start="url(#aro)" marker-end="url(#aro)"/>
+      <text x="499" y="112" font-size="10.5" fill="#a86a1e" text-anchor="middle" font-weight="700">自動でそろえる</text>
+      <defs>
+        <marker id="ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#12507a"/></marker>
+        <marker id="aro" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#d98b3a"/></marker>
+      </defs>
+    </svg>
+    <figcaption>パソコン・スマホは“コントローラー”。家のゲーム機（NAS）の中でAIが動き、手元のセーブと自動でそろう。</figcaption>
+  </div>
+
+  <h2>やったこと（順番に）</h2>
+  <ul>
+    <li>手元のパソコンを“コントローラー”にして、家のゲーム機に遠くからつなぐ。</li>
+    <li>そのゲーム機の中に、AIの相棒を住まわせる。</li>
+    <li>スマホも“コントローラー”として、同じAIを呼べるように設定。</li>
+    <li>コントローラーを抜いてもAIが動き続ける“留守番モード”をON。</li>
+    <li>手元のパソコンと家のゲーム機で、セーブ（作業フォルダ）を自動でそろえる係を用意。</li>
+    <li>実際にマンガ一式（約1.5GB）が、まるっと家のゲーム機にそろったのを確認。</li>
+  </ul>
+
+  <h2>学び（家のゲーム機でたとえると）</h2>
+  <h3>① 家のゲーム機（NAS）とAI</h3>
+  <p>NASは「家に置いた、電源つけっぱなしのゲーム機」。その中でAIの相棒が動く。ずっと起きているから、いつでも働いてもらえる。手元のパソコンやスマホは“コントローラー”で、遠くからこのゲーム機を動かす。</p>
+  <h3>② なぜ最初は「線を抜くと止まる」のか</h3>
+  <p>最初、AIは“あなたのコントローラーの線”につながって動いている。しかもこの線は、操作だけでなく「動き続けるための電源」も一緒に送っている（＝電源つきのコントローラーケーブル）。だから線を抜くと、電源も一緒に切れて、AIも止まってしまう。ここまでが“最初の状態”。</p>
+  <h3>③ どうやって止まらないようにするか（留守番モード）</h3>
+  <p>そこで、ゲーム機本体に“自前の電源”を持たせる設定を入れる。電源が本体から出るようになるので、あなたが操作の線を抜いても、ゲーム機の中でAIは動き続ける。あとはPCのコントローラーでもスマホのコントローラーでも、好きなときに差して操作できる。これで“どこにいてもAIを呼べる”状態になる。</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg">
+      <rect x="20" y="24" width="330" height="162" rx="14" fill="#fff1f1" stroke="#e26a6a" stroke-width="1.5"/>
+      <text x="185" y="50" font-size="13" font-weight="800" fill="#8a2b2b" text-anchor="middle">❌ ふつう：線を抜くと止まる</text>
+      <rect x="55" y="70" width="120" height="66" rx="10" fill="#fff" stroke="#e26a6a"/><text x="115" y="98" font-size="11" fill="#8a2b2b" text-anchor="middle">🎮 コントローラー</text><text x="115" y="116" font-size="10" fill="#b06a6a" text-anchor="middle">操作＋電源</text>
+      <path d="M177,103 L235,103" stroke="#e26a6a" stroke-width="2.4" marker-end="url(#rb)"/>
+      <rect x="238" y="70" width="92" height="66" rx="10" fill="#ffe3e3" stroke="#e26a6a"/><text x="284" y="106" font-size="12" fill="#8a2b2b" text-anchor="middle">🎯 AI</text>
+      <text x="185" y="172" font-size="10.5" fill="#8a2b2b" text-anchor="middle">線を抜く＝電源も切れる → AIも停止</text>
+      <rect x="370" y="24" width="330" height="162" rx="14" fill="#e7f7f2" stroke="#2cb696" stroke-width="1.5"/>
+      <text x="535" y="50" font-size="13" font-weight="800" fill="#175f4e" text-anchor="middle">✅ 留守番モード：抜いても動く</text>
+      <rect x="392" y="70" width="130" height="66" rx="10" fill="#fff" stroke="#2cb696"/><text x="457" y="94" font-size="11" fill="#175f4e" text-anchor="middle">🕹️ ゲーム機に</text><text x="457" y="112" font-size="11" fill="#175f4e" text-anchor="middle">電源を内蔵（tmux）</text>
+      <path d="M524,103 L578,103" stroke="#2cb696" stroke-width="2.4" marker-end="url(#gb)"/>
+      <rect x="581" y="70" width="98" height="66" rx="10" fill="#d7f2e9" stroke="#2cb696"/><text x="630" y="99" font-size="12" fill="#175f4e" text-anchor="middle">🎯 AI</text><text x="630" y="117" font-size="9.5" fill="#2f8f76" text-anchor="middle">動き続ける</text>
+      <text x="535" y="172" font-size="10.5" fill="#175f4e" text-anchor="middle">🎮📱 コントローラーは自由に抜き差し（操作だけ）</text>
+      <defs><marker id="rb" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e26a6a"/></marker><marker id="gb" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2cb696"/></marker></defs>
+    </svg>
+    <figcaption>「操作」と「電源」を分けるのがコツ。電源を本体（tmux）に内蔵すれば、操作のケーブルは抜き差し自由。</figcaption>
+  </div>
+
+  <h3>④ 2台で同じセーブを共有する</h3>
+  <p>別のゲーム機（手元のパソコン）と家のゲーム機（NAS）で、「セーブデータ（作業フォルダ）」をいつも同じ状態にそろえる機能を入れた。片方でセーブを更新すると、もう片方にも自動で反映される。だから手元で描いても、家のゲーム機のAIが作っても、両方いつも同じ中身。</p>
+
+  <h2>今日の気持ち</h2>
+  <p>はじめての言葉ばかりだったけど、ぜんぶ“家のゲーム機”にたとえたら、驚くほどスッと分かった。むずかしいものは、知っているものに置きかえればいい。しかも、たとえが最後まで筋道どおりだと、途中で迷わず理解が進む——そう実感できた一日。</p>
+
+  <span class="partmark d">🔧 くわしい版（用語そのまま）</span>
+
+  <h2>今日の活動テーマ</h2>
+  <ul>
+    <li>自宅のUGREEN NAS（DXPシリーズ）に、Claude Code（ターミナルで動くAIの相棒）を導入する</li>
+    <li>スマホのClaudeアプリから、NAS上のClaudeを操作できるようにする</li>
+    <li>PCを閉じてもNAS上のClaudeが動き続ける「常時起動」を用意する</li>
+    <li>ローカルPCとNASで、マンガ制作フォルダ（<code class="inl">manga-production</code>）を自動同期する土台をつくる</li>
+  </ul>
+
+  <h2>今日やったこと（コマンド再現）</h2>
+  <p>実際の端末画面ではなく、打ったコマンドを<b>再現ブロック</b>で載せます（生のスクリーンショットは使いません）。</p>
+
+  <h3>1. NASにSSH接続</h3>
+  <p>WindowsのPowerShellから、モニターの無いNASにログインして遠隔操作します。住所は家の中だけで通じる私設IP（<code class="inl">192.168.x.x</code> の形）。</p>
+  <div class="term"><div class="h">▷ PowerShell（PC）</div><code><span class="p">PS&gt;</span> ssh 管理者アカウント@192.168.x.x
+<span class="c"># NAS（Linux）のシェルに入る</span></code></div>
+
+  <h3>2. Claude Code の導入</h3>
+  <p>NAS上でインストールし、置き場所 <code class="inl">~/.local/bin</code> をPATHに登録。<code class="inl">claude</code> の一言で起動できるように。</p>
+  <div class="term"><div class="h">▷ NAS（Linux シェル）</div><code><span class="p">$</span> curl -fsSL https://claude.ai/install.sh | bash
+<span class="p">$</span> export PATH="$HOME/.local/bin:$PATH"
+<span class="p">$</span> claude   <span class="c"># AIの相棒を起動</span></code></div>
+
+  <h3>3. スマホから操作（Remote Control）</h3>
+  <p>Claude内で <code class="inl">/remote-control</code> を有効化。スマホのClaudeアプリから同じセッションに接続でき、処理はNASで動き続けます（スマホは“リモコン”）。</p>
+  <div class="term"><div class="h">▷ Claude 内</div><code><span class="p">&gt;</span> /remote-control
+<span class="c"># 表示された案内からスマホのClaudeアプリで接続（接続URLは非公開）</span></code></div>
+
+  <h3>4. 常時起動（tmux）</h3>
+  <p>SSHは「操作＋電源の2in1ケーブル」。抜くとClaudeも止まります。tmux（＝NASの中に据えた“消えない電源コンセント”）の中でClaudeを動かすと、<b>電源（tmux）と操作（PC・スマホ）が分離</b>され、ケーブルを抜いてもNAS上で動き続けます。</p>
+  <div class="term"><div class="h">▷ NAS（Linux シェル）</div><code><span class="p">$</span> sudo apt install tmux
+<span class="p">$</span> tmux            <span class="c"># 消えない電源の中へ</span>
+<span class="p">$</span> claude          <span class="c"># この中で起動 → 切っても動き続ける</span>
+<span class="c"># 離脱: Ctrl+b → d ／ 復帰: tmux attach</span></code></div>
+
+  <h3>5. Docker＋Syncthing（NAS側）</h3>
+  <p>UGOSのDockerで <code class="inl">linuxserver/syncthing</code> のコンテナを作成。GUI（管理画面）で設定しました。</p>
+  <div class="repcard">
+    <div class="top">🐳 Docker コンテナ設定<span class="win">UGOS 管理画面（GUI）再現</span></div>
+    <table>
+      <tr><td>イメージ</td><td>linuxserver/syncthing</td></tr>
+      <tr><td>権限（PUID/PGID）</td><td>自分のユーザーIDに合わせる</td></tr>
+      <tr><td>ポート</td><td>8384（設定画面） / 22000（同期通信）</td></tr>
+      <tr><td>フォルダ</td><td>/data（同期対象を割り当て）</td></tr>
+    </table>
+  </div>
+
+  <h3>6. Syncthing（PC側）とペアリング</h3>
+  <div class="term"><div class="h">▷ PowerShell（PC）</div><code><span class="p">PS&gt;</span> winget install GermanCoding.SyncTrayzor</code></div>
+  <div class="repcard">
+    <div class="top">🔗 デバイス ペアリング＆同期<span class="win">Syncthing 画面（GUI）再現</span></div>
+    <table>
+      <tr><td>ペア方法</td><td>お互いのデバイスIDを登録（IDは非公開）</td></tr>
+      <tr><td>同期フォルダ</td><td>manga-production（約1.5GB／3,245ファイル）</td></tr>
+      <tr><td>結果</td><td>PC→NAS へ完全同期。両方「最新」を確認</td></tr>
+    </table>
+  </div>
+  <div class="note-emph">おまけ：ソフトを入れる“調達係（パッケージマネージャー）”は、Linuxは <code class="inl">apt</code>、Windowsは <code class="inl">winget</code>。OSが違うだけで役割は同じ（<code class="inl">sudo apt install 〇〇</code> ≒ <code class="inl">winget install 〇〇</code>）。</div>
+
+  <h2>学び（やさしい説明）</h2>
+  <h3>NASとは</h3>
+  <p>NAS（Network Attached Storage）は「家に置く、電源をつけっぱなしにできる小さなサーバー」。据え置きゲーム機の本体のようなもので、モニターやキーボードを普段つながないため、操作は別のPCから遠隔で行う。SSH（Secure Shell）は「離れたコンピュータのコマンド画面を、暗号化された安全な回線で操作する方法」。住所は家の中だけで通じる私設IP（<code class="inl">192.168.x.x</code> の形）。</p>
+  <h3>CLIとGUIとは</h3>
+  <ul>
+    <li><b>CLI</b>（Command Line Interface）：黒い画面に文字でコマンドを打つ方式。細かい作業・自動化に強い。今日のNAS操作やインストールはこれ。</li>
+    <li><b>GUI</b>（Graphical User Interface）：アイコンやボタンをマウスで操作する方式。直感的。UGOSの管理画面やSyncthingの設定画面はこれ。</li>
+    <li>同じNASを「文字で命令する（CLI）」か「画面を触る（GUI）」かの違い。今日は両方を行き来した。</li>
+  </ul>
+  <h3>SyncthingとDocker</h3>
+  <p>Syncthingは「2台の機器のフォルダを、つねに同じ中身に保ち続ける自動同期ツール」。クラウドを介さず、機器同士が直接・暗号化してやり取りする（P2P）。片方が壊れても、もう片方に全データが残る。NASは常時稼働、PCは起動したときに差分を自動で追いつく。Dockerは「本体を汚さず、隔離した小部屋（コンテナ）でアプリを動かす仕組み」。イメージ（設計図＝カセット）からコンテナ（動く実体）を起動し、ポート（番号付き端子）で設定画面(8384)やデータ(22000)につなぐ。コンテナのPUID/PGIDを自分の番号にそろえ、同期ファイルをNAS上のClaudeも読み書きできるようにした。</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 720 170" xmlns="http://www.w3.org/2000/svg">
+      <rect x="40" y="55" width="200" height="60" rx="12" fill="#12507a" stroke="#0f2b46" stroke-width="2"/><text x="140" y="82" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">💻 PC</text><text x="140" y="100" font-size="10.5" fill="#cfe0ee" text-anchor="middle">manga-production</text>
+      <rect x="480" y="35" width="200" height="60" rx="12" fill="#2cb696" stroke="#249c80" stroke-width="2"/><text x="580" y="62" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">🕹️ NAS：/data（docker）</text><text x="580" y="80" font-size="10.5" fill="#eafaf4" text-anchor="middle">常時稼働</text>
+      <rect x="480" y="110" width="200" height="46" rx="12" fill="#d7f2e9" stroke="#2cb696"/><text x="580" y="138" font-size="12" fill="#175f4e" text-anchor="middle">🤖 NAS上のClaudeが読み書き</text>
+      <path d="M242,85 L478,68" stroke="#2cb696" stroke-width="2.6" fill="none" marker-start="url(#s2)" marker-end="url(#s2)"/>
+      <text x="360" y="66" font-size="11" fill="#175f4e" text-anchor="middle" font-weight="700">Syncthingが自動同期</text>
+      <path d="M580,95 L580,110" stroke="#2cb696" stroke-width="2.4" marker-end="url(#s2)"/>
+      <defs><marker id="s2" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2cb696"/></marker></defs>
+    </svg>
+    <figcaption>PCとNASの作業フォルダをSyncthingが自動でそろえ、NAS上のClaudeが同じファイルを読み書きする。</figcaption>
+  </div>
+
+  <h2>活動を経てのジャーナリング</h2>
+  <p>今日はNASという「自分の基地」を、遠隔から一日かけて立ち上げた。いちばん腑に落ちたのは、<b>『操作』と『電源』を分ける</b>という発想だった。SSHという1本のケーブルに操作と電源が同居していると、線を抜いた瞬間にすべて止まる。でもtmuxで電源を内蔵にしてしまえば、操作する側（PC・スマホ）は好きに抜き挿しできる。これは道具の話にとどまらず、『動かし続けたいものは、目の前の自分の接続に依存させない』という設計の考え方そのものだと感じた。</p>
+  <p>もうひとつは、比喩で理解することの強さ。ただし、比喩は最後まで筋道が通っていて初めて効く。NASを据え置きゲーム機、SSHを電源つきコントローラーケーブル、tmuxを本体内蔵の電源……と一貫して翻訳したら、初めての概念が驚くほどすっと入った。分からないものは、知っているものに置き換えればいい。</p>
+  <p>最後に、今日作ったのは『マンガを描く仕組み』そのものではなく『どこにいても創作を進められる土台』だということ。家のNASが常に起き、スマホから指示でき、PCと自動で同期する——場所と時間の制約が一枚はがれた感覚がある。次は、この土台の上で実際に4話を動かしてみたい。</p>
+
+  <h2>次にやること</h2>
+  <ul>
+    <li>スマホからNASのClaudeで「4話の原案」を作成させる（未作成分）。</li>
+    <li>予約実行の設計：Claude Codeの <code class="inl">/loop</code>、またはNASの cron ＋ <code class="inl">claude -p</code>（ヘッドレス）で、決めた時間にNASのClaudeを自動実行できるようにする。</li>
+    <li>PC側Syncthingに任意でGUIパスワードを設定する。</li>
+    <li>「オープンソース」ページに、今日の子トピック（NASとは／CLIとGUIとは／Syncthingとは）を再利用リンクで並べる。</li>
+  </ul>
+
+  <div class="backrow">
+    <a href="activity-notes.html">← 活動共有ノート（記事一覧）へ</a>
+    <a href="ai-security.html">🛡️ 安全な実行の考え方</a>
+    <a href="ai-creative.html">AIクリエイティブ自由研究へ</a>
+  </div>
+</article></div>
+
+<footer><div class="in">
+  team AIC｛team AI circle｝ ・ Machida, Japan. ／ この記事は実行の過程をそのまま共有する「活動共有ノート」の一つです。個人が特定される情報（IP・デバイスID・接続URL等）は伏字にしています。<br>&copy; <span id="yr"></span> team AIC
+</div></footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</body>
+</html>
