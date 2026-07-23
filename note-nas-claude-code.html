@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>自宅NASにClaude Codeを導入・スマホ操作・常時起動・ローカル⇄NAS同期 | team AIC</title>
-<meta name="description" content="自宅のUGREEN NASにClaude Codeを入れ、スマホから操作、電源を切っても動き続ける常時起動、PCとNASの作業フォルダ自動同期までを『家のゲーム機』のたとえと図解でやさしく解説。">
+<meta name="description" content="自宅のUGREEN NASにClaude Codeを入れ、スマホから操作、接続を切っても動き続ける常時起動、PCとNASの作業フォルダ自動同期までを、身近な言葉と図解でやさしく解説。NASは画面のないPC、から始めます。">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://sy-08.github.io/team-aic/note-nas-claude-code.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自宅NASにClaude Codeを導入した日｜team AIC">
-<meta property="og:description" content="家のゲーム機のたとえで、NAS×AI×常時起動×同期をやさしく。">
+<meta property="og:description" content="NAS＝画面のないPC、から始めてAI×常時起動×同期を一つずつやさしく。">
 <meta property="og:site_name" content="team AIC">
 <link rel="icon" href="assets/img/ai-creative/km-logo-round.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,109 +78,85 @@
 </div>
 
 <div class="wrap"><article>
-  <p class="lead">この記事は2部構成です。前半「やさしい版」は<b>“家のゲーム機”のたとえだけ</b>で、専門用語なし。後半「くわしい版」は用語もそのままきっちり。好きな方からどうぞ。（※個人が特定される情報＝IPアドレスなどは伏字にしています）</p>
+  <p class="lead">この記事は2部構成です。前半「やさしい版」は<b>身近な言葉だけ</b>で、専門用語が出てくるたびに「＝かんたんに言うと何か」をそのつど添えます。後半「くわしい版」は用語もそのままきっちり。好きな方からどうぞ。（※個人が特定される情報＝IPアドレスなどは伏字にしています）</p>
 
   <span class="partmark">🟢 やさしい版（はじめての人へ）</span>
-  <p>ぜんぶ「家に置いた<b>ゲーム機</b>」でたとえます。まず“たとえの約束”を先に見ると、迷わず読めます。</p>
-
-  <div class="repcard">
-    <div class="top">🎮 たとえの約束（対応表）<span class="win">この記事で統一</span></div>
-    <table>
-      <tr><td>NAS（家のサーバー）</td><td>🕹️ ゲーム機の<b>本体</b>（電源つけっぱOK・画面は普段つながない）</td></tr>
-      <tr><td>AI（Claude Code）</td><td>🎮 本体で動かす<b>ソフト</b>（ゲーム）</td></tr>
-      <tr><td>パソコン・スマホ</td><td>🕹️ <b>コントローラー</b>（遠くから操作する）</td></tr>
-      <tr><td>SSH接続</td><td>🔌 操作と電源を同時に送る<b>特殊ケーブル</b>（抜くとソフトも止まる）</td></tr>
-      <tr><td>tmux</td><td>🔋 本体に足す<b>消えない電源</b>（ケーブルを抜いても動き続ける）</td></tr>
-      <tr><td>作業フォルダ</td><td>💾 <b>セーブデータ</b>（manga-production）</td></tr>
-      <tr><td>Syncthing</td><td>🔁 本体と手元で<b>セーブを同じ中身にそろえる係</b></td></tr>
-    </table>
-  </div>
+  <p>専門用語は出てきますが、<b>覚える必要はありません</b>。出てきた順に「＝かんたんに言うと何か」を、そのつど付けていきます。</p>
 
   <h2>今日やったこと（ひとことで）</h2>
-  <p>家に置いた「ゲーム機の<b>本体</b>」（NAS）の中で<b>AIというソフト</b>を動かし、パソコンやスマホの<b>コントローラー</b>からいつでも呼べるようにして、手元の<b>セーブ</b>（作業フォルダ）と自動でそろえられるようにした一日。</p>
+  <p>家に置いた<b>「画面もキーボードも無いPC」（NAS）</b>の中でAIを動かし、手元のパソコンやスマホから遠隔で呼び出せるようにして、<b>接続を切ってもAIが動き続け</b>、さらに両方のパソコンでファイルが自動で同じにそろう——そんな“創作の基地”を作った一日です。</p>
 
-  <h2>今日のゴール（4つ）</h2>
-  <ul>
-    <li>ゲーム機の<b>本体</b>（NAS）に、<b>AIというソフト</b>を入れて動かす</li>
-    <li>パソコンとスマホ、どちらの<b>コントローラー</b>からもそのソフトを呼べるようにする</li>
-    <li><b>ケーブルを抜いても</b>、ソフトが本体の中で動き続けるようにする（＝本体に内蔵電源＝tmux）</li>
-    <li>本体と手元で、<b>セーブ</b>（作業フォルダ）を自動でそろえる</li>
-  </ul>
+  <h2>まず「NAS」って何？</h2>
+  <p><b>NAS＝マウスもキーボードもモニターも無いPC</b>、と思ってください。中身はふつうのパソコンと同じですが、画面をつながずに<b>電源を入れっぱなしにしておける“留守番PC”</b>です。だから、置きっぱなしで働かせておけます。</p>
+
+  <h2>画面もキーボードも無いのに、どうやって動かすの？</h2>
+  <p>ここで <b>SSH</b> という接続方法を使います。</p>
+  <p><b>SSHとは、かんたんに言うと</b>「手元のパソコンから、離れたPC（NAS）の操作画面を呼び出して、安全な回線でそのまま操作できる仕組み」です。手元のパソコンで打った命令が、そのままNASに届いて動くので、画面が無くても困りません。</p>
 
   <div class="fig">
-    <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg">
-      <rect x="255" y="80" width="210" height="100" rx="16" fill="#2cb696" stroke="#249c80" stroke-width="2"/>
-      <text x="360" y="110" font-size="15" font-weight="900" fill="#fff" text-anchor="middle">🕹️ ゲーム機の本体（NAS）</text>
-      <rect x="285" y="122" width="150" height="42" rx="10" fill="#d7f2e9" stroke="#bfe6d7"/><text x="360" y="140" font-size="12" fill="#175f4e" text-anchor="middle" font-weight="700">🎮 ソフト＝AI</text><text x="360" y="156" font-size="10" fill="#2f8f76" text-anchor="middle">本体の中で動く</text>
-      <rect x="40" y="34" width="150" height="58" rx="12" fill="#eaf3fc" stroke="#12507a" stroke-width="2"/><text x="115" y="60" font-size="12.5" font-weight="700" fill="#12507a" text-anchor="middle">🕹️ パソコン</text><text x="115" y="78" font-size="10.5" fill="#4a5b6b" text-anchor="middle">コントローラー</text>
-      <rect x="40" y="168" width="150" height="58" rx="12" fill="#eaf3fc" stroke="#12507a" stroke-width="2"/><text x="115" y="194" font-size="12.5" font-weight="700" fill="#12507a" text-anchor="middle">📱 スマホ</text><text x="115" y="212" font-size="10.5" fill="#4a5b6b" text-anchor="middle">コントローラー</text>
-      <path d="M192,63 C238,70 240,110 253,120" stroke="#12507a" stroke-width="2.4" fill="none" marker-end="url(#ar)"/>
-      <path d="M192,197 C238,190 240,150 253,140" stroke="#12507a" stroke-width="2.4" fill="none" marker-end="url(#ar)"/>
-      <text x="224" y="102" font-size="10.5" fill="#12507a" text-anchor="middle" font-weight="700">操作</text>
-      <rect x="545" y="105" width="150" height="60" rx="12" fill="#fdf0dc" stroke="#d98b3a" stroke-width="2"/><text x="620" y="131" font-size="12.5" font-weight="700" fill="#a86a1e" text-anchor="middle">💾 手元のセーブ</text><text x="620" y="150" font-size="10.5" fill="#a86a1e" text-anchor="middle">作業フォルダ</text>
-      <path d="M467,130 L541,130" stroke="#d98b3a" stroke-width="2.6" fill="none" marker-start="url(#aro)" marker-end="url(#aro)"/>
-      <text x="504" y="118" font-size="10.5" fill="#a86a1e" text-anchor="middle" font-weight="700">自動でそろえる</text>
-      <defs>
-        <marker id="ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#12507a"/></marker>
-        <marker id="aro" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#d98b3a"/></marker>
-      </defs>
+    <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg">
+      <rect x="30" y="34" width="180" height="60" rx="12" fill="#eaf3fc" stroke="#12507a" stroke-width="2"/><text x="120" y="60" font-size="12.5" font-weight="700" fill="#12507a" text-anchor="middle">🖥️ 手元のパソコン</text><text x="120" y="79" font-size="10.5" fill="#4a5b6b" text-anchor="middle">命令を打つ</text>
+      <rect x="30" y="126" width="180" height="60" rx="12" fill="#eaf3fc" stroke="#12507a" stroke-width="2"/><text x="120" y="152" font-size="12.5" font-weight="700" fill="#12507a" text-anchor="middle">📱 スマホ</text><text x="120" y="171" font-size="10.5" fill="#4a5b6b" text-anchor="middle">外からも操作</text>
+      <rect x="392" y="40" width="298" height="140" rx="16" fill="#2cb696" stroke="#249c80" stroke-width="2"/>
+      <text x="541" y="70" font-size="14.5" font-weight="900" fill="#fff" text-anchor="middle">🖥️ NAS（画面のないPC）</text>
+      <text x="541" y="90" font-size="10.5" fill="#eafaf4" text-anchor="middle">電源つけっぱなしの“留守番PC”</text>
+      <rect x="422" y="104" width="238" height="58" rx="10" fill="#d7f2e9" stroke="#bfe6d7"/><text x="541" y="129" font-size="12" fill="#175f4e" text-anchor="middle" font-weight="700">🤖 AI（Claude Code）が動く</text><text x="541" y="147" font-size="10" fill="#2f8f76" text-anchor="middle">留守番PCの中で</text>
+      <path d="M212,64 C300,72 305,100 390,104" stroke="#12507a" stroke-width="2.4" fill="none" marker-end="url(#ar)"/>
+      <path d="M212,156 C300,148 305,120 390,116" stroke="#12507a" stroke-width="2.4" fill="none" marker-end="url(#ar)"/>
+      <rect x="250" y="95" width="132" height="28" rx="8" fill="#fff" stroke="#12507a"/><text x="316" y="114" font-size="11" fill="#12507a" text-anchor="middle" font-weight="800">SSH（遠隔操作）</text>
+      <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#12507a"/></marker></defs>
     </svg>
-    <figcaption>本体（NAS）の中で「ソフト＝AI」が動く。パソコン・スマホは“コントローラー”。手元のセーブとは自動でそろう。</figcaption>
+    <figcaption>NASは画面のないPC。手元のパソコンやスマホから「SSH」でつないで遠隔操作し、その中でAIを動かす。</figcaption>
   </div>
 
-  <h2>やったこと（順番に）</h2>
-  <ul>
-    <li>パソコンを“コントローラー”にして、家のゲーム機の本体に遠くからつなぐ。</li>
-    <li>その本体の中に、AIというソフトを入れて動かす。</li>
-    <li>スマホも“コントローラー”として、同じソフトを呼べるように設定。</li>
-    <li>ケーブルを抜いてもソフトが動き続ける“本体の内蔵電源”（tmux）をON。</li>
-    <li>本体と手元で、セーブ（作業フォルダ）を自動でそろえる係を用意。</li>
-    <li>実際にマンガ一式（約1.5GB）が、まるっと本体にそろったのを確認。</li>
-  </ul>
+  <h2>その留守番PC（NAS）に、AI（Claude Code）を入れる</h2>
+  <p>SSHでNASにつないだら、その中に<b>AIの相棒（Claude Code）をインストール</b>。これで、手元のパソコンからNASの中のAIに指示を出せるようになりました。</p>
 
-  <h2>なぜこの4つが大事か（3つのポイント）</h2>
-  <h3>① 本体はゲーム機、AIはソフト</h3>
-  <p>NASは家に置いた“ゲーム機の本体”。ずっと電源を入れておけるから、いつでも働いてもらえる。AI（Claude）は、その本体で動かす“ソフト”。本体には画面をつながないので、操作はパソコンやスマホという“コントローラー”を使って遠くから行う。</p>
-  <h3>② なぜ最初は「ケーブルを抜くと止まる」のか</h3>
-  <p>最初、コントローラー（パソコン）と本体をつなぐケーブル（SSH）は、“操作”だけでなく“電源”も一緒に送っている特殊なケーブル。だからケーブルを抜くと、電源も切れて、ソフト（AI）も止まってしまう。ここが最初の状態。</p>
-  <h3>③ 止まらないようにする＝本体に「内蔵電源」を足す（tmux）</h3>
-  <p>そこで、本体の中に“消えない電源”（tmux）を用意する。電源が本体から出るようになるので、コントローラーのケーブルを抜いても、ソフトは本体の中で動き続ける。あとはパソコンでもスマホでも、好きなときにコントローラーを差して操作すればいい。これで“どこにいてもAIを呼べる”状態になる。</p>
+  <h2>スマホからも呼べるようにした</h2>
+  <p>さらに、スマホのアプリからも同じAIにつなげるよう設定。<b>外出先からでも、NASの中のAIに指示を出せます</b>。</p>
+
+  <h2>最初の“困った”：接続を切ると、AIも止まる</h2>
+  <p>ところがSSHの接続には、<b>「切ると、その中で動かしていた作業も一緒に終わってしまう」</b>という性質があります。パソコンを閉じたり接続を切ったりすると、せっかく動かしていたAIの作業まで止まってしまう。これが最初の状態でした。</p>
+
+  <h2>解決：tmux で「閉じても消えない作業部屋」をNASの中に作る</h2>
+  <p><b>tmuxとは、かんたんに言うと</b>「NASの中に、<b>“閉じても消えない作業部屋”</b>を用意しておく仕組み」です。AIをこの作業部屋の中で動かすと、手元の接続を切っても、部屋の中では作業が続きます。次に手元のパソコンやスマホからつなぎ直せば、その作業部屋の続きがそのまま出てきます。</p>
+  <p>コツは<b>「操作する接続」と「作業そのもの」を切り離すこと</b>。作業をNAS側の作業部屋（tmux）に置いておけば、手元の接続は好きなときに切ったりつないだりできます。これで“どこにいてもAIを呼べる”状態になりました。</p>
 
   <div class="fig">
     <svg viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg">
       <rect x="20" y="24" width="330" height="162" rx="14" fill="#fff1f1" stroke="#e26a6a" stroke-width="1.5"/>
-      <text x="185" y="50" font-size="13" font-weight="800" fill="#8a2b2b" text-anchor="middle">❌ ふつう：ケーブルを抜くと止まる</text>
-      <rect x="45" y="70" width="140" height="66" rx="10" fill="#fff" stroke="#e26a6a"/><text x="115" y="96" font-size="11" fill="#8a2b2b" text-anchor="middle">🔌 ケーブル(SSH)</text><text x="115" y="114" font-size="10" fill="#b06a6a" text-anchor="middle">操作＋電源</text>
-      <path d="M187,103 L235,103" stroke="#e26a6a" stroke-width="2.4" marker-end="url(#rb)"/>
-      <rect x="238" y="70" width="94" height="66" rx="10" fill="#ffe3e3" stroke="#e26a6a"/><text x="285" y="99" font-size="12" fill="#8a2b2b" text-anchor="middle">🎮 ソフト</text><text x="285" y="117" font-size="10" fill="#b06a6a" text-anchor="middle">(AI)</text>
-      <text x="185" y="172" font-size="10.5" fill="#8a2b2b" text-anchor="middle">ケーブルを抜く＝電源も切れる → ソフトも停止</text>
+      <text x="185" y="50" font-size="13" font-weight="800" fill="#8a2b2b" text-anchor="middle">❌ ふつう：接続を切ると止まる</text>
+      <rect x="42" y="72" width="120" height="64" rx="10" fill="#fff" stroke="#e26a6a"/><text x="102" y="100" font-size="11.5" fill="#8a2b2b" text-anchor="middle">🖥️ 手元PC</text><text x="102" y="118" font-size="10" fill="#b06a6a" text-anchor="middle">接続中</text>
+      <path d="M164,104 L206,104" stroke="#e26a6a" stroke-width="2.4" marker-end="url(#rb)"/>
+      <rect x="208" y="72" width="122" height="64" rx="10" fill="#ffe3e3" stroke="#e26a6a"/><text x="269" y="100" font-size="11.5" fill="#8a2b2b" text-anchor="middle">🤖 AIの作業</text><text x="269" y="118" font-size="10" fill="#b06a6a" text-anchor="middle">接続の中で動く</text>
+      <text x="185" y="172" font-size="10.5" fill="#8a2b2b" text-anchor="middle">接続を切る＝AIの作業も終了</text>
       <rect x="370" y="24" width="330" height="162" rx="14" fill="#e7f7f2" stroke="#2cb696" stroke-width="1.5"/>
-      <text x="535" y="50" font-size="13" font-weight="800" fill="#175f4e" text-anchor="middle">✅ 本体に内蔵電源(tmux)：抜いても動く</text>
-      <rect x="392" y="70" width="132" height="66" rx="10" fill="#fff" stroke="#2cb696"/><text x="458" y="94" font-size="11" fill="#175f4e" text-anchor="middle">🔋 本体に内蔵の</text><text x="458" y="112" font-size="11" fill="#175f4e" text-anchor="middle">消えない電源(tmux)</text>
-      <path d="M526,103 L578,103" stroke="#2cb696" stroke-width="2.4" marker-end="url(#gb)"/>
-      <rect x="581" y="70" width="98" height="66" rx="10" fill="#d7f2e9" stroke="#2cb696"/><text x="630" y="99" font-size="12" fill="#175f4e" text-anchor="middle">🎮 ソフト</text><text x="630" y="117" font-size="9.5" fill="#2f8f76" text-anchor="middle">動き続ける</text>
-      <text x="535" y="172" font-size="10.5" fill="#175f4e" text-anchor="middle">🕹️📱 コントローラーは自由に抜き差し（操作だけ）</text>
+      <text x="535" y="50" font-size="13" font-weight="800" fill="#175f4e" text-anchor="middle">✅ tmux：接続を切っても続く</text>
+      <rect x="470" y="66" width="208" height="72" rx="10" fill="#fff" stroke="#2cb696"/><text x="574" y="92" font-size="11" fill="#175f4e" text-anchor="middle">🏠 NASの中の作業部屋(tmux)</text><text x="574" y="118" font-size="11.5" fill="#175f4e" text-anchor="middle" font-weight="700">🤖 AIは動き続ける</text>
+      <rect x="386" y="80" width="76" height="46" rx="10" fill="#eafaf4" stroke="#2cb696"/><text x="424" y="101" font-size="12" fill="#175f4e" text-anchor="middle">🖥️📱</text><text x="424" y="117" font-size="8.5" fill="#2f8f76" text-anchor="middle">着脱自由</text>
+      <path d="M462,103 L468,103" stroke="#2cb696" stroke-width="2.4" stroke-dasharray="3 3" marker-end="url(#gb)"/>
+      <text x="535" y="172" font-size="10.5" fill="#175f4e" text-anchor="middle">作業はNAS側に残る → 手元は切ってもOK</text>
       <defs><marker id="rb" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e26a6a"/></marker><marker id="gb" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2cb696"/></marker></defs>
     </svg>
-    <figcaption>コツは「操作」と「電源」を分けること。電源を本体（tmux）に内蔵すれば、操作のケーブルは抜き差し自由。</figcaption>
+    <figcaption>コツは「操作する接続」と「作業そのもの」を分けること。作業をNASの作業部屋(tmux)に置けば、手元の接続は抜き差し自由。</figcaption>
   </div>
 
-  <h3>④ 2つの場所でセーブをそろえる（Syncthing）</h3>
-  <p>本体（NAS）と手元（パソコン）で、“セーブデータ”（作業フォルダ）をいつも同じ中身にそろえる係（Syncthing）を入れた。片方でセーブを更新すると、もう片方にも自動で反映される。だから手元で描いても、本体のAIが作っても、両方いつも同じ中身。</p>
+  <h2>手元のPCとNASで、ファイルを自動でそっくり同じに（Syncthing）</h2>
+  <p><b>Syncthingとは、かんたんに言うと</b>「2台のパソコンの“決めたフォルダ”を、つねに同じ中身に保ってくれる自動同期の仕組み」です。手元のパソコンで描いても、NASの中のAIが書いても、両方のフォルダがいつも同じ中身になります。実際にマンガ一式（約1.5GB）が、まるっと両方でそろいました。</p>
 
   <div class="fig">
     <svg viewBox="0 0 720 150" xmlns="http://www.w3.org/2000/svg">
-      <rect x="40" y="45" width="210" height="60" rx="12" fill="#12507a" stroke="#0f2b46" stroke-width="2"/><text x="145" y="72" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">💾 手元のセーブ（PC）</text><text x="145" y="90" font-size="10.5" fill="#cfe0ee" text-anchor="middle">作業フォルダ</text>
-      <rect x="470" y="45" width="210" height="60" rx="12" fill="#2cb696" stroke="#249c80" stroke-width="2"/><text x="575" y="72" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">🕹️ 本体のセーブ（NAS）</text><text x="575" y="90" font-size="10.5" fill="#eafaf4" text-anchor="middle">AIもここを読み書き</text>
+      <rect x="40" y="45" width="210" height="60" rx="12" fill="#12507a" stroke="#0f2b46" stroke-width="2"/><text x="145" y="72" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">🖥️ 手元のパソコン</text><text x="145" y="90" font-size="10" fill="#cfe0ee" text-anchor="middle">フォルダ manga-production</text>
+      <rect x="470" y="45" width="210" height="60" rx="12" fill="#2cb696" stroke="#249c80" stroke-width="2"/><text x="575" y="72" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">🖥️ NAS（留守番PC）</text><text x="575" y="90" font-size="10" fill="#eafaf4" text-anchor="middle">同じフォルダ／AIも読み書き</text>
       <path d="M252,75 L468,75" stroke="#2cb696" stroke-width="2.8" fill="none" marker-start="url(#s2)" marker-end="url(#s2)"/>
       <text x="360" y="62" font-size="12" fill="#175f4e" text-anchor="middle" font-weight="800">Syncthingがいつも同じ中身にそろえる</text>
       <defs><marker id="s2" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2cb696"/></marker></defs>
     </svg>
-    <figcaption>本体（NAS）と手元（PC）のセーブを、Syncthingが自動で同じ中身にそろえる。</figcaption>
+    <figcaption>手元のパソコンとNASの同じフォルダを、Syncthingが自動で同じ中身にそろえる。NASのAIも同じファイルを読み書きできる。</figcaption>
   </div>
 
   <h2>今日の気持ち</h2>
-  <p>はじめての言葉ばかりだったけど、ぜんぶ“ゲーム機（本体＋ソフト＋コントローラー）”にたとえたら、驚くほどスッと分かった。むずかしいものは、知っているものに置きかえればいい。しかも、たとえが最後まで筋道どおりだと、途中で迷わず理解が進む——そう実感できた一日。</p>
+  <p>はじめての言葉ばかりでしたが、一つずつ「＝かんたんに言うと何か」を確かめながら進めたら、意外とすんなり分かりました。NASは画面のないPC、SSHは遠隔操作の接続、tmuxは閉じても消えない作業部屋——正体をやさしい言葉に置きかえれば、むずかしいものも怖くない。そう実感できた一日でした。</p>
 
   <span class="partmark d">🔧 くわしい版（用語そのまま）</span>
 
@@ -212,9 +188,9 @@
 <span class="c"># 表示された案内からスマホのClaudeアプリで接続（接続URLは非公開）</span></code></div>
 
   <h3>4. 常時起動（tmux）</h3>
-  <p>SSHは「操作＋電源の2in1ケーブル」。抜くとClaudeも止まります。tmux（＝NASの中に据えた“消えない電源コンセント”）の中でClaudeを動かすと、<b>電源（tmux）と操作（PC・スマホ）が分離</b>され、ケーブルを抜いてもNAS上で動き続けます。</p>
+  <p>SSHの接続には「切ると、その中で動かしていた作業も一緒に終わる」性質があります。tmux（＝NASの中に用意する“閉じても消えない作業部屋”）の中でClaudeを動かすと、<b>操作する接続と、作業そのものが分離</b>され、接続を切ってもNAS上で動き続けます。</p>
   <div class="term"><div class="h">▷ NAS（Linux シェル）</div><code><span class="p">$</span> sudo apt install tmux
-<span class="p">$</span> tmux            <span class="c"># 消えない電源の中へ</span>
+<span class="p">$</span> tmux            <span class="c"># 消えない作業部屋の中へ</span>
 <span class="p">$</span> claude          <span class="c"># この中で起動 → 切っても動き続ける</span>
 <span class="c"># 離脱: Ctrl+b → d ／ 復帰: tmux attach</span></code></div>
 
@@ -244,7 +220,7 @@
 
   <h2>学び（やさしい説明）</h2>
   <h3>NASとは</h3>
-  <p>NAS（Network Attached Storage）は「家に置く、電源をつけっぱなしにできる小さなサーバー」。据え置きゲーム機の本体のようなもので、モニターやキーボードを普段つながないため、操作は別のPCから遠隔で行う。SSH（Secure Shell）は「離れたコンピュータのコマンド画面を、暗号化された安全な回線で操作する方法」。住所は家の中だけで通じる私設IP（<code class="inl">192.168.x.x</code> の形）。</p>
+  <p>NAS（Network Attached Storage）は「家に置く、電源をつけっぱなしにできる小さなサーバー」。中身はふつうのPCと同じで、モニターやキーボードを普段つながないため、操作は別のPCから遠隔で行う。SSH（Secure Shell）は「離れたコンピュータのコマンド画面を、暗号化された安全な回線で操作する方法」。住所は家の中だけで通じる私設IP（<code class="inl">192.168.x.x</code> の形）。</p>
   <h3>CLIとGUIとは</h3>
   <ul>
     <li><b>CLI</b>（Command Line Interface）：黒い画面に文字でコマンドを打つ方式。細かい作業・自動化に強い。今日のNAS操作やインストールはこれ。</li>
@@ -268,8 +244,8 @@
   </div>
 
   <h2>活動を経てのジャーナリング</h2>
-  <p>今日はNASという「自分の基地」を、遠隔から一日かけて立ち上げた。いちばん腑に落ちたのは、<b>『操作』と『電源』を分ける</b>という発想だった。SSHという1本のケーブルに操作と電源が同居していると、線を抜いた瞬間にすべて止まる。でもtmuxで電源を内蔵にしてしまえば、操作する側（PC・スマホ）は好きに抜き挿しできる。これは道具の話にとどまらず、『動かし続けたいものは、目の前の自分の接続に依存させない』という設計の考え方そのものだと感じた。</p>
-  <p>もうひとつは、比喩で理解することの強さ。ただし、比喩は最後まで筋道が通っていて初めて効く。NASを据え置きゲーム機、SSHを電源つきコントローラーケーブル、tmuxを本体内蔵の電源……と一貫して翻訳したら、初めての概念が驚くほどすっと入った。分からないものは、知っているものに置き換えればいい。</p>
+  <p>今日はNASという「自分の基地」を、遠隔から一日かけて立ち上げた。いちばん腑に落ちたのは、<b>『操作する接続』と『作業そのもの』を分ける</b>という発想だった。SSHの接続に作業がぶら下がっていると、線を切った瞬間にすべて止まる。でもtmuxで作業をNAS側に置いてしまえば、操作する側（PC・スマホ）は好きに抜き挿しできる。これは道具の話にとどまらず、『動かし続けたいものは、目の前の自分の接続に依存させない』という設計の考え方そのものだと感じた。</p>
+  <p>もうひとつは、むずかしい用語も“正体をやさしい言葉に置きかえる”と一気に分かるということ。NASは画面のないPC、SSHは遠隔操作の接続、tmuxは閉じても消えない作業部屋——一つずつ「＝かんたんに言うと何か」を確かめたら、初めての概念が驚くほどすっと入った。ただしその言い換えは、最後まで筋道が通っていて初めて効く。無理な例え（今回でいえばNASを"独立したゲーム機"と呼ぶような）は、かえって混乱を生むと痛感した。</p>
   <p>最後に、今日作ったのは『マンガを描く仕組み』そのものではなく『どこにいても創作を進められる土台』だということ。家のNASが常に起き、スマホから指示でき、PCと自動で同期する——場所と時間の制約が一枚はがれた感覚がある。次は、この土台の上で実際に4話を動かしてみたい。</p>
 
   <h2>次にやること</h2>
