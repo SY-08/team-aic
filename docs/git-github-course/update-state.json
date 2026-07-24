@@ -6,10 +6,11 @@
     2,
     3,
     4,
-    5
+    5,
+    6
   ],
-  "lastPublishedLessonId": 5,
-  "lastPublishedAt": "2026-07-23T09:10:28+09:00",
+  "lastPublishedLessonId": 6,
+  "lastPublishedAt": "2026-07-24T09:07:39+09:00",
   "completedAt": null,
   "history": [
     {
@@ -36,6 +37,11 @@
       "lessonId": 5,
       "source": "GitHub Actions daily publish",
       "publishedAt": "2026-07-23T09:10:28+09:00"
+    },
+    {
+      "lessonId": 6,
+      "source": "GitHub Actions daily publish",
+      "publishedAt": "2026-07-24T09:07:39+09:00"
     }
   ]
 }
