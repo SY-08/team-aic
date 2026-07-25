@@ -105,6 +105,9 @@ function validate(curriculum, state, page) {
     if (!Array.isArray(lesson.practice) || lesson.practice.length < 2 || !lesson.keyPoint || !lesson.note) {
       throw new Error(`第${lesson.id}話の学び・実践・注意事項が不足しています。`);
     }
+    if (lesson.id >= 4 && (typeof lesson.figure !== "string" || !lesson.figure.includes("ep-figure"))) {
+      throw new Error(`第${lesson.id}話の図解（figure）がありません。自動公開する回には必ず figure を用意します。`);
+    }
     if (FORBIDDEN_PATTERNS.some((pattern) => pattern.test(JSON.stringify(lesson)))) {
       throw new Error(`第${lesson.id}話に公開できない可能性のある文字列があります。`);
     }
@@ -123,11 +126,13 @@ function renderLesson(lesson) {
     return `<div class="msg ${safeSpeaker}"><div class="chat-av ${safeSpeaker}"></div><div class="msg-body"><div class="name">${escapeHtml(name)}</div><div class="bubble">${escapeHtml(text)}</div></div></div>`;
   }).join("\n");
   const practice = lesson.practice.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+  // The figure is trusted, hand-authored SVG stored in curriculum.json. Inject as-is (no escaping).
+  const figure = typeof lesson.figure === "string" && lesson.figure.trim() ? `\n${lesson.figure.trim()}` : "";
   return `<details class="ep" data-git-github-lesson="${lesson.id}">
 <summary><span class="tag">${escapeHtml(lesson.tag)}</span>第${lesson.id}話 ${escapeHtml(lesson.title)}</summary>
 <div class="chat">
 <div class="stage"><span>——${escapeHtml(lesson.scene)}</span></div>
-${messages}
+${messages}${figure}
 <div class="lesson-practice"><strong>今回のポイント</strong>${escapeHtml(lesson.keyPoint)}<strong style="margin-top:10px">10分で試すこと</strong><ul>${practice}</ul></div>
 <p class="lesson-note">確認事項：${escapeHtml(lesson.note)}</p>
 </div>
