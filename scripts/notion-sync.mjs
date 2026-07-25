@@ -825,46 +825,103 @@ function renderJournalContentDiagram(title, diagram) {
   return `<section class="journal-diagram journal-diagram--causal" data-journal-diagram-source="article" aria-label="記事の論点整理"><div class="journal-diagram__heading"><p class="journal-diagram__label">図解: 記事の論点整理</p><h4>${escapeHtml(title || "この記事から読み取る論点")}</h4></div><ol class="journal-causal-map">${diagram.steps.map((step, index) => `<li><span class="journal-causal-map__number">${String(index + 1).padStart(2, "0")}</span><span class="journal-causal-map__role">${escapeHtml(step.role)}</span><strong>${escapeHtml(step.heading)}</strong><p>${escapeHtml(step.detail)}</p></li>`).join("")}</ol><p class="journal-diagram__takeaway"><strong>読み取り</strong>${escapeHtml(diagram.takeaway)}</p></section>`;
 }
 
-function renderJournalDiagram(props, title) {
-  const contentDiagram = buildJournalDiagramFromContent(props);
-  if (contentDiagram) return renderJournalContentDiagram(title, contentDiagram);
+// ===== TEAM AIC journal diagram (box+arrow) renderer =====
+// Priority: use ChatGPT-authored 図解形式 + 図解データ. Fallback: content-derived steps.
+// All styles are inline so no CSS file change is needed. Renders as real box+arrow
+// (HTML/CSS) so arbitrary Japanese text wraps cleanly.
 
+const ZK = {
+  green: "#2f8f6b", greenD: "#1f6b4f", fill: "#eef6f2", line: "#cfe6db",
+  ink: "#33574a", gray: "#5b6b7a", amberF: "#fff7e6", amberB: "#e6cf92", amberI: "#6b5518",
+};
+
+function zkBox(label, sub, emphasis) {
+  const bg = emphasis ? "#dcefe6" : ZK.fill;
+  const bw = emphasis ? "2px" : "2px";
+  const subHtml = sub ? `<span style="display:block;margin-top:5px;font-weight:400;font-size:.8rem;color:${ZK.gray};line-height:1.5;">${sub}</span>` : "";
+  return `<div style="flex:1 1 130px;min-width:116px;max-width:230px;box-sizing:border-box;background:${bg};border:${bw} solid ${ZK.green};border-radius:12px;padding:11px 13px;font-weight:700;color:${ZK.greenD};font-size:.92rem;line-height:1.5;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">${label}${subHtml}</div>`;
+}
+function zkArrow() {
+  return `<div aria-hidden="true" style="flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:${ZK.green};font-weight:800;font-size:1.25rem;padding:0 2px;">→</div>`;
+}
+function zkFlow(items) {
+  // items: [{label, sub, emphasis}] -> box arrow box ...
+  const parts = [];
+  items.forEach((it, i) => {
+    if (i > 0) parts.push(zkArrow());
+    parts.push(zkBox(it.label, it.sub || "", it.emphasis));
+  });
+  return `<div style="display:flex;flex-wrap:wrap;align-items:stretch;gap:8px 2px;justify-content:center;margin:10px 0 4px;">${parts.join("")}</div>`;
+}
+function zkSection(type, inner) {
+  return `<section class="journal-diagram journal-diagram--zukai" aria-label="図解: ${escapeHtml(type)}"><p class="journal-diagram__label" style="font-size:.8rem;font-weight:800;letter-spacing:.02em;color:${ZK.greenD};margin:0 0 4px;">図解: ${escapeHtml(type)}</p>${inner}</section>`;
+}
+
+function splitArrowSteps(raw) {
+  return raw.split(/\s*(?:→|➡️?|⇒|=>|->|―>|—>)\s*/).map((v) => v.trim()).filter(Boolean);
+}
+
+function renderJournalZukai(type, raw, title) {
+  const t = (type || "").trim();
+
+  if (t === "因果関係" || t === "手順図") {
+    const steps = splitArrowSteps(raw);
+    if (steps.length >= 2) {
+      const items = steps.map((s, i) => ({
+        label: (t === "手順図" ? `<span style="display:inline-block;min-width:20px;height:20px;line-height:20px;border-radius:50%;background:${ZK.green};color:#fff;font-size:.72rem;margin-right:4px;">${i + 1}</span>` : "") + escapeHtml(s),
+        emphasis: i === steps.length - 1,
+      }));
+      return zkSection(t, zkFlow(items));
+    }
+  }
+
+  if (t === "2軸マトリクス") {
+    const cells = raw.split("｜").map((v) => v.trim()).filter(Boolean);
+    if (cells.length === 4) {
+      const cell = (txt) => `<div style="box-sizing:border-box;background:${ZK.fill};border:2px solid ${ZK.green};border-radius:12px;padding:14px 12px;min-height:66px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:700;color:${ZK.greenD};font-size:.92rem;line-height:1.5;">${escapeHtml(txt)}</div>`;
+      return zkSection(t, `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:540px;margin:10px auto 4px;">${cells.map(cell).join("")}</div>`);
+    }
+  }
+
+  if (t === "比較表") {
+    const rows = raw.split(/\r?\n/).map((l) => l.split("｜").map((c) => c.trim())).filter((c) => c.length === 2 && c[0] && c[1]);
+    if (rows.length) {
+      const tr = rows.map((c) => `<tr><th scope="row" style="text-align:left;padding:9px 13px;background:${ZK.fill};border:1px solid ${ZK.line};color:${ZK.greenD};font-weight:700;white-space:nowrap;vertical-align:top;">${escapeHtml(c[0])}</th><td style="padding:9px 13px;border:1px solid ${ZK.line};color:${ZK.ink};line-height:1.6;">${escapeHtml(c[1])}</td></tr>`).join("");
+      return zkSection(t, `<table style="width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:.9rem;"><tbody>${tr}</tbody></table>`);
+    }
+  }
+
+  if (t === "メモ") {
+    const body = escapeHtml(raw).replace(/\n/g, "<br>");
+    return zkSection(t, `<div style="background:${ZK.amberF};border:1px solid ${ZK.amberB};border-left:4px solid #d9a441;border-radius:10px;padding:12px 15px;color:${ZK.amberI};line-height:1.75;font-size:.93rem;">${body}</div>`);
+  }
+
+  return "";
+}
+
+function renderJournalDiagram(props, title) {
+  // 1) Prefer the structured diagram ChatGPT saved (図解形式 + 図解データ).
   const type = getPropertyText(props, ["図解形式"]);
   const raw = getPropertyText(props, ["図解データ"]);
-  if (!type || !raw) return "";
-
-  const caption = `<p class="journal-diagram__label">図解: ${escapeHtml(type)}</p>`;
-  if (type === "2軸マトリクス") {
-    const cells = raw.split("｜").map((value) => value.trim()).filter(Boolean);
-    if (cells.length === 4) {
-      return `<section class="journal-diagram journal-diagram--matrix" aria-label="${escapeHtml(type)}">${caption}<div class="journal-matrix"><span>${escapeHtml(cells[0])}</span><span>${escapeHtml(cells[1])}</span><span>${escapeHtml(cells[2])}</span><span>${escapeHtml(cells[3])}</span></div></section>`;
-    }
+  if (type && raw) {
+    const svg = renderJournalZukai(type, raw, title);
+    if (svg) return svg;
   }
-  if (type === "因果関係" || type === "手順図") {
-    const steps = raw.split(/→|->/).map((value) => value.trim()).filter(Boolean);
-    if (steps.length > 1) {
-      const roles = type === "因果関係"
-        ? ["起点", "成否を分ける設計", "確かめる", "還元する"]
-        : ["始める", "進める", "確かめる", "次へつなぐ"];
-      const annotations = steps.map((step, index) => {
-        if (index === 0) return `${escapeHtml(step)}だけでは、現場の価値は決まりません。`;
-        if (index === steps.length - 1) return `ここまで届いて初めて、変化が人や地域に残ります。`;
-        if (index === 1 && type === "因果関係") return `技術を使い続けられるかを左右する分岐点です。`;
-        return `結果と新たな負担を見ながら、次の判断につなげます。`;
-      });
-      const coreStep = steps[Math.min(1, steps.length - 1)];
-      const takeaway = `${escapeHtml(steps[0])}から${escapeHtml(steps[steps.length - 1])}までを一続きで設計すること。その中心にある${escapeHtml(coreStep)}が、この記事のいちばん大きな論点です。`;
-      return `<section class="journal-diagram journal-diagram--causal" aria-label="${escapeHtml(type)}"><div class="journal-diagram__heading">${caption}<h4>${escapeHtml(title || "この記事の因果関係")}</h4></div><ol class="journal-causal-map">${steps.map((step, index) => `<li><span class="journal-causal-map__number">${String(index + 1).padStart(2, "0")}</span><span class="journal-causal-map__role">${escapeHtml(roles[Math.min(index, roles.length - 1)])}</span><strong>${escapeHtml(step)}</strong><p>${annotations[index]}</p></li>`).join("")}</ol><p class="journal-diagram__takeaway"><strong>読み取り</strong>${takeaway}</p></section>`;
-    }
+  // 2) Fallback: derive a flow from the article body (still box+arrow, not flat cards).
+  const contentDiagram = buildJournalDiagramFromContent(props);
+  if (contentDiagram && Array.isArray(contentDiagram.steps) && contentDiagram.steps.length >= 2) {
+    const items = contentDiagram.steps.map((step, i) => ({
+      label: escapeHtml(step.heading || step.role || ""),
+      sub: step.role ? escapeHtml(step.role) : "",
+      emphasis: i === contentDiagram.steps.length - 1,
+    }));
+    const flow = zkFlow(items);
+    const take = contentDiagram.takeaway ? `<p class="journal-diagram__takeaway" style="margin:8px 0 0;color:${ZK.gray};font-size:.86rem;line-height:1.65;"><strong style="color:${ZK.greenD};">読み取り </strong>${escapeHtml(contentDiagram.takeaway)}</p>` : "";
+    return `<section class="journal-diagram journal-diagram--zukai" aria-label="記事の論点整理"><p class="journal-diagram__label" style="font-size:.8rem;font-weight:800;color:${ZK.greenD};margin:0 0 4px;">図解: 論点の流れ</p>${flow}${take}</section>`;
   }
-  if (type === "比較表") {
-    const rows = raw.split(/\r?\n/).map((line) => line.split("｜").map((cell) => cell.trim())).filter((cells) => cells.length === 2 && cells[0] && cells[1]);
-    if (rows.length) {
-      return `<section class="journal-diagram journal-diagram--compare" aria-label="${escapeHtml(type)}">${caption}<dl>${rows.map(([term, detail]) => `<dt>${escapeHtml(term)}</dt><dd>${escapeHtml(detail)}</dd>`).join("")}</dl></section>`;
-    }
-  }
-  return `<aside class="journal-diagram journal-diagram--note" aria-label="${escapeHtml(type)}">${caption}<p>${escapeHtml(raw).replace(/\n/g, "<br>")}</p></aside>`;
+  return "";
 }
+
 
 function normalizeMorningCategory(source, rawValue) {
   if (source.kind === "politics") return { key: "politics", label: "政治・行政" };
