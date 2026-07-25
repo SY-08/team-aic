@@ -9,13 +9,32 @@
       "title": "Gitってなに？＝作業のセーブ機能",
       "scene": "スカイブルーの世界。Gitさんは、自分が何者かを思い出せずにいた。",
       "dialogue": [
-        ["git", "Gitさん", "神様…。おれ『Git』って名前だけど、結局なにをする者なの？"],
-        ["god", "神様", "ひとことで言えば、お前は作業のセーブ機能じゃ。"],
-        ["github", "GitHub氏", "失敗しても、前のセーブに戻れるってこと？"],
-        ["god", "神様", "その通り。文章でもコードでも、区切りのよいところで記録を残し、安心して挑戦できるようにするんじゃ。"]
+        [
+          "git",
+          "Gitさん",
+          "神様…。おれ『Git』って名前だけど、結局なにをする者なの？"
+        ],
+        [
+          "god",
+          "神様",
+          "ひとことで言えば、お前は作業のセーブ機能じゃ。"
+        ],
+        [
+          "github",
+          "GitHub氏",
+          "失敗しても、前のセーブに戻れるってこと？"
+        ],
+        [
+          "god",
+          "神様",
+          "その通り。文章でもコードでも、区切りのよいところで記録を残し、安心して挑戦できるようにするんじゃ。"
+        ]
       ],
       "keyPoint": "Gitは、手元のファイル変更を時系列で残す仕組みです。",
-      "practice": ["ゲームのセーブにたとえて、今日の作業を一言でメモする。", "『どこまで戻れれば安心か』を考える。"],
+      "practice": [
+        "ゲームのセーブにたとえて、今日の作業を一言でメモする。",
+        "『どこまで戻れれば安心か』を考える。"
+      ],
       "note": "Gitはクラウドサービス名ではありません。自分のパソコン上で履歴を扱う仕組みです。"
     },
     {
@@ -24,13 +43,32 @@
       "title": "コミット＝名前付きでセーブする",
       "scene": "翌朝。Gitさんは、セーブに名前を付ける意味を知りたくなった。",
       "dialogue": [
-        ["git", "Gitさん", "神様、ただ保存するのと、コミットは何が違うの？"],
-        ["god", "神様", "コミットは、今の状態を写真に撮り『何をしたか』という名前を添えて残すことじゃ。"],
-        ["github", "GitHub氏", "あとで見た人にも、何の記録なのか伝わるんだね。"],
-        ["god", "神様", "そうじゃ。よいコミットは、未来の自分や仲間への短い引き継ぎになる。"]
+        [
+          "git",
+          "Gitさん",
+          "神様、ただ保存するのと、コミットは何が違うの？"
+        ],
+        [
+          "god",
+          "神様",
+          "コミットは、今の状態を写真に撮り『何をしたか』という名前を添えて残すことじゃ。"
+        ],
+        [
+          "github",
+          "GitHub氏",
+          "あとで見た人にも、何の記録なのか伝わるんだね。"
+        ],
+        [
+          "god",
+          "神様",
+          "そうじゃ。よいコミットは、未来の自分や仲間への短い引き継ぎになる。"
+        ]
       ],
       "keyPoint": "コミットは、変更のまとまりと理由を記録する単位です。",
-      "practice": ["今日直したことを『何を、なぜ』の形で一文にする。", "『修正』だけではなく対象を書く練習をする。"],
+      "practice": [
+        "今日直したことを『何を、なぜ』の形で一文にする。",
+        "『修正』だけではなく対象を書く練習をする。"
+      ],
       "note": "コミットは多すぎても少なすぎても振り返りにくくなります。ひとつの目的ごとに区切ります。"
     },
     {
@@ -39,13 +77,32 @@
       "title": "GitHub＝みんなで見られる保管庫",
       "scene": "セーブを覚えたGitさん。でも、GitHub氏はまだ自分の役割が分からない。",
       "dialogue": [
-        ["github", "GitHub氏", "Gitとぼくは、何が違うの？"],
-        ["god", "神様", "Gitが手元でのセーブなら、GitHubはその記録をネット上で保管し、共有する場所じゃ。"],
-        ["git", "Gitさん", "手元で記録して、GitHub氏のところで仲間と見られるんだね。"],
-        ["god", "神様", "その通り。team AICのホームページも、GitHubにある記録から公開されておる。"]
+        [
+          "github",
+          "GitHub氏",
+          "Gitとぼくは、何が違うの？"
+        ],
+        [
+          "god",
+          "神様",
+          "Gitが手元でのセーブなら、GitHubはその記録をネット上で保管し、共有する場所じゃ。"
+        ],
+        [
+          "git",
+          "Gitさん",
+          "手元で記録して、GitHub氏のところで仲間と見られるんだね。"
+        ],
+        [
+          "god",
+          "神様",
+          "その通り。team AICのホームページも、GitHubにある記録から公開されておる。"
+        ]
       ],
       "keyPoint": "GitHubはGitの履歴を保管・共有し、レビューや公開にも使えるサービスです。",
-      "practice": ["GitHubで任意の公開リポジトリを一つ開く。", "『Code』『Issues』『Pull requests』の表示を見つける。"],
+      "practice": [
+        "GitHubで任意の公開リポジトリを一つ開く。",
+        "『Code』『Issues』『Pull requests』の表示を見つける。"
+      ],
       "note": "GitHubは代表的なサービスです。Gitそのものと同じ意味ではありません。"
     },
     {
@@ -54,14 +111,34 @@
       "title": "リポジトリ＝プロジェクトの保管箱",
       "scene": "GitHub氏の部屋には、たくさんの箱が並んでいた。",
       "dialogue": [
-        ["github", "GitHub氏", "この箱は何？ 中にファイルや記録が入っているんだけど。"],
-        ["god", "神様", "それはリポジトリ。ひとつのプロジェクトに関わるファイルと履歴をまとめる保管箱じゃ。"],
-        ["git", "Gitさん", "ホームページ用の箱、メモ用の箱、と分ければ迷わないね。"],
-        ["god", "神様", "その通り。何のための箱かを説明できる名前にすると、仲間も未来の自分も助かる。"]
+        [
+          "github",
+          "GitHub氏",
+          "この箱は何？ 中にファイルや記録が入っているんだけど。"
+        ],
+        [
+          "god",
+          "神様",
+          "それはリポジトリ。ひとつのプロジェクトに関わるファイルと履歴をまとめる保管箱じゃ。"
+        ],
+        [
+          "git",
+          "Gitさん",
+          "ホームページ用の箱、メモ用の箱、と分ければ迷わないね。"
+        ],
+        [
+          "god",
+          "神様",
+          "その通り。何のための箱かを説明できる名前にすると、仲間も未来の自分も助かる。"
+        ]
       ],
       "keyPoint": "リポジトリは、ファイル・履歴・共同作業の記録を一つの目的でまとめる単位です。",
-      "practice": ["team AICのリポジトリを開き、ファイル一覧と履歴一覧を見比べる。", "リポジトリ名から目的を一言で説明してみる。"],
-      "note": "公開リポジトリの内容は誰でも見られます。公開してよい内容だけを置きます。"
+      "practice": [
+        "team AICのリポジトリを開き、ファイル一覧と履歴一覧を見比べる。",
+        "リポジトリ名から目的を一言で説明してみる。"
+      ],
+      "note": "公開リポジトリの内容は誰でも見られます。公開してよい内容だけを置きます。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 210' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><text x='310' y='24' font-size='13' fill='#5b6b7a' text-anchor='middle'>リポジトリ＝目的ごとの保管箱</text><g><rect x='40' y='50' width='160' height='120' rx='12' fill='#eaf3fc' stroke='#2a6fb5' stroke-width='2'/><text x='120' y='74' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>HP用リポジトリ</text><rect x='58' y='90' width='124' height='22' rx='5' fill='#fff' stroke='#b9d0ea'/><text x='120' y='106' font-size='11' fill='#5b6b7a' text-anchor='middle'>ファイル</text><rect x='58' y='120' width='124' height='22' rx='5' fill='#fff7e6' stroke='#e6cf92'/><text x='120' y='136' font-size='11' fill='#9c7a1f' text-anchor='middle'>履歴（記録）</text></g><g><rect x='230' y='50' width='160' height='120' rx='12' fill='#eaf3fc' stroke='#2a6fb5' stroke-width='2'/><text x='310' y='74' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>メモ用リポジトリ</text><rect x='248' y='90' width='124' height='22' rx='5' fill='#fff' stroke='#b9d0ea'/><text x='310' y='106' font-size='11' fill='#5b6b7a' text-anchor='middle'>ファイル</text><rect x='248' y='120' width='124' height='22' rx='5' fill='#fff7e6' stroke='#e6cf92'/><text x='310' y='136' font-size='11' fill='#9c7a1f' text-anchor='middle'>履歴（記録）</text></g><g><rect x='420' y='50' width='160' height='120' rx='12' fill='#f4f8fc' stroke='#b9d0ea' stroke-width='2' stroke-dasharray='5 5'/><text x='500' y='104' font-size='13' fill='#8aa2b8' text-anchor='middle'>用途ごとに</text><text x='500' y='124' font-size='13' fill='#8aa2b8' text-anchor='middle'>箱を分ける</text></g></svg><figcaption>リポジトリ＝ひとつの目的に関わる「ファイル」と「履歴」をまとめる保管箱。用途ごとに分けると迷わない。</figcaption></figure>"
     },
     {
       "id": 5,
@@ -69,14 +146,34 @@
       "title": "手元とネットの二つの場所",
       "scene": "GitさんとGitHub氏は、同じ記録を持っているようで少し違っていた。",
       "dialogue": [
-        ["git", "Gitさん", "ぼくの手元の記録と、GitHub氏のところの記録は同じなの？"],
-        ["god", "神様", "似ているが、別の場所にある。手元はローカル、GitHub側はリモートと呼ぶんじゃ。"],
-        ["github", "GitHub氏", "だから、手元で作っただけではぼくの箱には届かないんだ。"],
-        ["god", "神様", "そうじゃ。二つの場所の違いを知ることが、Git/GitHubで迷わない第一歩になる。"]
+        [
+          "git",
+          "Gitさん",
+          "ぼくの手元の記録と、GitHub氏のところの記録は同じなの？"
+        ],
+        [
+          "god",
+          "神様",
+          "似ているが、別の場所にある。手元はローカル、GitHub側はリモートと呼ぶんじゃ。"
+        ],
+        [
+          "github",
+          "GitHub氏",
+          "だから、手元で作っただけではぼくの箱には届かないんだ。"
+        ],
+        [
+          "god",
+          "神様",
+          "そうじゃ。二つの場所の違いを知ることが、Git/GitHubで迷わない第一歩になる。"
+        ]
       ],
       "keyPoint": "ローカルは自分のパソコン、リモートはGitHub上の保管場所です。",
-      "practice": ["『手元だけにある変更』と『GitHubにある変更』を紙に二列で書く。", "どちらを他の人が見られるか答える。"],
-      "note": "GitHubへ送る前の手元の変更は、まだ公開版には反映されません。"
+      "practice": [
+        "『手元だけにある変更』と『GitHubにある変更』を紙に二列で書く。",
+        "どちらを他の人が見られるか答える。"
+      ],
+      "note": "GitHubへ送る前の手元の変更は、まだ公開版には反映されません。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 200' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg5' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='30' y='45' width='240' height='120' rx='14' fill='#eef4fb' stroke='#2a6fb5' stroke-width='2'/><text x='150' y='70' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>ローカル（手元のPC）</text><rect x='60' y='90' width='180' height='24' rx='6' fill='#fff' stroke='#b9d0ea'/><text x='150' y='107' font-size='11' fill='#5b6b7a' text-anchor='middle'>自分だけが見える変更</text><text x='150' y='146' font-size='11' fill='#8aa2b8' text-anchor='middle'>ここで作業する</text><rect x='350' y='45' width='240' height='120' rx='14' fill='#dceafa' stroke='#2a6fb5' stroke-width='2'/><text x='470' y='70' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>リモート（GitHub）</text><rect x='380' y='90' width='180' height='24' rx='6' fill='#fff' stroke='#b9d0ea'/><text x='470' y='107' font-size='11' fill='#5b6b7a' text-anchor='middle'>みんなが見られる記録</text><circle cx='430' cy='140' r='6' fill='#2a6fb5'/><circle cx='470' cy='140' r='6' fill='#2a6fb5'/><circle cx='510' cy='140' r='6' fill='#2a6fb5'/><path d='M275,105 L345,105' stroke='#bf972c' stroke-width='3' marker-end='url(#gg5)'/><text x='310' y='94' font-size='11' fill='#9c7a1f' text-anchor='middle' font-weight='700'>push</text></svg><figcaption>同じ記録でも置き場所が違う。手元は「ローカル」、GitHub側は「リモート」。送るまで手元の変更は相手に届かない。</figcaption></figure>"
     },
     {
       "id": 6,
@@ -84,14 +181,34 @@
       "title": "git status＝まず現在地を見る",
       "scene": "Gitさんは急いで出発しようとして、神様に止められた。",
       "dialogue": [
-        ["git", "Gitさん", "すぐ保存して送ればいいんだよね？"],
-        ["god", "神様", "待つのじゃ。最初に今の状態を見る。そこで使うのが git status じゃ。"],
-        ["github", "GitHub氏", "変更したファイルや、まだ保存されていない変更が分かるの？"],
-        ["god", "神様", "そうじゃ。道に出る前に地図を見るようなもの。慌てた操作を減らせる。"]
+        [
+          "git",
+          "Gitさん",
+          "すぐ保存して送ればいいんだよね？"
+        ],
+        [
+          "god",
+          "神様",
+          "待つのじゃ。最初に今の状態を見る。そこで使うのが git status じゃ。"
+        ],
+        [
+          "github",
+          "GitHub氏",
+          "変更したファイルや、まだ保存されていない変更が分かるの？"
+        ],
+        [
+          "god",
+          "神様",
+          "そうじゃ。道に出る前に地図を見るようなもの。慌てた操作を減らせる。"
+        ]
       ],
       "keyPoint": "git statusは、変更・保存準備・未追跡のファイルを確認する最初のコマンドです。",
-      "practice": ["作業の前後に git status を実行する。", "表示されたファイル名を、意図した変更か確認する。"],
-      "note": "意味が分からない表示のまま次の操作へ進まないことが、安全な基本です。"
+      "practice": [
+        "作業の前後に git status を実行する。",
+        "表示されたファイル名を、意図した変更か確認する。"
+      ],
+      "note": "意味が分からない表示のまま次の操作へ進まないことが、安全な基本です。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 200' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><rect x='210' y='30' width='200' height='40' rx='10' fill='#dceafa' stroke='#2a6fb5' stroke-width='2'/><text x='310' y='55' font-size='14' fill='#1c548c' text-anchor='middle' font-weight='700'>git status＝現在地を見る</text><g><rect x='40' y='105' width='160' height='60' rx='10' fill='#eaf3fc' stroke='#2a6fb5'/><text x='120' y='130' font-size='12' fill='#1c548c' text-anchor='middle' font-weight='700'>変更あり</text><text x='120' y='150' font-size='10.5' fill='#5b6b7a' text-anchor='middle'>直したファイル</text></g><g><rect x='230' y='105' width='160' height='60' rx='10' fill='#fff7e6' stroke='#e6cf92'/><text x='310' y='130' font-size='12' fill='#9c7a1f' text-anchor='middle' font-weight='700'>保存準備できた</text><text x='310' y='150' font-size='10.5' fill='#9c7a1f' text-anchor='middle'>add 済みの変更</text></g><g><rect x='420' y='105' width='160' height='60' rx='10' fill='#f4f8fc' stroke='#b9d0ea'/><text x='500' y='130' font-size='12' fill='#5b6b7a' text-anchor='middle' font-weight='700'>未追跡</text><text x='500' y='150' font-size='10.5' fill='#8aa2b8' text-anchor='middle'>まだ記録対象外</text></g><path d='M310,72 L120,103' stroke='#b9d0ea' stroke-width='2'/><path d='M310,72 L310,103' stroke='#b9d0ea' stroke-width='2'/><path d='M310,72 L500,103' stroke='#b9d0ea' stroke-width='2'/></svg><figcaption>git statusは「いま何がどの状態か」を映す地図。変更あり・保存準備できた・未追跡の3つを、動く前に確かめる。</figcaption></figure>"
     },
     {
       "id": 7,
@@ -99,14 +216,34 @@
       "title": "git add＝保存する変更を選ぶ",
       "scene": "机の上には、保存したいメモと、まだ途中のメモが混ざっていた。",
       "dialogue": [
-        ["git", "Gitさん", "変えたものを全部まとめてセーブしていい？"],
-        ["god", "神様", "まず git add で、今回のコミットに入れる変更を選ぶんじゃ。"],
-        ["github", "GitHub氏", "途中の下書きまで混ぜなくていいんだね。"],
-        ["god", "神様", "その通り。目的の違う変更を分けると、後から理由をたどりやすい。"]
+        [
+          "git",
+          "Gitさん",
+          "変えたものを全部まとめてセーブしていい？"
+        ],
+        [
+          "god",
+          "神様",
+          "まず git add で、今回のコミットに入れる変更を選ぶんじゃ。"
+        ],
+        [
+          "github",
+          "GitHub氏",
+          "途中の下書きまで混ぜなくていいんだね。"
+        ],
+        [
+          "god",
+          "神様",
+          "その通り。目的の違う変更を分けると、後から理由をたどりやすい。"
+        ]
       ],
       "keyPoint": "git addは、次のコミットに含める変更を選ぶ準備です。",
-      "practice": ["git statusで変更を確認する。", "今回の目的に関係するファイルだけを git add する。"],
-      "note": "よく分からないファイルをまとめて追加しないこと。まず内容を確認します。"
+      "practice": [
+        "git statusで変更を確認する。",
+        "今回の目的に関係するファイルだけを git add する。"
+      ],
+      "note": "よく分からないファイルをまとめて追加しないこと。まず内容を確認します。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 200' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg7' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><text x='95' y='40' font-size='12' fill='#5b6b7a' text-anchor='middle'>机の上の変更</text><rect x='30' y='55' width='130' height='30' rx='6' fill='#eaf3fc' stroke='#2a6fb5'/><text x='95' y='75' font-size='11' fill='#1c548c' text-anchor='middle'>本文の修正 ✔</text><rect x='30' y='95' width='130' height='30' rx='6' fill='#eaf3fc' stroke='#2a6fb5'/><text x='95' y='115' font-size='11' fill='#1c548c' text-anchor='middle'>画像の差し替え ✔</text><rect x='30' y='135' width='130' height='30' rx='6' fill='#f4f8fc' stroke='#b9d0ea' stroke-dasharray='4 4'/><text x='95' y='155' font-size='11' fill='#8aa2b8' text-anchor='middle'>途中の下書き</text><path d='M165,70 L250,95' stroke='#bf972c' stroke-width='3' marker-end='url(#gg7)'/><path d='M165,110 L250,105' stroke='#bf972c' stroke-width='3' marker-end='url(#gg7)'/><text x='210' y='78' font-size='11' fill='#9c7a1f' text-anchor='middle' font-weight='700'>git add で選ぶ</text><rect x='260' y='70' width='170' height='70' rx='10' fill='#fff7e6' stroke='#e6cf92' stroke-width='2'/><text x='345' y='98' font-size='12' fill='#9c7a1f' text-anchor='middle' font-weight='700'>ステージ</text><text x='345' y='118' font-size='10.5' fill='#9c7a1f' text-anchor='middle'>今回のコミットに入れる</text><path d='M435,105 L505,105' stroke='#bf972c' stroke-width='3' marker-end='url(#gg7)'/><text x='470' y='94' font-size='11' fill='#9c7a1f' text-anchor='middle' font-weight='700'>commit</text><rect x='510' y='75' width='90' height='60' rx='10' fill='#dceafa' stroke='#2a6fb5' stroke-width='2'/><text x='555' y='110' font-size='11' fill='#1c548c' text-anchor='middle' font-weight='700'>記録へ</text></svg><figcaption>git addは「今回のコミットに入れる変更」を選ぶ準備。関係あるものだけをステージに載せ、下書きは残しておける。</figcaption></figure>"
     },
     {
       "id": 8,
@@ -114,14 +251,34 @@
       "title": "push＝手元のセーブをGitHubへ届ける",
       "scene": "コミットを作ったGitさんは、GitHub氏へ連絡したくなった。",
       "dialogue": [
-        ["git", "Gitさん", "手元でコミットしたよ。GitHub氏の箱にも入る？"],
-        ["god", "神様", "まだじゃ。git pushで、手元のコミットをリモートへ送るんじゃ。"],
-        ["github", "GitHub氏", "届けば、ぼくの画面でも履歴として見られるんだね。"],
-        ["god", "神様", "そうじゃ。pushの成功表示を確認してから、GitHubの画面でも内容を見るのじゃ。"]
+        [
+          "git",
+          "Gitさん",
+          "手元でコミットしたよ。GitHub氏の箱にも入る？"
+        ],
+        [
+          "god",
+          "神様",
+          "まだじゃ。git pushで、手元のコミットをリモートへ送るんじゃ。"
+        ],
+        [
+          "github",
+          "GitHub氏",
+          "届けば、ぼくの画面でも履歴として見られるんだね。"
+        ],
+        [
+          "god",
+          "神様",
+          "そうじゃ。pushの成功表示を確認してから、GitHubの画面でも内容を見るのじゃ。"
+        ]
       ],
       "keyPoint": "git pushは、ローカルのコミットをGitHub上のブランチへ送る操作です。",
-      "practice": ["コミット後に git push を実行する。", "GitHubのコミット一覧を更新し、同じメッセージが見えるか確認する。"],
-      "note": "pushは公開やmainへの反映と同義ではありません。送った先のブランチを必ず確認します。"
+      "practice": [
+        "コミット後に git push を実行する。",
+        "GitHubのコミット一覧を更新し、同じメッセージが見えるか確認する。"
+      ],
+      "note": "pushは公開やmainへの反映と同義ではありません。送った先のブランチを必ず確認します。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 190' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg8' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='40' y='60' width='170' height='80' rx='12' fill='#eaf3fc' stroke='#2a6fb5' stroke-width='2'/><text x='125' y='88' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>手元（ローカル）</text><rect x='62' y='102' width='126' height='24' rx='6' fill='#fff' stroke='#b9d0ea'/><text x='125' y='119' font-size='11' fill='#5b6b7a' text-anchor='middle'>コミット済み</text><path d='M215,100 L370,100' stroke='#bf972c' stroke-width='3.5' marker-end='url(#gg8)'/><text x='292' y='88' font-size='13' fill='#9c7a1f' text-anchor='middle' font-weight='700'>git push</text><text x='292' y='120' font-size='10.5' fill='#9c7a1f' text-anchor='middle'>ブランチへ送る</text><rect x='400' y='55' width='180' height='90' rx='14' fill='#dceafa' stroke='#2a6fb5' stroke-width='2'/><text x='490' y='84' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>GitHub（リモート）</text><rect x='422' y='100' width='136' height='24' rx='6' fill='#fff' stroke='#b9d0ea'/><text x='490' y='117' font-size='11' fill='#5b6b7a' text-anchor='middle'>同じ履歴が見える</text></svg><figcaption>git pushは、手元のコミットをGitHubのブランチへ届ける操作。届いた先はまず「送ったブランチ」。公開やmainと同じではない。</figcaption></figure>"
     },
     {
       "id": 9,
@@ -129,14 +286,34 @@
       "title": "fetch / pull＝始める前に最新を受け取る",
       "scene": "GitHub氏の箱には、Gitさんが知らない新しい記録が増えていた。",
       "dialogue": [
-        ["github", "GitHub氏", "ほかの人が先に更新しているかもしれないよ。"],
-        ["git", "Gitさん", "じゃあ、作業を始める前に見に行く必要があるね。"],
-        ["god", "神様", "git fetchは最新情報を受け取る操作、git pullは受け取って手元へ反映する操作じゃ。"],
-        ["god", "神様", "まず状態を確認し、何が変わるか分かったうえで取り込むのが大切じゃ。"]
+        [
+          "github",
+          "GitHub氏",
+          "ほかの人が先に更新しているかもしれないよ。"
+        ],
+        [
+          "git",
+          "Gitさん",
+          "じゃあ、作業を始める前に見に行く必要があるね。"
+        ],
+        [
+          "god",
+          "神様",
+          "git fetchは最新情報を受け取る操作、git pullは受け取って手元へ反映する操作じゃ。"
+        ],
+        [
+          "god",
+          "神様",
+          "まず状態を確認し、何が変わるか分かったうえで取り込むのが大切じゃ。"
+        ]
       ],
       "keyPoint": "fetchは確認用に最新情報を受け取り、pullは手元の作業にも取り込む操作です。",
-      "practice": ["作業前に git fetch origin main を実行する。", "取り込む前に git status と変更内容を確認する。"],
-      "note": "未保存の変更があるとpullで問題が起きやすくなります。作業を区切ってから実行します。"
+      "practice": [
+        "作業前に git fetch origin main を実行する。",
+        "取り込む前に git status と変更内容を確認する。"
+      ],
+      "note": "未保存の変更があるとpullで問題が起きやすくなります。作業を区切ってから実行します。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 190' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg9' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='410' y='50' width='180' height='90' rx='14' fill='#dceafa' stroke='#2a6fb5' stroke-width='2'/><text x='500' y='78' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>GitHub（リモート）</text><rect x='432' y='95' width='136' height='24' rx='6' fill='#fff7e6' stroke='#e6cf92'/><text x='500' y='112' font-size='11' fill='#9c7a1f' text-anchor='middle'>新しい記録が増えた</text><rect x='40' y='55' width='170' height='80' rx='12' fill='#eaf3fc' stroke='#2a6fb5' stroke-width='2'/><text x='125' y='83' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>手元（ローカル）</text><rect x='62' y='97' width='126' height='24' rx='6' fill='#fff' stroke='#b9d0ea'/><text x='125' y='114' font-size='11' fill='#5b6b7a' text-anchor='middle'>作業を始める前</text><path d='M405,80 L215,80' stroke='#bf972c' stroke-width='3' marker-end='url(#gg9)'/><text x='310' y='70' font-size='12' fill='#9c7a1f' text-anchor='middle' font-weight='700'>fetch＝確認だけ</text><path d='M405,115 L215,115' stroke='#2a6fb5' stroke-width='3' marker-end='url(#gg9)'/><text x='310' y='134' font-size='12' fill='#1c548c' text-anchor='middle' font-weight='700'>pull＝取り込む</text></svg><figcaption>作業前に最新を受け取る。fetchは「確認だけ」、pullは「確認して手元にも取り込む」。中身を見てから取り込むのが安全。</figcaption></figure>"
     },
     {
       "id": 10,
@@ -144,14 +321,34 @@
       "title": "ブランチ＝本番を守る別の作業道",
       "scene": "一本の道に全員が集まり、Gitさんは身動きが取れなくなっていた。",
       "dialogue": [
-        ["git", "Gitさん", "本番の道で直接直すと、途中の変更まで見えてしまうね。"],
-        ["god", "神様", "そこでブランチを作る。本番から分かれた、自分の作業用の道じゃ。"],
-        ["github", "GitHub氏", "完成するまで別の場所で試せるんだ。"],
-        ["god", "神様", "そうじゃ。終わったら確認して、本番のmainへ取り込む。"]
+        [
+          "git",
+          "Gitさん",
+          "本番の道で直接直すと、途中の変更まで見えてしまうね。"
+        ],
+        [
+          "god",
+          "神様",
+          "そこでブランチを作る。本番から分かれた、自分の作業用の道じゃ。"
+        ],
+        [
+          "github",
+          "GitHub氏",
+          "完成するまで別の場所で試せるんだ。"
+        ],
+        [
+          "god",
+          "神様",
+          "そうじゃ。終わったら確認して、本番のmainへ取り込む。"
+        ]
       ],
       "keyPoint": "ブランチは、公開版のmainを守りながら変更を進めるための作業単位です。",
-      "practice": ["作業用ブランチ名に、目的が分かる言葉を付ける。", "mainで直接直す場面と、ブランチで進める場面を考える。"],
-      "note": "ブランチ名に個人情報や機密情報を書かないようにします。"
+      "practice": [
+        "作業用ブランチ名に、目的が分かる言葉を付ける。",
+        "mainで直接直す場面と、ブランチで進める場面を考える。"
+      ],
+      "note": "ブランチ名に個人情報や機密情報を書かないようにします。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 200' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg10' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><line x1='40' y1='120' x2='580' y2='120' stroke='#2a6fb5' stroke-width='6' stroke-linecap='round'/><text x='60' y='150' font-size='12' fill='#1c548c' font-weight='700'>main（本番）</text><circle cx='150' cy='120' r='9' fill='#2a6fb5'/><circle cx='500' cy='120' r='9' fill='#2a6fb5'/><path d='M150,120 C210,60 330,60 390,60' fill='none' stroke='#bf972c' stroke-width='4'/><circle cx='270' cy='60' r='9' fill='#bf972c'/><circle cx='390' cy='60' r='9' fill='#bf972c'/><text x='300' y='44' font-size='12' fill='#9c7a1f' text-anchor='middle' font-weight='700'>作業用ブランチ</text><path d='M390,60 C450,60 460,120 500,120' fill='none' stroke='#bf972c' stroke-width='4' marker-end='url(#gg10)'/><text x='470' y='150' font-size='11' fill='#9c7a1f' text-anchor='middle'>できたら取り込む</text></svg><figcaption>ブランチは本番（main）から分かれた自分専用の作業道。完成するまで別の場所で試し、確認してからmainへ合流させる。</figcaption></figure>"
     },
     {
       "id": 11,
@@ -159,14 +356,34 @@
       "title": "Pull Request＝変更を見てもらう提案書",
       "scene": "作業道を歩き終えたGitさんは、本番の道へ戻る前に立ち止まった。",
       "dialogue": [
-        ["git", "Gitさん", "できたからmainへ入れていい？"],
-        ["god", "神様", "その前にPull Requestを作る。『この変更を見て、取り込みませんか』という提案書じゃ。"],
-        ["github", "GitHub氏", "何を変えたか、画面で比べながら見られるんだね。"],
-        ["god", "神様", "そうじゃ。急いで公開版を変えず、確認するための場所を作る。"]
+        [
+          "git",
+          "Gitさん",
+          "できたからmainへ入れていい？"
+        ],
+        [
+          "god",
+          "神様",
+          "その前にPull Requestを作る。『この変更を見て、取り込みませんか』という提案書じゃ。"
+        ],
+        [
+          "github",
+          "GitHub氏",
+          "何を変えたか、画面で比べながら見られるんだね。"
+        ],
+        [
+          "god",
+          "神様",
+          "そうじゃ。急いで公開版を変えず、確認するための場所を作る。"
+        ]
       ],
       "keyPoint": "Pull Request（PR）は、ブランチの変更をmainへ取り込む前に確認する提案です。",
-      "practice": ["PRのタイトルに『何を変えるか』を書く。", "説明に『目的』『変更内容』『確認したこと』を短く書く。"],
-      "note": "PR作成はmainへの反映ではありません。確認の入口です。"
+      "practice": [
+        "PRのタイトルに『何を変えるか』を書く。",
+        "説明に『目的』『変更内容』『確認したこと』を短く書く。"
+      ],
+      "note": "PR作成はmainへの反映ではありません。確認の入口です。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 190' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg11' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='30' y='60' width='140' height='70' rx='12' fill='#fff7e6' stroke='#e6cf92' stroke-width='2'/><text x='100' y='90' font-size='12' fill='#9c7a1f' text-anchor='middle' font-weight='700'>作業用ブランチ</text><text x='100' y='110' font-size='10.5' fill='#9c7a1f' text-anchor='middle'>変更ができた</text><path d='M172,95 L232,95' stroke='#bf972c' stroke-width='3' marker-end='url(#gg11)'/><rect x='240' y='45' width='170' height='100' rx='12' fill='#dceafa' stroke='#2a6fb5' stroke-width='2'/><text x='325' y='72' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>Pull Request</text><text x='325' y='92' font-size='10.5' fill='#5b6b7a' text-anchor='middle'>「見て、取り込みませんか」</text><rect x='262' y='102' width='126' height='30' rx='6' fill='#fff' stroke='#b9d0ea'/><text x='325' y='121' font-size='10.5' fill='#5b6b7a' text-anchor='middle'>変更を並べて比べられる</text><path d='M412,95 L472,95' stroke='#b9d0ea' stroke-width='3' stroke-dasharray='5 4' marker-end='url(#gg11)'/><rect x='480' y='60' width='110' height='70' rx='12' fill='#eef4fb' stroke='#2a6fb5'/><text x='535' y='90' font-size='12' fill='#1c548c' text-anchor='middle' font-weight='700'>main</text><text x='535' y='110' font-size='10.5' fill='#8aa2b8' text-anchor='middle'>確認後に取り込む</text></svg><figcaption>Pull Request（PR）は「この変更を見て取り込みませんか」という提案書。急いで本番を変えず、比べて確認する場所を作る。</figcaption></figure>"
     },
     {
       "id": 12,
@@ -174,14 +391,34 @@
       "title": "レビュー＝取り込む前の読み合わせ",
       "scene": "神様は、Pull Requestを静かに読み始めた。",
       "dialogue": [
-        ["github", "GitHub氏", "PRを作ったら、すぐマージしていい？"],
-        ["god", "神様", "まずレビューじゃ。変わった箇所、目的、表示、影響を確かめる。"],
-        ["git", "Gitさん", "間違いを探すだけじゃなく、意図どおりかを確かめるんだね。"],
-        ["god", "神様", "その通り。小さな確認が、公開後の困りごとを減らす。"]
+        [
+          "github",
+          "GitHub氏",
+          "PRを作ったら、すぐマージしていい？"
+        ],
+        [
+          "god",
+          "神様",
+          "まずレビューじゃ。変わった箇所、目的、表示、影響を確かめる。"
+        ],
+        [
+          "git",
+          "Gitさん",
+          "間違いを探すだけじゃなく、意図どおりかを確かめるんだね。"
+        ],
+        [
+          "god",
+          "神様",
+          "その通り。小さな確認が、公開後の困りごとを減らす。"
+        ]
       ],
       "keyPoint": "レビューは、変更の正しさ・意図・影響を確認する作業です。",
-      "practice": ["Files changedで変更箇所を上から読む。", "『利用者にどう見えるか』を一つ確認する。"],
-      "note": "自動チェックが通っても、文章や見た目の確認は別に必要です。"
+      "practice": [
+        "Files changedで変更箇所を上から読む。",
+        "『利用者にどう見えるか』を一つ確認する。"
+      ],
+      "note": "自動チェックが通っても、文章や見た目の確認は別に必要です。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 200' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg12' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='30' y='60' width='130' height='70' rx='12' fill='#dceafa' stroke='#2a6fb5' stroke-width='2'/><text x='95' y='95' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>Pull Request</text><text x='95' y='114' font-size='10.5' fill='#5b6b7a' text-anchor='middle'>提案された変更</text><path d='M162,95 L212,95' stroke='#bf972c' stroke-width='3' marker-end='url(#gg12)'/><rect x='220' y='35' width='200' height='130' rx='12' fill='#fff7e6' stroke='#e6cf92' stroke-width='2'/><text x='320' y='60' font-size='13' fill='#9c7a1f' text-anchor='middle' font-weight='700'>レビュー＝読み合わせ</text><g font-size='11' fill='#9c7a1f'><text x='240' y='86'>□ 変わった箇所を上から読む</text><text x='240' y='108'>□ 目的どおりか</text><text x='240' y='130'>□ 表示・見え方は問題ないか</text><text x='240' y='152'>□ ほかへの影響はないか</text></g><path d='M422,100 L472,100' stroke='#bf972c' stroke-width='3' marker-end='url(#gg12)'/><rect x='480' y='65' width='110' height='70' rx='12' fill='#eef4fb' stroke='#2a6fb5'/><text x='535' y='95' font-size='12' fill='#1c548c' text-anchor='middle' font-weight='700'>取り込みへ</text><text x='535' y='115' font-size='10.5' fill='#8aa2b8' text-anchor='middle'>確認できたら</text></svg><figcaption>レビューは取り込む前の読み合わせ。間違い探しだけでなく「意図どおりか・利用者にどう見えるか」を確かめる。</figcaption></figure>"
     },
     {
       "id": 13,
@@ -189,14 +426,34 @@
       "title": "Merge と Confirm merge＝公開版へ取り込む",
       "scene": "確認を終えた三人の前に、二つのボタンが現れた。",
       "dialogue": [
-        ["git", "Gitさん", "Merge pull requestを押すのが、取り込む操作？"],
-        ["god", "神様", "そうじゃ。そしてConfirm mergeは、その内容と記録メッセージで本当に取り込む最終確認じゃ。"],
-        ["github", "GitHub氏", "二段階なのは、うっかり本番を変えないためなんだね。"],
-        ["god", "神様", "その通り。確認後にmainへ入り、公開の仕組みがその変更を使えるようになる。"]
+        [
+          "git",
+          "Gitさん",
+          "Merge pull requestを押すのが、取り込む操作？"
+        ],
+        [
+          "god",
+          "神様",
+          "そうじゃ。そしてConfirm mergeは、その内容と記録メッセージで本当に取り込む最終確認じゃ。"
+        ],
+        [
+          "github",
+          "GitHub氏",
+          "二段階なのは、うっかり本番を変えないためなんだね。"
+        ],
+        [
+          "god",
+          "神様",
+          "その通り。確認後にmainへ入り、公開の仕組みがその変更を使えるようになる。"
+        ]
       ],
       "keyPoint": "Mergeは変更をmainへ取り込む操作、Confirm mergeはその実行を確定する最終操作です。",
-      "practice": ["マージ前にPRの目的と変更ファイルをもう一度見る。", "マージ後にmainの履歴へ記録が入ったことを確認する。"],
-      "note": "マージ後も公開反映まで時間がかかる場合があります。デプロイ状況を確認します。"
+      "practice": [
+        "マージ前にPRの目的と変更ファイルをもう一度見る。",
+        "マージ後にmainの履歴へ記録が入ったことを確認する。"
+      ],
+      "note": "マージ後も公開反映まで時間がかかる場合があります。デプロイ状況を確認します。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 190' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg13' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='20' y='70' width='120' height='60' rx='10' fill='#dceafa' stroke='#2a6fb5'/><text x='80' y='96' font-size='12' fill='#1c548c' text-anchor='middle' font-weight='700'>確認済みのPR</text><text x='80' y='114' font-size='10.5' fill='#5b6b7a' text-anchor='middle'>レビュー完了</text><path d='M142,100 L182,100' stroke='#bf972c' stroke-width='3' marker-end='url(#gg13)'/><rect x='190' y='75' width='150' height='50' rx='8' fill='#2a6fb5'/><text x='265' y='105' font-size='12.5' fill='#fff' text-anchor='middle' font-weight='700'>Merge pull request</text><text x='265' y='142' font-size='10.5' fill='#5b6b7a' text-anchor='middle'>①取り込む操作</text><path d='M342,100 L382,100' stroke='#bf972c' stroke-width='3' marker-end='url(#gg13)'/><rect x='390' y='75' width='130' height='50' rx='8' fill='#1c548c'/><text x='455' y='105' font-size='12.5' fill='#fff' text-anchor='middle' font-weight='700'>Confirm merge</text><text x='455' y='142' font-size='10.5' fill='#5b6b7a' text-anchor='middle'>②最終確認</text><path d='M522,100 L560,100' stroke='#bf972c' stroke-width='3' marker-end='url(#gg13)'/><text x='585' y='96' font-size='12' fill='#1c548c' text-anchor='middle' font-weight='700'>main</text><text x='585' y='112' font-size='10.5' fill='#8aa2b8' text-anchor='middle'>へ反映</text></svg><figcaption>取り込みは二段階。Mergeで「取り込む」、Confirm mergeで「本当に実行」。うっかり本番を変えないための最終確認。</figcaption></figure>"
     },
     {
       "id": 14,
@@ -204,14 +461,34 @@
       "title": "コンフリクト＝同じ場所の違う変更を整える",
       "scene": "二人が同じ文章を別々に書き換え、Gitさんは困ってしまった。",
       "dialogue": [
-        ["git", "Gitさん", "同じ場所に二つの変更があるって言われた。どっちが正しいの？"],
-        ["god", "神様", "それがコンフリクト。Gitは勝手に選ばず、人に意図を聞いているんじゃ。"],
-        ["github", "GitHub氏", "片方を消す前に、両方の目的を確かめるんだね。"],
-        ["god", "神様", "そうじゃ。迷ったら作業を止め、変更前後とPRを見直してから整える。"]
+        [
+          "git",
+          "Gitさん",
+          "同じ場所に二つの変更があるって言われた。どっちが正しいの？"
+        ],
+        [
+          "god",
+          "神様",
+          "それがコンフリクト。Gitは勝手に選ばず、人に意図を聞いているんじゃ。"
+        ],
+        [
+          "github",
+          "GitHub氏",
+          "片方を消す前に、両方の目的を確かめるんだね。"
+        ],
+        [
+          "god",
+          "神様",
+          "そうじゃ。迷ったら作業を止め、変更前後とPRを見直してから整える。"
+        ]
       ],
       "keyPoint": "コンフリクトは異常ではなく、同じ箇所への異なる変更を人が判断する必要がある状態です。",
-      "practice": ["競合したファイル名と、競合した行を確認する。", "分からない場合は無理に確定せず、変更の意図を確認する。"],
-      "note": "『oursを採用』などの操作は内容を理解してから。機械的に選ぶと必要な変更を失うことがあります。"
+      "practice": [
+        "競合したファイル名と、競合した行を確認する。",
+        "分からない場合は無理に確定せず、変更の意図を確認する。"
+      ],
+      "note": "『oursを採用』などの操作は内容を理解してから。機械的に選ぶと必要な変更を失うことがあります。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 200' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg14' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='30' y='40' width='150' height='50' rx='10' fill='#eaf3fc' stroke='#2a6fb5'/><text x='105' y='60' font-size='11.5' fill='#1c548c' text-anchor='middle' font-weight='700'>あなたの変更</text><text x='105' y='78' font-size='10.5' fill='#5b6b7a' text-anchor='middle'>同じ行を「A」に</text><rect x='30' y='110' width='150' height='50' rx='10' fill='#fff7e6' stroke='#e6cf92'/><text x='105' y='130' font-size='11.5' fill='#9c7a1f' text-anchor='middle' font-weight='700'>相手の変更</text><text x='105' y='148' font-size='10.5' fill='#9c7a1f' text-anchor='middle'>同じ行を「B」に</text><path d='M182,65 L250,90' stroke='#bf972c' stroke-width='3' marker-end='url(#gg14)'/><path d='M182,135 L250,110' stroke='#bf972c' stroke-width='3' marker-end='url(#gg14)'/><rect x='258' y='72' width='150' height='56' rx='10' fill='#fde8e8' stroke='#e0a0a0' stroke-width='2'/><text x='333' y='96' font-size='12.5' fill='#a94442' text-anchor='middle' font-weight='700'>コンフリクト</text><text x='333' y='116' font-size='10.5' fill='#a94442' text-anchor='middle'>同じ場所・違う変更</text><path d='M410,100 L470,100' stroke='#bf972c' stroke-width='3' marker-end='url(#gg14)'/><text x='440' y='90' font-size='10.5' fill='#9c7a1f' text-anchor='middle'>人が判断</text><rect x='478' y='72' width='120' height='56' rx='10' fill='#e6f4ea' stroke='#8fc7a3' stroke-width='2'/><text x='538' y='96' font-size='12' fill='#2f7d4f' text-anchor='middle' font-weight='700'>意図を確かめ</text><text x='538' y='114' font-size='11' fill='#2f7d4f' text-anchor='middle'>整える</text></svg><figcaption>コンフリクトは異常ではない。同じ場所への違う変更をGitが勝手に選ばず人に聞いている状態。両方の目的を確かめて整える。</figcaption></figure>"
     },
     {
       "id": 15,
@@ -219,14 +496,34 @@
       "title": "GitHub Actions＝決まった作業を自動で動かす係",
       "scene": "毎朝同じ作業をしている神様の前に、小さな自動係が現れた。",
       "dialogue": [
-        ["github", "GitHub氏", "毎回同じ確認をするなら、誰かに頼めないかな？"],
-        ["god", "神様", "GitHub Actionsがその係じゃ。決めた時刻や変更をきっかけに、同じ手順を自動で実行する。"],
-        ["git", "Gitさん", "このお勉強会の毎日更新も、その係がしているんだね。"],
-        ["god", "神様", "そうじゃ。ただし自動化にも、何を実行するかを書いた設計図が必要じゃ。"]
+        [
+          "github",
+          "GitHub氏",
+          "毎回同じ確認をするなら、誰かに頼めないかな？"
+        ],
+        [
+          "god",
+          "神様",
+          "GitHub Actionsがその係じゃ。決めた時刻や変更をきっかけに、同じ手順を自動で実行する。"
+        ],
+        [
+          "git",
+          "Gitさん",
+          "このお勉強会の毎日更新も、その係がしているんだね。"
+        ],
+        [
+          "god",
+          "神様",
+          "そうじゃ。ただし自動化にも、何を実行するかを書いた設計図が必要じゃ。"
+        ]
       ],
       "keyPoint": "GitHub Actionsは、テスト・同期・公開準備などの定型作業をGitHub上で自動実行する仕組みです。",
-      "practice": ["リポジトリのActionsタブを開く。", "実行履歴で『いつ、何が、成功したか』を確認する。"],
-      "note": "自動化の失敗は見えにくいことがあります。実行結果と通知の確認を運用に入れます。"
+      "practice": [
+        "リポジトリのActionsタブを開く。",
+        "実行履歴で『いつ、何が、成功したか』を確認する。"
+      ],
+      "note": "自動化の失敗は見えにくいことがあります。実行結果と通知の確認を運用に入れます。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 190' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg15' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='20' y='55' width='150' height='80' rx='10' fill='#fff7e6' stroke='#e6cf92' stroke-width='2'/><text x='95' y='82' font-size='12' fill='#9c7a1f' text-anchor='middle' font-weight='700'>きっかけ</text><text x='95' y='103' font-size='10.5' fill='#9c7a1f' text-anchor='middle'>決めた時刻</text><text x='95' y='120' font-size='10.5' fill='#9c7a1f' text-anchor='middle'>または変更</text><path d='M172,95 L232,95' stroke='#bf972c' stroke-width='3' marker-end='url(#gg15)'/><rect x='240' y='45' width='180' height='100' rx='14' fill='#dceafa' stroke='#2a6fb5' stroke-width='2'/><text x='330' y='74' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>GitHub Actions</text><text x='330' y='94' font-size='10.5' fill='#5b6b7a' text-anchor='middle'>決めた手順を自動実行</text><rect x='262' y='104' width='136' height='28' rx='6' fill='#fff' stroke='#b9d0ea'/><text x='330' y='123' font-size='10' fill='#5b6b7a' text-anchor='middle'>設計図（ワークフロー）に沿って</text><path d='M422,95 L482,95' stroke='#bf972c' stroke-width='3' marker-end='url(#gg15)'/><rect x='490' y='55' width='110' height='80' rx='10' fill='#eef4fb' stroke='#2a6fb5'/><text x='545' y='88' font-size='12' fill='#1c548c' text-anchor='middle' font-weight='700'>結果</text><text x='545' y='108' font-size='10' fill='#8aa2b8' text-anchor='middle'>公開・同期</text><text x='545' y='123' font-size='10' fill='#8aa2b8' text-anchor='middle'>テストなど</text></svg><figcaption>GitHub Actionsは「決めたきっかけ→決めた手順を自動実行→結果」の係。このお勉強会の毎朝更新もActionsが動かしている。</figcaption></figure>"
     },
     {
       "id": 16,
@@ -234,14 +531,34 @@
       "title": "GitHub Pages＝GitHubからサイトを公開する場所",
       "scene": "GitHub氏の保管箱から、世界へ続く小さな扉が開いた。",
       "dialogue": [
-        ["github", "GitHub氏", "ファイルを置いただけで、どうしてホームページになるの？"],
-        ["god", "神様", "GitHub Pagesが、指定されたファイルをWebサイトとして届けているからじゃ。"],
-        ["git", "Gitさん", "mainに入った記録が、公開サイトにつながることもあるんだね。"],
-        ["god", "神様", "その通り。だから公開前の確認と、公開後に実際の画面を見ることが大切じゃ。"]
+        [
+          "github",
+          "GitHub氏",
+          "ファイルを置いただけで、どうしてホームページになるの？"
+        ],
+        [
+          "god",
+          "神様",
+          "GitHub Pagesが、指定されたファイルをWebサイトとして届けているからじゃ。"
+        ],
+        [
+          "git",
+          "Gitさん",
+          "mainに入った記録が、公開サイトにつながることもあるんだね。"
+        ],
+        [
+          "god",
+          "神様",
+          "その通り。だから公開前の確認と、公開後に実際の画面を見ることが大切じゃ。"
+        ]
       ],
       "keyPoint": "GitHub Pagesは、リポジトリのHTMLなどをWebサイトとして公開できる機能です。",
-      "practice": ["公開サイトをスマートフォン幅でも開く。", "リンク・文章・画像が意図どおりか確認する。"],
-      "note": "公開サイトは広く見られます。住所・連絡先・認証情報などを不用意に載せません。"
+      "practice": [
+        "公開サイトをスマートフォン幅でも開く。",
+        "リンク・文章・画像が意図どおりか確認する。"
+      ],
+      "note": "公開サイトは広く見られます。住所・連絡先・認証情報などを不用意に載せません。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 185' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg16' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='30' y='55' width='160' height='80' rx='12' fill='#dceafa' stroke='#2a6fb5' stroke-width='2'/><text x='110' y='82' font-size='12.5' fill='#1c548c' text-anchor='middle' font-weight='700'>GitHub（main）</text><rect x='52' y='98' width='116' height='24' rx='6' fill='#fff' stroke='#b9d0ea'/><text x='110' y='115' font-size='11' fill='#5b6b7a' text-anchor='middle'>index.html など</text><path d='M192,95 L262,95' stroke='#bf972c' stroke-width='3.5' marker-end='url(#gg16)'/><text x='227' y='84' font-size='11' fill='#9c7a1f' text-anchor='middle' font-weight='700'>公開</text><rect x='270' y='50' width='170' height='90' rx='14' fill='#eef4fb' stroke='#2a6fb5' stroke-width='2'/><text x='355' y='80' font-size='12.5' fill='#1c548c' text-anchor='middle' font-weight='700'>GitHub Pages</text><text x='355' y='100' font-size='10.5' fill='#5b6b7a' text-anchor='middle'>ファイルをWebサイト</text><text x='355' y='116' font-size='10.5' fill='#5b6b7a' text-anchor='middle'>として届ける</text><path d='M442,95 L502,95' stroke='#bf972c' stroke-width='3.5' marker-end='url(#gg16)'/><rect x='510' y='55' width='90' height='80' rx='10' fill='#fff7e6' stroke='#e6cf92' stroke-width='2'/><text x='555' y='90' font-size='12' fill='#9c7a1f' text-anchor='middle' font-weight='700'>公開サイト</text><text x='555' y='110' font-size='11' fill='#9c7a1f' text-anchor='middle'>（世界へ）</text></svg><figcaption>GitHub Pagesは、mainに入ったHTMLをそのままWebサイトとして公開する機能。公開前の確認と、公開後に実画面を見るのが大切。</figcaption></figure>"
     },
     {
       "id": 17,
@@ -249,14 +566,34 @@
       "title": "秘密情報を守る＝GitHubに置かないもの",
       "scene": "GitHub氏の箱に、鍵のかかったメモが混ざりそうになった。",
       "dialogue": [
-        ["github", "GitHub氏", "このパスワードやAPIキーも、記録しておけば便利かな？"],
-        ["god", "神様", "いかん。公開リポジトリに秘密情報を置いてはならぬ。消しても履歴に残るおそれがある。"],
-        ["git", "Gitさん", "じゃあ安全に自動化するにはどうするの？"],
-        ["god", "神様", "GitHub Secretsのような、公開ファイルとは別の安全な保管場所を使うのじゃ。"]
+        [
+          "github",
+          "GitHub氏",
+          "このパスワードやAPIキーも、記録しておけば便利かな？"
+        ],
+        [
+          "god",
+          "神様",
+          "いかん。公開リポジトリに秘密情報を置いてはならぬ。消しても履歴に残るおそれがある。"
+        ],
+        [
+          "git",
+          "Gitさん",
+          "じゃあ安全に自動化するにはどうするの？"
+        ],
+        [
+          "god",
+          "神様",
+          "GitHub Secretsのような、公開ファイルとは別の安全な保管場所を使うのじゃ。"
+        ]
       ],
       "keyPoint": "パスワード、APIキー、トークン、個人情報はコードや公開履歴に入れません。",
-      "practice": ["公開予定の変更に秘密情報がないか見直す。", "設定値を置く場所と公開ファイルを分ける。"],
-      "note": "秘密情報を誤って公開した疑いがあるときは、削除だけで済ませず、その値を無効化・再発行します。"
+      "practice": [
+        "公開予定の変更に秘密情報がないか見直す。",
+        "設定値を置く場所と公開ファイルを分ける。"
+      ],
+      "note": "秘密情報を誤って公開した疑いがあるときは、削除だけで済ませず、その値を無効化・再発行します。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 200' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><rect x='30' y='45' width='260' height='125' rx='14' fill='#eef4fb' stroke='#2a6fb5' stroke-width='2'/><text x='160' y='72' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>公開リポジトリ</text><text x='160' y='90' font-size='10.5' fill='#5b6b7a' text-anchor='middle'>誰でも見られる・履歴に残る</text><rect x='55' y='104' width='210' height='24' rx='6' fill='#e6f4ea' stroke='#8fc7a3'/><text x='160' y='121' font-size='11' fill='#2f7d4f' text-anchor='middle'>◯ 公開してよいコード・文章</text><rect x='55' y='134' width='210' height='24' rx='6' fill='#fde8e8' stroke='#e0a0a0'/><text x='160' y='151' font-size='11' fill='#a94442' text-anchor='middle'>✕ パスワード・APIキー・個人情報</text><rect x='340' y='45' width='250' height='125' rx='14' fill='#fbf3ff' stroke='#9a6fb5' stroke-width='2'/><text x='465' y='72' font-size='13' fill='#5b2f7d' text-anchor='middle' font-weight='700'>🔒 GitHub Secrets</text><text x='465' y='90' font-size='10.5' fill='#7a5b8a' text-anchor='middle'>公開ファイルとは別の安全な保管場所</text><rect x='365' y='104' width='200' height='24' rx='6' fill='#fff' stroke='#c9a0e0'/><text x='465' y='121' font-size='11' fill='#5b2f7d' text-anchor='middle'>トークン・鍵はここへ</text><text x='465' y='150' font-size='10.5' fill='#7a5b8a' text-anchor='middle'>コードからは名前で呼び出す</text></svg><figcaption>秘密情報は公開リポジトリに置かない（消しても履歴に残る）。パスワードや鍵はGitHub Secretsなど別の安全な場所で管理する。</figcaption></figure>"
     },
     {
       "id": 18,
@@ -264,14 +601,34 @@
       "title": "最初の一周＝変更から公開までをたどる",
       "scene": "GitさんとGitHub氏は、ここまでの旅を一枚の地図に並べた。",
       "dialogue": [
-        ["git", "Gitさん", "最初はセーブ機能だと思っていたけど、仲間と安全に進める仕組みだったんだね。"],
-        ["github", "GitHub氏", "手元で確認して、ブランチで作業して、PRで見てもらい、mainへ取り込む。流れがつながったよ。"],
-        ["god", "神様", "よく学んだ。大切なのは、急いで操作を覚えることではなく、今どの段階かを確かめながら進むことじゃ。"],
-        ["god", "神様", "迷ったときは status、履歴、PR、Actionsを見よ。記録は必ず次の自分を助けてくれる。"]
+        [
+          "git",
+          "Gitさん",
+          "最初はセーブ機能だと思っていたけど、仲間と安全に進める仕組みだったんだね。"
+        ],
+        [
+          "github",
+          "GitHub氏",
+          "手元で確認して、ブランチで作業して、PRで見てもらい、mainへ取り込む。流れがつながったよ。"
+        ],
+        [
+          "god",
+          "神様",
+          "よく学んだ。大切なのは、急いで操作を覚えることではなく、今どの段階かを確かめながら進むことじゃ。"
+        ],
+        [
+          "god",
+          "神様",
+          "迷ったときは status、履歴、PR、Actionsを見よ。記録は必ず次の自分を助けてくれる。"
+        ]
       ],
       "keyPoint": "Git/GitHubの基本は、確認しながら記録し、レビューを経て、安全に公開へつなげる流れです。",
-      "practice": ["git status → git add → git commit → git push の順を声に出して確認する。", "ブランチ → PR → レビュー → マージの順も紙に書く。"],
-      "note": "全18話は基礎コースの完結です。実際の作業では、分からない表示をそのまま進めず、一つずつ確認します。"
+      "practice": [
+        "git status → git add → git commit → git push の順を声に出して確認する。",
+        "ブランチ → PR → レビュー → マージの順も紙に書く。"
+      ],
+      "note": "全18話は基礎コースの完結です。実際の作業では、分からない表示をそのまま進めず、一つずつ確認します。",
+      "figure": "<figure class='ep-figure'><svg viewBox='0 0 620 210' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg18' markerWidth='9' markerHeight='9' refX='5.5' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><text x='310' y='24' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>変更から公開まで、ひとつの流れ</text><g font-size='10.5' font-weight='700'><rect x='18' y='45' width='86' height='42' rx='8' fill='#eaf3fc' stroke='#2a6fb5'/><text x='61' y='66' fill='#1c548c' text-anchor='middle'>status</text><text x='61' y='80' fill='#5b6b7a' text-anchor='middle' font-weight='400' font-size='9.5'>現在地</text><rect x='128' y='45' width='86' height='42' rx='8' fill='#eaf3fc' stroke='#2a6fb5'/><text x='171' y='66' fill='#1c548c' text-anchor='middle'>add</text><text x='171' y='80' fill='#5b6b7a' text-anchor='middle' font-weight='400' font-size='9.5'>選ぶ</text><rect x='238' y='45' width='86' height='42' rx='8' fill='#eaf3fc' stroke='#2a6fb5'/><text x='281' y='66' fill='#1c548c' text-anchor='middle'>commit</text><text x='281' y='80' fill='#5b6b7a' text-anchor='middle' font-weight='400' font-size='9.5'>記録</text><rect x='348' y='45' width='86' height='42' rx='8' fill='#eaf3fc' stroke='#2a6fb5'/><text x='391' y='66' fill='#1c548c' text-anchor='middle'>push</text><text x='391' y='80' fill='#5b6b7a' text-anchor='middle' font-weight='400' font-size='9.5'>送る</text><rect x='458' y='45' width='86' height='42' rx='8' fill='#fff7e6' stroke='#e6cf92'/><text x='501' y='66' fill='#9c7a1f' text-anchor='middle'>PR</text><text x='501' y='80' fill='#9c7a1f' text-anchor='middle' font-weight='400' font-size='9.5'>提案</text></g><path d='M104,66 L126,66' stroke='#bf972c' stroke-width='2.5' marker-end='url(#gg18)'/><path d='M214,66 L236,66' stroke='#bf972c' stroke-width='2.5' marker-end='url(#gg18)'/><path d='M324,66 L346,66' stroke='#bf972c' stroke-width='2.5' marker-end='url(#gg18)'/><path d='M434,66 L456,66' stroke='#bf972c' stroke-width='2.5' marker-end='url(#gg18)'/><path d='M501,89 C501,110 391,110 391,128' fill='none' stroke='#bf972c' stroke-width='2.5' marker-end='url(#gg18)'/><g font-size='10.5' font-weight='700'><rect x='348' y='130' width='86' height='42' rx='8' fill='#fff7e6' stroke='#e6cf92'/><text x='391' y='151' fill='#9c7a1f' text-anchor='middle'>レビュー</text><text x='391' y='165' fill='#9c7a1f' text-anchor='middle' font-weight='400' font-size='9.5'>読み合わせ</text><rect x='238' y='130' width='86' height='42' rx='8' fill='#2a6fb5'/><text x='281' y='151' fill='#fff' text-anchor='middle'>merge</text><text x='281' y='165' fill='#dce9f7' text-anchor='middle' font-weight='400' font-size='9.5'>取り込む</text><rect x='128' y='130' width='86' height='42' rx='8' fill='#eef4fb' stroke='#2a6fb5'/><text x='171' y='151' fill='#1c548c' text-anchor='middle'>Pages</text><text x='171' y='165' fill='#5b6b7a' text-anchor='middle' font-weight='400' font-size='9.5'>公開</text></g><path d='M348,151 L326,151' stroke='#bf972c' stroke-width='2.5' marker-end='url(#gg18)'/><path d='M238,151 L216,151' stroke='#bf972c' stroke-width='2.5' marker-end='url(#gg18)'/><circle cx='105' cy='151' r='16' fill='#e6f4ea' stroke='#8fc7a3'/><text x='105' y='155' font-size='14' text-anchor='middle'>🌐</text><path d='M128,151 L124,151' stroke='#bf972c' stroke-width='2.5' marker-end='url(#gg18)'/></svg><figcaption>ここまでの一周：status→add→commit→pushで記録を送り、PR→レビュー→mergeで確認して取り込み、Pagesで公開へつながる。</figcaption></figure>"
     }
   ]
 }
