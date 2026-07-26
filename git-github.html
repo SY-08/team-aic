@@ -234,6 +234,19 @@
 <p class="lesson-note">確認事項：よく分からないファイルをまとめて追加しないこと。まず内容を確認します。</p>
 </div>
 </details>
+<details class="ep" data-git-github-lesson="8">
+<summary><span class="tag">Git操作</span>第8話 push＝手元のセーブをGitHubへ届ける</summary>
+<div class="chat">
+<div class="stage"><span>——コミットを作ったGitさんは、GitHub氏へ連絡したくなった。</span></div>
+<div class="msg git"><div class="chat-av git"></div><div class="msg-body"><div class="name">Gitさん</div><div class="bubble">手元でコミットしたよ。GitHub氏の箱にも入る？</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">まだじゃ。git pushで、手元のコミットをリモートへ送るんじゃ。</div></div></div>
+<div class="msg github"><div class="chat-av github"></div><div class="msg-body"><div class="name">GitHub氏</div><div class="bubble">届けば、ぼくの画面でも履歴として見られるんだね。</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">そうじゃ。pushの成功表示を確認してから、GitHubの画面でも内容を見るのじゃ。</div></div></div>
+<figure class='ep-figure'><svg viewBox='0 0 620 190' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg8' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='40' y='60' width='170' height='80' rx='12' fill='#eaf3fc' stroke='#2a6fb5' stroke-width='2'/><text x='125' y='88' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>手元（ローカル）</text><rect x='62' y='102' width='126' height='24' rx='6' fill='#fff' stroke='#b9d0ea'/><text x='125' y='119' font-size='11' fill='#5b6b7a' text-anchor='middle'>コミット済み</text><path d='M215,100 L370,100' stroke='#bf972c' stroke-width='3.5' marker-end='url(#gg8)'/><text x='292' y='88' font-size='13' fill='#9c7a1f' text-anchor='middle' font-weight='700'>git push</text><text x='292' y='120' font-size='10.5' fill='#9c7a1f' text-anchor='middle'>ブランチへ送る</text><rect x='400' y='55' width='180' height='90' rx='14' fill='#dceafa' stroke='#2a6fb5' stroke-width='2'/><text x='490' y='84' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>GitHub（リモート）</text><rect x='422' y='100' width='136' height='24' rx='6' fill='#fff' stroke='#b9d0ea'/><text x='490' y='117' font-size='11' fill='#5b6b7a' text-anchor='middle'>同じ履歴が見える</text></svg><figcaption>git pushは、手元のコミットをGitHubのブランチへ届ける操作。届いた先はまず「送ったブランチ」。公開やmainと同じではない。</figcaption></figure>
+<div class="lesson-practice"><strong>今回のポイント</strong>git pushは、ローカルのコミットをGitHub上のブランチへ送る操作です。<strong style="margin-top:10px">10分で試すこと</strong><ul><li>コミット後に git push を実行する。</li><li>GitHubのコミット一覧を更新し、同じメッセージが見えるか確認する。</li></ul></div>
+<p class="lesson-note">確認事項：pushは公開やmainへの反映と同義ではありません。送った先のブランチを必ず確認します。</p>
+</div>
+</details>
 <!-- git-github:auto-lessons:end -->
 
     <div class="callout" style="margin-top:22px">
@@ -244,7 +257,7 @@
     </div>
 
     <!-- git-github:auto-status:start -->
-<p class="course-status">公開済み：第1〜7話／次回：第8話「push＝手元のセーブをGitHubへ届ける」。GitHub Actionsが毎朝1話ずつ公開します。</p>
+<p class="course-status">公開済み：第1〜8話／次回：第9話「fetch / pull＝始める前に最新を受け取る」。GitHub Actionsが毎朝1話ずつ公開します。</p>
 <!-- git-github:auto-status:end -->
 
     <div class="cta-row" style="margin-top:18px">
