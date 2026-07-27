@@ -247,6 +247,19 @@
 <p class="lesson-note">確認事項：pushは公開やmainへの反映と同義ではありません。送った先のブランチを必ず確認します。</p>
 </div>
 </details>
+<details class="ep" data-git-github-lesson="9">
+<summary><span class="tag">Git操作</span>第9話 fetch / pull＝始める前に最新を受け取る</summary>
+<div class="chat">
+<div class="stage"><span>——GitHub氏の箱には、Gitさんが知らない新しい記録が増えていた。</span></div>
+<div class="msg github"><div class="chat-av github"></div><div class="msg-body"><div class="name">GitHub氏</div><div class="bubble">ほかの人が先に更新しているかもしれないよ。</div></div></div>
+<div class="msg git"><div class="chat-av git"></div><div class="msg-body"><div class="name">Gitさん</div><div class="bubble">じゃあ、作業を始める前に見に行く必要があるね。</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">git fetchは最新情報を受け取る操作、git pullは受け取って手元へ反映する操作じゃ。</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">まず状態を確認し、何が変わるか分かったうえで取り込むのが大切じゃ。</div></div></div>
+<figure class='ep-figure'><svg viewBox='0 0 620 190' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg9' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='410' y='50' width='180' height='90' rx='14' fill='#dceafa' stroke='#2a6fb5' stroke-width='2'/><text x='500' y='78' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>GitHub（リモート）</text><rect x='432' y='95' width='136' height='24' rx='6' fill='#fff7e6' stroke='#e6cf92'/><text x='500' y='112' font-size='11' fill='#9c7a1f' text-anchor='middle'>新しい記録が増えた</text><rect x='40' y='55' width='170' height='80' rx='12' fill='#eaf3fc' stroke='#2a6fb5' stroke-width='2'/><text x='125' y='83' font-size='13' fill='#1c548c' text-anchor='middle' font-weight='700'>手元（ローカル）</text><rect x='62' y='97' width='126' height='24' rx='6' fill='#fff' stroke='#b9d0ea'/><text x='125' y='114' font-size='11' fill='#5b6b7a' text-anchor='middle'>作業を始める前</text><path d='M405,80 L215,80' stroke='#bf972c' stroke-width='3' marker-end='url(#gg9)'/><text x='310' y='70' font-size='12' fill='#9c7a1f' text-anchor='middle' font-weight='700'>fetch＝確認だけ</text><path d='M405,115 L215,115' stroke='#2a6fb5' stroke-width='3' marker-end='url(#gg9)'/><text x='310' y='134' font-size='12' fill='#1c548c' text-anchor='middle' font-weight='700'>pull＝取り込む</text></svg><figcaption>作業前に最新を受け取る。fetchは「確認だけ」、pullは「確認して手元にも取り込む」。中身を見てから取り込むのが安全。</figcaption></figure>
+<div class="lesson-practice"><strong>今回のポイント</strong>fetchは確認用に最新情報を受け取り、pullは手元の作業にも取り込む操作です。<strong style="margin-top:10px">10分で試すこと</strong><ul><li>作業前に git fetch origin main を実行する。</li><li>取り込む前に git status と変更内容を確認する。</li></ul></div>
+<p class="lesson-note">確認事項：未保存の変更があるとpullで問題が起きやすくなります。作業を区切ってから実行します。</p>
+</div>
+</details>
 <!-- git-github:auto-lessons:end -->
 
     <div class="callout" style="margin-top:22px">
@@ -257,7 +270,7 @@
     </div>
 
     <!-- git-github:auto-status:start -->
-<p class="course-status">公開済み：第1〜8話／次回：第9話「fetch / pull＝始める前に最新を受け取る」。GitHub Actionsが毎朝1話ずつ公開します。</p>
+<p class="course-status">公開済み：第1〜9話／次回：第10話「ブランチ＝本番を守る別の作業道」。GitHub Actionsが毎朝1話ずつ公開します。</p>
 <!-- git-github:auto-status:end -->
 
     <div class="cta-row" style="margin-top:18px">
