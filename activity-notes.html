@@ -34,6 +34,8 @@
   .post{display:grid;grid-template-columns:150px 1fr;gap:18px;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:box-shadow .16s,transform .12s;}
   .post:hover{box-shadow:0 12px 30px rgba(30,70,55,.10);transform:translateY(-1px);}
   .post .thumb{background:linear-gradient(135deg,#2cb696,#8fe0cd);display:flex;align-items:center;justify-content:center;font-size:2.4rem;min-height:120px;}
+  .post .thumb.photo{padding:0;background:#e7f7f2;}
+  .post .thumb.photo img{width:100%;height:100%;min-height:120px;object-fit:cover;display:block;}
   .post .body{padding:16px 18px 16px 0;}
   .post .date{font-size:.78rem;color:var(--sub);font-weight:700;}
   .post h2{font-size:1.14rem;margin:5px 0 6px;color:var(--ink);font-weight:900;line-height:1.5;}
@@ -60,6 +62,17 @@
 </section>
 
 <div class="list">
+  <a class="post" href="note-kojima-atsugi-ai.html">
+    <div class="thumb photo"><img src="assets/img/notes/kojima-2026-07-28-thumb.jpg" alt="厚木市役所本庁舎にて、厚木市議会議員の小島まさひろさんと横塚翔太" loading="lazy"></div>
+    <div class="body">
+      <div class="date">2026年7月28日</div>
+      <h2>厚木市議会議員・小島まさひろさんと、AI活用に向けた意見交換をさせて頂きました</h2>
+      <p>厚木市役所本庁舎にて。議員活動・広報の改善から、教育現場でのいじめ・ディスレクシア対策、医療システムの費用と構造課題まで。NotebookLMでの議会だより制作や、Claude・GitHubでのHP自動更新の実演も交えた意見交換の記録。</p>
+      <div class="chips"><span class="chip">#意見交換</span><span class="chip">#自治体DX</span><span class="chip">#議員活動</span><span class="chip">#生成AI</span></div>
+      <span class="more">読む →</span>
+    </div>
+  </a>
+
   <a class="post" href="note-nas-claude-code.html">
     <div class="thumb">🕹️🤖</div>
     <div class="body">
