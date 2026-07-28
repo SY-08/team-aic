@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIを活用した子どもの居場所づくり・学習支援プロジェクト（検討案） | team AIC</title>
+<meta name="description" content="いじめや不登校が起きた時、子どもへの支援にAIをどう生かせるか。厚木市議会議員・小島まさひろ氏との意見交換をきっかけに整理した検討案。学習支援・対話支援・見守り支援・支援計画の補助と、地域からの実証構想をまとめています。">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://sy-08.github.io/team-aic/education-kodomo-ibasho.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AIを活用した子どもの居場所づくり・学習支援プロジェクト（検討案） | team AIC">
+<meta property="og:description" content="いじめ・不登校の共通課題に、AIで何ができるか。検討段階の企画案。">
+<meta property="og:url" content="https://sy-08.github.io/team-aic/education-kodomo-ibasho.html">
+<meta property="og:site_name" content="team AIC">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .ed-wrap{max-width:800px;margin:0 auto;padding:0 20px;}
+  .ed-cover{background:linear-gradient(120deg,#eaf4ff,#f4f9f7);border:1px solid #d8e6f2;border-radius:20px;max-width:800px;margin:24px auto 0;padding:30px 26px;}
+  .ed-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
+  .ed-chip{font-size:.74rem;font-weight:700;color:#1c548c;background:#dcebfa;border:1px solid #bfd8ee;border-radius:999px;padding:3px 11px;}
+  .ed-cover h1{font-size:clamp(1.45rem,4.4vw,2.05rem);line-height:1.5;margin:0 0 10px;font-weight:900;color:#1b2b28;}
+  .ed-cover .sub{color:#5b6b7a;font-size:.92rem;margin:0;}
+  .ed-status{background:#fff8e8;border:1px solid #ecd9a6;border-left:4px solid #d9a441;border-radius:0 12px 12px 0;padding:14px 18px;margin:22px 0;color:#6b5518;}
+  .ed-status b{display:block;margin-bottom:5px;color:#8a6d1a;}
+  .ed-body h2{font-size:1.3rem;margin:36px 0 10px;color:#1b2b28;font-weight:900;padding-bottom:8px;border-bottom:2px solid #eef4f2;}
+  .ed-body h3{font-size:1.05rem;margin:22px 0 6px;color:#249c80;font-weight:800;}
+  .ed-body p{line-height:1.95;margin:10px 0;color:#33403c;}
+  .ed-body ul,.ed-body ol{padding-left:1.35em;line-height:1.9;color:#33403c;}
+  .ed-body li{margin:6px 0;}
+  .ed-lead{background:#f4f9f7;border-left:4px solid #2cb696;border-radius:0 12px 12px 0;padding:13px 17px;color:#40514c;}
+  .ed-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:14px 0;}
+  .ed-card{border:1px solid #dfeae6;border-radius:14px;padding:15px 17px;background:#fff;}
+  .ed-card b{display:block;color:#249c80;margin-bottom:5px;font-size:.98rem;}
+  .ed-card p{margin:0;font-size:.92rem;line-height:1.8;}
+  .ed-step{border-left:3px solid #cfe6db;padding:2px 0 2px 18px;margin:14px 0;}
+  .ed-step b{color:#1b2b28;}
+  .ed-guard{background:#f7fbff;border:1px solid #cfe0f0;border-radius:14px;padding:16px 19px;margin:14px 0;}
+  .ed-guard li{margin:7px 0;}
+  .ed-back{display:flex;flex-wrap:wrap;gap:14px;margin:34px 0 12px;font-size:.92rem;font-weight:700;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">AIC</span>
+      <span class="brand-name">team AIC<small>{team AI circle}</small></span>
+    </a>
+    <nav class="site-nav" id="siteNav"></nav>
+    <button class="nav-toggle" id="navToggle" aria-label="メニュー" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="ed-cover">
+    <div class="ed-chips"><span class="ed-chip">Education</span><span class="ed-chip">検討案</span><span class="ed-chip">2026年7月</span></div>
+    <h1>AIを活用した<br>子どもの居場所づくり・学習支援プロジェクト</h1>
+    <p class="sub">team AIC ／ 教育領域　検討案（実証前・未決定）</p>
+  </div>
+
+  <div class="ed-wrap"><article class="ed-body">
+
+    <div class="ed-status">
+      <b>公開上の位置づけ：検討段階の企画案（実証前・未決定）</b>
+      このページは、AIを活用した子どもの居場所づくり・学習支援の可能性を整理した検討案です。特定の学校・行政・団体との実施や連携が決定したものではありません。子どもの安全と本人の意思を最優先に、人による支援を前提として考えます。
+    </div>
+
+    <h2>背景</h2>
+    <p class="ed-lead">本企画は、厚木市議会議員 <b>小島まさひろ</b>氏とのAI活用に関する意見交換を通じて得られた気付きをもとに、「いじめ」や「不登校」が発生した際の子どもへの支援について、AIをどのように活用できるかという観点から検討・考案したものです。</p>
+    <p>近年、生成AIの急速な発展により、教育現場や行政においてもAI活用の可能性が広がっています。一方で、いじめや不登校は依然として深刻な社会課題であり、学校だけで解決することが難しいケースも少なくありません。</p>
+    <p>いじめと不登校は密接に関係する場合もありますが、それぞれ異なる要因によって生じる課題であり、一律の解決策では十分な支援ができません。その一方で、両者には<b>共通して支援が必要となる課題</b>も存在します。本企画では、それらの共通課題に対してAIを活用することで、子ども・保護者・学校・支援機関をつなぐ新たな支援モデルの実現可能性について検討します。</p>
+    <p>▶ 出発点となった意見交換の記録：<a href="note-kojima-atsugi-ai.html">厚木市議会議員・小島まさひろさんと、AI活用に向けた意見交換をさせて頂きました（2026年7月28日）</a><br>
+    ▶ 小島まさひろ氏について：<a href="https://kojimamasahiro.jimdofree.com/" target="_blank" rel="noopener">小島まさひろ official サイト</a></p>
+
+    <h2>1. 共通する課題</h2>
+    <p>いじめ・不登校には様々な原因が存在しますが、共通して支援が必要となる要素として次の点が考えられます。</p>
+    <div class="ed-cards">
+      <div class="ed-card"><b>（1）安心できる居場所を失うこと</b><p>学校だけでなく、自宅や地域を含め、「自分が安心して過ごせる場所」がなくなることで孤立感が強まります。</p></div>
+      <div class="ed-card"><b>（2）本音を話せる相手がいないこと</b><p>相談できる相手が見つからず、一人で悩みを抱え込んでしまいます。</p></div>
+      <div class="ed-card"><b>（3）学習機会が失われること</b><p>学校へ通えない状況が続くことで学習が止まり、復帰への心理的ハードルが高くなります。</p></div>
+      <div class="ed-card"><b>（4）支援者が状況を把握しづらいこと</b><p>保護者や学校、支援機関が子どもの変化に気付きにくく、適切な支援につながるまで時間を要する場合があります。</p></div>
+    </div>
+
+    <h2>2. 本プロジェクトの考え方</h2>
+    <p>本プロジェクトは、AIによって「いじめ」や「不登校」そのものを解決することを目的とするものではありません。AIを活用し、</p>
+    <ul>
+      <li>子どもが安心できる環境をつくること</li>
+      <li>学びを継続できる環境をつくること</li>
+      <li>支援者が早期に状況を把握できる仕組みをつくること</li>
+    </ul>
+    <p>を目的とします。<b>AIは先生や保護者の代替ではなく、子どもと支援者をつなぐ伴走者</b>として位置付けます。</p>
+
+    <h2>3. AI活用案</h2>
+
+    <h3>① AIによる学習支援</h3>
+    <p><b>目的：</b>学校へ通えない期間でも学習機会を維持する。</p>
+    <p><b>内容：</b>学校の年間カリキュラムに沿った学習内容をAIが管理し、「今日学ぶ内容 → 理解度確認 → 復習 → 次の日の学習」までを自動でサポートします。子どもの理解度に応じて難易度を調整し、一人ひとりに合った学習計画を提供します。</p>
+
+    <h3>② AIによる対話支援</h3>
+    <p><b>目的：</b>安心して話せる存在を確保する。</p>
+    <p><b>内容：</b>AIは単なるチャットボットではなく、毎日話しかける／日々の変化を確認する／子どもの気持ちを整理する、という役割を担います。会話を通じて安心感を提供し、孤立感の軽減を目指します。</p>
+
+    <h3>③ AIによる見守り支援</h3>
+    <p><b>目的：</b>支援の遅れを防ぐ。</p>
+    <p><b>内容：</b>会話履歴や日々の様子から、会話量の変化・気分の変化・学習状況などを整理し、必要に応じて保護者や支援者へ共有します。<b>※AIが診断を行うものではなく、支援者が状況を把握するための補助機能とします。</b></p>
+
+    <h3>④ AIによる支援計画の補助</h3>
+    <p>保護者や学校、支援者から得られる情報を基に、接し方・学習ペース・声掛け方法などを整理し、一人ひとりに合わせた支援方針の作成を支援します。</p>
+
+    <h2>人が担うことと、守ること</h2>
+    <div class="ed-guard">
+      <ul>
+        <li>子ども本人の意思、安心、安全を最優先にする</li>
+        <li>AIは診断や最終判断を行わない</li>
+        <li>緊急性のある相談は、地域の相談窓口・専門職など<b>人の支援へ確実につなぐ</b></li>
+        <li>会話履歴や学習データの扱いは、本人・保護者の同意、目的、閲覧範囲、保存期間を明確にする</li>
+        <li>支援者の負担を増やさない運用と、説明責任を最初から設計する</li>
+      </ul>
+    </div>
+
+    <h2>4. 実証フィールド</h2>
+    <p>学校から開始するのではなく、<b>地域での実証</b>を想定します。</p>
+    <ul>
+      <li>フリースクール</li>
+      <li>教育支援センター</li>
+      <li>子どもの居場所事業</li>
+      <li>学習支援団体</li>
+      <li>厚木市内の子ども支援団体</li>
+    </ul>
+    <p>地域で実績を積んだ後、教育委員会や学校との連携を目指します。</p>
+
+    <h2>5. 厚木市での実証に向けたアプローチ</h2>
+    <div class="ed-step"><b>第1段階：課題共有</b><br>厚木市議会議員／教育委員会／教育相談センター／校内教育支援センターへ、現状の課題をヒアリングする。</div>
+    <div class="ed-step"><b>第2段階：地域連携</b><br>厚木市内で活動するフリースクール、不登校支援団体、子ども食堂、子どもの居場所事業、NPO法人と連携し、小規模な実証を行う。</div>
+    <div class="ed-step"><b>第3段階：AI試験導入</b><br>10〜20名程度を対象に、AI学習支援・AI対話支援を実施し、利用率／継続率／学習状況／利用者アンケート／保護者アンケートを取得する。</div>
+    <div class="ed-step"><b>第4段階：行政との共同実証</b><br>実証結果を基に、厚木市教育委員会と連携したモデル事業としての展開を検討する。</div>
+
+    <h2>6. 今後さらに検討すべき事項</h2>
+    <ul>
+      <li><b>対象者の明確化</b>（小学生・中学生・高校生のどこを主対象とするか）</li>
+      <li><b>AIの役割範囲</b>（学習支援・対話支援・見守り支援のうち、どこまでをAIが担い、どこからを人が担うか）</li>
+      <li><b>プライバシー・同意</b>（会話履歴の保存、保護者や支援者との共有範囲、本人の同意の取り扱い）</li>
+      <li><b>効果測定</b>（継続利用率、学習時間、自己効力感、支援への接続率など）</li>
+      <li><b>既存制度との連携</b>（校内教育支援センター、教育相談、フリースクールなどとの役割分担）</li>
+      <li><b>導入しやすさ</b>（自治体や支援団体が無理なく試行できるコスト・運用体制）</li>
+    </ul>
+
+    <h2>7. 想定実証プロセス（ロードマップ・仮案）</h2>
+    <p>本プロジェクトは、子どもや保護者の実際のニーズを起点としたサービス設計を行うため、以下のステップで検証・実証を進めます。</p>
+
+    <div class="ed-step"><b>Step1　現状課題の把握</b><br>いじめや不登校に悩む児童・生徒および保護者へのヒアリングやアンケート調査を実施し、現在抱えている悩みや困りごとを把握する。併せて、教育委員会、教育相談センター、フリースクール、子どもの居場所事業などの支援機関へのヒアリングも行い、現場が抱える課題を整理する。</div>
+    <div class="ed-step"><b>Step2　課題仮説の検証</b><br>本企画で整理した共通課題（安心できる居場所がない／本音を話せる相手がいない／学習機会が失われる／支援者が状況を把握しづらい）について、実際の当事者・保護者・支援者から共感やニーズが得られるかを確認する。想定していない課題が存在する場合は、企画へ反映する。</div>
+    <div class="ed-step"><b>Step3　実現可能性の検証（フィージビリティスタディ）</b><br>学校カリキュラムとの連携可能性／教材提供者（学校・教育委員会・学習塾・教材会社等）の協力可能性／AIによる対話支援の実現可能性／個人情報・プライバシー管理／保護者・支援者との情報共有方法／システム運営体制を検証する。</div>
+    <div class="ed-step"><b>Step4　プロトタイプ開発</b><br>検証結果を基に、必要最小限の機能を備えたAIプロトタイプ（AI学習支援・AI対話支援・AI見守り支援）を開発する。</div>
+    <div class="ed-step"><b>Step5　PoC（実証実験）の実施</b><br>フリースクールや地域の支援団体等の協力を得ながら、10〜20名程度を対象に小規模な実証実験を実施し、利用状況／継続率／学習状況／利用者・保護者アンケート／支援者からの評価を取得する。</div>
+    <div class="ed-step"><b>Step6　効果検証・改善</b><br>PoCで得られたデータを分析し、有効だった機能／利用されなかった機能／改善が必要な点／新たな課題を整理し、サービス改善を行う。</div>
+    <div class="ed-step"><b>Step7　継続モニタリング</b><br>改善後も継続的に利用状況をモニタリングし、AIの回答品質や利用者満足度、支援効果を継続的に検証する。教育現場や保護者からのフィードバックを反映しながら運用方法を改善する。</div>
+    <div class="ed-step"><b>Step8　本番環境の構築</b><br>利用するAI基盤の選定／個人情報保護体制／セキュリティ対策／運営主体／保守・サポート体制／利用ルール・ガイドラインを整備する。</div>
+    <div class="ed-step"><b>Step9　サービス開始</b><br>厚木市での実証結果を踏まえ、本番環境でサービスを開始する。開始後も継続的に利用状況や効果測定を行い、教育現場や地域支援団体との連携を深めながら、段階的なサービス拡大を目指す。</div>
+
+    <div class="ed-back">
+      <a href="education.html">← 教育トップへ戻る</a>
+      <a href="note-kojima-atsugi-ai.html">意見交換の記録を読む</a>
+      <a href="activities.html">活動領域へ</a>
+    </div>
+  </article></div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-links"></div>
+    <p>&copy; <span id="year"></span> team AIC - team AI circle. Japan.</p>
+    <p class="footer-note">本ページは検討段階の企画案です。実施・連携が決定した事実を示すものではありません。</p>
+  </div>
+</footer>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
