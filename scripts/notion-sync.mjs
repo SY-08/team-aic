@@ -825,101 +825,66 @@ function renderJournalContentDiagram(title, diagram) {
   return `<section class="journal-diagram journal-diagram--causal" data-journal-diagram-source="article" aria-label="記事の論点整理"><div class="journal-diagram__heading"><p class="journal-diagram__label">図解: 記事の論点整理</p><h4>${escapeHtml(title || "この記事から読み取る論点")}</h4></div><ol class="journal-causal-map">${diagram.steps.map((step, index) => `<li><span class="journal-causal-map__number">${String(index + 1).padStart(2, "0")}</span><span class="journal-causal-map__role">${escapeHtml(step.role)}</span><strong>${escapeHtml(step.heading)}</strong><p>${escapeHtml(step.detail)}</p></li>`).join("")}</ol><p class="journal-diagram__takeaway"><strong>読み取り</strong>${escapeHtml(diagram.takeaway)}</p></section>`;
 }
 
-// ===== TEAM AIC journal diagram (box+arrow) renderer =====
-// Priority: use ChatGPT-authored 図解形式 + 図解データ. Fallback: content-derived steps.
-// All styles are inline so no CSS file change is needed. Renders as real box+arrow
-// (HTML/CSS) so arbitrary Japanese text wraps cleanly.
+// ===== TEAM AIC journal diagram — 10 crossing (2-axis) patterns =====
+// すべて「2つの独立した軸が交差し、各点/各マスが掛け合わせを表す」図。連鎖・階層・分割は使わない。
+const JJC={green:"#2f8f6b",greenD:"#1f6b4f",fill:"#eef6f2",line:"#cddbe8",ink:"#33507a",gray:"#5b6b7a",
+hotBg:"#fdecec",hotBd:"#d98a8a",hotFg:"#a4443f",mid:"#8fc7a3",lite:"#eef6f2",neu:"#f4f8fb"};
+function JJsec(t,inner){return `<section class="journal-diagram journal-diagram--zukai" aria-label="図解: ${escapeHtml(t)}"><p class="journal-diagram__label" style="font-size:.8rem;font-weight:800;letter-spacing:.02em;color:${JJC.greenD};margin:0 0 10px;">図解: ${escapeHtml(t)}</p>${inner}</section>`;}
+function JJL(raw){return raw.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);}
+function JJkv(ls,k){const l=ls.find(x=>x.replace(/^[\-●・\s]+/,'').startsWith(k));if(!l)return null;const i=Math.max(l.indexOf(':'),l.indexOf('：'));return i>=0?l.slice(i+1).trim():null;}
+function JJitems(ls,k){return ls.filter(x=>x.replace(/^[\-●・\s]+/,'').startsWith(k)).map(l=>{const i=Math.max(l.indexOf(':'),l.indexOf('：'));return l.slice(i+1).trim();});}
+function JJdot(v){return (v||"").split(/[・､、,／/]/).map(x=>x.trim()).filter(Boolean);}
+function JJpct(s){const n=parseFloat(s);return isFinite(n)?Math.max(4,Math.min(96,n)):50;}
 
-const ZK = {
-  green: "#2f8f6b", greenD: "#1f6b4f", fill: "#eef6f2", line: "#cfe6db",
-  ink: "#33574a", gray: "#5b6b7a", amberF: "#fff7e6", amberB: "#e6cf92", amberI: "#6b5518",
-};
+// ENGINE: 2-axis JJplot (optional bubble size)
+function JJplot(title,xName,yName,pts,hotLabel){
+  const dots=pts.map(p=>{const hot=p.x>=68&&p.y<=32;const d=p.size?Math.max(10,Math.min(34,10+p.size*0.26)):12;
+    return `<div style="position:absolute;left:${p.x}%;top:${p.y}%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-JJitems:center;z-index:2;"><i style="width:${d}px;height:${d}px;border-radius:50%;background:${hot?'rgba(192,69,63,.85)':'rgba(47,143,107,.8)'};box-shadow:0 0 0 3px ${hot?'rgba(192,69,63,.15)':'rgba(47,143,107,.13)'};"></i><span style="font-size:.71rem;font-weight:700;color:#1f3b4d;margin-top:3px;white-space:nowrap;background:rgba(255,255,255,.85);padding:0 3px;border-radius:4px;">${escapeHtml(p.label)}</span></div>`;}).join("");
+  return JJsec(title,`<div style="position:relative;height:290px;margin:6px 24px 30px 60px;border-left:2px solid #b9c7d6;border-bottom:2px solid #b9c7d6;"><div style="position:absolute;right:0;top:0;width:50%;height:46%;background:rgba(217,138,138,.12);"></div><div style="position:absolute;right:6px;top:6px;font-size:.64rem;color:#a4443f;font-weight:800;text-align:right;line-height:1.3;">${escapeHtml(hotLabel)}</div>${dots}<div style="position:absolute;left:0;right:-14px;bottom:-24px;display:flex;justify-content:space-between;font-size:.72rem;color:${JJC.gray};font-weight:700;"><span>低</span><span>${escapeHtml(xName)} →</span><span>高</span></div><div style="position:absolute;left:-52px;top:-4px;bottom:16px;display:flex;flex-direction:column;justify-content:space-between;font-size:.72rem;color:${JJC.gray};font-weight:700;text-align:center;"><span>${escapeHtml(yName)}<br>高</span><span>低</span></div></div>`);}
+function JJparsePlot(ls){return JJitems(ls,"点").map(s=>{const p=s.split(/[｜|]/).map(x=>x.trim());return{label:p[0],x:JJpct(p[1]),y:100-JJpct(p[2]),size:p[3]!=null?JJpct(p[3]):0};}).filter(p=>p.label);}
+function JJfmtPlot(raw,def){const ls=JJL(raw);const p=JJparsePlot(ls);if(p.length<2)return "";return JJplot(def.title,JJkv(ls,"X")||def.x,JJkv(ls,"Y")||def.y,p,JJkv(ls,"最優先")||def.hot);}
 
-function zkBox(label, sub, emphasis) {
-  const bg = emphasis ? "#dcefe6" : ZK.fill;
-  const bw = emphasis ? "2px" : "2px";
-  const subHtml = sub ? `<span style="display:block;margin-top:5px;font-weight:400;font-size:.8rem;color:${ZK.gray};line-height:1.5;">${sub}</span>` : "";
-  return `<div style="flex:1 1 130px;min-width:116px;max-width:230px;box-sizing:border-box;background:${bg};border:${bw} solid ${ZK.green};border-radius:12px;padding:11px 13px;font-weight:700;color:${ZK.greenD};font-size:.92rem;line-height:1.5;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">${label}${subHtml}</div>`;
-}
-function zkArrow() {
-  return `<div aria-hidden="true" style="flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:${ZK.green};font-weight:800;font-size:1.25rem;padding:0 2px;">→</div>`;
-}
-function zkFlow(items) {
-  // items: [{label, sub, emphasis}] -> box arrow box ...
-  const parts = [];
-  items.forEach((it, i) => {
-    if (i > 0) parts.push(zkArrow());
-    parts.push(zkBox(it.label, it.sub || "", it.emphasis));
-  });
-  return `<div style="display:flex;flex-wrap:wrap;align-items:stretch;gap:8px 2px;justify-content:center;margin:10px 0 4px;">${parts.join("")}</div>`;
-}
-function zkSection(type, inner) {
-  return `<section class="journal-diagram journal-diagram--zukai" aria-label="図解: ${escapeHtml(type)}"><p class="journal-diagram__label" style="font-size:.8rem;font-weight:800;letter-spacing:.02em;color:${ZK.greenD};margin:0 0 4px;">図解: ${escapeHtml(type)}</p>${inner}</section>`;
-}
+// ENGINE: quadrant (labels + current)
+function JJquad(raw){const ls=JJL(raw);const gx=(JJkv(ls,"X")||"").split(/[｜|]/).map(s=>s.trim());const gy=(JJkv(ls,"Y")||"").split(/[｜|]/).map(s=>s.trim());const q=(JJkv(ls,"象限")||"").split(/[｜|]/).map(s=>s.trim());const now=JJkv(ls,"現状")||"";if(gx.length<3||gy.length<3||q.length!==4)return "";const pos=["左上","右上","左下","右下"];
+const cell=i=>{const d=now===pos[i];return `<div style="border:2px solid ${JJC.green};border-radius:12px;padding:12px 10px;text-align:center;font-weight:700;font-size:.85rem;min-height:66px;display:flex;flex-direction:column;align-JJitems:center;justify-content:center;${d?`background:${JJC.hotBg};border-color:${JJC.hotBd};color:${JJC.hotFg};`:`background:${JJC.fill};color:${JJC.greenD};`}">${escapeHtml(q[i])}${d?`<span style="display:block;margin-top:5px;font-size:.66rem;font-weight:800;">● いまの現状</span>`:""}</div>`;};
+return JJsec("4象限マトリクス",`<div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:7px;max-width:560px;margin:6px auto 0;"><div></div><div style="grid-column:2/4;text-align:center;color:${JJC.gray};font-weight:700;font-size:.72rem;">← ${escapeHtml(gx[0])}：${escapeHtml(gx[1])}｜${escapeHtml(gx[2])} →</div><div style="writing-mode:vertical-rl;text-align:center;color:${JJC.gray};font-weight:700;font-size:.72rem;display:flex;align-JJitems:center;justify-content:center;">${escapeHtml(gy[0])}：${escapeHtml(gy[2])}</div>${cell(0)}${cell(1)}<div style="writing-mode:vertical-rl;text-align:center;color:${JJC.gray};font-weight:700;font-size:.72rem;display:flex;align-JJitems:center;justify-content:center;">${escapeHtml(gy[1])}</div>${cell(2)}${cell(3)}</div>`);}
 
-function splitArrowSteps(raw) {
-  return raw.split(/\s*(?:→|➡️?|⇒|=>|->|―>|—>)\s*/).map((v) => v.trim()).filter(Boolean);
-}
+// ENGINE: SWOT (2x2, each cell a list)
+function JJswot(raw){const ls=JJL(raw);const V=(JJkv(ls,"縦")||"内部｜外部").split(/[｜|]/).map(s=>s.trim());const H=(JJkv(ls,"横")||"プラス｜マイナス").split(/[｜|]/).map(s=>s.trim());const pos=["左上","右上","左下","右下"];const cells=pos.map(p=>JJdot(JJkv(ls,p)||""));if(cells.filter(c=>c.length).length<3)return "";
+const cell=(arr,warm)=>`<div style="border:2px solid ${warm?JJC.hotBd:JJC.green};border-radius:12px;padding:10px 12px;min-height:74px;background:${warm?JJC.hotBg:JJC.fill};">${arr.map(x=>`<div style="font-size:.83rem;font-weight:700;color:${warm?JJC.hotFg:JJC.greenD};line-height:1.5;">・${escapeHtml(x)}</div>`).join("")}</div>`;
+return JJsec("SWOT（2×2）",`<div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:7px;max-width:600px;margin:6px auto 0;"><div></div><div style="text-align:center;color:${JJC.gray};font-weight:700;font-size:.72rem;">${escapeHtml(H[0])}</div><div style="text-align:center;color:${JJC.gray};font-weight:700;font-size:.72rem;">${escapeHtml(H[1])}</div><div style="writing-mode:vertical-rl;text-align:center;color:${JJC.gray};font-weight:700;font-size:.72rem;display:flex;align-JJitems:center;justify-content:center;">${escapeHtml(V[0])}</div>${cell(cells[0],false)}${cell(cells[1],true)}<div style="writing-mode:vertical-rl;text-align:center;color:${JJC.gray};font-weight:700;font-size:.72rem;display:flex;align-JJitems:center;justify-content:center;">${escapeHtml(V[1])}</div>${cell(cells[2],false)}${cell(cells[3],true)}</div>`);}
 
-function renderJournalZukai(type, raw, title) {
-  const t = (type || "").trim();
+// ENGINE: JJmatrix table (rows x cols)
+function JJmatrix(title,raw){const rows=JJL(raw).map(l=>l.replace(/^(見出し|行)\s*[:：]\s*/,'').split(/[｜|]/).map(c=>c.trim())).filter(r=>r.length>=2&&r[0]);const heads=JJL(raw).some(x=>x.startsWith("見出し"));if(!rows.length)return "";const ncol=Math.max(...rows.map(r=>r.length));
+const th=c=>`<th style="text-align:left;padding:8px 11px;border:1px solid ${JJC.line};background:${JJC.fill};color:${JJC.greenD};font-weight:800;font-size:.83rem;">${escapeHtml(c)}</th>`;
+const head=heads?`<tr>${rows[0].map(th).join("")}</tr>`:"";
+const body=(heads?rows.slice(1):rows).map((r,ri)=>`<tr style="background:${ri%2?'#f6fbf8':'#fff'};">`+Array.from({length:ncol}).map((_,i)=>i===0?`<th scope="row" style="text-align:left;padding:8px 11px;border:1px solid ${JJC.line};color:${JJC.greenD};font-weight:700;white-space:nowrap;vertical-align:top;">${escapeHtml(r[0]||"")}</th>`:`<td style="padding:8px 11px;border:1px solid ${JJC.line};color:${JJC.ink};line-height:1.5;font-size:.86rem;">${escapeHtml(r[i]||"")}</td>`).join("")+`</tr>`).join("");
+return JJsec(title,`<table style="width:100%;border-collapse:collapse;">${head}${body}</table>`);}
 
-  if (t === "因果関係" || t === "手順図") {
-    const steps = splitArrowSteps(raw);
-    if (steps.length >= 2) {
-      const items = steps.map((s, i) => ({
-        label: (t === "手順図" ? `<span style="display:inline-block;min-width:20px;height:20px;line-height:20px;border-radius:50%;background:${ZK.green};color:#fff;font-size:.72rem;margin-right:4px;">${i + 1}</span>` : "") + escapeHtml(s),
-        emphasis: i === steps.length - 1,
-      }));
-      return zkSection(t, zkFlow(items));
-    }
+// ENGINE: heatmap (rows x cols with intensity)
+function JJheat(raw){const ls=JJL(raw);const rows=ls.map(l=>l.replace(/^(見出し|行)\s*[:：]\s*/,'').split(/[｜|]/).map(c=>c.trim())).filter(r=>r.length>=2);const heads=ls.some(x=>x.startsWith("見出し"));if(rows.length<2)return "";const ncol=Math.max(...rows.map(r=>r.length));
+const lv=v=>{if(/(強|高|◎|大)/.test(v))return[JJC.green,"#fff"];if(/(中|○|普通)/.test(v))return[JJC.mid,"#1f4b38"];if(/(弱|低|△|小)/.test(v))return[JJC.lite,JJC.greenD];return[JJC.neu,JJC.gray];};
+const th=c=>`<th style="padding:7px 9px;border:1px solid ${JJC.line};background:${JJC.fill};color:${JJC.greenD};font-weight:800;font-size:.8rem;text-align:center;">${escapeHtml(c)}</th>`;
+const head=heads?`<tr><th style="border:1px solid ${JJC.line};background:${JJC.fill};"></th>${rows[0].slice(1).map(th).join("")}</tr>`:"";
+const body=(heads?rows.slice(1):rows).map(r=>`<tr><th scope="row" style="text-align:left;padding:7px 10px;border:1px solid ${JJC.line};color:${JJC.greenD};font-weight:700;white-space:nowrap;font-size:.83rem;background:#fbfdfc;">${escapeHtml(r[0])}</th>`+r.slice(1).map(v=>{const[bg,fg]=lv(v);return `<td style="padding:9px 8px;border:1px solid ${JJC.line};text-align:center;background:${bg};color:${fg};font-weight:700;font-size:.82rem;">${escapeHtml(v)}</td>`;}).join("")+`</tr>`).join("");
+return JJsec("ヒートマップ",`<table style="width:100%;border-collapse:collapse;">${head}${body}</table><p style="margin:8px 0 0;font-size:.72rem;color:${JJC.gray};text-align:right;">濃い＝強い／薄い＝弱い</p>`);}
+
+function renderJournalDiagram(props, title){
+  const type=(getPropertyText(props,["図解形式"])||"").trim();
+  const raw=getPropertyText(props,["図解データ"])||"";
+  switch(type){
+    case "ポジショニングマップ": return JJfmtPlot(raw,{title:"ポジショニングマップ",x:"対応の難しさ",y:"放置時の危険",hot:"最優先（難＆危険）"});
+    case "リスクマップ": return JJfmtPlot(raw,{title:"リスクマップ",x:"起こりやすさ",y:"重大度",hot:"重点リスク"});
+    case "レバレッジマップ": return JJfmtPlot(raw,{title:"レバレッジマップ",x:"介入の容易さ",y:"効果の大きさ",hot:"効く一手"});
+    case "バブルチャート": return JJfmtPlot(raw,{title:"バブルチャート",x:"軸1",y:"軸2",hot:"注目"});
+    case "4象限マトリクス": return JJquad(raw);
+    case "SWOT": case "SWOT（2×2）": return JJswot(raw);
+    case "クロス表": return JJmatrix("クロス表",raw);
+    case "フェーズ×主体マトリクス": return JJmatrix("フェーズ×主体マトリクス",raw);
+    case "影響波及マトリクス": return JJmatrix("影響波及マトリクス",raw);
+    case "ヒートマップ": return JJheat(raw);
+    default: return "";
   }
-
-  if (t === "2軸マトリクス") {
-    const cells = raw.split("｜").map((v) => v.trim()).filter(Boolean);
-    if (cells.length === 4) {
-      const cell = (txt) => `<div style="box-sizing:border-box;background:${ZK.fill};border:2px solid ${ZK.green};border-radius:12px;padding:14px 12px;min-height:66px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:700;color:${ZK.greenD};font-size:.92rem;line-height:1.5;">${escapeHtml(txt)}</div>`;
-      return zkSection(t, `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:540px;margin:10px auto 4px;">${cells.map(cell).join("")}</div>`);
-    }
-  }
-
-  if (t === "比較表") {
-    const rows = raw.split(/\r?\n/).map((l) => l.split("｜").map((c) => c.trim())).filter((c) => c.length === 2 && c[0] && c[1]);
-    if (rows.length) {
-      const tr = rows.map((c) => `<tr><th scope="row" style="text-align:left;padding:9px 13px;background:${ZK.fill};border:1px solid ${ZK.line};color:${ZK.greenD};font-weight:700;white-space:nowrap;vertical-align:top;">${escapeHtml(c[0])}</th><td style="padding:9px 13px;border:1px solid ${ZK.line};color:${ZK.ink};line-height:1.6;">${escapeHtml(c[1])}</td></tr>`).join("");
-      return zkSection(t, `<table style="width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:.9rem;"><tbody>${tr}</tbody></table>`);
-    }
-  }
-
-  if (t === "メモ") {
-    const body = escapeHtml(raw).replace(/\n/g, "<br>");
-    return zkSection(t, `<div style="background:${ZK.amberF};border:1px solid ${ZK.amberB};border-left:4px solid #d9a441;border-radius:10px;padding:12px 15px;color:${ZK.amberI};line-height:1.75;font-size:.93rem;">${body}</div>`);
-  }
-
-  return "";
-}
-
-function renderJournalDiagram(props, title) {
-  // 1) Prefer the structured diagram ChatGPT saved (図解形式 + 図解データ).
-  const type = getPropertyText(props, ["図解形式"]);
-  const raw = getPropertyText(props, ["図解データ"]);
-  if (type && raw) {
-    const svg = renderJournalZukai(type, raw, title);
-    if (svg) return svg;
-  }
-  // 2) Fallback: derive a flow from the article body (still box+arrow, not flat cards).
-  const contentDiagram = buildJournalDiagramFromContent(props);
-  if (contentDiagram && Array.isArray(contentDiagram.steps) && contentDiagram.steps.length >= 2) {
-    const items = contentDiagram.steps.map((step, i) => ({
-      label: escapeHtml(step.heading || step.role || ""),
-      sub: step.role ? escapeHtml(step.role) : "",
-      emphasis: i === contentDiagram.steps.length - 1,
-    }));
-    const flow = zkFlow(items);
-    const take = contentDiagram.takeaway ? `<p class="journal-diagram__takeaway" style="margin:8px 0 0;color:${ZK.gray};font-size:.86rem;line-height:1.65;"><strong style="color:${ZK.greenD};">読み取り </strong>${escapeHtml(contentDiagram.takeaway)}</p>` : "";
-    return `<section class="journal-diagram journal-diagram--zukai" aria-label="記事の論点整理"><p class="journal-diagram__label" style="font-size:.8rem;font-weight:800;color:${ZK.greenD};margin:0 0 4px;">図解: 論点の流れ</p>${flow}${take}</section>`;
-  }
-  return "";
 }
 
 
