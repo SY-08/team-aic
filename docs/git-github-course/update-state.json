@@ -12,10 +12,11 @@
     8,
     9,
     10,
-    11
+    11,
+    12
   ],
-  "lastPublishedLessonId": 11,
-  "lastPublishedAt": "2026-07-29T09:06:23+09:00",
+  "lastPublishedLessonId": 12,
+  "lastPublishedAt": "2026-07-30T09:06:59+09:00",
   "completedAt": null,
   "history": [
     {
@@ -72,6 +73,11 @@
       "lessonId": 11,
       "source": "GitHub Actions daily publish",
       "publishedAt": "2026-07-29T09:06:23+09:00"
+    },
+    {
+      "lessonId": 12,
+      "source": "GitHub Actions daily publish",
+      "publishedAt": "2026-07-30T09:06:59+09:00"
     }
   ]
 }
