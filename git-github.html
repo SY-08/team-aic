@@ -312,6 +312,19 @@
 <p class="lesson-note">確認事項：マージ後も公開反映まで時間がかかる場合があります。デプロイ状況を確認します。</p>
 </div>
 </details>
+<details class="ep" data-git-github-lesson="14">
+<summary><span class="tag">トラブル対応</span>第14話 コンフリクト＝同じ場所の違う変更を整える</summary>
+<div class="chat">
+<div class="stage"><span>——二人が同じ文章を別々に書き換え、Gitさんは困ってしまった。</span></div>
+<div class="msg git"><div class="chat-av git"></div><div class="msg-body"><div class="name">Gitさん</div><div class="bubble">同じ場所に二つの変更があるって言われた。どっちが正しいの？</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">それがコンフリクト。Gitは勝手に選ばず、人に意図を聞いているんじゃ。</div></div></div>
+<div class="msg github"><div class="chat-av github"></div><div class="msg-body"><div class="name">GitHub氏</div><div class="bubble">片方を消す前に、両方の目的を確かめるんだね。</div></div></div>
+<div class="msg god"><div class="chat-av god"></div><div class="msg-body"><div class="name">神様</div><div class="bubble">そうじゃ。迷ったら作業を止め、変更前後とPRを見直してから整える。</div></div></div>
+<figure class='ep-figure'><svg viewBox='0 0 620 200' xmlns='http://www.w3.org/2000/svg' style='width:100%;max-width:620px;height:auto' font-family='sans-serif'><defs><marker id='gg14' markerWidth='10' markerHeight='10' refX='6' refY='3' orient='auto'><path d='M0,0 L6,3 L0,6 z' fill='#bf972c'/></marker></defs><rect x='30' y='40' width='150' height='50' rx='10' fill='#eaf3fc' stroke='#2a6fb5'/><text x='105' y='60' font-size='11.5' fill='#1c548c' text-anchor='middle' font-weight='700'>あなたの変更</text><text x='105' y='78' font-size='10.5' fill='#5b6b7a' text-anchor='middle'>同じ行を「A」に</text><rect x='30' y='110' width='150' height='50' rx='10' fill='#fff7e6' stroke='#e6cf92'/><text x='105' y='130' font-size='11.5' fill='#9c7a1f' text-anchor='middle' font-weight='700'>相手の変更</text><text x='105' y='148' font-size='10.5' fill='#9c7a1f' text-anchor='middle'>同じ行を「B」に</text><path d='M182,65 L250,90' stroke='#bf972c' stroke-width='3' marker-end='url(#gg14)'/><path d='M182,135 L250,110' stroke='#bf972c' stroke-width='3' marker-end='url(#gg14)'/><rect x='258' y='72' width='150' height='56' rx='10' fill='#fde8e8' stroke='#e0a0a0' stroke-width='2'/><text x='333' y='96' font-size='12.5' fill='#a94442' text-anchor='middle' font-weight='700'>コンフリクト</text><text x='333' y='116' font-size='10.5' fill='#a94442' text-anchor='middle'>同じ場所・違う変更</text><path d='M410,100 L470,100' stroke='#bf972c' stroke-width='3' marker-end='url(#gg14)'/><text x='440' y='90' font-size='10.5' fill='#9c7a1f' text-anchor='middle'>人が判断</text><rect x='478' y='72' width='120' height='56' rx='10' fill='#e6f4ea' stroke='#8fc7a3' stroke-width='2'/><text x='538' y='96' font-size='12' fill='#2f7d4f' text-anchor='middle' font-weight='700'>意図を確かめ</text><text x='538' y='114' font-size='11' fill='#2f7d4f' text-anchor='middle'>整える</text></svg><figcaption>コンフリクトは異常ではない。同じ場所への違う変更をGitが勝手に選ばず人に聞いている状態。両方の目的を確かめて整える。</figcaption></figure>
+<div class="lesson-practice"><strong>今回のポイント</strong>コンフリクトは異常ではなく、同じ箇所への異なる変更を人が判断する必要がある状態です。<strong style="margin-top:10px">10分で試すこと</strong><ul><li>競合したファイル名と、競合した行を確認する。</li><li>分からない場合は無理に確定せず、変更の意図を確認する。</li></ul></div>
+<p class="lesson-note">確認事項：『oursを採用』などの操作は内容を理解してから。機械的に選ぶと必要な変更を失うことがあります。</p>
+</div>
+</details>
 <!-- git-github:auto-lessons:end -->
 
     <div class="callout" style="margin-top:22px">
@@ -322,7 +335,7 @@
     </div>
 
     <!-- git-github:auto-status:start -->
-<p class="course-status">公開済み：第1〜13話／次回：第14話「コンフリクト＝同じ場所の違う変更を整える」。GitHub Actionsが毎朝1話ずつ公開します。</p>
+<p class="course-status">公開済み：第1〜14話／次回：第15話「GitHub Actions＝決まった作業を自動で動かす係」。GitHub Actionsが毎朝1話ずつ公開します。</p>
 <!-- git-github:auto-status:end -->
 
     <div class="cta-row" style="margin-top:18px">

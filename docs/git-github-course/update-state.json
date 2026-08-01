@@ -14,10 +14,11 @@
     10,
     11,
     12,
-    13
+    13,
+    14
   ],
-  "lastPublishedLessonId": 13,
-  "lastPublishedAt": "2026-07-31T09:12:23+09:00",
+  "lastPublishedLessonId": 14,
+  "lastPublishedAt": "2026-08-01T09:09:32+09:00",
   "completedAt": null,
   "history": [
     {
@@ -84,6 +85,11 @@
       "lessonId": 13,
       "source": "GitHub Actions daily publish",
       "publishedAt": "2026-07-31T09:12:23+09:00"
+    },
+    {
+      "lessonId": 14,
+      "source": "GitHub Actions daily publish",
+      "publishedAt": "2026-08-01T09:09:32+09:00"
     }
   ]
 }
