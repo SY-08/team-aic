@@ -996,6 +996,25 @@ main a:not(.btn):not(.brand):not(.site-nav a) {
   line-height: 1.5;
 }
 
+.blueprint-flow-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px 2px;
+  border-radius: 6px;
+  background: #edf6ff;
+  color: #1c548c;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.blueprint-flow-link:hover,
+.blueprint-flow-link:focus-visible {
+  background: #2a6fb5;
+  color: #fff;
+  outline: none;
+}
+
 .blueprint-flow p {
   margin: 10px 0 0;
   color: #526879;
