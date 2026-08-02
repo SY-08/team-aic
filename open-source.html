@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232a6fb5'/%3E%3Ctext x='32' y='42' font-size='30' font-family='Arial, sans-serif' font-weight='700' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/theme-sax-blue.css?v=3">
+<link rel="stylesheet" href="assets/css/theme-sax-blue.css?v=9">
 </head>
 <body>
 <header class="site-header">
@@ -51,7 +51,7 @@
   </div>
 </div>
 
-<main>
+<main class="blueprint-page">
   <div class="wrap notion-sync">
     <!-- notion-sync:badge:start -->
     <span class="notion-sync-badge">🔄 Synced from Notion: 08 Website CMS</span>
@@ -59,35 +59,124 @@
     <!-- notion-sync:badge:end -->
   </div>
 
-  <div class="page-header wrap">
-    <span class="eyebrow">Activity Blueprint</span>
-    <h1>活動の設計図</h1>
-    <p class="lead">team AICの考え方、作業ログ、NotionからGitHub Pagesへ公開される流れを整理するページです。</p>
-  </div>
-
-  <section class="section wrap">
-    <h2>このページの役割</h2>
-    <p class="section-lead">日々の相談や作業を、公開できる知識・教材・発信へ育てるための全体図です。</p>
-    <div class="grid">
-      <div class="card">
-        <h3>🏗️ サイト構成図</h3>
-        <p>ホーム、活動内容、活動共有ノート、AIクリエイティブ自由研究など、ページ同士の関係を整理します。</p>
-      </div>
-      <div class="card">
-        <h3>🔗 仕組みの設計図</h3>
-        <p>Notionを正本、GitHubを中継、GitHub Pagesを公開先としてつなぐ流れを記録します。</p>
-      </div>
-      <div class="card">
-        <h3>💡 考え方のメモ</h3>
-        <p>作業中に生まれた方針、判断、勉強会化できそうな学びを蓄積します。</p>
+  <section class="blueprint-hero">
+    <div class="wrap-wide blueprint-hero__inner">
+      <span class="eyebrow">Activity Blueprint</span>
+      <h1>活動の設計図</h1>
+      <p class="lead">team AICの相談、実装、記録、公開をひとつの流れとして見える化するページです。Notionを頭脳、GitHubを中継、GitHub Pagesを公開先として、活動がどう育っていくかを整理します。</p>
+      <div class="blueprint-map" aria-label="team AICの全体構造">
+        <div class="blueprint-map__lane">
+          <p>考える</p>
+          <strong>GPT / Claude / Gemini</strong>
+          <span>壁打ち、構造化、実装、別視点</span>
+        </div>
+        <div class="blueprint-map__arrow" aria-hidden="true">→</div>
+        <div class="blueprint-map__lane blueprint-map__lane--primary">
+          <p>貯める</p>
+          <strong>Notion</strong>
+          <span>企画、設計、本文、活動記録の正本</span>
+        </div>
+        <div class="blueprint-map__arrow" aria-hidden="true">→</div>
+        <div class="blueprint-map__lane">
+          <p>つなぐ</p>
+          <strong>GitHub</strong>
+          <span>変更履歴、同期処理、公開用データ</span>
+        </div>
+        <div class="blueprint-map__arrow" aria-hidden="true">→</div>
+        <div class="blueprint-map__lane">
+          <p>届ける</p>
+          <strong>GitHub Pages / note / SNS</strong>
+          <span>読者に届く公開コンテンツ</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section wrap notion-content" id="notion-synced">
-    <h2>Notion同期コンテンツ</h2>
-    <p class="section-lead">この下は、Notion「08 Website CMS」の 08-05 活動の設計図 から自動同期されるセクションです。</p>
-    <!-- notion-sync:content:start -->
+  <section class="section wrap-wide blueprint-system">
+    <div class="blueprint-section-heading">
+      <span>System Map</span>
+      <h2>team AIC全体の役割整理</h2>
+      <p>どの道具が何を担うのかを分けておくと、作業が増えても迷いにくくなります。</p>
+    </div>
+    <div class="blueprint-role-grid">
+      <article class="blueprint-role">
+        <span class="blueprint-role__label">思考エンジン</span>
+        <h3>AIたちが考えを形にする</h3>
+        <ul>
+          <li><strong>GPT</strong> 壁打ち、整理、構造化、文章化</li>
+          <li><strong>Claude</strong> 実装、コード生成、GitHub更新</li>
+          <li><strong>Gemini</strong> 将来的な別視点、Google系連携候補</li>
+        </ul>
+      </article>
+      <article class="blueprint-role blueprint-role--notion">
+        <span class="blueprint-role__label">全体データベース</span>
+        <h3>Notionが頭脳として残す</h3>
+        <ul>
+          <li>企画、設計、本文、下書きの保管場所</li>
+          <li>08 Website CMSの正本</li>
+          <li>AIたちが読む中心データ</li>
+        </ul>
+      </article>
+      <article class="blueprint-role">
+        <span class="blueprint-role__label">中継プラットフォーム</span>
+        <h3>GitHubが外へ出す形に変換する</h3>
+        <ul>
+          <li>公開用データ置き場</li>
+          <li>変更履歴の管理</li>
+          <li>GitHub Pagesへの公開基盤</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section wrap-wide blueprint-flow-section">
+    <div class="blueprint-section-heading">
+      <span>Publishing Flow</span>
+      <h2>Notion更新で育つ公開フロー</h2>
+      <p>正本はNotion。公開はGitHub Pages。GitHubは中継。この前提を固定して、相談から公開までを追えるようにします。</p>
+    </div>
+    <ol class="blueprint-flow">
+      <li><span>01</span><strong>AIに相談する</strong><p>GPTやClaudeと壁打ちし、企画、設計、文章、実装方針を整理します。</p></li>
+      <li><span>02</span><strong>Notionに整理する</strong><p>公開してよい内容だけをCMSや各アーカイブに集約します。</p></li>
+      <li><span>03</span><strong>GitHubが同期する</strong><p>Actionsや手動作業でNotionの内容をサイト用ファイルへ変換します。</p></li>
+      <li><span>04</span><strong>履歴として残る</strong><p>何を変えたかがコミットやPRとして残り、後から振り返れます。</p></li>
+      <li><span>05</span><strong>サイトに反映される</strong><p>GitHub Pagesを通じて、活動内容や読み物として公開されます。</p></li>
+    </ol>
+  </section>
+
+  <section class="section wrap-wide blueprint-flow-section blueprint-flow-section--study">
+    <div class="blueprint-section-heading">
+      <span>Study Session Flow</span>
+      <h2>活動ログから勉強会へ育てる設計</h2>
+      <p>実際にやった作業だけを教材化することで、机上の説明ではなく「自分も試せる」学びに変えていきます。</p>
+    </div>
+    <div class="blueprint-study-map">
+      <div><strong>実際に作業する</strong><span>HP更新、Notion整理、GitHub操作</span></div>
+      <div><strong>活動共有ノートに残す</strong><span>専門用語もかみくだいて記録</span></div>
+      <div><strong>初心者向けに言い換える</strong><span>GitとGitHub、AI活用、制作手順</span></div>
+      <div><strong>対象別に分ける</strong><span>子ども、地域企業、高齢者など</span></div>
+      <div><strong>デモにする</strong><span>その場で試せる小さな実践</span></div>
+      <div><strong>資料へ展開する</strong><span>スライド、配布資料、動画台本</span></div>
+    </div>
+  </section>
+
+  <section class="section wrap-wide blueprint-principle">
+    <div class="blueprint-section-heading">
+      <span>Current Principle</span>
+      <h2>最新の考え方</h2>
+    </div>
+    <div class="blueprint-principle__box">
+      <p><strong>AIと相談する</strong>内容をNotionに貯め、GitHubが外へ出す形へ変換し、GitHub Pagesや各発信コンテンツへ展開します。</p>
+      <p>Notionは頭脳であり、全体データベース。GitHubは頭脳ではなく、中継プラットフォーム。外部発信ツールは、NotionとGitHubを通じて展開される出口です。</p>
+    </div>
+  </section>
+
+  <section class="section wrap blueprint-source-section">
+    <details class="blueprint-source">
+      <summary>Notion同期の原文を開く</summary>
+      <div class="notion-content" id="notion-synced">
+        <p class="section-lead">この中身は、Notion「08 Website CMS」の 08-05 活動の設計図 から自動同期される原文です。</p>
+        <!-- notion-sync:content:start -->
     <h2>最新設計図：team AIC 全体システム</h2>
 <p>team AICの全体構造は、以下のように整理します。</p>
 <pre><code>（思考エンジン）
@@ -174,7 +263,9 @@ GitHub Pagesや各発信コンテンツへ展開する</code></pre>
 <p>Notionは頭脳であり、全体データベース。</p>
 <p>GitHubは頭脳ではなく、中継プラットフォーム。</p>
 <p>外部発信ツールは、NotionとGitHubを通じて展開される出口です。</p>
-    <!-- notion-sync:content:end -->
+        <!-- notion-sync:content:end -->
+      </div>
+    </details>
   </section>
 </main>
 
