@@ -148,6 +148,16 @@
   padding: 24px;
 }
 
+.experiment-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
 .monster-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
@@ -221,6 +231,123 @@
   border: 1px solid rgba(42, 111, 181, 0.18);
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.78);
+}
+
+.children-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 72px 0;
+}
+
+.children-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255, 215, 79, 0.24), transparent 24%),
+    radial-gradient(circle at 84% 18%, rgba(100, 181, 246, 0.32), transparent 28%),
+    radial-gradient(circle at 78% 82%, rgba(255, 128, 171, 0.18), transparent 28%),
+    linear-gradient(140deg, #f3fbff 0%, #e2f5ff 46%, #fff9e9 100%);
+}
+
+.children-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.children-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+  gap: 42px;
+  align-items: center;
+}
+
+.children-hero h1 {
+  max-width: 780px;
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  line-height: 1.14;
+  margin: 0 0 20px;
+  color: #17345a;
+}
+
+.children-visual-card {
+  padding: 18px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 28px 70px rgba(42, 111, 181, 0.18);
+}
+
+.children-visual-card img {
+  width: 100%;
+  display: block;
+  border-radius: 20px;
+}
+
+.children-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.children-feature-card,
+.children-note-panel {
+  border: 1px solid rgba(42, 111, 181, 0.18);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 14px 36px rgba(42, 111, 181, 0.10);
+}
+
+.children-feature-card {
+  padding: 22px;
+}
+
+.children-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  background: #e7f5ff;
+  color: #1e6fb5;
+  font-weight: 700;
+}
+
+.children-note-panel {
+  padding: clamp(24px, 5vw, 42px);
+  background:
+    linear-gradient(90deg, rgba(42, 111, 181, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, #ffffff 0%, #f8fcff 100%);
+  background-size: 36px 100%, auto;
+}
+
+.children-note-list {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.children-note-list li {
+  position: relative;
+  padding-left: 24px;
+}
+
+.children-note-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2a6fb5;
 }
 
 /* ナレッジモンスターマンガ 説明ブロック */
@@ -303,7 +430,8 @@
 
 @media (max-width: 900px) {
   .creative-hero-grid,
-  .naremon-hero-grid {
+  .naremon-hero-grid,
+  .children-hero-grid {
     grid-template-columns: 1fr;
   }
 
@@ -318,7 +446,8 @@
 
   .experiment-grid,
   .monster-grid,
-  .manga-grid {
+  .manga-grid,
+  .children-feature-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -338,7 +467,8 @@
 
   .experiment-grid,
   .monster-grid,
-  .manga-grid {
+  .manga-grid,
+  .children-feature-grid {
     grid-template-columns: 1fr;
   }
 
