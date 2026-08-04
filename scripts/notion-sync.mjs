@@ -24,6 +24,17 @@ const NOTION_API_BASE = "https://api.notion.com/v1";
 const NOTION_VERSION = "2022-06-28";
 const MAX_LOG_ENTRIES = 20;
 
+const CHILD_PAGE_LINKS = [
+  {
+    match: "厚木市議会議員・小島さんとの意見交換",
+    href: "education-kodomo-ibasho.html",
+  },
+  {
+    match: "子どもに“答え”ではなく",
+    href: "education-approach-hypothesis.html",
+  },
+];
+
 // Auto-publish is intentionally opt-in per mapping. Only the four public
 // content databases requested for this workflow set autoPublish: true.
 const PAGE_MAP = [
@@ -1041,6 +1052,11 @@ function blockToHtml(block) {
       return `<hr>\n`;
     case "code":
       return `<pre><code>${escapeHtml(plainTextOf(block.code.rich_text))}</code></pre>\n`;
+    case "child_page": {
+      const title = block.child_page.title || "";
+      const href = childPageHref(title);
+      return title ? `<p><a href="${escapeHtml(href)}">${escapeHtml(title)}</a></p>\n` : "";
+    }
     default:
       // Unsupported block types (images, tables, embeds, ...) are skipped rather
       // than rendered badly. They are not reported per-block to keep the sync
@@ -1072,9 +1088,15 @@ function plainTextOf(richTextArr) {
 }
 
 function plainTextOfBlock(block) {
+  if (block.type === "child_page") return block.child_page.title || "";
   const data = block[block.type];
   if (data && data.rich_text) return plainTextOf(data.rich_text);
   return "";
+}
+
+function childPageHref(title) {
+  const mapped = CHILD_PAGE_LINKS.find((item) => title.includes(item.match));
+  return mapped ? mapped.href : "#";
 }
 
 function escapeHtml(str) {

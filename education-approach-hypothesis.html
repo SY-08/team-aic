@@ -3,47 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>学びの根っこに「分解して、一つ試す力」を（アプローチ仮説） | team AIC</title>
-<meta name="description" content="AIを教育に使うとき、子どもの中に最後に何を残したいのか。課題→仮説→根拠→展開の順で、分解して・見立てて・一つ試して・確かめる、という世界の見方を年齢も分野も越える共通の型として整理した、team AICの教育アプローチ仮説（検討段階・未検証）。">
+<title>子どもに“答え”ではなく、“思考”と“実行”を、分解して考える方法を渡す。——対話型AIアプリの設計を考える | team AIC</title>
+<meta name="description" content="AIを教育に使うとき、子どもに答えを渡すのではなく、見る・表す・分ける・見立てる・一つ試す・確かめる力をどう育てるか。対話型AIアプリの設計仮説を整理します。">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://sy-08.github.io/team-aic/education-approach-hypothesis.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="学びの根っこに「分解して、一つ試す力」を（アプローチ仮説） | team AIC">
-<meta property="og:description" content="課題→仮説→根拠→展開で段階的に整理。分解して・見立てて・一つ試して・確かめる、という世界の見方を学びの土台に。">
+<meta property="og:title" content="子どもに“答え”ではなく、“思考”と“実行”を、分解して考える方法を渡す。——対話型AIアプリの設計を考える | team AIC">
+<meta property="og:description" content="AIに答えを出させるだけではなく、子どもが現実を見て、分けて、一つ試し、確かめるための設計仮説。">
 <meta property="og:url" content="https://sy-08.github.io/team-aic/education-approach-hypothesis.html">
 <meta property="og:site_name" content="team AIC">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="assets/css/style.css">
 <style>
-  .ed-wrap{max-width:800px;margin:0 auto;padding:0 20px;}
-  .ed-cover{background:linear-gradient(120deg,#eaf4ff,#f4f9f7);border:1px solid #d8e6f2;border-radius:20px;max-width:800px;margin:24px auto 0;padding:30px 26px;}
+  .ed-wrap{max-width:880px;margin:0 auto;padding:0 20px;}
+  .ed-cover{background:linear-gradient(120deg,#eaf4ff,#f6fbf8);border:1px solid #d8e6f2;border-radius:20px;max-width:880px;margin:24px auto 0;padding:30px 26px;}
   .ed-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
   .ed-chip{font-size:.74rem;font-weight:700;color:#1c548c;background:#dcebfa;border:1px solid #bfd8ee;border-radius:999px;padding:3px 11px;}
-  .ed-cover h1{font-size:clamp(1.4rem,4.2vw,2rem);line-height:1.5;margin:0 0 10px;font-weight:900;color:#1b2b28;}
+  .ed-cover h1{font-size:clamp(1.35rem,4vw,2rem);line-height:1.55;margin:0 0 10px;font-weight:900;color:#1b2b28;}
   .ed-cover .sub{color:#5b6b7a;font-size:.92rem;margin:0;}
   .ed-status{background:#fff8e8;border:1px solid #ecd9a6;border-left:4px solid #d9a441;border-radius:0 12px 12px 0;padding:14px 18px;margin:22px 0;color:#6b5518;}
   .ed-status b{display:block;margin-bottom:5px;color:#8a6d1a;}
   .ed-body h2{font-size:1.28rem;margin:38px 0 10px;color:#1b2b28;font-weight:900;padding-bottom:8px;border-bottom:2px solid #eef4f2;}
-  .ed-body h2 .step{display:inline-block;font-size:.7rem;font-weight:800;color:#fff;background:#2cb696;border-radius:999px;padding:3px 10px;margin-right:9px;vertical-align:middle;letter-spacing:.02em;}
   .ed-body h3{font-size:1.05rem;margin:22px 0 6px;color:#249c80;font-weight:800;}
   .ed-body p{line-height:1.95;margin:10px 0;color:#33403c;}
   .ed-body ul,.ed-body ol{padding-left:1.35em;line-height:1.9;color:#33403c;}
   .ed-body li{margin:6px 0;}
   .ed-lead{background:#f4f9f7;border-left:4px solid #2cb696;border-radius:0 12px 12px 0;padding:13px 17px;color:#40514c;}
   .ed-quote{background:#eef4ff;border-left:4px solid #3f7fd0;border-radius:0 12px 12px 0;padding:14px 18px;color:#24425f;font-weight:700;font-size:1.02rem;line-height:1.8;margin:16px 0;}
-  .ed-map{list-style:none;padding:0;margin:16px 0;counter-reset:m;}
-  .ed-map li{position:relative;padding:8px 0 8px 40px;margin:0;border-left:2px dashed #cfe6db;margin-left:12px;}
-  .ed-map li:before{counter-increment:m;content:counter(m);position:absolute;left:-15px;top:8px;width:28px;height:28px;background:#2cb696;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;}
-  .ed-map li b{color:#1b2b28;}
+  .ed-flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:18px 0;}
+  .ed-flow span{background:#fff;border:1px solid #d9e8f5;border-radius:12px;padding:12px 10px;text-align:center;font-weight:800;color:#1f5c96;box-shadow:0 8px 18px rgba(34,93,145,.08);}
   .ed-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9rem;}
   .ed-table th{background:#eef6f2;color:#1b2b28;text-align:left;padding:9px 11px;border:1px solid #dfeae6;font-weight:800;}
   .ed-table td{padding:9px 11px;border:1px solid #dfeae6;color:#33403c;vertical-align:top;line-height:1.7;}
   .ed-table tr:nth-child(even) td{background:#fafcfb;}
-  .ed-table td:first-child{font-weight:700;color:#1b2b28;white-space:nowrap;}
+  .ed-table td:first-child{font-weight:700;color:#1b2b28;}
   .ed-table-wrap{overflow-x:auto;}
   .ed-note{font-size:.86rem;color:#6b5518;background:#fff8e8;border:1px solid #ecd9a6;border-radius:10px;padding:10px 14px;margin:10px 0 0;}
   .ed-guard{background:#f7fbff;border:1px solid #cfe0f0;border-radius:14px;padding:16px 19px;margin:14px 0;}
-  .ed-guard li{margin:7px 0;}
   .ed-back{display:flex;flex-wrap:wrap;gap:14px;margin:34px 0 12px;font-size:.92rem;font-weight:700;}
 </style>
 </head>
@@ -63,110 +59,112 @@
 
 <main>
   <div class="ed-cover">
-    <div class="ed-chips"><span class="ed-chip">Education</span><span class="ed-chip">アプローチ仮説</span><span class="ed-chip">2026年8月</span></div>
-    <h1>学びの根っこに「分解して、一つ試す力」を<br>――年齢も分野も越える共通の型</h1>
-    <p class="sub">team AIC ／ 教育領域　アプローチ仮説（検討段階・未検証）</p>
+    <div class="ed-chips"><span class="ed-chip">Education</span><span class="ed-chip">設計仮説</span><span class="ed-chip">未検証</span></div>
+    <h1>子どもに“答え”ではなく、“思考”と“実行”を、分解して考える方法を渡す。<br>——対話型AIアプリの設計を考える</h1>
+    <p class="sub">team AIC ／ 教育領域　調査に基づく設計仮説</p>
   </div>
 
   <div class="ed-wrap"><article class="ed-body">
-
     <div class="ed-status">
-      <b>公開上の位置づけ：検討段階のアプローチ仮説（未検証）</b>
-      本ページは、team AICが教育領域で検討している「どこを解けば本質に近づけるのか」についての仮説を整理したものです。特定の学校・行政・団体との実施や連携が決定したものではなく、効果が実証されたものでもありません。子どもの安全と本人の意思を最優先に、人による支援を前提として考えます。
+      <b>公開上の位置づけ：調査に基づく設計仮説（未検証）</b>
+      本ページは、子ども向け対話型AIアプリのあり方について、既存の教育・発達・対話設計の知見をもとに整理した仮説です。特定の学校・行政・団体との実施や連携が決定したものではなく、効果が実証されたものでもありません。特に子どもが一人で使う前提ではなく、初期段階では保護者・支援者・教育者との共同利用を前提に考えます。
     </div>
 
-    <p class="ed-lead">このページは、思いつきを並べたものではありません。<b>「課題を正しく捉える → 何を残すか決める → なぜそれが効くのか → 私たちが言い切れる根拠 → 育てる形にする → 実際に解ける問題 → 年齢を越える検証 → 守ること」</b>という順番で、一段ずつ積み上げて整理しています。急がず、上から順にお読みください。</p>
+    <p class="ed-lead">AIを教育に使うとき、子どもに残したいのは「正解を早く出す力」だけではありません。大切なのは、自分の目の前にある出来事を見て、分けて、考えて、一つ試し、確かめる力です。</p>
+    <p>子どもが最初から上手に質問できるとは限りません。むしろ「自ら問いを立てる」は、最初の入力条件ではなく、育てたい結果です。だからこそ、対話型AIは答えを出すだけではなく、問いの前にある観察や表現を支える設計が必要になります。</p>
+    <div class="ed-quote">子どもに渡したいのは、答えではなく、世界を見て、分けて、一つ試し、確かめるための小さな手順です。</div>
 
-    <h2><span class="step">STEP 1</span>まず、課題を正しく捉える</h2>
-    <p>AIを教育に使うとき、多くはいきなり「どんな機能を作るか」から考え始めます。しかし機能は手段です。<b>「子どもの中に、最後に何を残したいのか」</b>を先に決めないと、便利なツールの寄せ集めで終わってしまいます。私たちが最初にやったのは、この順番を守ること——機能の前に、残したいものを一つに絞ることでした。</p>
-    <p>そのうえで、既存の学習支援によくある前提に、構造的な無理があると考えました。多くの設計は<b>「何がわからないかを、子どもが自分から問える」</b>ことを出発点に置きます。ところが、幼い子どもや、いじめ・不登校でつらさの中にいる子どもは、そもそも<b>「わからないことが、わからない」</b>。入口の前提が、いちばん支援が必要な子に届かない——ここが本当の課題（イシュー）です。</p>
+    <h2>1. 完全な自由対話でも、固定された教材コースでもない</h2>
+    <p>子ども向けのAI学習支援を考えるとき、二つの極端があります。一つは、なんでも自由に聞けるチャット。もう一つは、決められた順番で進む教材です。前者は自由ですが、問いを立てられない子どもには難しい。後者は安全ですが、現実の発見や寄り道が消えやすい。</p>
+    <p>team AICが考える方向性は、その中間です。AIが子どもの前に「小さな観察対象」を置き、子どもはそれを見て、言葉・絵・音・操作で表し、AIが一つずつ問いを返していく。自由対話ではなく、発見を支えるガイド付きの対話です。</p>
+    <div class="ed-flow">
+      <span>対象を置く</span>
+      <span>見る</span>
+      <span>表す</span>
+      <span>分ける</span>
+      <span>見立てる</span>
+      <span>一つ試す</span>
+      <span>確かめる</span>
+      <span>次の問い</span>
+    </div>
 
-    <h2><span class="step">STEP 2</span>では、何を残すのか（仮説）</h2>
-    <p>結論から言います。子どもに残したいのは、知識そのものではなく<b>「世界の見方」</b>です。その見方を一文にすると、こうなります。</p>
-    <div class="ed-quote">どんな出来事も、分けて・どれが効くか見立てて・一つ試して・確かめられる。</div>
-    <p>身近な例で言えば、料理がうまくいかない時に、材料も火加減も手順も“全部”を疑って作り直すのではなく、<b>火加減だけを一つ変えて</b>味を見る。目の前のできごとは、崩せない壁ではなく、部品とルールでできた仕組みであり、バラして、いじって、変えられる。この<b>構え</b>を残すことが、あらゆる学びの土台になる、というのが本仮説です。</p>
-
-    <h2><span class="step">STEP 3</span>なぜ、それが“どんな場面でも”効くのか</h2>
-    <p>この見方の正体は、世界を<b>「今の状態」と「それを変える操作」</b>の二つで捉えることです。今この状態があり、操作を一つ加えると、次の状態になる——積み木も、算数の一問も、友達とのすれ違いも、大人の仕事の課題も、すべてこの形で書けます。</p>
-    <p>中身（何を扱うか）が変わっても、捉え方の“形”は変わりません。だから特定の教科や年齢に縛られない。<b>段階は変わるが、解釈は変わらない。</b>これが、この一つの見方を「共通の型」として選んだ理由です。</p>
-
-    <h2><span class="step">STEP 4</span>なぜ、私たちがそう言い切れるのか（根拠）</h2>
-    <p>ここまでは仮説です。では、なぜ私たちはこれを信じられるのか。それは、<b>team AIC自身が二つの専門性を実際に手を動かしながら実践する中で、同じ構造に何度も行き着いたから</b>です。語彙が違うだけで、コンサルティングとプログラミングは、下の層が同じでした。</p>
+    <h2>2. “絵→単語→文章”は、一本の階段ではない</h2>
+    <p>子どもの表現は、いつも「絵から単語、単語から文章へ」と一方向に進むわけではありません。年齢、発達、得意不得意、その日の気分によって、表しやすい形は変わります。</p>
     <div class="ed-table-wrap">
-    <table class="ed-table">
-      <tr><th>共通の動作</th><th>コンサルティングの言葉</th><th>プログラミングの言葉</th></tr>
-      <tr><td>分解する</td><td>イシューツリー、MECE</td><td>関数・モジュールに分ける</td></tr>
-      <tr><td>効く所を見つける</td><td>キードライバー、ボトルネック</td><td>原因箇所の特定</td></tr>
-      <tr><td>一つ試す</td><td>仮説を立てて検証、PoC</td><td>1行直して実行する</td></tr>
-      <tr><td>回す</td><td>PDCA</td><td>トライ＆エラーのループ</td></tr>
-    </table>
+      <table class="ed-table">
+        <tr><th>表現の入口</th><th>使い方</th><th>AIの役割</th></tr>
+        <tr><td>写真・実物</td><td>目の前のものを見せる</td><td>「どこが気になった？」と観察を促す</td></tr>
+        <tr><td>絵・落書き</td><td>言葉にしにくいものを形にする</td><td>描かれた要素を分けて、問いに変える</td></tr>
+        <tr><td>音声</td><td>話したいことをそのまま出す</td><td>言い直し、要約、次の一問を返す</td></tr>
+        <tr><td>単語・短文</td><td>小さな気付きだけを書く</td><td>単語同士の関係を一緒に整理する</td></tr>
+        <tr><td>操作</td><td>積む、並べる、動かす</td><td>変えた点と結果をつなげて記録する</td></tr>
+      </table>
     </div>
-    <p>この二つを両方そなえることに意味があります。<b>コンサルティング的思考</b>は、頭の中で構造化して「どこが効くか」を見立てる力。<b>プログラミング的思考</b>は、実際に動かして、現実にぶつけて確かめる力。片方だけだと「考えるが動かない」か「動くが考えない」になります。両輪にして初めて、<b>分解して・見立てて・試して・確かめる</b>ループが回り出します。</p>
-    <p>これは、team AICが活動全体で大事にしていることと同じです。私たちは<b>完成物だけでなく実行の過程をそのまま共有し、大きな仕組みより先に現場で小さく試す</b>ことを繰り返してきました。子どもに渡したい“見方”は、私たちが日々使っている“働き方”そのものなのです。だからこそ、机上の理想ではなく、自分たちが回して確かめた手ごたえとして提案できます。</p>
+    <p>つまり、文章を書ける子だけを前提にしないことが重要です。子どもが出せる表現をAIが受け取り、次の問いに変える。ここに対話型AIの意味があります。</p>
 
-    <h2><span class="step">STEP 5</span>それを、育てられる形にする</h2>
-    <p>この背骨を、育てたい力として三つに分けます。三つは並列ではなく、<b>「見る → 考える → つくる」という一つのループ</b>です。</p>
-    <ol class="ed-map">
-      <li><b>現状把握力・分析力</b>（見る）— 状態を観て、部品に分解する</li>
-      <li><b>思考力・構想力</b>（考える）— 部品の関係を見立て、「どの一つを動かすか」仮説を立てる</li>
-      <li><b>構築力・行動力</b>（つくる）— 操作を<b>一つだけ</b>加えて、次の状態を観る</li>
-    </ol>
-    <p>行動が新しい現状を生み、また①に戻る。この循環は年齢に依存しません。</p>
-    <h3>「一つだけ動かす」という規律</h3>
-    <p>一度に多くを変えると、結果が良くても悪くても「何が効いたのか」がわかりません。一つだけ変えて結果を見れば、原因と結果が線でつながる。これは因果を自分の手で確かめる作法であり、年齢を問わず成立します。</p>
-
-    <h2><span class="step">STEP 6</span>この設計が、実際に解く三つの問題</h2>
-    <h3>（1）「自分から問える」は、前提ではなく“結果”になる</h3>
-    <p>STEP 1で挙げた無理——「自分から問える」ことを出発点に置く設計——は、この型で反転します。<b>①現状把握力を最初に育てる力として置けば、「自分から問える」は学びの“出口”になります</b>。入口の前提から、育っていく結果へと、位置づけが変わります。</p>
-    <h3>（2）無力感を、はげましではなく“構造”から崩す</h3>
-    <p>いじめや不登校のさなかにいる子どもは、状況を「自分に降りかかる、巨大でのっぺらした何か」として体験しやすい。現状把握が潰れた状態が、無力感です。ここで効くのは、はげましよりも構造の提示です。<b>「この状況にも部品がある。自分が動かせる部分が、一つはある」</b>。分解し、動かせるものを一つ見つけ、押して、変化を観る。この手順そのものが、<b>自己効力感を“構造から”つくる装置</b>になり得ると考えます。</p>
-    <h3>（3）教材を自前で持たなくてよい＝AIは“伴走者”に徹する</h3>
-    <p>見方を育てるのが目的なら、AIは大量の教材を抱える必要がありません。<b>子どもの手元にあるもの（在籍校の教科書・課題）の上に乗る「コーチ層（伴走層）」</b>として成立します。team AICはAIを先生や保護者の代わりにはしません。<b>AIの価値を「素材」ではなく「プロセス（分解を促す・問いを引き出す・一つ試すを伴走する）」に置く</b>。この判断は開発負担を下げるだけでなく、不登校の子どもが学級と歩調を合わせやすく、復帰のハードルが下がるという意味も持ちます。</p>
-
-    <h2><span class="step">STEP 7</span>本当に、年齢・場面を越えるのか</h2>
-    <p>同じ型が、発達段階も状況も越えて使えるかを、具体例で確かめます。違うのは<b>難易度・素材・声かけ方</b>だけで、エンジン（見る→考える→つくる）は同じです。</p>
+    <h2>3. 普通のAIチャットとの差は、口調ではなく“問いの設計”にある</h2>
+    <p>子ども向けだから優しい口調にする、というだけでは不十分です。大事なのは、AIが何を聞き、どこで止まり、いつ人につなぐかです。</p>
     <div class="ed-table-wrap">
-    <table class="ed-table">
-      <tr><th>場面</th><th>①見る（分ける）</th><th>②考える（どこが効くか）</th><th>③つくる（一つ試す）</th></tr>
-      <tr><td>幼児・積み木</td><td>タワーが倒れた。下が細い</td><td>下を太くすれば？</td><td>下だけ変えて積み直す</td></tr>
-      <tr><td>小学校 低学年<br>（1〜2年）・算数</td><td>どこで手が止まったか、指でたどる</td><td>数え方か、書き方か、どっちでつまずいた？</td><td>つまずいた所だけ、もう一度やってみる</td></tr>
-      <tr><td>小学校 中学年<br>（3〜4年）・算数や理科</td><td>問題を「わかる所」と「あやしい所」に分ける</td><td>計算ミスか、問題文の読み取りか、見当をつける</td><td>あやしい一工程だけ、やり方を変えて試す</td></tr>
-      <tr><td>小学校 高学年<br>（5〜6年）・調べ学習</td><td>手順に分け、どの段階で結果が変わるか探す</td><td>効きそうな一因（変数）はどれかを仮説にする</td><td>一つだけ条件を変えて、結果の変化を確かめる</td></tr>
-      <tr><td>いじめを受けている子<br>（安全を最優先）</td><td>つらさを「まるごと」でなく、いつ・どこ・誰と、に分けて眺める</td><td>自分や大人が“動かせる”のはどこか（離れる・場所を変える・頼れる先）</td><td>今日できる安全な一歩を一つ（信頼できる大人に一つ伝える）</td></tr>
-      <tr><td>不登校の子</td><td>今の自分の状態を言葉にする</td><td>何が一番重いか、動かせる部分はどこか</td><td>今日できる小さな一歩を一つ</td></tr>
-      <tr><td>大人の仕事</td><td>現状を構造化する</td><td>ボトルネック仮説を立てる</td><td>小さくPoCを回す</td></tr>
-    </table>
+      <table class="ed-table">
+        <tr><th>設計要素</th><th>考え方</th></tr>
+        <tr><td>対話状態</td><td>観察中、整理中、試行中、確認中、安全確認中など、会話の状態を分ける</td></tr>
+        <tr><td>問いの方針</td><td>一度に複数聞かず、一つの観察・一つの操作に絞る</td></tr>
+        <tr><td>表現チャネル</td><td>文字だけでなく、絵・写真・音声・操作を受け取る</td></tr>
+        <tr><td>支援の薄め方</td><td>慣れてきたらAIの助けを減らし、子ども自身の問いを増やす</td></tr>
+        <tr><td>発見の記録</td><td>正解履歴ではなく、見たこと・試したこと・わかったことを残す</td></tr>
+        <tr><td>安全ルーター</td><td>いじめ、虐待、自傷、犯罪被害などは探究テーマにせず、人の支援へ切り替える</td></tr>
+      </table>
     </div>
-    <div class="ed-note">※「いじめを受けている子」への適用は、細心の注意を要します。ここでの「分ける」は<b>いじめの原因を子どもに分析させることでは決してありません</b>。つらさを丸ごと抱えて動けなくなるのを防ぐため、「安全な場所・頼れる人はどこにあるか」を一緒に探すことに限ります。原因の追及や解決は大人と支援機関が引き受けます。</div>
 
-    <h2><span class="step">STEP 8</span>だから、人がやること・守ること</h2>
-    <p>この型は「子どもに一人で考えさせる」ためのものではありません。安全を設計に組み込んで初めて成立します。</p>
+    <h2>4. 推奨案は、現実を見るための“問いレンズ”</h2>
+    <p>このアプリは、子どもを画面の中に閉じ込めるものではありません。むしろAIが「外を見るためのレンズ」になります。写真を撮る、身の回りのものを観察する、音を聞く、積み木を動かす。現実を起点にして、AIが問いを返す形です。</p>
+    <div class="ed-table-wrap">
+      <table class="ed-table">
+        <tr><th>最初の5分</th><th>子どもの行動</th><th>AIの返し方</th></tr>
+        <tr><td>1分目</td><td>写真や実物を見せる</td><td>「どこが気になった？」と一つだけ聞く</td></tr>
+        <tr><td>2分目</td><td>気になる部分を指す・話す</td><td>「形、色、数、動きのどれに近い？」と分ける</td></tr>
+        <tr><td>3分目</td><td>一つ選ぶ</td><td>「そこを少し変えるなら何を変える？」と見立てる</td></tr>
+        <tr><td>4分目</td><td>一つだけ試す</td><td>「何が変わった？」と結果を見る</td></tr>
+        <tr><td>5分目</td><td>気付きを残す</td><td>「次に確かめたいこと」を一緒に短く書く</td></tr>
+      </table>
+    </div>
+    <div class="ed-note">価値は、チャット時間の長さではなく、子どもが現実へ戻って観察・実行できることに置きます。</div>
+
+    <h2>5. 安全のため、探究してはいけないことがある</h2>
+    <p>いじめ、不登校、虐待、自傷、犯罪被害などは、子どもに原因分析させるテーマではありません。AIが行うべきことは、原因を掘ることではなく、安全確認と人の支援への接続です。</p>
     <div class="ed-guard">
       <ul>
-        <li>子ども本人の意思、安心、安全を最優先にする</li>
-        <li>AIは診断や最終判断を行わない。分解を促し、問いを差し出す“伴走”に徹する</li>
-        <li>つらさの原因を「子どもに分析させる」ことが自責に転じないよう、問いの向け先と深さを慎重に設計する</li>
-        <li>緊急性のある相談は、地域の相談窓口・専門職など、人の支援へ確実につなぐ</li>
-        <li>会話履歴や学習データは、本人・保護者の同意、目的、閲覧範囲、保存期間を明確にする</li>
+        <li>つらさの原因を子どもに分析させない</li>
+        <li>AIが診断や最終判断を行わない</li>
+        <li>緊急性がある場合は、保護者・支援者・専門機関につなぐ</li>
+        <li>会話履歴や学習データの保存、共有範囲、本人同意を明確にする</li>
+        <li>子どもが安心できる場所と頼れる人を一緒に確認する</li>
       </ul>
     </div>
 
-    <h2><span class="step">STEP 9</span>それでも、これから検証すること</h2>
-    <p>本仮説は未検証です。少なくとも次の点を、現場で確かめる必要があります。</p>
-    <ul>
-      <li>この「見方」は、子どもにとって本当に学べるものか（教えられるか、体験を通じてしか得られないか）</li>
-      <li>年齢帯ごとに、どこまでが無理なく、どこからが早すぎるか</li>
-      <li>いじめ・不登校の文脈で、「分解して考える」ことが支えになる場面と、逆に負担になる場面の境目</li>
-      <li>安全上の線引き——つらさの原因を子どもに向けさせないための、問いの設計</li>
-      <li>AIの問いかけが、子どもの思考を引き出すのか、先回りして奪ってしまうのか</li>
-    </ul>
+    <h2>6. 本格開発より先に、人を使った小さな実証を行う</h2>
+    <p>いきなりアプリを作り込むのではなく、まずは人がAI役を演じる小さな実証から始めます。これにより、どの問いが子どもに届くのか、どこで詰まるのか、どこから人の支援が必要かを確認できます。</p>
+    <div class="ed-table-wrap">
+      <table class="ed-table">
+        <tr><th>検証項目</th><th>見ること</th></tr>
+        <tr><td>問いの届き方</td><td>子どもが理解できるか、答えやすいか</td></tr>
+        <tr><td>表現手段</td><td>文字・絵・音声・写真のどれが自然か</td></tr>
+        <tr><td>支援の量</td><td>どこまでAIが支え、どこから人が入るべきか</td></tr>
+        <tr><td>安全確認</td><td>つらさや危険の兆候をどう拾い、どうつなぐか</td></tr>
+        <tr><td>継続性</td><td>子どもが続けたいと思えるか</td></tr>
+      </table>
+    </div>
+
+    <h2>おわりに：AIが答える前に、子どもが世界を見る</h2>
+    <p>この設計で目指すのは、AIが子どもに代わって考えることではありません。AIが問いを整え、子どもが世界を見て、分けて、一つ試して、確かめる。その小さな循環を育てることです。</p>
+    <p>答えを渡すAIではなく、子どもが自分の問いを見つけるためのAI。その方向で、team AICは教育領域の仮説を少しずつ検証していきます。</p>
 
     <h2>関連ページ</h2>
-    <p>本仮説は、教育ページ配下の<a href="education-kodomo-ibasho.html">「AIを活用した子どもの居場所づくり・学習支援プロジェクト（検討案）」</a>と掛け合わせて検討を進めます。</p>
+    <p>この設計仮説は、教育ページ配下の<a href="education-kodomo-ibasho.html">「AI活用での子どもの居場所づくり・学習支援企画のアイデア」</a>と掛け合わせて検討を進めます。</p>
 
     <div class="ed-back">
-      <a href="education.html">← 教育トップへ戻る</a>
-      <a href="education-kodomo-ibasho.html">子どもの居場所・学習支援（検討案）</a>
+      <a href="education.html">教育トップへ戻る</a>
+      <a href="education-kodomo-ibasho.html">子どもの居場所・学習支援企画を読む</a>
       <a href="activities.html">活動領域へ</a>
     </div>
   </article></div>
@@ -176,7 +174,7 @@
   <div class="footer-inner">
     <div class="footer-links"></div>
     <p>&copy; <span id="year"></span> team AIC - team AI circle. Japan.</p>
-    <p class="footer-note">本ページは検討段階のアプローチ仮説です。実施・連携や効果が実証された事実を示すものではありません。</p>
+    <p class="footer-note">本ページは検討段階の設計仮説です。実施・連携・効果が確認された事実を示すものではありません。</p>
   </div>
 </footer>
 <script src="assets/js/main.js"></script>
