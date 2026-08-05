@@ -18,11 +18,12 @@
     14,
     15,
     16,
-    17
+    17,
+    18
   ],
-  "lastPublishedLessonId": 17,
-  "lastPublishedAt": "2026-08-04T09:14:36+09:00",
-  "completedAt": null,
+  "lastPublishedLessonId": 18,
+  "lastPublishedAt": "2026-08-05T09:12:21+09:00",
+  "completedAt": "2026-08-05T09:12:21+09:00",
   "history": [
     {
       "lessonId": 1,
@@ -108,6 +109,11 @@
       "lessonId": 17,
       "source": "GitHub Actions daily publish",
       "publishedAt": "2026-08-04T09:14:36+09:00"
+    },
+    {
+      "lessonId": 18,
+      "source": "GitHub Actions daily publish",
+      "publishedAt": "2026-08-05T09:12:21+09:00"
     }
   ]
 }
