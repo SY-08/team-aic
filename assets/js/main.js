@@ -27,11 +27,11 @@
   } catch (e) {}
 })();
 
-// 1b) ファビコン（四角A）をサックスブルーに統一（緑をやめる）
+// 1b) ファビコン（四角A）をパステルイエローに統一（緑をやめる）
 (function () {
   try {
     var svg =
-      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232a6fb5'/%3E%3Ctext x='32' y='42' font-size='30' font-family='Arial, sans-serif' font-weight='700' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E";
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e6b422'/%3E%3Ctext x='32' y='42' font-size='30' font-family='Arial, sans-serif' font-weight='700' fill='%233d3111' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E";
     var link = document.querySelector('link[rel="icon"]');
     if (!link) {
       link = document.createElement("link");
@@ -356,10 +356,10 @@ document.addEventListener("DOMContentLoaded", function () {
       homeBtn.style.cssText =
         "position:fixed;right:18px;bottom:18px;z-index:1000;" +
         "display:inline-flex;align-items:center;gap:6px;" +
-        "background:#2a6fb5;color:#fff;text-decoration:none;" +
+        "background:linear-gradient(135deg,#f2ce5b,#e3b23c);color:#3d3111;text-decoration:none;" +
         "font-weight:700;font-size:14px;line-height:1;" +
         "padding:12px 18px;border-radius:999px;" +
-        "box-shadow:0 8px 22px rgba(28,84,140,.38);";
+        "box-shadow:0 8px 22px rgba(180,130,20,.40);";
       document.body.appendChild(homeBtn);
     }
   } catch (e) {}
