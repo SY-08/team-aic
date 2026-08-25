@@ -115,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ["open-source.html", "活動の設計図"],
     ["live-build.html", "活動共有ノート"],
     ["roadmap.html", "ロードマップ"],
+    ["teamaic-partners.html", "team AIC パートナー制度"],
     ["contact.html", "お問い合わせ"],
   ];
   // オープンソース配下のページ（トップメニューでは「オープンソース」を選択状態に）
@@ -125,6 +126,11 @@ document.addEventListener("DOMContentLoaded", function () {
   var LIBRARY_FAMILY = [
     "daily-column.html", "ai-daily.html", "philosophy.html", "my-journal.html",
   ];
+  // 「team AIC パートナー制度」配下のページ（トップメニューでは同項目を選択状態に）
+  var PARTNER_FAMILY = [
+    "ai-children-about.html", "ai-children-partners-about.html",
+    "ai-children-partners.html",
+  ];
 
   var nav = document.getElementById("siteNav");
   if (nav) {
@@ -134,6 +140,8 @@ document.addEventListener("DOMContentLoaded", function () {
       activeTop = "open-source.html";
     } else if (navHrefs.indexOf(current) === -1 && LIBRARY_FAMILY.indexOf(current) !== -1) {
       activeTop = "daily-column.html";
+    } else if (navHrefs.indexOf(current) === -1 && PARTNER_FAMILY.indexOf(current) !== -1) {
+      activeTop = "teamaic-partners.html";
     }
     nav.innerHTML = NAV.map(function (n) {
       var cls = n[0] === activeTop ? ' class="active"' : "";
