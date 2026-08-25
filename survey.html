@@ -74,7 +74,7 @@
     <div class="cap">AIで作成したキャラクター<br>｜でんきねこ｜ゴロニャン<br><span style="color:var(--sax2);font-weight:600">「ぼくが順番に きいていくね！」</span></div>
   </div>
   <button class="start" id="startBtn">ゴロニャンと はじめる（約3分）</button>
-  <div class="foot">ログイン不要・無料。個人を特定する情報は入力しないでください。</div>
+  <div class="foot">ログイン不要・無料。アンケート本編は匿名でOK。最後に、活動情報を希望する方だけ、任意でニックネームや連絡先をうかがいます。</div>
 </div>
 
 <div id="scr-chat" class="card chat hide">
@@ -105,12 +105,23 @@ const Q=[
  {id:"q5",type:"multi",title:"逆に、不安に感じることはある？（いくつでもOK）",opts:["AIが間違った情報を教えること","AIの回答をそのまま信じてしまうこと","自分で考える力が弱くなること","AIに頼りすぎてしまうこと","宿題や勉強をAI任せにしてしまうこと","性的・暴力的など、不適切な内容に触れること","名前・住所・学校名などの個人情報を入力してしまうこと","AIとの会話を周囲の大人が把握できないこと","長時間利用してしまうこと","特に不安はない","わからない","その他"]},
  {id:"q6",type:"multi",title:"子どもが使うAIで、表示や回答を制限したほうがいい内容はある？（いくつでもOK）",opts:["性的・成人向けの内容","暴力的・残虐な内容","自傷・自殺などに関する内容","犯罪や違法行為に関する内容","危険な行為や危険物に関する内容","お酒・たばこ・薬物・ギャンブルに関する内容","差別・いじめ・誹謗中傷につながる内容","個人情報やプライバシーに関する内容","子どもの年齢にふさわしくない内容全般","特に制限する必要はないと思う","わからない","その他"]},
  {id:"q7",type:"single",title:"ところで、お子さまはいらっしゃる？",opts:["いる","いない","回答しない"]},
+ {id:"childCount",type:"single",cond:a=>a.q7==="いる",title:"（お子さまがいる方へ）お子さまは何人いらっしゃる？",opts:["1人","2人","3人","4人以上"]},
  {id:"q8",type:"multi",optional:true,title:"（お子さまがいる方へ）お子さまの年齢・学年を教えてね。複数いる場合は全部えらんでOK！（任意）",opts:["0〜3歳","年少","年中","年長","小学校1〜2年生","小学校3〜4年生","小学校5〜6年生","中学生","高校生","それ以上"]},
  {id:"q9",type:"single",title:"よかったら、あなたの年代も教えて！",opts:["20歳未満","20代","30代","40代","50代","60代","70代以上","回答しない"]},
- {id:"q10",type:"text",optional:true,title:"最後に…子どもとAIの関わりについて、自由に聞かせて！（任意）\n例：こんなAIなら使わせてよい／こういう使い方は心配／学校や家庭でこう使ってほしい など",placeholder:"ご自由にご記入ください（空欄でもOK）"}
+ {id:"q10",type:"text",optional:true,title:"最後に…子どもとAIの関わりについて、自由に聞かせて！（任意）\n例：こんなAIなら使わせてよい／こういう使い方は心配／学校や家庭でこう使ってほしい など",placeholder:"ご自由にご記入ください（空欄でもOK）"},
+ {id:"infoOptIn",type:"single",phase:"extra",endFinish:a=>!isYes(a.infoOptIn),title:"これからも、teamAICの活動報告や、AI活用イベント・大人向けのAI講座・「子どもとAIの未来」に関するお知らせを、あなたにお届けしてもいい？　あなたと、これからの子どもたちに役立つ情報だけを選んでお送りするよ。（任意）",opts:["はい、ぜひ受け取りたい","いいえ、今回は遠慮しておく"]},
+ {id:"nickname",type:"text",input:true,required:true,phase:"extra",cond:a=>isYes(a.infoOptIn),title:"うれしい！ではまず、お名前のかわりに呼べる「ニックネーム」を教えてね。（必須）",placeholder:"例：さくらママ / Ken など"},
+ {id:"email",type:"text",input:true,required:true,email:true,phase:"extra",cond:a=>isYes(a.infoOptIn),title:"お知らせをお届けする「メールアドレス」を教えてね。（必須）",placeholder:"例：you@example.com"},
+ {id:"partner",type:"single",phase:"extra",cond:a=>isYes(a.infoOptIn),endFinish:a=>!isYes(a.partner),pre:["最後に、ひとつだけ ご案内があるよ。","【 AIC Future Partners ― 未来をともに考える仲間たち ― 】","これは、teamAIC（AI × Children）の“パートナー”を募集する制度だよ。パートナーは、これからの未来に向けた活動を一緒に考えてくれる仲間のこと。","たとえば、横塚がつくる無料のAIアプリを実際に触って感想を聞かせてくれたり、アイデアをくれたり。横塚が一人で頭を抱えて葛藤しているとき、こっそり相談にのってくれたり。ときにはアンケートのように数多くの声を集めることで、社会を動かすこともできるんだ。","活動を強制することは一切ないよ。できるときに、できることだけでOK。"],title:"そんなふうに、ときどき力を貸してくれる「パートナー」になってもいいと思う？",opts:["はい、協力できるかも","いいえ、今回は見送る"]},
+ {id:"publishName",type:"single",phase:"extra",cond:a=>isYes(a.partner),pre:["ありがとう…！ とても心強いよ。🐾","【 お名前を掲載する理由 】","活動に協力してくださる皆さまへの感謝と敬意を、きちんと目に見える形で表したい。まず、それが一番の理由だよ。","そしてもう一つ。「興味はあるけれど、自分に何ができるか分からない」「参加はハードルが高い」——そんな方にも、いろいろな関わり方があることを知ってもらい、最初の一歩を踏み出しやすくしたいんだ。","AIアプリを試して感想を伝える。アイデアを共有する。アンケートに答える。ときには相談相手になる。その一つひとつが、teamAICにとって大切な活動への参画だよ。","協力してくださる方の存在が見えることで「自分も少し関わってみよう」と思う人が増えていく。その小さな積み重ねが、社会を少しずつ動かす力になると考えているんだ。","お名前の掲載は、皆さまへの賞賛と感謝であると同時に、次に参加する方の入口をひらくためのものだよ。"],title:"ホームページに、あなたの「ニックネーム」をパートナーとして掲載してもいい？",opts:["はい、掲載してもよい","いいえ、掲載はしないでほしい"]},
+ {id:"socialLink",type:"text",input:true,phase:"extra",cond:a=>isYes(a.publishName),title:"ありがとう！希望があれば、掲載時にリンクできるよ。InstagramのユーザーネームやFacebook・ホームページのURLなど、載せたいページがわかるものを教えてね。（任意）",placeholder:"例：@your_insta または https://..."}
 ];
 const REACT=["ありがとう！","なるほど〜。","うんうん、メモしたよ φ(..)","そう考えるんだね！","ふむふむ、参考になるなぁ。","いいね、教えてくれてありがとう！"];
 const ans={}; let i=0;
+function isYes(v){return typeof v==="string"&&v.indexOf("はい")===0;}
+function applies(q){return !q.cond||q.cond(ans);}
+function nextIdx(f){let k=f+1;while(k<Q.length&&!applies(Q[k]))k++;return k;}
+function mainList(){return Q.filter(q=>(q.phase||"main")==="main"&&applies(q));}
 const thread=document.getElementById("thread"), ctrl=document.getElementById("ctrl");
 const el=(t,c)=>{const e=document.createElement(t);if(c)e.className=c;return e;};
 const scroll=()=>{thread.scrollTop=thread.scrollHeight;};
@@ -127,10 +138,17 @@ document.getElementById("startBtn").onclick=()=>{
  });
 };
 function ask(){
- const q=Q[i]; const total=Q.length; const left=total-(i+1);
- document.getElementById("pg").textContent=(i+1)+" / "+total+"（あと"+left+"問）";
- document.getElementById("pbar").style.width=Math.round((i+1)/total*100)+"%";
- botSay(q.title,()=>controls(q));
+ const q=Q[i];
+ if((q.phase||"main")==="main"){
+  const ml=mainList(); const idx=ml.indexOf(q)+1, total=ml.length, left=Math.max(total-idx,0);
+  document.getElementById("pg").textContent=idx+" / "+total+"（あと"+left+"問）";
+  document.getElementById("pbar").style.width=Math.round(idx/total*100)+"%";
+ } else {
+  document.getElementById("pg").textContent="任意のご質問（ここからは自由だよ）";
+  document.getElementById("pbar").style.width="100%";
+ }
+ const pre=q.pre||[]; let k=0;
+ (function chain(){ if(k<pre.length){ botSay(pre[k++],chain); } else { botSay(q.title,()=>controls(q)); } })();
 }
 function controls(q){
  ctrl.innerHTML="";
@@ -160,19 +178,32 @@ function controls(q){
   if(q.optional){const sk=el("button","skip");sk.textContent="\u30b9\u30ad\u30c3\u30d7";sk.onclick=()=>{ans[q.id]=[];addUser("\uff08\u30b9\u30ad\u30c3\u30d7\uff09");next();};go.appendChild(sk);}
   ctrl.appendChild(go);
  } else {
-  const ta=el("textarea");ta.placeholder=q.placeholder||"";
+  const ta=el(q.input?"input":"textarea"); if(q.input)ta.className="otherbox"; ta.placeholder=q.placeholder||"";
+  if(q.email)ta.type="email";
   ctrl.appendChild(ta);
+  const err=el("div","cnt"); err.style.color="#c0392b"; err.style.display="none"; ctrl.appendChild(err);
   const go=el("div","go");
   const send=el("button","send");send.textContent="送信する";
-  send.onclick=()=>{const v=ta.value.trim();ans[q.id]=v;addUser(v||"（自由記述なし）");next();};
+  send.onclick=()=>{const v=ta.value.trim();
+   if(q.required&&!v){err.textContent="\u26a0 ここは必須だよ。入力してね。";err.style.display="";return;}
+   if(q.email&&v&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){err.textContent="\u26a0 メールアドレスの形式を確認してね。";err.style.display="";return;}
+   ans[q.id]=v;addUser(v||"（記入なし）");next();};
   go.appendChild(send);
+  if(!q.required){const sk=el("button","skip");sk.textContent="スキップ";sk.onclick=()=>{ans[q.id]="";addUser("（スキップ）");next();};go.appendChild(sk);}
   ctrl.appendChild(go);
  }
 }
 function next(){
  ctrl.innerHTML="";
- if(i<Q.length-1){ i++; botSay(REACT[Math.floor(Math.random()*REACT.length)],()=>ask()); }
- else { finish(); }
+ const q=Q[i];
+ if(q.endFinish&&q.endFinish(ans)){ finish(); return; }
+ const ni=nextIdx(i);
+ if(ni<Q.length){
+  const wasMain=(q.phase||"main")==="main", willExtra=(Q[ni].phase||"main")==="extra";
+  i=ni;
+  if(wasMain&&willExtra){ botSay("ここまで ほんとうに ありがとう！🐾 ここからは ぜんぶ 任意だよ。よかったら もう少しだけ 教えてね。",()=>ask()); }
+  else { botSay(REACT[Math.floor(Math.random()*REACT.length)],()=>ask()); }
+ } else { finish(); }
 }
 function finish(){
  botSay("ぜんぶ おしえてくれて ありがとう！🐾",()=>{
